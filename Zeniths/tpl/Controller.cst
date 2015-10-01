@@ -1,0 +1,133 @@
+﻿<%@ CodeTemplate Language="C#" TargetLanguage="C#" Debug="False" CompilerVersion="v3.5"  ResponseEncoding="UTF-8" Description="生成实体对象" %>
+<%@ Assembly Name="System.Data" %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Import Namespace="SchemaExplorer" %>
+<%@ Map Name="CSharpAlias" Src="DbType-CSharp.csmap" Reverse="False"%>
+<%@ Property Name="NameSpace" Type="String" Category="参数" Description="命名空间" Default="ZDX" %>
+<%@ Property Name="Table" Type="SchemaExplorer.TableSchema" Category="参数" Description="表名" Optional="False" %>
+<%@ Property Name="IsDialog" Type="Boolean" Category="参数" Description="是否对话框模式" Default="True" Optional="True" %>
+<%
+string TableRemark = Table.Description.Replace("\n","").Replace("\r","").Replace(" ","");
+string TableName = Table.Name.Replace("\n","").Replace("\r","").Replace(" ","");
+string pkName = "Id";
+string pkType = "int";
+if(Table.HasPrimaryKey)
+{
+    pkName = Table.PrimaryKey.MemberColumns[0].Name;
+    pkType = CSharpAlias[Table.PrimaryKey.MemberColumns[0].SystemType.Name];
+}
+%>
+// ===============================================================================
+//  Copyright (c) 2015 正得信集团股份有限公司
+// ===============================================================================
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using XCI.Doc;
+using XCI.Web;
+using <%= NameSpace %>.Entity;
+using <%= NameSpace %>.Service;
+using ZDX.Entity;
+using ZDX.Extensions;
+using ZDX.Helper;
+using ZDX.Utility;
+using ZDX.WebUtility;
+using ZDX.WebUtility.Helper;
+
+namespace <%= NameSpace %>.Controllers
+{
+    [Authorize]
+    public class <%=TableName%>Controller : BaseController
+    {
+        private readonly <%=TableName%>Service service = new <%=TableName%>Service();
+        private readonly RoadFlow.Platform.Dictionary dicService = new RoadFlow.Platform.Dictionary();
+
+        public ActionResult Index(string key)
+        {
+            //SetDropListOptions(categoryId, userCategoryId);
+            var list = service.GetPageList(key);
+            return View(list);
+        }
+
+        public ActionResult Create()
+        {
+            return EditCore(new <%=TableName%>());
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var entity = service.Get(id);
+            return EditCore(entity);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Save(<%=TableName%> entity)
+        {
+            var has = service.Exists(entity);
+            if (has)
+            {
+                ViewBag.ErrorMessage = "输入<%= TableRemark %>已经存在";
+                return EditCore(entity);
+            }
+
+            var isCreate = entity.<%= pkName %> == 0;
+            BoolMessage result = isCreate ? service.Insert(entity) : service.Update(entity);
+            <% if(!IsDialog) {%>
+            if (result.Success)
+            {
+                return RedirectToAction("Index", WebHelper.GetQueryRouteValuesNoId(RouteData.Values));
+            }
+            ViewBag.ErrorMessage = result.Message.ReplaceEnter();
+            return EditCore(entity);
+            <% } else {%>
+            if (result.Success)
+            {
+                ViewBag.SuccessMessage = "ok";
+            }
+            else
+            {
+                ViewBag.ErrorMessage = result.Message.ReplaceEnter();
+            }
+            return EditCore(entity);
+            <% } %>
+        }
+
+        private ActionResult EditCore(<%=TableName%> entity)
+        {
+            //SetDropListOptions(entity.CategoryId, entity.UserCategoryId);
+            return View("Edit", entity);
+        }
+
+        [HttpPost]
+        public ActionResult BatchDelete(string ids)
+        {
+            var result = service.Delete(StringHelper.ConvertToArrayInt(ids));
+            return JsonNet(new JsonMessage(result));
+        }
+
+        [HttpPost]
+        public ActionResult Delete(string id)
+        {
+            var result = service.Delete(new[] { id.ToInt() });
+            return JsonNet(new JsonMessage(result));
+        }
+
+        public FileContentResult Export()
+        {
+            var dt = service.GetTable();
+            byte[] fileContents = ExcelHelper.Export(dt, EntityMetadata.ForType(typeof(<%= TableName %>)));
+            return File(fileContents, "application/ms-excel", "<%= TableRemark %>导出.xls");
+        }
+
+        private void SetDropListOptions(int categoryId, int userCategoryId)
+        {
+            //ViewBag.CategoryOptions = dicService.GetOptionsByCode("ExamQuestionCategory", value: categoryId.ToString());
+            //ViewBag.UserCategoryOptions = dicService.GetOptionsByCode("UserCategory", value: userCategoryId.ToString());
+        }
+    }
+}

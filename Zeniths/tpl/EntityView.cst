@@ -1,0 +1,60 @@
+﻿<%@ CodeTemplate Language="C#" TargetLanguage="C#" Debug="False" CompilerVersion="v3.5"  ResponseEncoding="UTF-8" Description="生成实体对象" %>
+<%@ Assembly Name="System.Data" %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Import Namespace="SchemaExplorer" %>
+<%@ Map Name="CSharpAlias" Src="DbType-CSharp.csmap" Reverse="False"%>
+<%@ Property Name="NameSpace" Type="String" Category="参数" Description="命名空间" Default="ZDX" %>
+<%@ Property Name="Table" Type="SchemaExplorer.ViewSchema" Category="参数" Description="表名" Optional="False" %>
+<%
+string TableRemark = Table.Description.Replace("\n","").Replace("\r","").Replace(" ","");
+string TableName = Table.Name.Replace("\n","").Replace("\r","").Replace(" ","");
+string PKName = string.Empty;
+bool autoIncrement = false;
+/*
+if (Table.HasPrimaryKey)
+{
+	PKName = Table.PrimaryKey.MemberColumns[0].Name;
+    autoIncrement = Table.PrimaryKey.MemberColumns[0].ExtendedProperties["CS_IsIdentity"].Value.ToString().ToLower()=="true";
+}
+*/
+%>
+// ===============================================================================
+//  Copyright (c) 2015 正得信集团股份有限公司
+// ===============================================================================
+
+using System;
+using ZDX.Entity;
+
+namespace <%= NameSpace %>.Entity
+{
+    /// <summary>
+    /// <%= TableRemark %>
+    /// </summary>
+    [Table(Caption = "<%= TableRemark %>")]
+    [PrimaryKey("<%=PKName%>")]
+    public class <%=TableName%>
+    {
+        <% for(int i= 0;i< Table.Columns.Count;i++) { 
+            ViewColumnSchema column = Table.Columns[i];
+            string columnRemark = column.Description.Replace("\n","").Replace("\r","").Replace(" ","");
+        %>		
+		/// <summary>
+        /// <%= columnRemark %>
+        /// </summary>
+        [Column(Caption = "<%= columnRemark %>")]
+        public <%=CSharpAlias[column.SystemType.Name]%><%if(!column.SystemType.Name.Equals("String")) if(column.AllowDBNull) Response.Write("?");%> <%= column.Name%> { get; set; }
+		<% 
+        if(i!=Table.Columns.Count-1) Response.WriteLine();
+        } 
+        %>
+
+        /// <summary>
+        /// 复制对象
+        /// </summary>
+        public <%=TableName%> Clone()
+        {
+            return (<%=TableName%>)this.MemberwiseClone();
+        }
+    }
+}

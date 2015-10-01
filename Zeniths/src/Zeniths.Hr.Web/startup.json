@@ -1,0 +1,11 @@
+﻿{
+    "Database": [
+        {
+            "Name": "web",
+            "Provider": null,
+            "ConnectionString": "server=.;uid=sa;pwd=1;database=UserCenterV36",
+            "Encrypted": false,
+            "Remark": ""
+        }
+    ]
+}

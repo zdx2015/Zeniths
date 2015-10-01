@@ -1,0 +1,78 @@
+﻿@{Layout = null;}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>正得信股份综合管控平台</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link href="~/assets/jquery-easyui/css/panel.css" rel="stylesheet"/>
+    <link href="~/assets/jquery-easyui/css/layout.css" rel="stylesheet"/>
+    <link href="~/assets/jquery-easyui/css/tree.css" rel="stylesheet"/>
+    <link href="~/assets/jquery-easyui/css/tabs.css" rel="stylesheet" />
+    <link href="~/assets/web/css/easyui-fix.css" rel="stylesheet" />
+    <link href="~/assets/web/css/web.css" rel="stylesheet" />
+    <link href="~/assets/page/css/default.css" rel="stylesheet" />
+</head>
+<body class="easyui-layout" style="display:none">
+    <div data-options="region:'north'" class="header">
+        <div class="logo">
+            <img src="~/assets/page/css/images/logo.png" alt="Logo">
+        </div>
+
+        <div class="topbar">
+            <div class="userinfo">
+                欢迎您：<span id="userNameInfo"></span>  登陆IP：192.168.1.103  当前时间：
+            </div>
+            <ul class="menu">
+                <li class="item"><a href="#">个人信息</a></li>
+                <li class="item"><a href="#">修改密码</a></li>
+                <li class="item"><a href="#">安全退出</a></li>
+                <li class="item"><a href="#">帮助中心</a></li>
+            </ul>
+        </div>
+    </div>
+    <div data-options="region:'west',split:true" title="导航菜单" style="width:200px;">
+        <div>
+            <ul class="treeMenu"></ul>
+        </div>
+    </div>
+    <div data-options="region:'center'">
+        <div id="tabs" class="easyui-tabs" fit="true" border="false">
+        </div>
+    </div>
+    <div data-options="region:'south'" class="footer">
+        操作系统：<span id="statusSystem"></span>&nbsp;&nbsp;
+        浏览器：<span id="statusBrowser"></span>&nbsp;&nbsp;
+        分辨率：<span id="statusScreen"></span>&nbsp;&nbsp;
+        正得信股份 &copy;@DateTime.Now.Year
+    </div>
+     
+    <script src="~/assets/jquery/jquery.min.js"></script>
+    <script src="~/assets/jquery-easyui/js/jquery.parser.js"></script>
+    <script src="~/assets/jquery-easyui/js/jquery.resizable.js"></script>
+    <script src="~/assets/jquery-easyui/js/jquery.panel.js"></script>
+    <script src="~/assets/jquery-easyui/js/jquery.layout.js"></script>
+    <script src="~/assets/jquery-easyui/js/jquery.tree.js"></script>
+    <script src="~/assets/jquery-easyui/js/jquery.tabs.js"></script>
+    <script src="~/assets/jquery-easyui/js/jquery.tabs.extend.js"></script>
+    <script>
+        var $body = $(document.body);
+        $body.css({ 'overflow': 'hidden', 'position': 'relative' });
+        var $mask = $('<div style="position:absolute;z-index:2;width:100%;height:100%;background:#ccc;z-index:1000;opacity:0.3;filter:alpha(opacity=30);"><div>').appendTo($body);
+        var $maskMessage = $('<div class="mask-message" style="z-index:3;width:auto;height:16px;line-height:16px;position:absolute;top:50%;left:50%;margin-top:-20px;margin-left:-92px;border:2px solid #d4d4d4;padding: 12px 5px 10px 30px;background: #ffffff url(/assets/jquery-easyui/css/images/loading.gif) no-repeat scroll 5px center;"> 正在加载资源 ... </div>').appendTo($body);
+
+        $.parser.onComplete = function () {
+            $([$mask[0], $maskMessage[0]]).fadeOut('fast', function () {
+                $(this).remove();
+            });
+            $(document.body).css('display', '');
+            $(document.body).layout('resize');  
+        };
+    </script>
+    <script src="~/assets/layer/layer.js"></script>
+    <script src="~/assets/web/js/zeniths.util.js"></script>
+    <script src="~/assets/page/js/index.js"></script>
+</body>
+</html>

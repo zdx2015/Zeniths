@@ -1,0 +1,166 @@
+﻿<%@ CodeTemplate Language="C#" TargetLanguage="C#" Debug="False" CompilerVersion="v3.5"  ResponseEncoding="UTF-8" Description="生成实体对象" %>
+<%@ Assembly Name="System.Data" %>
+<%@ Assembly Name="SchemaExplorer" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Import Namespace="SchemaExplorer" %>
+<%@ Map Name="CSharpAlias" Src="DbType-CSharp.csmap" Reverse="False"%>
+<%@ Property Name="NameSpace" Type="String" Category="参数" Description="命名空间" Default="ZDX" %>
+<%@ Property Name="Table" Type="SchemaExplorer.TableSchema" Category="参数" Description="表名" Optional="False" %>
+<%
+string TableRemark = Table.Description.Replace("\n","").Replace("\r","").Replace(" ","");
+string TableName = Table.Name.Replace("\n","").Replace("\r","").Replace(" ","");
+string pkName = "Id";
+string pkType = "int";
+if(Table.HasPrimaryKey)
+{
+    pkName = Table.PrimaryKey.MemberColumns[0].Name;
+    pkType = CSharpAlias[Table.PrimaryKey.MemberColumns[0].SystemType.Name];
+}
+%>
+// ===============================================================================
+//  Copyright (c) 2015 正得信集团股份有限公司
+// ===============================================================================
+
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using <%= NameSpace %>.Entity;
+using ZDX.Collections;
+using ZDX.Data;
+using ZDX.Extensions;
+using ZDX.Utility;
+
+namespace <%= NameSpace %>.Service
+{
+    /// <summary>
+    /// <%= TableRemark %>服务
+    /// </summary>
+    public class <%=TableName%>Service
+    {
+        /// <summary>
+        /// 存储器
+        /// </summary>
+        private readonly Repository<<%=TableName%>> repository = new Repository<<%=TableName%>>();
+
+        /// <summary>
+        /// 检测是否存在指定<%= TableRemark %>
+        /// </summary>
+        /// <param name="entity"><%= TableRemark %>实体</param>
+        /// <returns>存在返回true</returns>
+        public bool Exists(<%=TableName%> entity)
+        {
+            return false;
+            //return repository.Exists(p => p.Code == entity.Code && p.Id != entity.Id);
+        }
+
+        /// <summary>
+        /// 添加<%= TableRemark %>
+        /// </summary>
+        /// <param name="entity"><%= TableRemark %>实体</param>
+        public BoolMessage Insert(<%=TableName%> entity)
+        {
+            try
+            {
+                repository.Insert(entity);
+                return BoolMessage.True;
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// 更新<%= TableRemark %>
+        /// </summary>
+        /// <param name="entity"><%= TableRemark %>实体</param>
+        public BoolMessage Update(<%=TableName%> entity)
+        {
+            try
+            {
+                repository.Update(entity);
+                return BoolMessage.True;
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// 删除<%= TableRemark %>
+        /// </summary>
+        /// <param name="ids"><%= TableRemark %>主键数组</param>
+        public BoolMessage Delete(<%=pkType%>[] ids)
+        {
+            try
+            {
+                if (ids.Length==1)
+                {
+                    repository.Delete(ids[0]);
+                }
+                else
+                {
+                    repository.Delete(ids);
+                }
+                return BoolMessage.True;
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
+        
+        /// <summary>
+        /// 获取<%= TableRemark %>对象
+        /// </summary>
+        /// <param name="id"><%= TableRemark %>主键</param>
+        /// <returns><%= TableRemark %>对象</returns>
+        public <%=TableName%> Get(int id)
+        {
+            return repository.Get(id);
+        }
+        
+        /// <summary>
+        /// 获取<%= TableRemark %>列表
+        /// </summary>
+        /// <returns><%= TableRemark %>列表</returns>
+        public List<<%=TableName%>> GetList()
+        {
+            var query = repository.NewQuery;
+            return repository.Query(query).ToList();
+        }
+        
+        /// <summary>
+        /// 获取<%= TableRemark %>数据表
+        /// </summary>
+        /// <returns>返回<%= TableRemark %>数据表</returns>
+        public DataTable GetTable()
+        {
+            var query = repository.NewQuery;
+            return repository.GetTable(query);
+        }
+
+        /// <summary>
+        /// 获取<%= TableRemark %>列表
+        /// </summary>
+        /// <returns><%= TableRemark %>列表</returns>
+        public PageList<<%=TableName%>> GetPageList(string key)
+        {
+            int pageIndex= RoadFlow.Utility.Tools.GetPageNumber();
+            int pageSize =RoadFlow.Utility.Tools.GetPageSize();
+            var query = repository.NewQuery.Take(pageSize).Page(pageIndex).OrderBy(p => p.<%=pkName%>);
+            if (key.IsNotEmpty())
+            {
+                //query.Where(p => p.Name.Contains(key));
+            }
+            return repository.Page(query);
+        }
+
+        #region 私有方法
+
+
+        #endregion
+    }
+}

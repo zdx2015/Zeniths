@@ -1,0 +1,88 @@
+﻿
+<div class="container-zeniths">
+    <div class="panel panel-default panel-zeniths">
+        <div class="panel-heading">
+            管理数据源资料
+        </div>
+        <div class="panel-body">
+            <div class="search-panel-zeniths">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label>账号：</label>
+                        <input class="form-control" name="userName" type="text" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label>姓名：</label>
+                        <input class="form-control" name="realname" type="text" placeholder="">
+                    </div>
+
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> 查询</button>
+                    <a class="btn btn-success" href="@Url.Action("Edit")">新建</a>
+                    <a class="btn btn-success create">添加</a>
+
+
+                    <button class="btn btn-danger delete" type="button">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </button>
+                    <button class="btn btn-default" id="refresh" type="button"> 刷新</button>
+                </form>
+
+            </div>
+
+            <div class="datagrid" data-url="@Html.Raw(Url.Action("GetUserList"))" data-query-form="form">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+        $(function() {
+
+            $('#refresh').on('click', function() {
+                $('.datagrid').datagrid().reload();
+            });
+
+            //var count = 0;
+            //$('.datagrid').datagrid({
+            //    onCheck: function() {
+            //        count++;
+            //        console.log('选中的行数{0}'.format(count));
+            //    },
+            //    onUncheck: function() {
+            //        count--;
+            //        console.log('选中的行数{0}'.format(count));
+            //    }
+            //});
+
+            @*$('.create').on('click', function () {
+                zeniths.util.dialog('@Url.Action("Edit")', {
+                    parent:true,
+                    area: ['1200px','700px'],
+                    success:function(index) {
+                    }
+                });
+            });
+
+           
+
+            var table = $('.tableArea').zenithsTable({
+                $form: $('form'),
+                callback: function () {
+                    $('.delete').on('click', function () {
+                        var ids = table.getSelectedIds().join(',');
+                        parent.layer.confirm('您是如何看待前端开发？', {
+                            btn: ['重要', '奇葩'] //按钮
+                        }, function () {
+                            parent.layer.msg('的确很重要' + ids, { icon: 1 });
+                        }, function () {
+                            parent.layer.msg('奇葩么么哒', { shift: 6 });
+                        });
+                    });
+                }
+            });*@
+        });
+
+    </script>
+}

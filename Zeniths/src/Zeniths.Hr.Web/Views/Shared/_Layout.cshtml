@@ -1,0 +1,89 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>表格例子</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <!-- 开始页面加载样式 -->
+    <script src="~/assets/pace/pace.min.js"></script>
+    <link href="~/assets/pace/themes/pace-theme-flash.css" rel="stylesheet" />
+    <!-- 结束页面加载样式 -->
+    <!-- 开始bootstrap样式 -->
+    <link href="~/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 结束bootstrap样式 -->
+    <!-- 开始插件样式 -->
+    <link href="~/assets/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" />
+    <link href="~/assets/jquery-icheck/skins/square/blue.css" rel="stylesheet" />
+    <link href="~/assets/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <link href="~/assets/bootstrap-timepicker/css/bootstrap-timepicker.min.css" rel="stylesheet" />
+    <link href="~/assets/bootstrap-clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet" />
+
+    <link href="~/assets/jquery-select2/css/select2.min.css" rel="stylesheet" />
+    <link href="~/assets/jquery-select2/css/select2-bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/assets/jquery-chosen/bootstrap-chosen.css" rel="stylesheet" />
+
+    <link href="~/assets/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
+    <link href="~/assets/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+    <link href="~/assets/kindeditor/themes/default/default.css" rel="stylesheet" />
+
+    <!-- 结束插件样式 -->
+    <link href="~/Assets/web/css/web.css" rel="stylesheet" />
+    @RenderSection("style", required: false)
+</head>
+<body>
+    @RenderBody()
+    <script src="~/assets/jquery/jquery.min.js"></script>
+    <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/assets/jquery-blockui/jquery.blockui.min.js"></script>
+    <script src="~/assets/jquery-cookie/jquery.cookie.min.js"></script>
+    <script src="~/assets/layer/layer.js"></script>
+    <script>
+        layer.config({
+            extend: 'extend/layer.ext.js'
+        });
+    </script>
+    <script src="~/assets/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <script src="~/assets/jquery-icheck/js/icheck.min.js"></script>
+    <script src="~/assets/bootstrap-daterangepicker/moment.min.js"></script>
+    <script src="~/assets/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="~/assets/bootstrap-daterangepicker/zh-cn.js"></script>
+    <script src="~/assets/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+    <script src="~/assets/bootstrap-clockpicker/js/bootstrap-clockpicker.min.js"></script>
+    <script src="~/assets/kindeditor/kindeditor-min.js"></script>
+    <script src="~/assets/kindeditor/lang/zh_CN.js"></script>
+
+    <script src="~/assets/jquery-select2/js/select2.min.js"></script>
+    <script src="~/assets/jquery-select2/js/zh-CN.js"></script>
+
+    <script src="~/assets/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script src="~/assets/bootstrap-select/js/defaults-zh_CN.min.js"></script>
+
+    <script src="~/assets/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/assets/bootstrap-datepicker/js/bootstrap-datepicker.zh-CN.min.js"></script>
+
+    <script src="~/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/assets/jquery-chosen/chosen.jquery.min.js"></script>
+    <script src="~/assets/jquery-maskedinput/jquery.maskedinput.min.js"></script>
+    <script src="~/assets/jquery-inputlimiter/jquery.inputlimiter.js"></script>
+
+    <script src="~/assets/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/assets/jquery-validation/additional-methods.min.js"></script>
+    <script src="~/assets/jquery-validation/messages_zh.min.js"></script>
+    <script src="~/assets/jquery-form/jquery.form.min.js"></script>
+    <script src="~/assets/jquery.pin/jquery.pin.min.js"></script>
+    <script src="~/assets/web/js/zeniths.util.js"></script>
+    <script src="~/assets/web/js/string.format.js"></script>
+    <script src="~/assets/web/js/zeniths.datagrid.js"></script>
+    <script src="~/assets/web/js/zeniths.dataform.js"></script>
+    @RenderSection("script", required: false)
+</body>
+</html>
