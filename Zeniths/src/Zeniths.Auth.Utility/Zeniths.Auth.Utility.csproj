@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B1C2B9F9-2FAF-4EC0-B2EA-73CD917C4B02}</ProjectGuid>
+    <ProjectGuid>{263DBFCF-A690-4E04-B02C-CC004E065400}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zeniths.Hr.Entity</RootNamespace>
-    <AssemblyName>Zeniths.Hr.Entity</AssemblyName>
+    <RootNamespace>Zeniths.Auth.Utility</RootNamespace>
+    <AssemblyName>Zeniths.Auth.Utility</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,20 +33,20 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WorkFlowForm.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Zeniths.Data\Zeniths.Data.csproj">
-      <Project>{e67f375d-ee64-4bdf-8458-a1c2b2a29472}</Project>
-      <Name>Zeniths.Data</Name>
+    <ProjectReference Include="..\Zeniths.Auth.Entity\Zeniths.Auth.Entity.csproj">
+      <Project>{642da20a-c41b-4d35-8e23-04a45d756e56}</Project>
+      <Name>Zeniths.Auth.Entity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Zeniths.Utility\Zeniths.Utility.csproj">
-      <Project>{7e12afba-bcdd-4de2-81e0-d4c7074d68aa}</Project>
-      <Name>Zeniths.Utility</Name>
+    <ProjectReference Include="..\Zeniths.Auth.Service\Zeniths.Auth.Service.csproj">
+      <Project>{eb7b2a8a-484d-4279-861c-5560b1d76160}</Project>
+      <Name>Zeniths.Auth.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

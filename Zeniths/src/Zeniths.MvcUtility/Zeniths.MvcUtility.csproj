@@ -78,6 +78,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Zeniths.Document\Zeniths.Document.csproj">
+      <Project>{ffb05f57-778a-480c-ae21-07d99f540ed8}</Project>
+      <Name>Zeniths.Document</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Zeniths.Utility\Zeniths.Utility.csproj">
       <Project>{7e12afba-bcdd-4de2-81e0-d4c7074d68aa}</Project>
       <Name>Zeniths.Utility</Name>

@@ -2,6 +2,8 @@
 // Copyright (c) 2015 正得信集团股份有限公司
 // ===============================================================================
 using System;
+using Zeniths.Extensions;
+using Zeniths.Helper;
 
 namespace Zeniths.Utility
 {
@@ -40,7 +42,7 @@ namespace Zeniths.Utility
         public BoolMessage(bool success, string message)
         {
             _success = success;
-            _message = message;
+            _message = message.ReplaceEnter();
         }
 
         /// <summary>

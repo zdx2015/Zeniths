@@ -1,5 +1,6 @@
 ﻿// ========================================================================
 
+using System.Collections;
 using System.ComponentModel;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -66,11 +67,10 @@ namespace Zeniths.MvcUtility
             int totalPages = source.TotalPages;
             int showPages = 7;
             int miniPages = 2;
-            string pagedInfo = string.Format("共 {0} 条 当前显示 {1} 到 {2} 条", source.TotalCount, source.RecordStartIndex,
-                                             source.RecordEndIndex);
+            string pagedInfo = $"共 {source.TotalCount} 条 当前显示 {source.RecordStartIndex} 到 {source.RecordEndIndex} 条";
             if (source.RecordEndIndex == 0 && source.RecordEndIndex == 0)
             {
-                pagedInfo = string.Format("共 {0} 条", source.TotalCount);
+                pagedInfo = $"共 {source.TotalCount} 条";
             }
             if (totalPages <= showPages)
             {
@@ -171,16 +171,10 @@ namespace Zeniths.MvcUtility
                 }
             }
 
-            if (currentPage == pageIndex)
-            {
-                pages.AppendFormat(@"<li class=""active"" title=""第{0}页""><span>{0}</span></li>", currentPage);
-            }
-            else
-            {
-                //var url = helper.ActionLink(currentPage.ToString(), action, controller, 
-                //    routeData, new RouteValueDictionary { { "data-page", currentPage } }).ToString();
-                pages.AppendFormat(@"<li title=""第{0}页""><a data-page=""{0}"">{0}</a></li>", currentPage);
-            }
+            pages.AppendFormat(
+                currentPage == pageIndex
+                    ? @"<li class=""active"" title=""第{0}页""><span>{0}</span></li>"
+                    : @"<li title=""第{0}页""><a data-page=""{0}"">{0}</a></li>", currentPage);
         }
 
         /// <summary>
@@ -188,7 +182,7 @@ namespace Zeniths.MvcUtility
         /// </summary>
         /// <param name="helper"></param>
         /// <param name="fieldName">字段名称</param>
-        public static MvcHtmlString BuildOrderImage(this HtmlHelper helper,string fieldName)
+        public static MvcHtmlString BuildOrderImage(this HtmlHelper helper, string fieldName)
         {
             var order = HttpContext.Current.Request.Params["order"].ToStringOrEmpty();
             if (!fieldName.Equals(order, System.StringComparison.OrdinalIgnoreCase))
@@ -259,5 +253,15 @@ namespace Zeniths.MvcUtility
         {
             return isReadonly ? MvcHtmlString.Create("readonly") : MvcHtmlString.Empty;
         }
+
+        public static MvcHtmlString BoolFaIcon(this HtmlHelper helper,bool result)
+        {
+            if (result)
+            {
+                return MvcHtmlString.Create("<i class=\"fa fa-check-square-o\" style=\"color: green\"></i>");
+            }
+            return MvcHtmlString.Create("<i class=\"fa fa-close\" style=\"color: red\"></i>");
+        }
+        
     }
 }

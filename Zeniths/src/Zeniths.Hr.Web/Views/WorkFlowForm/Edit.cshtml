@@ -1,0 +1,42 @@
+﻿@model WorkFlowForm
+@{
+    var title = "编辑流程表单";
+}
+
+<div class="container-zeniths">
+    <form class="form-horizontal editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.WorkFlowFormId</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+
+                @Html.Partial("_Form")
+
+            </div>
+            <div class="panel-footer text-center">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fa fa-save"></i> 保存
+                </button>
+                &nbsp;
+                <a class="btn btn-default">
+                    <i class="fa fa-sign-in"></i> 关闭
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section script{
+    <script>
+        $(function () {
+            //$('.editform').dataform().initPlugin().initValidate({
+            //    rules: {
+            //        Category1: 'required',
+            //        UName: 'required'
+            //    }
+            //});
+        });
+    </script>
+}

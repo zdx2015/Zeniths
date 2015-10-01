@@ -2,12 +2,14 @@
 // Copyright (c) 2015 正得信集团股份有限公司
 // ===============================================================================
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Routing;
+using Zeniths.Extensions;
 
 namespace Zeniths.Helper
 {
@@ -409,6 +411,27 @@ namespace Zeniths.Helper
             }
 
             return routeData;
+        }
+
+        /// <summary>
+        /// 获取Select控件option列表
+        /// </summary>
+        /// <param name="list">数据源</param>
+        /// <param name="displayMember">显示字段</param>
+        /// <param name="valueMember">值字段</param>
+        /// <param name="selectedValue">选中的值</param>
+        /// <returns></returns>
+        public static string GetSelectOptions(IList list, string displayMember, string valueMember, string selectedValue = null)
+        {
+            var options = new StringBuilder();
+            foreach (object item in list)
+            {
+                string display = ObjectHelper.GetObjectValue(item, displayMember).ToStringOrEmpty();
+                string value = ObjectHelper.GetObjectValue(item, valueMember).ToStringOrEmpty();
+                options.AppendFormat("<option value=\"{0}\"{1}>{2}</option>", value,
+                    value.Equals(selectedValue.ToStringOrEmpty()) ? " selected" : string.Empty, display);
+            }
+            return options.ToString();
         }
     }
 }

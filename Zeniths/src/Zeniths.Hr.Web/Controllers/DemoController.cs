@@ -20,14 +20,14 @@ namespace Zeniths.Hr.Web.Controllers
 
         public ActionResult GetUserList()
         {
-            var userServie = new UserService();
-            var pageIndex = WebHelper.GetFormString("page").ToInt(1);
-            var orderName = WebHelper.GetFormString("order", "Id");
-            var orderDir = WebHelper.GetFormString("dir", "asc");
-            var userName = WebHelper.GetFormString("userName");
-            var realName = WebHelper.GetFormString("realName");
-            var list = userServie.GetPageList(pageIndex, 10, orderName, orderDir, userName, realName);
-            return View("Data/_UserTable", list);
+            //var userServie = new UserService();
+            //var pageIndex = WebHelper.GetFormString("page").ToInt(1);
+            //var orderName = WebHelper.GetFormString("order", "Id");
+            //var orderDir = WebHelper.GetFormString("dir", "asc");
+            //var userName = WebHelper.GetFormString("userName");
+            //var realName = WebHelper.GetFormString("realName");
+            //var list = userServie.GetPageList(pageIndex, 10, orderName, orderDir, userName, realName);
+            return View("Data/_UserTable");
         }
 
         public ActionResult Edit()

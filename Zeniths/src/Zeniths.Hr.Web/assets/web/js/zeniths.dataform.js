@@ -470,7 +470,7 @@
             if (instance) {
                 $.extend(instance.options, options);
             } else {
-                instance = new DataForm($this, $.extend({}, $.fn.datagrid.dataform.defaults));
+                instance = new DataForm($this, $.extend({}, $.fn.dataform.defaults));
                 $this.data('dataform', instance);
             }
             instances.push(instance);

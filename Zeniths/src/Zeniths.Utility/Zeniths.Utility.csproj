@@ -93,6 +93,7 @@
     <Compile Include="InnerAction.cs" />
     <Compile Include="KeyValue.cs" />
     <Compile Include="MutipleThreadResetEvent.cs" />
+    <Compile Include="OrderDir.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="SystemMacro.cs" />

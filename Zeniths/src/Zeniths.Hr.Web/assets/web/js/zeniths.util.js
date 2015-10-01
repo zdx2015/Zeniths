@@ -57,6 +57,24 @@ zeniths.util.getBrowser = function () {
 };
 
 /**
+ * 是否IE浏览器
+ * @returns {Boolean} 
+ */
+zeniths.util.isIE = navigator.userAgent.toLowerCase().match(/msie ([\d.]+)/);
+
+/**
+ * 是否Chrome浏览器
+ * @returns {Boolean} 
+ */
+zeniths.util.isChrome = navigator.userAgent.toLowerCase().match(/chrome\/([\d.]+)/);
+
+/**
+ * 是否火狐浏览器
+ * @returns {Boolean} 
+ */
+zeniths.util.isFirefox = navigator.userAgent.toLowerCase().match(/firefox\/([\d.]+)/);
+
+/**
  * 获取当前系统分辨率
  * @return {}
  */
@@ -75,6 +93,74 @@ zeniths.util.getScrollbarWidth = function () {
     var scrollbarWidth = node.offsetWidth - node.clientWidth;
     $node.remove();
     return scrollbarWidth;
+}
+
+/**
+ * 显示成功信息
+ * @param {JQuery} $target 显示位置
+ * @param {String} title 标题
+ * @param {String} msg 消息内容
+ * @param {Boolean} allowClose 是否允许关闭
+ * @returns {} 
+ */
+zeniths.util.showAlertSuccess = function ($target, title, msg, allowClose) {
+    zeniths.util.showAlert($target, title, msg, allowClose, 'alert-success');
+}
+
+/**
+ * 显示提示信息
+ * @param {JQuery} $target 显示位置
+ * @param {String} title 标题
+ * @param {String} msg 消息内容
+ * @param {Boolean} allowClose 是否允许关闭
+ * @returns {} 
+ */
+zeniths.util.showAlertInfo = function ($target, title, msg, allowClose) {
+    zeniths.util.showAlert($target, title, msg, allowClose, 'alert-info');
+}
+
+/**
+ * 显示警告信息
+ * @param {JQuery} $target 显示位置
+ * @param {String} title 标题
+ * @param {String} msg 消息内容
+ * @param {Boolean} allowClose 是否允许关闭
+ * @returns {} 
+ */
+zeniths.util.showAlertWarning = function ($target, title, msg, allowClose) {
+    zeniths.util.showAlert($target, title, msg, allowClose, 'alert-warning');
+}
+
+/**
+ * 显示错误信息
+ * @param {JQuery} $target 显示位置
+ * @param {String} title 标题
+ * @param {String} msg 消息内容
+ * @param {Boolean} allowClose 是否允许关闭
+ * @returns {} 
+ */
+zeniths.util.showAlertDanger = function ($target, title, msg, allowClose) {
+    zeniths.util.showAlert($target, title, msg, allowClose, 'alert-danger');
+}
+
+/**
+ * 显示信息
+ * @param {JQuery} $target 显示位置
+ * @param {String} title 标题
+ * @param {String} msg 消息内容
+ * @param {Boolean} allowClose 是否允许关闭
+ * @param {String} className 类名
+ * @returns {} 
+ */
+zeniths.util.showAlert = function ($target, title, msg, allowClose, className) {
+
+    var html = '<div class="alert {0} alert-dismissible" role="alert">'.format(className);
+    if (allowClose) {
+        html += '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+    }
+    html += '<strong>{0}</strong> {1}'.format(title, msg);
+    html += '</div>';
+    $target.append(html);
 }
 
 /**
@@ -168,18 +254,16 @@ zeniths.util.hideLoading = function (target) {
 zeniths.util.alert = function (message, options, callback) {
     var defaults = {
         title: '系统提示',
-        //shift:-1,
+        shift: zeniths.util.isChrome ? -1 : 0,
         icon: 0
     }
-    var ops = $.extend({}, defaults);
-    if (typeof options === 'object') {
-        $.extend(ops, options);
-    }
-    else if (typeof options === 'function') {
+    if (typeof options === 'function') {
         callback = options;
-        options = undefined;
+        options = {};
     }
-    if (ops.parent) {
+    var ops = $.extend({}, defaults, options);
+
+    if (window.top) {
         window.top.layer.alert(message, ops, callback);
     } else {
         layer.alert(message, ops, callback);
@@ -197,18 +281,17 @@ zeniths.util.alert = function (message, options, callback) {
 zeniths.util.confirm = function (message, options, yesCallback, cancelCallback) {
     var defaults = {
         title: '系统提示',
-        //shift:-1,
+        shift: zeniths.util.isChrome ? -1 : 0,
         icon: 3
     }
-    var ops = $.extend({}, defaults);
-    if (typeof options === 'object') {
-        $.extend(ops, options);
-    }
-    else if (typeof options === 'function') {
+    if (typeof options === 'function') {
+        cancelCallback = yesCallback;
         yesCallback = options;
-        options = undefined;
+        options = {};
     }
-    if (ops.parent) {
+    var ops = $.extend({}, defaults, options);
+
+    if (window.top) {
         window.top.layer.confirm(message, ops, yesCallback, cancelCallback);
     } else {
         layer.confirm(message, ops, yesCallback, cancelCallback);
@@ -222,7 +305,11 @@ zeniths.util.confirm = function (message, options, yesCallback, cancelCallback) 
  * @returns {void} 
  */
 zeniths.util.msg = function (message, callback) {
-    layer.msg(message, callback);
+    if (window.top) {
+        window.top.layer.msg(message, callback);
+    } else {
+        layer.msg(message, callback);
+    }
 };
 
 /**
@@ -236,18 +323,15 @@ zeniths.util.msg = function (message, callback) {
 zeniths.util.prompt = function (message, options, callback) {
     var defaults = {
         title: message,
-        //shift:-1,
+        shift: zeniths.util.isChrome ? -1 : 0,
         icon: 3
     }
-    var ops = $.extend({}, defaults);
-    if (typeof options === 'object') {
-        $.extend(ops, options);
-    }
-    else if (typeof options === 'function') {
+    if (typeof options === 'function') {
         callback = options;
-        options = undefined;
+        options = {};
     }
-    if (ops.parent) {
+    var ops = $.extend({}, defaults, options);
+    if (window.top) {
         window.top.layer.prompt(ops, callback);
     } else {
         layer.prompt(ops, callback);
@@ -256,41 +340,35 @@ zeniths.util.prompt = function (message, options, callback) {
 
 /**
  * 对话框
- * 如果需要在顶层窗口显示,则需要在选项中增加{parent:true}.
- * success :对话框弹出后的成功回调
- * end :对话框销毁后触发的回调
- * fit:默认大小自适应,需要在子页面的body标签设置宽高,如果要手动指定大小,需要把fit设为false,同时使用area: ['500px', '300px']指定
- * @param {String} title 标题
  * @param {String} url 加载路径
- * @param {Object(可选)} options 选项配置
+ * @param {Int} width 宽度
+ * @param {Int} height 高度
+ * @param {Object(可选)} options 选项配置 success :对话框弹出后的成功回调 end :对话框销毁后触发的回调
  * @returns {void} 
  */
-zeniths.util.dialog = function (url, options) {
+zeniths.util.dialog = function (url, width, height, options) {
+    var _w = width;
+    var _y = height;
+    if (typeof width === 'number') {
+        _w = width + 'px';
+    }
+    if (typeof height === 'number') {
+        _y = height + 'px';
+    }
     var defaults = {
         type: 2, //0信息框 1页面层 2iframe层 3加载层 4tips层
         skin: 'layui-layer-rim', //加上边框
         scrollbar: false,
         moveOut: true,
-        shift: 3,
+        shift: 3,//zeniths.util.isChrome ? -1 : 3,
         fix: true,
         closeBtn: 2,
         title: '',
+        area: [_w, _y],
         content: url
     };
-    var ops = $.extend({}, defaults);
-    if (typeof options === 'object') {
-        $.extend(ops, options);
-    }
-    //if (ops.fit !== false) {
-    //    ops.success = function (layero, index) {
-    //        zeniths.util.dialogIframeCenter(layero, ops.parent);
-    //        if (options && options.success) {
-    //            options.success(layero, index);
-    //        }
-    //    };
-    //}
-
-    if (ops.parent) {
+    var ops = $.extend({}, defaults, options);
+    if (window.top) {
         window.top.layer.open(ops);
     } else {
         layer.open(ops);
@@ -298,43 +376,131 @@ zeniths.util.dialog = function (url, options) {
 };
 
 /**
- * 重新调整对话框的宽高位置,使之居中
- * @param {window} win window对象
- * @param {Number} index 对话框索引号
- * @returns {void} 
+ * 关闭窗口
+ * @param {Int} index 
+ * @returns {} 
  */
-zeniths.util.dialogIframeCenter = function (layero, isParent) {
-    var body = $(layero.find('iframe').contents().find('body'));
-    var wid = body.outerWidth();
-    var heg = body.outerHeight();
-
-    var titHeight = layero.find('.layui-layer-title').outerHeight() || 0;
-    var btnHeight = layero.find('.layui-layer-btn').outerHeight() || 0;
-    var borderWidth = 6;
-
-    var scrollWid = zeniths.util.getScrollbarWidth();
-    var $win = isParent ? $(window.top) : $(window);
-    var top = ($win.height() - heg) / 2;
-    var left = ($win.width() - wid) / 2;
-
-    //console.log('scrollWid=' + scrollWid);
-
-    //console.log('layero:top={0},left={1},width={2},height={3}'
-    //    .format(top, left, (wid + scrollWid + (borderWidth * 2)), (heg + titHeight + btnHeight + scrollWid + (borderWidth * 2))));
-    //console.log('iframe:width={0},height={1}'.format( wid + scrollWid,  heg + scrollWid));
-
-    //$.each(layero.find('iframe').contents(),function(k,v) {
-    //    console.log('key={0},value={1}'.format(k,v));
-    //});
-    //console.log($(layero.find('iframe').contents().find('body')).outerWidth());
-    //console.log('window:width={0},height={1}'.format( , ));
-
-    if (isParent) {
-        layero.css({ top: top, left: left, width: wid + scrollWid, height: heg + titHeight + btnHeight + scrollWid });
+zeniths.util.layerClose = function (index) {
+    if (window.top) {
+        window.top.layer.close(index);
     } else {
-        layero.css({ top: top, left: left, width: wid + scrollWid + (borderWidth * 2), height: heg + titHeight + btnHeight + scrollWid + (borderWidth * 2) });
+        layer.close(index);
     }
-    layero.find('iframe').css({ width: wid + scrollWid, height: heg + scrollWid });
+}
 
+///**
+// * 重新调整对话框的宽高位置,使之居中
+// * @param {window} win window对象
+// * @param {Number} index 对话框索引号
+// * @returns {void} 
+// */
+//zeniths.util.dialogIframeCenter = function (layero, isParent) {
+//    var body = $(layero.find('iframe').contents().find('body'));
+//    var wid = body.outerWidth();
+//    var heg = body.outerHeight();
+
+//    var titHeight = layero.find('.layui-layer-title').outerHeight() || 0;
+//    var btnHeight = layero.find('.layui-layer-btn').outerHeight() || 0;
+//    var borderWidth = 6;
+
+//    var scrollWid = zeniths.util.getScrollbarWidth();
+//    var $win = isParent ? $(window.top) : $(window);
+//    var top = ($win.height() - heg) / 2;
+//    var left = ($win.width() - wid) / 2;
+
+//    //console.log('scrollWid=' + scrollWid);
+
+//    //console.log('layero:top={0},left={1},width={2},height={3}'
+//    //    .format(top, left, (wid + scrollWid + (borderWidth * 2)), (heg + titHeight + btnHeight + scrollWid + (borderWidth * 2))));
+//    //console.log('iframe:width={0},height={1}'.format( wid + scrollWid,  heg + scrollWid));
+
+//    //$.each(layero.find('iframe').contents(),function(k,v) {
+//    //    console.log('key={0},value={1}'.format(k,v));
+//    //});
+//    //console.log($(layero.find('iframe').contents().find('body')).outerWidth());
+//    //console.log('window:width={0},height={1}'.format( , ));
+
+//    if (isParent) {
+//        layero.css({ top: top, left: left, width: wid + scrollWid, height: heg + titHeight + btnHeight + scrollWid });
+//    } else {
+//        layero.css({ top: top, left: left, width: wid + scrollWid + (borderWidth * 2), height: heg + titHeight + btnHeight + scrollWid + (borderWidth * 2) });
+//    }
+//    layero.find('iframe').css({ width: wid + scrollWid, height: heg + scrollWid });
+//};
+
+
+/**
+ * Post异步提交数据
+ * @param {String} url 提交地址
+ * @param {Object} data 提交数据
+ * @param {Function} callback 成功回调
+ * @param {Function} errorCallback 错误回调
+ * @returns {} 
+ */
+zeniths.util.post = function (url, data, callback, errorCallback) {
+    if (typeof (data) === 'function') {
+        callback = data;
+        data = undefined;
+    }
+
+    $.ajax({
+        url: url,
+        type: "post",
+        data: data,
+        success: function (result) {
+            if (callback) {
+                callback(result);
+            }
+        },
+        error: function (result) {
+            if (errorCallback) {
+                errorCallback(result);
+            } else {
+                var msg = result.responseJSON.message;
+                zeniths.util.alert(msg);
+            }
+        }
+    });
 };
 
+/**
+ * 删除数据记录
+ * @param {String} url 删除地址
+ * @param {Object} data 数据
+ * @param {Function} callback 成功回调函数
+ * @returns {} 
+ */
+zeniths.util.delete = function (url, data, callback) {
+    if (typeof (data) === 'function') {
+        callback = data;
+        data = undefined;
+    }
+    zeniths.util.confirm('确定要删除此数据吗?', function (index) {
+        zeniths.util.post(url, data, function (result) {
+            zeniths.util.layerClose(index);
+            if (result.success) {
+                if (callback) {
+                    callback();
+                }
+            } else {
+                var msg = result.message;
+                zeniths.util.alert(msg);
+            }
+        });
+    });
+};
+
+/**
+ * 批量删除数据
+ * @param {String} url 删除地址
+ * @param {Array} ids 主键数组
+ * @param {Function} callback 成功回调函数
+ * @returns {} 
+ */
+zeniths.util.deleteBatch = function (url, ids, callback) {
+    if (ids.length == 0) {
+        zeniths.util.msg('请选择需要删除的数据');
+        return;
+    }
+    zeniths.util.delete(url, { id: ids.join() }, callback);
+};

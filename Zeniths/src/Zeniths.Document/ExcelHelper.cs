@@ -119,7 +119,7 @@ namespace Zeniths.Document
             }
             sheet.Import(table, true, 0, 0);
             sheet.Columns.AutoFit(0, sheet.Cells.CurrentRegion.ColumnCount - 1);
-            return workbook.SaveDocument(DocumentFormat.Xls);
+            return workbook.SaveDocument(DocumentFormat.Xlsx);
         }
 
         /// <summary>

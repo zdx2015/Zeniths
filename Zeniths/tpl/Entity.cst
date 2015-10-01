@@ -22,7 +22,7 @@ if (Table.HasPrimaryKey)
 // ===============================================================================
 
 using System;
-using ZDX.Entity;
+using Zeniths.Entity;
 
 namespace <%= NameSpace %>.Entity
 {

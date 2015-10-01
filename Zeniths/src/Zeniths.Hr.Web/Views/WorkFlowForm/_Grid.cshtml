@@ -1,0 +1,48 @@
+﻿@model PageList<WorkFlowForm>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-checkbox">
+                <label><input class="checkbox-check" type="checkbox"><span></span></label>
+            </th>
+            <th class="w-200px" data-order="@nameof(WorkFlowForm.WorkFlowFormName)">名称 @Html.BuildOrderImage(nameof(WorkFlowForm.WorkFlowFormName))</th>
+            <th class="w-200px" data-order="@nameof(WorkFlowForm.WorkFlowFormCategory)">分类 @Html.BuildOrderImage(nameof(WorkFlowForm.WorkFlowFormCategory))</th>
+            <th class="w-80px text-center" data-order="@nameof(WorkFlowForm.IsEnabled)">状态 @Html.BuildOrderImage(nameof(WorkFlowForm.IsEnabled))</th>
+            <th class="w-80px text-center" data-order="@nameof(WorkFlowForm.SortIndex)">序号 @Html.BuildOrderImage(nameof(WorkFlowForm.SortIndex))</th>
+            <th data-order="@nameof(WorkFlowForm.Url)">地址 @Html.BuildOrderImage(nameof(WorkFlowForm.Url))</th>
+            <th class="w-130px text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr>
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.WorkFlowFormId"><span></span></label>
+                </td>
+                <td>@record.WorkFlowFormName</td>
+                <td>@record.WorkFlowFormCategory</td>
+                <td class="text-center">@Html.BoolFaIcon(record.IsEnabled)</td>
+                <td class="text-center">@record.SortIndex</td>
+                <td>
+                    <div class="text-split">
+                        @record.Url
+                    </div>
+                </td>
+                <td>
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.WorkFlowFormId})">
+                        <i class="fa fa-edit"></i> 编辑
+                    </a>
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.WorkFlowFormId})">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)

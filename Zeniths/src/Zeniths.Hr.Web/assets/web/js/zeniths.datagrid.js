@@ -50,11 +50,11 @@
                 success: function (result) {
                     zeniths.util.hideLoading(instance.$element);
                     _callback(result);
-                    __onLoadSuccess(result,instance.options);
+                    __onLoadSuccess(result, instance.options);
                 },
                 error: function (result) {
                     zeniths.util.hideLoading(instance.$element);
-                    __onLoadError(result, instance.options);
+                    __onLoadError(result, instance.options, instance);
                 }
             });
         }
@@ -114,9 +114,34 @@
                 __onSort(instance.options);
                 _load();
             }).css('cursor', 'pointer');
+
+            //添加没有数据提示
+            _noDataAlert(instance);
+
+            _setTextSplitWidth(instance.$table);
         }
 
         _load();
+    }
+
+    function _setTextSplitWidth($table) {
+        function _core() {
+            $table.find('tbody .text-split').each(function () {
+                var w = $(this).parent().width();
+                $(this).css('width', (w - 100) + 'px');
+            });
+        }
+        window.onresize = function () {
+             _core();
+        }
+        _core();
+    }
+
+    function _noDataAlert(instance) {
+        var hasData = instance.$table.find('tbody tr').length > 0;
+        if (!hasData) {
+            zeniths.util.showAlertWarning(instance.$element, '<i class="fa-lg fa fa-warning"></i> 没有查询到数据!', '', false);
+        }
     }
 
     /*****************************事件函数*****************************/
@@ -134,11 +159,12 @@
         }
     }
 
-    function __onLoadError(result, options) {
+    function __onLoadError(result, options, instance) {
         if (options.onLoadError) {
             options.onLoadError(result);
         } else {
-            alert(result.responseJSON.message);
+            zeniths.util.showAlertDanger(instance.$element, '<i class="fa-lg fa fa-warning"></i> 数据加载失败!', result.responseJSON.message, true);
+            //alert(result.responseJSON.message);
         }
     }
 
@@ -323,26 +349,26 @@
         /**
          * 数据加载成功后执行
          */
-        onLoadSuccess: function (result) { },
+        onLoadSuccess: null,
 
         /**
          * 数据加载失败后执行
          */
-        onLoadError: function (result) { },
+        onLoadError: null,
 
         /**
          * 复选框选中时执行
          * @param {String} id 
          * @returns {} 
          */
-        onCheck: function (id) { },
+        onCheck: null,
 
         /**
          * 复选框未选中时执行
          * @param {String} id 
          * @returns {} 
          */
-        onUncheck: function (id) { },
+        onUncheck: null,
 
         /**
          * 数据排序前执行
@@ -350,7 +376,7 @@
          * @param {String} dir 
          * @returns {} 
          */
-        onSort: function (name, dir) { }
+        onSort: null
     };
 
 })(jQuery);

@@ -357,6 +357,8 @@
     <Content Include="assets\jquery-select2\js\select2.js" />
     <Content Include="assets\jquery-select2\js\select2.min.js" />
     <Content Include="assets\jquery-select2\js\zh-CN.js" />
+    <Content Include="assets\web\css\images\checkno.gif" />
+    <Content Include="assets\web\css\images\checkok.gif" />
     <Content Include="assets\web\css\images\loading-spinner-blue.gif" />
     <Content Include="assets\page\css\images\login_bg.jpg" />
     <Content Include="assets\page\css\images\login_btn.jpg" />
@@ -466,6 +468,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\DemoController.cs" />
+    <Compile Include="Controllers\WorkFlowFormController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -495,6 +498,10 @@
     <Content Include="Views\Demo\Data\_UserTable.cshtml" />
     <Content Include="Views\Demo\Edit.cshtml" />
     <Content Include="Views\Demo\Details.cshtml" />
+    <Content Include="Views\WorkFlowForm\Index.cshtml" />
+    <Content Include="Views\WorkFlowForm\Edit.cshtml" />
+    <Content Include="Views\WorkFlowForm\_Grid.cshtml" />
+    <Content Include="Views\WorkFlowForm\_Form.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

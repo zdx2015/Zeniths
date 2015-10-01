@@ -6,6 +6,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using System.Web.Mvc;
+using Zeniths.Document;
+using Zeniths.Entity;
+using Zeniths.Extensions;
+using Zeniths.Helper;
+using Zeniths.Utility;
 
 namespace Zeniths.MvcUtility
 {
@@ -23,6 +28,22 @@ namespace Zeniths.MvcUtility
         {
             return new JsonNetResult(data);
         }
+
+        protected JsonNetResult JsonNet(bool success, string message)
+        {
+            return new JsonNetResult(new JsonMessage(success, message));
+        }
+
+        protected JsonNetResult JsonNet(bool success)
+        {
+            return new JsonNetResult(new JsonMessage(success));
+        }
+
+        protected JsonNetResult JsonNet(BoolMessage boolMessage)
+        {
+            return new JsonNetResult(new JsonMessage(boolMessage));
+        }
+
 
         /// <summary>
         /// 创建 System.Web.Mvc.JsonResult 对象，该对象使用内容类型、内容编码和 JSON 请求行为将指定对象序列化为 JavaScript 对象表示法 (JSON) 格式。
@@ -78,7 +99,7 @@ namespace Zeniths.MvcUtility
         /// <returns></returns>
         public JsonNetResult NotFound(string msg)
         {
-            return new JsonNetResult(new JsonMessage(false, "找不到网页:"+msg));
+            return new JsonNetResult(new JsonMessage(false, "找不到网页:" + msg));
         }
 
         /// <summary>
@@ -90,6 +111,24 @@ namespace Zeniths.MvcUtility
         {
             return new JsonNetResult(new JsonMessage(false, msg));
         }
-        
+
+        /// <summary>
+        /// 数据导出
+        /// </summary>
+        /// <typeparam name="T">实体类型</typeparam>
+        /// <param name="dataList">数据</param>
+        /// <param name="fileName">导出文件名称(不太后缀名)</param>
+        /// <returns></returns>
+        protected FileContentResult Export<T>(List<T> dataList, string fileName = null) where T : class, new()
+        {
+            var meta = EntityMetadata.ForType(typeof (T));
+            if (fileName.IsEmpty())
+            {
+                fileName = meta.TableInfo.Caption;
+            }
+            var dt = DataTableHelper.ConvertToDataTable(dataList);
+            byte[] fileContents = ExcelHelper.Export(dt, meta);
+            return File(fileContents, "application/ms-excel", $"{fileName}.xlsx");
+        }
     }
 }

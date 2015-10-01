@@ -241,5 +241,26 @@ namespace Zeniths.Extensions
         {
             return str.Replace("\r", "").Replace("\n", "");
         }
+
+        /// <summary>
+        /// 是否Asc方式排序(不区分大小写)
+        /// </summary>
+        /// <param name="orderDir">排序方式字符串</param>
+        /// <returns>如果字符串为Asc,返回true</returns>
+        public static bool IsAsc(this string orderDir)
+        {
+            return orderDir.ToLower().Equals("asc");
+        }
+
+        /// <summary>
+        /// 是否Desc方式排序(不区分大小写)
+        /// </summary>
+        /// <param name="orderDir">排序方式字符串</param>
+        /// <returns>是否Desc方式排序,返回true</returns>
+        public static bool IsDesc(this string orderDir)
+        {
+            return orderDir.ToLower().Equals("desc");
+        }
+
     }
 }
