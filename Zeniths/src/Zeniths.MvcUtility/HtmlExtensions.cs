@@ -258,9 +258,9 @@ namespace Zeniths.MvcUtility
         {
             if (result)
             {
-                return MvcHtmlString.Create("<i class=\"fa fa-check-square-o\" style=\"color: green\"></i>");
+                return MvcHtmlString.Create("<i class=\"fa fa-lg fa-check-square-o\" style=\"color: green\"></i>");
             }
-            return MvcHtmlString.Create("<i class=\"fa fa-close\" style=\"color: red\"></i>");
+            return MvcHtmlString.Create("<i class=\"fa fa-lg fa-close\" style=\"color: red\"></i>");
         }
         
     }

@@ -4,10 +4,17 @@
     background-color: #fafafa;
 }
 
+.select2-container--bootstrap .select2-selection,
+.select2-container--bootstrap .select2-search--dropdown .select2-search__field {
+    font-family: "Microsoft Yahei";
+    font-size: 14px;
+}
+
 .required:after {
-    position: absolute;
-    right: 2px;
-    top: 5px;
+    /*position: absolute;*/
+    position: relative;
+    top: 8px;
+    right: 5px;
     display: inline-block;
     color: #d2322d;
     font-family: arial;
@@ -16,9 +23,9 @@
 }
 
 .text-split {
-    overflow:hidden; 
-    text-overflow:ellipsis; 
-    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
@@ -35,7 +42,6 @@
     width: 17px;
     height: 14px;
 }
-
 
 /*分页*/
 div.dataTables_info {
@@ -1083,51 +1089,62 @@ Custom tabs
     margin-left: auto;
 }
 
+.container-edit-zeniths {
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .search-panel-zeniths {
     border: 1px solid #e5e5e5;
     background: #f8fafe;
-    padding: 10px 10px 10px 1px;
+    padding: 10px 10px 10px 5px;
     margin-bottom: 5px;
 }
 
-
-.panel-zeniths .panel-body {
-    padding: 5px;
-    /*background-color:#fafafa;*/
+.panel-zeniths {
+    margin-bottom: 0px;
 }
 
-.panel-zeniths > .panel-heading {
-    min-height: 46px;
-    padding: 13px 20px;
-    background: #f8fafe;
-    border-bottom: 1px solid #e5e5e5;
-    color: #333;
-    font-weight: bold;
-    font-size: 16px;
-}
-
-    .panel-zeniths > .panel-heading > .prefix {
-        display: inline-block;
-        margin-right: 5px;
-        color: #666;
+    .panel-zeniths .panel-body {
+        padding: 5px;
+        /*background-color:#fafafa;*/
     }
 
-        .panel-zeniths > .panel-heading > .prefix > strong {
-            font-weight: normal;
-            border: 1px solid #aaa;
-            padding: 0px 4px;
-            background: #fff;
-            text-align: center;
-            min-width: 20px;
+    .panel-zeniths > .panel-heading {
+        min-height: 46px;
+        padding: 13px 20px;
+        background: #f8fafe;
+        border-bottom: 1px solid #e5e5e5;
+        color: #333;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+        .panel-zeniths > .panel-heading > .prefix {
+            display: inline-block;
+            margin-right: 5px;
             color: #666;
-            font-size: 12px;
         }
 
-        .panel-zeniths > .panel-heading > .prefix > i {
-            font-size: 14px;
-            color: #808080;
-            display: none;
-        }
+            .panel-zeniths > .panel-heading > .prefix > strong {
+                font-weight: normal;
+                border: 1px solid #aaa;
+                padding: 0px 4px;
+                background: #fff;
+                text-align: center;
+                min-width: 20px;
+                color: #666;
+                font-size: 12px;
+            }
+
+            .panel-zeniths > .panel-heading > .prefix > i {
+                font-size: 14px;
+                color: #808080;
+                display: none;
+            }
 
 
 
@@ -1554,4 +1571,174 @@ Bootstrap Time Picker
 .bootstrap-timepicker-widget.timepicker-orient-bottom:before,
 .bootstrap-timepicker-widget.timepicker-orient-bottom:after {
     top: auto;
+}
+
+/* Table form */
+
+.table-dialog-form {
+    width: 95%;
+}
+
+.table-form {
+    margin-bottom: 0;
+}
+
+    .table-form > tbody > tr > th {
+        text-align: right;
+        vertical-align: middle;
+        border-bottom: none;
+    }
+
+        .table-form > tbody > tr > th.text-left,
+        .table-form > tbody > tr > tr.text-left th {
+            text-align: left;
+            vertical-align: middle;
+            border-bottom: none;
+        }
+
+    .table-form > tbody > tr > td {
+        vertical-align: middle;
+        border-bottom: none;
+    }
+
+    .table-form > tbody > tr > th,
+    .table-form > tbody > tr > td {
+        border-top: none;
+        border-bottom: none;
+    }
+
+.table th.text-middle, .table td.text-middle,
+.text-middle {
+    vertical-align: middle;
+}
+
+.table-form > tbody > tr > td.text-bottom {
+    vertical-align: bottom;
+}
+
+.table-form > tbody > tr > td .form-control {
+    vertical-align: middle;
+    margin: 0;
+}
+
+.table-form > tbody > tr > td .checkbox,
+.table-form > tbody > tr > td input[type="radio"] + label {
+    margin-right: 10px;
+}
+
+.table-form > tbody > tr > td > .row {
+    margin-right: 0;
+}
+
+    .table-form > tbody > tr > td > .row > [class*="col-"] {
+        padding-right: 0;
+        line-height: 34px;
+    }
+
+.table-form > tbody > tr > td .checkbox {
+    margin: 0;
+}
+
+.table-form > tbody > tr > td > .radio:first-child {
+    margin-top: 0;
+}
+
+.table-form > tbody > tr > td > .radio:last-child {
+    margin-bottom: 0;
+}
+
+.table-form > tbody > tr > td .btn + .btn {
+    margin-left: 8px;
+}
+
+.table-form > tbody > tr > td .btn-group .btn + .btn {
+    margin-left: -1px;
+}
+
+.table-form tr > td > .input-group {
+    width: 100%;
+}
+
+
+/***
+Input icons
+***/
+.input-icon {
+    position: relative;
+    left: 0;
+}
+
+    .input-icon > .form-control {
+        padding-left: 33px;
+    }
+
+.input-group .input-icon > .form-control {
+    -webkit-border-radius: 4px 0 0 4px;
+    -moz-border-radius: 4px 0 0 4px;
+    -ms-border-radius: 4px 0 0 4px;
+    -o-border-radius: 4px 0 0 4px;
+    border-radius: 4px 0 0 4px;
+}
+
+.input-icon > i {
+    color: #ccc;
+    display: block;
+    position: absolute;
+    margin: 11px 2px 4px 10px;
+    z-index: 3;
+    width: 16px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.modal .input-icon > i {
+    z-index: 10055;
+}
+
+.has-success .input-icon > i {
+    color: #45B6AF;
+}
+
+.has-warning .input-icon > i {
+    color: #dfba49;
+}
+
+.has-info .input-icon > i {
+    color: #89C4F4;
+}
+
+.has-error .input-icon > i {
+    color: #F3565D;
+}
+
+.input-icon.right {
+    left: auto;
+    right: 0;
+}
+
+    .input-icon.right > .form-control {
+        padding-right: 33px;
+        padding-left: 12px;
+    }
+
+.input-group .input-icon.right > .form-control {
+    -webkit-border-radius: 0 4px 4px 0;
+    -moz-border-radius: 0 4px 4px 0;
+    -ms-border-radius: 0 4px 4px 0;
+    -o-border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.input-icon.right > i {
+    right: 8px;
+    float: right;
+}
+
+.input-icon.input-icon-lg > i {
+    margin-top: 16px;
+}
+
+.input-icon.input-icon-sm > i {
+    margin-top: 8px;
+    font-size: 13px;
 }

@@ -101,6 +101,11 @@
     <Content Include="assets\bootstrap-clockpicker\js\bootstrap-clockpicker.js" />
     <Content Include="assets\bootstrap-clockpicker\css\bootstrap-clockpicker.min.css" />
     <Content Include="assets\bootstrap-clockpicker\js\bootstrap-clockpicker.min.js" />
+    <Content Include="assets\bootstrap-colorpickersliders\bootstrap.colorpickersliders.css" />
+    <Content Include="assets\bootstrap-colorpickersliders\bootstrap.colorpickersliders.js" />
+    <Content Include="assets\bootstrap-colorpickersliders\bootstrap.colorpickersliders.min.css" />
+    <Content Include="assets\bootstrap-colorpickersliders\bootstrap.colorpickersliders.min.js" />
+    <Content Include="assets\bootstrap-colorpickersliders\tinycolor.js" />
     <Content Include="assets\bootstrap-datepicker\css\bootstrap-datepicker3.css" />
     <Content Include="assets\bootstrap-datepicker\css\bootstrap-datepicker3.min.css" />
     <Content Include="assets\bootstrap-datepicker\js\bootstrap-datepicker.js" />
@@ -468,6 +473,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\DemoController.cs" />
+    <Compile Include="Controllers\WorkFlowButtonController.cs" />
     <Compile Include="Controllers\WorkFlowFormController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -501,7 +507,9 @@
     <Content Include="Views\WorkFlowForm\Index.cshtml" />
     <Content Include="Views\WorkFlowForm\Edit.cshtml" />
     <Content Include="Views\WorkFlowForm\_Grid.cshtml" />
-    <Content Include="Views\WorkFlowForm\_Form.cshtml" />
+    <Content Include="Views\WorkFlowButton\Index.cshtml" />
+    <Content Include="Views\WorkFlowButton\Edit.cshtml" />
+    <Content Include="Views\WorkFlowButton\_Grid.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,43 +1,49 @@
-﻿@model WorkFlowForm
+﻿@model WorkFlowButton
 @{
-    var title = "编辑流程表单";
+    var title = "编辑流程按钮";
 }
 
 <div class="container-edit-zeniths">
     <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
-                <span class="prefix"> <strong>@Model.WorkFlowFormId</strong></span>
+                <span class="prefix"> <strong>@Model.WorkFlowButtonId</strong></span>
                 @title
             </div>
             <div class="panel-body">
                 @Html.AntiForgeryToken()
-                <input type="hidden" name="@nameof(Model.WorkFlowFormId)" value="@Model.WorkFlowFormId" />
+                <input type="hidden" name="@nameof(Model.WorkFlowButtonId)" value="@Model.WorkFlowButtonId" />
                 <table class="table table-form table-dialog-form">
                     <tr>
                         <th class='w-100px'><label class="control-label">名称</label></th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.WorkFlowFormName)" value="@Model.WorkFlowFormName" type="text" placeholder="请输入表单名称" />
+                                <input class="form-control" name="@nameof(Model.WorkFlowButtonName)" value="@Model.WorkFlowButtonName" type="text" placeholder="请输入按钮名称" />
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th><label class="control-label">分类</label></th>
+                        <th><label class="control-label">样式</label></th>
                         <td>
-                            <div class="input-icon right">
-                                <select class="select2-control form-control" name="@nameof(Model.WorkFlowFormCategory)" data-placeholder="请选择表单分类">
-                                    <option></option>
-                                    @WorkFlowSelectOptions.WorkFlowFormCategory(Model.WorkFlowFormCategory)
-                                </select>
+                            <div class='row'>
+                                <div class='col-sm-6'>
+                                    <input class="form-control" name="@nameof(Model.IconClass)" value="@Model.IconClass" type="text" />
+                                </div>
+                                <div class='col-sm-6'>
+                                    <div class='input-group'>
+                                        <span class='input-group-addon fix-border'>颜色</span>
+                                        <input class="color-control form-control" name="@nameof(Model.IconColor)" 
+                                               value="@Model.IconColor" type="text" title="请选择图标颜色" />
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th><label class="control-label">地址</label></th>
+                        <th><label class="control-label">脚本</label></th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Url)" value="@Model.Url" type="text" />
+                                <textarea class="form-control" name="@nameof(Model.Script)" rows="5">@Model.Script</textarea>
                             </div>
                         </td>
                     </tr>
@@ -84,16 +90,13 @@
 
         //初始化表单
         function initForm() {
-            $('.editform').dataform().initSelect2().initSwitch().initValidate({
+            $('.editform').dataform().initColorPicker().initSelect2().initSwitch().initValidate({
                 rules: {
-                    WorkFlowFormName: {
+                    WorkFlowButtonName: {
                         required: true,
                         maxlength: 100
                     },
-                    WorkFlowFormCategory: {
-                        required: true
-                    },
-                    Url: {
+                    Script: {
                         required: true
                     },
                     SortIndex: {
@@ -103,20 +106,17 @@
                     }
                 },
                 messages: {
-                    WorkFlowFormName: {
-                        required: '请填写表单名称',
-                        maxlength: '表单名称长度不能超过100'
+                    WorkFlowButtonName: {
+                        required: '请填写按钮名称',
+                        maxlength: '按钮名称长度不能超过100'
                     },
-                    WorkFlowFormCategory: {
-                        required: '请选择表单分类'
-                    },
-                    Url: {
-                        required: '请填写表单路径'
+                    Script: {
+                        required: '请填写按钮脚本'
                     },
                     SortIndex: {
-                        required: '请填写表单排序号',
-                        digits: '表单排序号只能输入正整数',
-                        maxlength: '表单排序号不能超过9位数'
+                        required: '请填写按钮排序号',
+                        digits: '按钮排序号只能输入正整数',
+                        maxlength: '按钮排序号不能超过9位数'
                     }
                 },
                 beforeSubmit: function () {
@@ -137,7 +137,7 @@
         $(function () {
 
             initForm();//初始化表单
-            
+
             //绑定关闭按钮事件
             $('.btnClose').on('click', function () {
                 zeniths.util.closeFrameDialog(window);

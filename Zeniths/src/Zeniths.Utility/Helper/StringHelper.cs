@@ -836,5 +836,19 @@ namespace Zeniths.Helper
         {
             return BitConverter.ToString(buf).Replace("-", "");
         }
+
+        /// <summary>
+        /// 获取字符串首字母
+        /// </summary>
+        /// <param name="str">字符串</param>
+        /// <returns>返回字符串首字母</returns>
+        public static string GetFirstAlpha(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return string.Empty;
+            }
+            return SpellHelper.ConvertSpell(str.Substring(0,1));
+        }
     }
 }

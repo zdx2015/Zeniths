@@ -10,7 +10,7 @@ zeniths.index = function () {
         bindTreeMenu: function () {
             var self = this;
             var menus = [{ 'id': 'menu2', text: '连接串管理', 'iconCls': 'icon-ok', 'attributes': { 'url': 'demo/edit' } },
-            { 'id': 'menu3', text: '数据源管理', 'iconCls': 'icon-ok', 'attributes': { 'url': 'http://www.baidu.com' } },
+            { 'id': 'menu3', text: '流程按钮管理', 'iconCls': 'icon-ok', 'attributes': { 'url': 'WorkFlowButton' } },
             { 'id': 'menu4', text: '流程表单管理', 'iconCls': 'icon-ok', 'attributes': { 'url': 'WorkFlowForm' } }];
 
             $('.treeMenu').tree({

@@ -343,35 +343,67 @@ zeniths.util.prompt = function (message, options, callback) {
  * @param {String} url 加载路径
  * @param {Int} width 宽度
  * @param {Int} height 高度
- * @param {Object(可选)} options 选项配置 success :对话框弹出后的成功回调 end :对话框销毁后触发的回调
+ * @param {Object(可选)} options 选项配置
  * @returns {void} 
  */
 zeniths.util.dialog = function (url, width, height, options) {
+    if (typeof height === 'number' && zeniths.util.isFirefox) {
+        height = height + 40;
+    }
+
+    //alert(window.top.frames.length);
+    if (typeof height === 'number' && window.top.frames.length === 0) {
+        height = height + 10;
+    }
+
     var _w = width;
-    var _y = height;
+    var _h = height;
     if (typeof width === 'number') {
         _w = width + 'px';
     }
     if (typeof height === 'number') {
-        _y = height + 'px';
+        _h = height + 'px';
     }
     var defaults = {
         type: 2, //0信息框 1页面层 2iframe层 3加载层 4tips层
-        skin: 'layui-layer-rim', //加上边框
+        skin: 'layui-layer-zdx', //加上边框
         scrollbar: false,
         moveOut: true,
-        shift: 3,//zeniths.util.isChrome ? -1 : 3,
+        shift: zeniths.util.isChrome ? -1 : 3,
         fix: true,
         closeBtn: 2,
-        title: '',
-        area: [_w, _y],
+        title: ' ',
+        area: [_w, _h],
         content: url
     };
     var ops = $.extend({}, defaults, options);
     if (window.top) {
-        window.top.layer.open(ops);
+        var index = window.top.layer.open(ops);
+        //console.log('options123=' + options);
+        if (options && options.callback) {
+            top.window['dialog' + index] = options.callback;
+            //console.log('dialog index=' + index + ',callback=' + options.callback);
+        }
     } else {
-        layer.open(ops);
+        var index = layer.open(ops);
+        if (options && options.callback) {
+            top.window['dialog' + index] = options.callback;
+        }
+    }
+};
+
+/**
+ * 执行对话框回调函数
+ * @param {Window} win Frame窗口对象
+ * @returns {} 
+ */
+zeniths.util.callDialogCallback = function (win) {
+    var index = top.layer.getFrameIndex(win.name);
+    var callback = top.window['dialog' + index];
+    //console.log('callDialogCallback index=' + index + ',callback=' + callback);
+    if (callback) {
+        callback();
+        top.window['dialog' + index] = undefined;
     }
 };
 
@@ -386,6 +418,16 @@ zeniths.util.layerClose = function (index) {
     } else {
         layer.close(index);
     }
+}
+
+/**
+ * 关闭窗口
+ * @param {Window} win Frame窗口对象
+ * @returns {} 
+ */
+zeniths.util.closeFrameDialog = function (win) {
+    var index = window.top.layer.getFrameIndex(win.name);
+    window.top.layer.close(index);
 }
 
 ///**

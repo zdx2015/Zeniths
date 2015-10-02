@@ -14,92 +14,110 @@
 
     function _validform(instance) {
 
-        if (!instance.validOptions.rules) {
-            instance.validOptions.rules = {};
+        if (!instance.options.validOptions.rules) {
+            instance.options.validOptions.rules = {};
         }
 
-        $.each(instance.validOptions.rules, function (k, v) {
-            var parent = $('form [name=' + k + ']').parent();
-            //console.log(parent);
-            if (parent.is('.input-group')) {
-                parent.parent().siblings('label').addClass('required');
-            } if (parent.is('.iradio_square-blue') || parent.is('.icheckbox_square-blue')) {
-                parent.closest('.radio-list,.checkbox-list').parent().siblings('label').addClass('required');
-            }
-            else {
-                parent.siblings('label').addClass('required');
-            }
+        $.each(instance.options.validOptions.rules, function (k, v) {
+            $('form [name=' + k + ']').closest('td').prev('th').prepend('<label class="required"></label>');
+            //var parent = $('form [name=' + k + ']').parent();
+            ////console.log(parent);
+            //if (parent.is('.input-group')) {
+            //    parent.parent().siblings('label').addClass('required');
+            //} if (parent.is('.iradio_square-blue') || parent.is('.icheckbox_square-blue')) {
+            //    parent.closest('.radio-list,.checkbox-list').parent().siblings('label').addClass('required');
+            //}
+            //else {
+            //    parent.siblings('label').addClass('required');
+            //}
         });
 
-        return instance.$element.validate({
+        var defaults = {
             errorElement: 'span',
             errorClass: 'help-block',
             focusInvalid: false,
             ignore: '',
-            rules: instance.validOptions.rules,
-            messages: instance.validOptions.messages,
             invalidHandler: function (event, validator) {
             },
             highlight: function (element) {
-                $(element).closest('.error-container,.form-group').addClass('has-error');
+                //$(element).closest('.error-container,.form-group').addClass('has-error');
+                //$(element).closest('tr').addClass('has-error');
+                $(element).closest('td').removeClass("has-success").addClass('has-error');
+                $(element).closest('td').prev('th').removeClass("has-success").addClass('has-error');
             },
             unhighlight: function (element) {
-                $(element).closest('.error-container,.form-group').removeClass('has-error');
+                //$(element).closest('.error-container,.form-group').removeClass('has-error');
+                //$(element).closest('tr').removeClass('has-error');
             },
-            success: function (label) {
-                label.closest('.error-container,.form-group').removeClass('has-error');
-                label.remove();
+            success: function (label, element) {
+                //label.closest('.error-container,.form-group').removeClass('has-error');
+                //label.remove();
+                var icon = $(element).parent('.input-icon').children('i');
+                icon.removeClass("fa-warning").addClass("fa-check");
+                $(element).closest('td').removeClass('has-error').addClass('has-success');
+                $(element).closest('td').prev('th').removeClass('has-error').addClass('has-success');
             },
             errorPlacement: function (error, element) {
-                if (element.parent(".input-group").size() > 0) {
-                    error.insertAfter(element.parent(".input-group"));
-                } else if (element.parents('.radio-list').size() > 0) {
-                    error.appendTo(element.parents('.radio-list'));
-                } else if (element.parents('.checkbox-list').size() > 0) {
-                    error.appendTo(element.parents('.checkbox-list'));
-                } else if (element.is('.select2-control') || element.is('.chosen-control') || element.is('.select-control')) {
-                    error.appendTo(element.parent());
-                } else {
-                    error.insertAfter(element);
+                //if (element.parent(".input-group").size() > 0) {
+                //    error.insertAfter(element.parent(".input-group"));
+                //} else if (element.parents('.radio-list').size() > 0) {
+                //    error.appendTo(element.parents('.radio-list'));
+                //} else if (element.parents('.checkbox-list').size() > 0) {
+                //    error.appendTo(element.parents('.checkbox-list'));
+                //} else if (element.is('.select2-control') || element.is('.chosen-control') || element.is('.select-control')) {
+                //    error.appendTo(element.parent());
+                //} else {
+                //    error.insertAfter(element);
+                //}
+                //var errorElement = element.siblings('.help-block');
+                //if (errorElement.length == 0) {
+                //    error.appendTo(element.parent());
+                //}
+
+                //error.appendTo(element.parent());
+
+                var icon = $(element).parent('.input-icon').children('i');
+                if (icon.length == 0) {
+                    icon = $('<i class="fa"></i>');
+                    $(element).parent('.input-icon').prepend(icon[0]);
                 }
+                icon.removeClass('fa-check').addClass("fa-warning");
+                icon.attr('data-original-title', error.text())
+                    .attr('data-placement', 'left')
+                    .tooltip({ 'container': 'body' });
             },
             submitHandler: function (form) {
-                var res = __onBeforeSubmit(instance);
-                if (res && instance.options.ajaxFormOptions != null) { //表面是ajax提交
-                    instance.$element.ajaxSubmit(instance.options.ajaxFormOptions);
+                if (instance.options.validOptions.beforeSubmit) {
+                    var result = instance.options.validOptions.beforeSubmit(instance);
+                    if (result == undefined || result == true) {
+                        if (instance.options.ajaxOptions) {
+                            if (!instance.options.ajaxOptions.data) {
+                                instance.options.ajaxOptions.data = {};
+                            }
+                            instance.$element.find('input[type=checkbox]').each(function () {
+                                var name = $(this).attr('name');
+                                instance.options.ajaxOptions.data[name] = $(this).prop('checked');
+                            });
+                            instance.$element.ajaxSubmit(instance.options.ajaxOptions);
+                        }
+                    } else {
+                        return false;
+                    }
                 }
-                return res;
             }
-        });
+        };
+        var ops = $.extend({}, defaults, instance.options.validOptions);
+        return instance.$element.validate(ops);
     }
 
     /*****************************事件函数*****************************/
-
-    function __onBeforeSubmit(instance) {
-        if (instance.options.onBeforeSubmit) {
-            return options.onBeforeSubmit(instance);
-        }
-        return true;
-    }
-
-    function __onSubmitSuccess(instance) {
-        if (instance.options.onSubmitSuccess) {
-            return options.onSubmitSuccess(instance);
-        }
-    }
-
-    function __onSubmitError(instance) {
-        if (instance.options.onSubmitError) {
-            return options.onSubmitError(instance);
-        }
-    }
 
 
     /*****************************构造函数*****************************/
     /**
      * 组件构造函数
-     * @param {} $element 
-     * @param {} options 
+     * @param {JQuery} $element 
+     * @param {Object} options 
      * @returns {} 
      */
     var DataForm = function ($element, options) {
@@ -207,11 +225,17 @@
      */
     DataForm.prototype.initSelect2 = function (options) {
         //select2-bootstrap
+        var self = this;
         var ops = $.extend({}, {
             theme: "bootstrap",
+            allowClear: true,
             language: 'zh-CN'
         }, options);
         $('.select2-control').select2(ops);
+        $('.select2-control').on("change", function () {
+            self.$element.validate().element($(this));
+        });
+
         return this;
     };
 
@@ -407,6 +431,35 @@
     };
 
     /**
+     * 初始化颜色控件
+     * @param {Object} options 控件配置
+     * @returns {DataForm} 
+     */
+    DataForm.prototype.initColorPicker = function (options) {
+        //colorpickersliders
+        var self = this;
+        var ops = $.extend({}, {
+            size: 'sm',
+            hsvpanel: true,
+            previewformat: 'hex',
+            order: {
+                rgb: 1,
+                preview: 2,
+                //hsl: 3,
+                opacity: 3
+            },
+            onchange: function (container, color) {
+                //console.log(container);
+                //self.$element.validate().element($(this));
+            }
+        }, options);
+
+        $('.color-control').ColorPickerSliders(ops);
+
+        return this;
+    };
+
+    /**
      * 初始化全部控件,除initKindEditor.需要的话手动调用initKindEditor(options);
      * @returns {DataForm}
      */
@@ -421,6 +474,7 @@
         this.initDatePicker();
         this.initDateTimePicker();
         this.initDateRangePicker();
+        this.initColorPicker();
         return this;
     };
 
@@ -430,10 +484,13 @@
      * @returns {DataForm} 
      */
     DataForm.prototype.initValidate = function (options) {
-        $.extend(this.options.validOptions, options);
+
         if (!this.options.validOptions) {
             this.options.validOptions = {};
         }
+
+        $.extend(this.options.validOptions, options);
+
         _validform(this);
         return this;
     };
@@ -443,14 +500,18 @@
      * @param {Object} options 异步提交配置 
      * @returns {DataForm} 
      */
-    DataForm.prototype.initAjaxForm = function (options) {
-        $.extend(this.options.ajaxFormOptions, options);
-        if (!this.options.ajaxFormOptions) {
-            this.options.ajaxFormOptions = {};
+    DataForm.prototype.initAjax = function (options) {
+
+        if (!this.options.ajaxOptions) {
+            this.options.ajaxOptions = {
+                error: function (request) {
+                    var msg = result.responseJSON.message;
+                    zeniths.util.alert(msg);
+                }
+            };
         }
-        if (this.options.ajaxFormOptions.success) {
-            
-        }
+
+        $.extend(this.options.ajaxOptions, options);
         return this;
     };
 
@@ -484,13 +545,7 @@
      */
     $.fn.dataform.defaults = {
         validOptions: null,
-        ajaxFormOptions: null,
-        /**
-         * 表单提交前执行
-         */
-        onBeforeSubmit: function (instance) { return true; },
-        onSubmitSuccess: function (instance) { },
-        onSubmitError: function (instance) { }
+        ajaxOptions: null
     };
 
 })(jQuery);

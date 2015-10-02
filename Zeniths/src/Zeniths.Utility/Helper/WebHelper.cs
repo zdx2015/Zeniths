@@ -355,7 +355,7 @@ namespace Zeniths.Helper
             return GetRouteValues(routeDatas, addValues, true, false, "id");
         }
 
-        public static RouteValueDictionary GetQueryRouteValues(RouteValueDictionary routeDatas,object addValues = null, params string[] removeNames)
+        public static RouteValueDictionary GetQueryRouteValues(RouteValueDictionary routeDatas, object addValues = null, params string[] removeNames)
         {
             return GetRouteValues(routeDatas, addValues, true, false, removeNames);
         }
@@ -391,7 +391,7 @@ namespace Zeniths.Helper
                     }
                 }
             }
-            
+
 
             if (addValues != null)
             {
@@ -420,14 +420,37 @@ namespace Zeniths.Helper
         /// <param name="displayMember">显示字段</param>
         /// <param name="valueMember">值字段</param>
         /// <param name="selectedValue">选中的值</param>
+        /// <param name="firstAlpha">生成首字母</param>
         /// <returns></returns>
-        public static string GetSelectOptions(IList list, string displayMember, string valueMember, string selectedValue = null)
+        public static string GetSelectOptions(IList list, string displayMember, string valueMember,
+            string selectedValue = null, bool firstAlpha = true)
         {
             var options = new StringBuilder();
             foreach (object item in list)
             {
                 string display = ObjectHelper.GetObjectValue(item, displayMember).ToStringOrEmpty();
+                display = $"{StringHelper.GetFirstAlpha(display).ToUpper()}:{display}";
                 string value = ObjectHelper.GetObjectValue(item, valueMember).ToStringOrEmpty();
+                options.AppendFormat("<option value=\"{0}\"{1}>{2}</option>", value,
+                    value.Equals(selectedValue.ToStringOrEmpty()) ? " selected" : string.Empty, display);
+            }
+            return options.ToString();
+        }
+
+        /// <summary>
+        /// 获取Select控件option列表
+        /// </summary>
+        /// <param name="array">数组</param>
+        /// <param name="selectedValue">选中的值</param>
+        /// <param name="firstAlpha">生成首字母</param>
+        /// <returns></returns>
+        public static string GetSelectOptions(Array array, string selectedValue = null, bool firstAlpha = true)
+        {
+            var options = new StringBuilder();
+            foreach (object item in array)
+            {
+                string value = item.ToStringOrEmpty();
+                string display = $"{StringHelper.GetFirstAlpha(value).ToUpper()}:{value}";
                 options.AppendFormat("<option value=\"{0}\"{1}>{2}</option>", value,
                     value.Equals(selectedValue.ToStringOrEmpty()) ? " selected" : string.Empty, display);
             }
