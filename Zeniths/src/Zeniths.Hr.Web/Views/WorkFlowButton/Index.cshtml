@@ -1,0 +1,102 @@
+﻿@model WorkFlowButton
+@{
+    var title = "管理流程按钮";
+}
+<div class="container-zeniths">
+    <div class="panel panel-default panel-zeniths">
+        <div class="panel-heading">
+            @title
+        </div>
+        <div class="panel-body">
+            <div class="search-panel-zeniths">
+                <form class="form-inline search-form">
+                    <div class="form-group">
+                        <input class="w-200px form-control" name="@nameof(WorkFlowButton.WorkFlowButtonName)" type="text" placeholder="请输入按钮名称关键字查询">
+                    </div>
+                    &nbsp;
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-search"></i> 查询
+                    </button>
+                    <a class="btn btn-success" id="btnCreate" data-url="@Url.Action("Create")">
+                        <i class="fa fa-plus"></i> 新建
+                    </a>
+                    <a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                    <a class="btn btn-default" id="btnRefresh">
+                        <i class="fa fa-repeat"></i> 刷新
+                    </a>
+                    <a class="btn btn-default" href="@Url.Action("Export")">
+                        <i class="fa fa-share-square-o"></i> 导出
+                    </a>
+                </form>
+            </div>
+            <div class="datagrid" data-url="@Html.Raw(Url.Action("_Grid"))" data-query-form=".search-form">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+
+        //数据编辑
+        function editData(url, grid) {
+            zeniths.util.dialog(url, 800, 560, {
+                callback: function () {
+                    grid.reload();
+                }
+            });
+        }
+
+        $(function () {
+
+            //变量
+            var datagrid = $('.datagrid').datagrid({
+                onLoadSuccess: function () {
+
+                    //编辑记录事件
+                    $('.btnRecordEdit').on('click', function () {
+                        editData($(this).data('url'), datagrid);
+                    });
+
+                    //行双击事件
+                    $('table>tbody>tr').on('dblclick', function () {
+                        var url = $(this).find('.btnRecordEdit').data('url') ;
+                        editData(url, datagrid);
+                    });
+
+                    //删除记录事件
+                    $('.btnRecordDelete').on('click', function () {
+                        zeniths.util.delete($(this).data('url'), function () {
+                            datagrid.reload();
+                        });
+                    });
+
+                }
+            });
+
+            //初始化Select控件
+            $('.search-form').dataform().initSelect2();
+
+            //刷新事件
+            $('#btnRefresh').on('click', function () {
+                datagrid.reload();
+            });
+
+            //新建事件
+            $('#btnCreate').on('click', function () {
+                editData($(this).data('url'), datagrid);
+            });
+
+            //删除事件
+            $('#btnDelete').on('click', function () {
+                zeniths.util.deleteBatch($(this).data('url'), datagrid.getSelectedIds(), function () {
+                    datagrid.reload();
+                });
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,58 @@
+﻿@model PageList<WorkFlowButton>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-checkbox">
+                <label><input class="checkbox-check" type="checkbox"><span></span></label>
+            </th>
+            <th class="w-200px" data-order="@nameof(WorkFlowButton.WorkFlowButtonName)">名称 @Html.BuildOrderImage(nameof(WorkFlowButton.WorkFlowButtonName))</th>
+            <th class="w-80px text-center">图标</th>
+            <th class="w-80px text-center" data-order="@nameof(WorkFlowButton.IsEnabled)">状态 @Html.BuildOrderImage(nameof(WorkFlowButton.IsEnabled))</th>
+            <th class="w-80px text-center" data-order="@nameof(WorkFlowButton.SortIndex)">序号 @Html.BuildOrderImage(nameof(WorkFlowButton.SortIndex))</th>
+            <th>备注</th>
+            <th class="w-130px text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer">
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.WorkFlowButtonId"><span></span></label>
+                </td>
+                <td>@record.WorkFlowButtonName</td>
+                <td class="text-center"><i class="@record.IconClass fa-2x" style="color: @record.IconColor"></i></td>
+                <td class="text-center">
+                    @*@Html.BoolFaIcon(record.IsEnabled)*@
+                    @if (record.IsEnabled)
+                    {
+                        <span class="label label-success">启用</span>
+                    }
+                    else
+                    {
+                        <span class="label label-danger">禁用</span>
+                    }
+                </td>
+                <td class="text-center">@record.SortIndex</td>
+                <td>
+                    <div class="text-split">
+                        @record.Note
+                    </div>
+                </td>
+                <td>
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.WorkFlowButtonId})">
+                        <i class="fa fa-edit"></i> 编辑
+                    </a>
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.WorkFlowButtonId})">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)
