@@ -6,7 +6,6 @@ using System.Web;
 using System.Web.Mvc;
 using Zeniths.Extensions;
 using Zeniths.Helper;
-using Zeniths.Hr.Service;
 using Zeniths.MvcUtility;
 
 namespace Zeniths.Hr.Web.Controllers

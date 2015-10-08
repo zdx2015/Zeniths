@@ -5,32 +5,32 @@
 using System;
 using Zeniths.Entity;
 
-namespace Zeniths.Hr.Entity
+namespace Zeniths.WorkFlow.Entity
 {
     /// <summary>
     /// 流程表单
     /// </summary>
     [Table(Caption = "流程表单")]
-    [PrimaryKey("WorkFlowFormId", true)]
+    [PrimaryKey("Id", true)]
     public class WorkFlowForm
     {
         /// <summary>
         /// 表单主键
         /// </summary>
         [Column(Caption = "表单主键", Exported = false)]
-        public int WorkFlowFormId { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// 表单名称
         /// </summary>
         [Column(Caption = "表单名称")]
-        public string WorkFlowFormName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// 表单分类
         /// </summary>
         [Column(Caption = "表单分类")]
-        public string WorkFlowFormCategory { get; set; }
+        public string Category { get; set; }
 
         /// <summary>
         /// 表单地址

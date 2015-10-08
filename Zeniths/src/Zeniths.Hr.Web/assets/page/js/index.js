@@ -9,9 +9,9 @@ zeniths.index = function () {
          */
         bindTreeMenu: function () {
             var self = this;
-            var menus = [{ 'id': 'menu2', text: '连接串管理', 'iconCls': 'icon-ok', 'attributes': { 'url': 'demo/edit' } },
-            { 'id': 'menu3', text: '流程按钮管理', 'iconCls': 'icon-ok', 'attributes': { 'url': 'WorkFlowButton' } },
-            { 'id': 'menu4', text: '流程表单管理', 'iconCls': 'icon-ok', 'attributes': { 'url': 'WorkFlowForm' } }];
+            var menus = [{ 'id': 'menu2', text: '连接串管理', 'iconCls': 'icon-ok', 'url': 'demo/edit'},
+            { 'id': 'menu3', text: '流程按钮管理', 'iconCls': 'icon-ok', 'url': 'WorkFlowButton'},
+            { 'id': 'menu4', text: '流程表单管理', 'iconCls': 'icon-ok', 'url': 'WorkFlowForm'}];
 
             $('.treeMenu').tree({
                 //lines: true,
@@ -19,8 +19,8 @@ zeniths.index = function () {
                 data: menus,
                 onClick: function (node) {
                     $(this).tree('toggle', node.target);
-                    if (node.attributes && node.attributes.url) {
-                        self.createTab(node.text, node.attributes.url, node.iconCls);
+                    if (node.url) {
+                        self.createTab(node.text, node.url, node.iconCls);
                     }
                 }
             });

@@ -5,13 +5,13 @@
 using System;
 using Zeniths.Entity;
 
-namespace Zeniths.Hr.Entity
+namespace Zeniths.WorkFlow.Entity
 {
     /// <summary>
     /// 流程按钮
     /// </summary>
     [Table(Caption = "流程按钮")]
-    [PrimaryKey("WorkFlowButtonId", true)]
+    [PrimaryKey("Id", true)]
     public class WorkFlowButton
     {
         /// <summary>
@@ -20,7 +20,7 @@ namespace Zeniths.Hr.Entity
         //[Required(ErrorMessage = "请输入按钮主键")]
         //[StringLength(4, ErrorMessage = "按钮主键长度不能超过{1}")]
         [Column(Caption = "按钮主键", Exported = false)]
-        public int WorkFlowButtonId { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// 按钮名称
@@ -28,7 +28,7 @@ namespace Zeniths.Hr.Entity
         //[Required(ErrorMessage = "请输入按钮名称")]
         //[StringLength(100, ErrorMessage = "按钮名称长度不能超过{1}")]
         [Column(Caption = "按钮名称")]
-        public string WorkFlowButtonName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// 图标样式

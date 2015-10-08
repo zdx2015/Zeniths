@@ -7,11 +7,9 @@ using System.Web.UI.WebControls;
 using Zeniths.Entity;
 using Zeniths.Extensions;
 using Zeniths.Helper;
-using Zeniths.Hr.Entity;
-using Zeniths.Hr.Service;
 using Zeniths.Hr.Utility;
-using Zeniths.MvcUtility;
-using Zeniths.Utility;
+using Zeniths.WorkFlow.Entity;
+using Zeniths.WorkFlow.Service;
 
 namespace Zeniths.Hr.Web.Controllers
 {
@@ -24,14 +22,14 @@ namespace Zeniths.Hr.Web.Controllers
             return View();
         }
 
-        public ActionResult _Grid(string workFlowFormName, string workFlowFormCategory)
+        public ActionResult _Grid(string formName, string formCategory)
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
             var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir,
-                workFlowFormName, workFlowFormCategory);
+                formName, formCategory);
             return View(list);
         }
 
@@ -61,7 +59,7 @@ namespace Zeniths.Hr.Web.Controllers
                 return JsonNet(hasResult);
             }
 
-            var result = entity.WorkFlowFormId == 0 ? service.Insert(entity) : service.Update(entity);
+            var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
             return JsonNet(result);
         }
 

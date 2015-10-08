@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Zeniths.Helper;
-using Zeniths.Hr.Entity;
-using Zeniths.Hr.Service;
+using Zeniths.WorkFlow.Entity;
+using Zeniths.WorkFlow.Service;
 using Zeniths.Hr.Utility;
 
 namespace Zeniths.Hr.Web.Controllers
@@ -19,13 +19,13 @@ namespace Zeniths.Hr.Web.Controllers
             return View();
         }
 
-        public ActionResult _Grid(string workFlowButtonName)
+        public ActionResult _Grid(string name)
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir,workFlowButtonName);
+            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name);
             return View(list);
         }
 
@@ -55,7 +55,7 @@ namespace Zeniths.Hr.Web.Controllers
                 return JsonNet(hasResult);
             }
 
-            var result = entity.WorkFlowButtonId == 0 ? service.Insert(entity) : service.Update(entity);
+            var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
             return JsonNet(result);
         }
 

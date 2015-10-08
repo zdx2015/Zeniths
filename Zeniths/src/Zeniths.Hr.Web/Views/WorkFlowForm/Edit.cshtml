@@ -7,18 +7,18 @@
     <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
-                <span class="prefix"> <strong>@Model.WorkFlowFormId</strong></span>
+                <span class="prefix"> <strong>@Model.Id</strong></span>
                 @title
             </div>
             <div class="panel-body">
                 @Html.AntiForgeryToken()
-                <input type="hidden" name="@nameof(Model.WorkFlowFormId)" value="@Model.WorkFlowFormId" />
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
                 <table class="table table-form table-dialog-form">
                     <tr>
                         <th class='w-100px'><label class="control-label">名称</label></th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.WorkFlowFormName)" value="@Model.WorkFlowFormName" type="text" placeholder="请输入表单名称" />
+                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" placeholder="请输入表单名称" />
                             </div>
                         </td>
                     </tr>
@@ -26,9 +26,9 @@
                         <th><label class="control-label">分类</label></th>
                         <td>
                             <div class="input-icon right">
-                                <select class="select2-control form-control" name="@nameof(Model.WorkFlowFormCategory)" data-placeholder="请选择表单分类">
+                                <select class="select2-control form-control" name="@nameof(Model.Category)" data-placeholder="请选择表单分类">
                                     <option></option>
-                                    @WorkFlowSelectOptions.WorkFlowFormCategory(Model.WorkFlowFormCategory)
+                                    @WorkFlowSelectOptions.WorkFlowFormCategory(Model.Category)
                                 </select>
                             </div>
                         </td>

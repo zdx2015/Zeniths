@@ -71,10 +71,6 @@
     <Compile Include="Utilities\StoreProcDefine.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Zeniths.Configuration\Zeniths.Configuration.csproj">
-      <Project>{809c7fbd-4258-4416-92ce-c0de4afc89d9}</Project>
-      <Name>Zeniths.Configuration</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Zeniths.Utility\Zeniths.Utility.csproj">
       <Project>{7e12afba-bcdd-4de2-81e0-d4c7074d68aa}</Project>
       <Name>Zeniths.Utility</Name>

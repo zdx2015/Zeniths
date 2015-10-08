@@ -7,18 +7,18 @@
     <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
-                <span class="prefix"> <strong>@Model.WorkFlowButtonId</strong></span>
+                <span class="prefix"> <strong>@Model.Id</strong></span>
                 @title
             </div>
             <div class="panel-body">
                 @Html.AntiForgeryToken()
-                <input type="hidden" name="@nameof(Model.WorkFlowButtonId)" value="@Model.WorkFlowButtonId" />
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
                 <table class="table table-form table-dialog-form">
                     <tr>
                         <th class='w-100px'><label class="control-label">名称</label></th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.WorkFlowButtonName)" value="@Model.WorkFlowButtonName" type="text" placeholder="请输入按钮名称" />
+                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" placeholder="请输入按钮名称" />
                             </div>
                         </td>
                     </tr>
@@ -83,7 +83,6 @@
         </div>
     </form>
 </div>
-
 
 @section script{
     <script>

@@ -37,7 +37,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\WorkFlowButton.cs" />
+    <Compile Include="Entity\WorkFlowForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\WorkFlowButtonService.cs" />
+    <Compile Include="Service\WorkFlowFormService.cs" />
+    <Compile Include="WorkFlowDatabase.cs" />
+    <Compile Include="WorkFlowRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Zeniths.Data\Zeniths.Data.csproj">
+      <Project>{e67f375d-ee64-4bdf-8458-a1c2b2a29472}</Project>
+      <Name>Zeniths.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zeniths.Utility\Zeniths.Utility.csproj">
+      <Project>{7e12afba-bcdd-4de2-81e0-d4c7074d68aa}</Project>
+      <Name>Zeniths.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

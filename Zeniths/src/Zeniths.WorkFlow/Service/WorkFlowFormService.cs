@@ -1,46 +1,38 @@
-﻿// ===============================================================================
-//  Copyright (c) 2015 正得信集团股份有限公司
-// ===============================================================================
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Zeniths.Hr.Entity;
 using Zeniths.Collections;
 using Zeniths.Data;
 using Zeniths.Extensions;
 using Zeniths.Utility;
+using Zeniths.WorkFlow.Entity;
 
-namespace Zeniths.Hr.Service
+namespace Zeniths.WorkFlow.Service
 {
-    /// <summary>
-    /// 流程按钮服务
-    /// </summary>
-    public class WorkFlowButtonService
+    public class WorkFlowFormService
     {
         /// <summary>
         /// 存储器
         /// </summary>
-        private readonly Repository<WorkFlowButton> repos = new Repository<WorkFlowButton>();
+        private readonly WorkFlowRepository<WorkFlowForm> repos = new WorkFlowRepository<WorkFlowForm>();
 
         /// <summary>
-        /// 检测是否存在指定流程按钮
+        /// 检测是否存在指定流程表单
         /// </summary>
-        /// <param name="entity">流程按钮实体</param>
+        /// <param name="entity">流程表单实体</param>
         /// <returns>存在返回true</returns>
-        public BoolMessage Exists(WorkFlowButton entity)
+        public BoolMessage Exists(WorkFlowForm entity)
         {
-            var has = repos.Exists(p => p.WorkFlowButtonName == entity.WorkFlowButtonName
-            && p.WorkFlowButtonId != entity.WorkFlowButtonId);
-            return has ? new BoolMessage(false, "输入流程按钮名称已经存在") : BoolMessage.True;
+            var has = repos.Exists(p => p.Name == entity.Name && p.Category == entity.Category && p.Id != entity.Id);
+            return has ? new BoolMessage(false, "输入流程表单名称已经存在") : BoolMessage.True;
         }
 
         /// <summary>
-        /// 添加流程按钮
+        /// 添加流程表单
         /// </summary>
-        /// <param name="entity">流程按钮实体</param>
-        public BoolMessage Insert(WorkFlowButton entity)
+        /// <param name="entity">流程表单实体</param>
+        public BoolMessage Insert(WorkFlowForm entity)
         {
             try
             {
@@ -54,10 +46,10 @@ namespace Zeniths.Hr.Service
         }
 
         /// <summary>
-        /// 更新流程按钮
+        /// 更新流程表单
         /// </summary>
-        /// <param name="entity">流程按钮实体</param>
-        public BoolMessage Update(WorkFlowButton entity)
+        /// <param name="entity">流程表单实体</param>
+        public BoolMessage Update(WorkFlowForm entity)
         {
             try
             {
@@ -71,9 +63,9 @@ namespace Zeniths.Hr.Service
         }
 
         /// <summary>
-        /// 删除流程按钮
+        /// 删除流程表单
         /// </summary>
-        /// <param name="ids">流程按钮主键数组</param>
+        /// <param name="ids">流程表单主键数组</param>
         public BoolMessage Delete(int[] ids)
         {
             try
@@ -95,11 +87,11 @@ namespace Zeniths.Hr.Service
         }
 
         /// <summary>
-        /// 获取流程按钮对象
+        /// 获取流程表单对象
         /// </summary>
         /// <param name="id">流程表单主键</param>
         /// <returns>流程表单对象</returns>
-        public WorkFlowButton Get(int id)
+        public WorkFlowForm Get(int id)
         {
             return repos.Get(id);
         }
@@ -108,32 +100,38 @@ namespace Zeniths.Hr.Service
         /// 获取启用的表单列表
         /// </summary>
         /// <returns>返回启用的表单列表</returns>
-        public List<WorkFlowButton> GetEnabledList()
+        public List<WorkFlowForm> GetEnabledList()
         {
             var query = repos.NewQuery.Where(p => p.IsEnabled == true).OrderBy(p => p.SortIndex);
             return repos.Query(query).ToList();
         }
 
         /// <summary>
-        /// 获取流程按钮列表
+        /// 获取流程表单列表(包括禁用记录)
         /// </summary>
         /// <param name="pageIndex">页面索引</param>
         /// <param name="pageSize">分页大小</param>
         /// <param name="orderName">排序列名</param>
         /// <param name="orderDir">排序方式</param>
-        /// <param name="workFlowButtonName">按钮名称</param>
-        /// <returns></returns>
-        public PageList<WorkFlowButton> GetPageList(int pageIndex, int pageSize, string orderName,
-            string orderDir, string workFlowButtonName)
+        /// <param name="formName">表单名称</param>
+        /// <param name="formCategory">表单分类</param>
+        /// <returns>流程表单分页列表</returns>
+        public PageList<WorkFlowForm> GetPageList(int pageIndex, int pageSize, string orderName,
+            string orderDir, string formName, string formCategory)
         {
-            orderName = orderName.IsEmpty() ? nameof(WorkFlowButton.WorkFlowButtonId) : orderName;
+            orderName = orderName.IsEmpty() ? nameof(WorkFlowForm.Id) : orderName;
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;
             var query = repos.NewQuery.Take(pageSize).Page(pageIndex).
                 OrderBy(orderName, orderDir.IsAsc());
-            if (workFlowButtonName.IsNotEmpty())
+            if (formName.IsNotEmpty())
             {
-                workFlowButtonName = workFlowButtonName.Trim();
-                query.Where(p => p.WorkFlowButtonName.Contains(workFlowButtonName));
+                formName = formName.Trim();
+                query.Where(p => p.Name.Contains(formName));
+            }
+            if (formCategory.IsNotEmpty())
+            {
+                formCategory = formCategory.Trim();
+                query.Where(p => p.Category == formCategory);
             }
             return repos.Page(query);
         }

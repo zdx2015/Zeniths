@@ -1,11 +1,16 @@
 ﻿{
-    "Database": [
-        {
-            "Name": "web",
-            "Provider": null,
-            "ConnectionString": "server=.;uid=sa;pwd=1;database=WorkFlow",
-            "Encrypted": false,
-            "Remark": ""
-        }
-    ]
+  "Database": [
+    {
+      "Name": "hr",
+      "ConnectionString": "server=.;uid=sa;pwd=1;database=Zeniths.HR"
+    },
+    {
+      "Name": "auth",
+      "ConnectionString": "server=.;uid=sa;pwd=1;database=Zeniths.Auth"
+    },
+    {
+      "Name": "workflow",
+      "ConnectionString": "server=.;uid=sa;pwd=1;database=Zeniths.WorkFlow"
+    }
+  ]
 }
