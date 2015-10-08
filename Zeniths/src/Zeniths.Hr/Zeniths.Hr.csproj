@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EB7B2A8A-484D-4279-861C-5560B1D76160}</ProjectGuid>
+    <ProjectGuid>{A151CFA0-A72E-499B-84E0-AF5DC3D2D142}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zeniths.Auth.Service</RootNamespace>
-    <AssemblyName>Zeniths.Auth.Service</AssemblyName>
+    <RootNamespace>Zeniths.Hr</RootNamespace>
+    <AssemblyName>Zeniths.Hr</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,12 +33,11 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthDatabase.cs" />
-    <Compile Include="AuthRepository.cs" />
+    <Compile Include="HRDatabase.cs" />
+    <Compile Include="HRRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

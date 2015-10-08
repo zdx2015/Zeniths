@@ -4,7 +4,7 @@
 
 using Zeniths.Data;
 
-namespace Zeniths.Auth.Service
+namespace Zeniths.Auth
 {
     public class AuthRepository<T> : Repository<T> where T : class,new()
     {

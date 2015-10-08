@@ -69,7 +69,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Zeniths.Auth.Service\Zeniths.Auth.csproj">
+    <ProjectReference Include="..\Zeniths.Auth\Zeniths.Auth.csproj">
       <Project>{eb7b2a8a-484d-4279-861c-5560b1d76160}</Project>
       <Name>Zeniths.Auth</Name>
     </ProjectReference>

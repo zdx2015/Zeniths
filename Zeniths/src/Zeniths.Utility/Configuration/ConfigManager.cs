@@ -24,9 +24,9 @@ namespace Zeniths.Configuration
         {
             lock (lockObject)
             {
-                string directoryName = AppDomain.CurrentDomain.BaseDirectory;
+                string directoryName = SystemDirectory.DataDirectory;
                 var v = ConfigurationManager.AppSettings["ConfigFileName"];
-                string fileName = string.IsNullOrEmpty(v) ? "startup.json" : v;
+                string fileName = string.IsNullOrEmpty(v) ? "project.json" : v;
                 configFile = new JsonConfigFile<Dictionary<string, object>>(directoryName, fileName);
                 if (configFile.Data == null)
                 {

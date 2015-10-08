@@ -4,7 +4,7 @@
 using Zeniths.Configuration;
 using Zeniths.Data;
 
-namespace Zeniths.HR.Service
+namespace Zeniths.HR
 {
     public class HRDatabase : Database
     {

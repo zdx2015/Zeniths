@@ -4,7 +4,7 @@
 
 using Zeniths.Data;
 
-namespace Zeniths.HR.Service
+namespace Zeniths.HR
 {
     public class HRRepository<T> : Repository<T> where T : class,new()
     {
