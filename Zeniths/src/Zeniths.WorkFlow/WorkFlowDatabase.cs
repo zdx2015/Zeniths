@@ -1,5 +1,4 @@
-﻿using Zeniths.Configuration;
-using Zeniths.Data;
+﻿using Zeniths.Data;
 
 namespace Zeniths.WorkFlow
 {
