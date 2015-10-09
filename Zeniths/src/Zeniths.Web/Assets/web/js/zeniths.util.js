@@ -165,6 +165,26 @@ zeniths.util.showAlert = function ($target, title, msg, allowClose, className) {
 
 /**
  * 显示加载层
+ * @param {String} msg 提示消息
+ * @returns {} 
+ */
+zeniths.util.mask = function (msg) {
+    if (!msg) {
+        msg = '正在提交数据,请稍等...';
+    }
+    $(document.body).mask(msg);
+};
+
+/**
+ * 隐藏加载层
+ * @returns {} 
+ */
+zeniths.util.unmask = function () {
+    $(document.body).unmask();
+};
+
+/**
+ * 显示加载层
  * @param {$Object} target 目标
  * @param {String} msg 消息内容
  * @returns {} 

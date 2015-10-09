@@ -91,6 +91,7 @@
                     var result = instance.options.validOptions.beforeSubmit(instance);
                     if (result == undefined || result == true) {
                         if (instance.options.ajaxOptions) {
+                            zeniths.util.mask('正在提交数据,请稍等...');
                             if (!instance.options.ajaxOptions.data) {
                                 instance.options.ajaxOptions.data = {};
                             }
@@ -503,10 +504,20 @@
     DataForm.prototype.initAjax = function (options) {
 
         if (!this.options.ajaxOptions) {
-            this.options.ajaxOptions = {
-                error: function (request) {
-                    var msg = result.responseJSON.message;
-                    zeniths.util.alert(msg);
+            this.options.ajaxOptions = {};
+        }
+        if (!this.options.ajaxOptions.error) {
+            this.options.ajaxOptions.error = function (request) {
+                var msg = result.responseJSON.message;
+                zeniths.util.alert(msg);
+            };
+        }
+
+        if (!this.options.ajaxOptions.success) {
+            this.options.ajaxOptions.success = function (result) {
+                zeniths.util.unmask();
+                if (!result.success) {
+                    zeniths.util.alert(result.message);
                 }
             };
         }

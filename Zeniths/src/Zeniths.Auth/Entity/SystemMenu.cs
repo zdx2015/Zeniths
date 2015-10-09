@@ -122,7 +122,7 @@ namespace Zeniths.Auth.Entity
         /// </summary>
         [Column(Caption = "备注")]
         public string Note { get; set; }
-
+        
         /// <summary>
         /// 复制对象
         /// </summary>

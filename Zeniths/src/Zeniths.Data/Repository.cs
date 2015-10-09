@@ -358,7 +358,7 @@ namespace Zeniths.Data
         /// 批量更新(建议外部开启事务)
         /// </summary>
         /// <param name="changedData">改变的数据</param>
-        public int BatchUpdate(IList<PrimaryKeyValue> changedData)
+        public int BatchUpdate(IEnumerable<PrimaryKeyValue> changedData)
         {
             var affectCount = 0;
             foreach (var item in changedData)

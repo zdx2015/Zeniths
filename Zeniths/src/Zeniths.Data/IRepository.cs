@@ -121,7 +121,7 @@ namespace Zeniths.Data
         /// 批量更新(建议外部开启事务)
         /// </summary>
         /// <param name="changedData">改变的数据</param>
-        int BatchUpdate(IList<PrimaryKeyValue> changedData);
+        int BatchUpdate(IEnumerable<PrimaryKeyValue> changedData);
         
         /// <summary>
         /// 删除数据(参数对象)

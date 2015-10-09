@@ -124,6 +124,7 @@
                 }
             }).initAjax({
                 success: function (result) {
+                    zeniths.util.unmask();
                     if (!result.success) {
                         zeniths.util.alert(result.message);
                     } else {

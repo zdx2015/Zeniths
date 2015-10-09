@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EasyUIGrid.cs" />
+    <Compile Include="EntityMessage.cs" />
     <Compile Include="HtmlExtensions.cs" />
     <Compile Include="JsonController.cs" />
     <Compile Include="JsonExceptionAttribute.cs" />

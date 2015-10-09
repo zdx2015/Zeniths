@@ -86,6 +86,44 @@ namespace Zeniths.Auth.Service
         }
 
         /// <summary>
+        /// 保存模块父节点
+        /// </summary>
+        /// <param name="id">模块主键</param>
+        /// <param name="oldParentId">原父节点Id</param>
+        /// <param name="newParentId">新父节点Id</param>
+        /// <returns>操作成功返回True</returns>
+        public BoolMessage SaveParent(int id, int oldParentId, int newParentId)
+        {
+            try
+            {
+                repos.Update(new SystemMenu { ParentId = newParentId }, p => p.Id == id, p => p.ParentId);
+                return BoolMessage.True;
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// 更新模块排序路径
+        /// </summary>
+        /// <param name="sortPathData">数据列表</param>
+        /// <returns>操作成功返回True</returns>
+        public BoolMessage UpdateSortPath(IEnumerable<PrimaryKeyValue> sortPathData)
+        {
+            try
+            {
+                repos.BatchUpdate(sortPathData);
+                return BoolMessage.True;
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
+
+        /// <summary>
         /// 获取系统菜单对象
         /// </summary>
         /// <param name="id">系统菜单主键</param>
@@ -101,7 +139,7 @@ namespace Zeniths.Auth.Service
         /// <returns>系统菜单列表</returns>
         public List<SystemMenu> GetList()
         {
-            var query = repos.NewQuery.OrderBy(p=>p.SortPath);
+            var query = repos.NewQuery.OrderBy(p => p.SortPath);
             return repos.Query(query).ToList();
         }
 
@@ -111,7 +149,7 @@ namespace Zeniths.Auth.Service
         public List<SystemMenu> GetEnabledList()
         {
             var query = repos.NewQuery.OrderBy(p => p.SortPath)
-                .Where(p=>p.IsEnabled == true);
+                .Where(p => p.IsEnabled == true);
             return repos.Query(query).ToList();
         }
     }
