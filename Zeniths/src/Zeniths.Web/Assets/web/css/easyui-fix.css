@@ -1,52 +1,22 @@
 ﻿
 /*Panel组件*/
-.panel-body {
-  /*background-color: #ffffff;
-  color: #000000;*/
-  font-size: 14px;
-}
-.panel-title {
-  font-size: 14px;
-  /*font-weight: bold;
-  color: #0E2D5F;
-  height: 16px;
-  line-height: 16px;*/
-}
-
-/*Tab组件*/
-.tabs-title {
+.panel-body,.panel-title,.tabs-title {
   font-size: 14px;
 }
 
 
 /*Tree组件*/
 
-.tree-title {
+.tree-title,.tree-node-proxy,.tree-editor  {
   font-size: 14px;
-  /*display: inline-block;
-  text-decoration: none;
-  vertical-align: top;
-  white-space: nowrap;
-  padding: 0 2px;
-  height: 18px;
-  line-height: 18px;*/
 }
-.tree-node-proxy {
+
+
+.l-btn-text,.datagrid-header .datagrid-cell span{
   font-size: 14px;
-  /*line-height: 20px;
-  padding: 0 2px 0 20px;
-  border-width: 1px;
-  border-style: solid;
-  z-index: 9900000;*/
 }
-.tree-editor {
-  font-size: 14px;
-  /*border: 1px solid #ccc;
-  height: 14px !important;
-  height: 18px;
-  line-height: 14px;
-  padding: 1px 2px;
-  width: 80px;
-  position: absolute;
-  top: 0;*/
+
+.datagrid-header-row,
+.datagrid-row {
+  height: 30px;
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace Zeniths.Utility
@@ -9,19 +10,25 @@ namespace Zeniths.Utility
     public class TreeNode
     {
         /// <summary>
-        /// 绑定节点的标识值
+        /// 节点Id
         /// </summary>
         [JsonProperty("id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// 显示的节点文本
+        /// 父节点Id
+        /// </summary>
+        [JsonProperty("parentid")]
+        public string ParentId { get; set; }
+
+        /// <summary>
+        /// 节点文本
         /// </summary>
         [JsonProperty("text")]
         public string Text { get; set; }
 
         /// <summary>
-        /// 显示的节点图标CSS类ID
+        /// 节点Css类
         /// </summary>
         [JsonProperty("iconCls")]
         public string IconCls { get; set; }
@@ -30,13 +37,19 @@ namespace Zeniths.Utility
         /// 该节点是否被选中
         /// </summary>
         [JsonProperty("checked")]
-        public bool Checked { get; set; }
+        public bool? Checked { get; set; }
 
         /// <summary>
         /// 节点状态，'open' 或 'closed'
         /// </summary>
         [JsonProperty("state")]
-        public TreeNodeState State { get; set; }
+        public TreeNodeState? State { get; set; }
+
+        /// <summary>
+        /// 链接地址
+        /// </summary>
+        [JsonProperty("url")]
+        public string Url { get; set; }
 
         /// <summary>
         /// 子节点
@@ -59,13 +72,11 @@ namespace Zeniths.Utility
         /// <summary>
         /// 展开
         /// </summary>
-        [JsonProperty("open")]
         Open,
 
         /// <summary>
         /// 不展开
         /// </summary>
-        [JsonProperty("closed")]
         Closed
     }
 }

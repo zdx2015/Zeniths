@@ -36,6 +36,7 @@
             var res = __onBeforeLoad(instance, instance.options)
             if (!res) return;//返回false 则不发起请求
 
+            //instance.$element.mask('正在请求数据,请稍等...');
             zeniths.util.showLoading(instance.$element, '正在请求数据,请稍等...');
             var ajaxParam = $.extend({}, {
                 page: instance.options.page,
@@ -48,11 +49,13 @@
                 type: "post",
                 data: ajaxParam,
                 success: function (result) {
+                    //instance.$element.unmask();
                     zeniths.util.hideLoading(instance.$element);
                     _callback(result);
                     __onLoadSuccess(result, instance.options);
                 },
                 error: function (result) {
+                    //instance.$element.unmask();
                     zeniths.util.hideLoading(instance.$element);
                     __onLoadError(result, instance.options, instance);
                 }

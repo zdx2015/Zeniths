@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Zeniths.MvcUtility
 {
@@ -26,6 +27,7 @@ namespace Zeniths.MvcUtility
                 NullValueHandling = NullValueHandling.Ignore,
                 DateFormatString = "yyyy-MM-dd HH:mm:ss"
             };
+            Settings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
         }
 
         /// <summary>

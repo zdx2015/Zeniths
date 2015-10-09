@@ -147,6 +147,26 @@ namespace Zeniths.Entity
     }
 
     /// <summary>
+    /// 显示字段
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class)]
+    public class TextKeyAttribute : Attribute
+    {
+        /// <summary>
+        /// 初始化父级字段。
+        /// </summary>
+        public TextKeyAttribute(string name)
+        {
+            Name = name;
+        }
+
+        /// <summary>
+        /// 字段名称
+        /// </summary>
+        public string Name { get; private set; }
+    }
+
+    /// <summary>
     /// 排序字段
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]

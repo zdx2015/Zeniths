@@ -31,6 +31,11 @@ namespace Zeniths.Entity
         public string ParentKey { get; set; }
 
         /// <summary>
+        /// 显示字段名
+        /// </summary>
+        public string TextKey { get; set; }
+
+        /// <summary>
         /// 排序路径
         /// </summary>
         public string SortPath { get; set; }
@@ -44,7 +49,7 @@ namespace Zeniths.Entity
         /// 序列名称
         /// </summary>
         public string SequenceName { get; set; }
-        
+
         /// <summary>
         /// 读取特性标签获取表信息
         /// </summary>
@@ -99,6 +104,19 @@ namespace Zeniths.Entity
 
                 // ReSharper disable once PossibleNullReferenceException
                 ti.ParentKey = parentKeyAttribute.Name;
+            }
+
+            #endregion
+
+            #region 显示字段信息
+
+            a = t.GetCustomAttributes(typeof(TextKeyAttribute), true);
+            if (a.Length > 0)
+            {
+                var textKeyAttribute = a[0] as TextKeyAttribute;
+
+                // ReSharper disable once PossibleNullReferenceException
+                ti.TextKey = textKeyAttribute.Name;
             }
 
             #endregion

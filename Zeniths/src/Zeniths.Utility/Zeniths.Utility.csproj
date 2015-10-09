@@ -40,6 +40,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -102,7 +103,6 @@
     <Compile Include="Helper\WebHelper.cs" />
     <Compile Include="Helper\XmlHelper.cs" />
     <Compile Include="Utility\InnerAction.cs" />
-    <Compile Include="Utility\ITreeNode.cs" />
     <Compile Include="Utility\KeyValue.cs" />
     <Compile Include="Utility\MutipleThreadResetEvent.cs" />
     <Compile Include="Utility\OrderDir.cs" />

@@ -8,3 +8,4 @@
 /// <reference path="jquery-validation/jquery.validate.js" />
 /// <reference path="jquery-form/jquery.form.js" />
 /// <reference path="web/js/zeniths.dataform.js" />
+/// <reference path="jquery-loadmask/jquery.loadmask.js" />
