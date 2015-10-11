@@ -1,0 +1,24 @@
+﻿@{
+    Layout = null;
+    var files = FileHelper.GetFiles(Server.MapPath("~/assets/jquery-easyui-full/css/icon"));
+    var nameList = new List<string>();
+    files.ForEach(p => nameList.Add(Path.GetFileName(p)));
+    var names = nameList.ToArray();
+    Array.Sort(names);
+}
+
+<ul id="iconlist" style="margin:0;padding:0; list-style-type:none;">
+    @foreach (string fileName in names)
+    {
+        var name = Path.GetFileNameWithoutExtension(fileName);
+        <li title="@name"><span class="icon icon-@name">&nbsp;</span></li>
+    }
+</ul>
+@*<style>*@
+@*        @foreach (string fileName in names)*@
+@*        {*@
+@*            var name = Path.GetFileNameWithoutExtension(fileName);*@
+@*            var cls = ".icon-" + name + "{background:url('icon/" + fileName + "') no-repeat}\n";*@
+@*            @Html.Raw(cls)*@
+@*        }*@
+@*</style>*@

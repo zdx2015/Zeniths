@@ -1,0 +1,109 @@
+﻿@{
+    Layout = "~/Areas/Auth/Views/Shared/_TreeGridLayout.cshtml";
+}
+<table id="ModuleGrid" fit="true" border="false" striped="true"></table>
+
+
+<div id="ModuleDialog" class="easyui-dialog pad3"
+     data-options="width: 700,height:480,modal: true,closed: true,buttons:'#ModuleDialogButtons'">
+    <form id="ModuleEditForm" method="post" novalidate>
+        <table class="tableForm" align="center">
+            <tr>
+                <td align="right">上级模块</td>
+                <td><span id="ModuleParentName" style="font-weight: bold;color: green;"></span></td>
+            </tr>
+            <tr>
+                <td align="right">模块编码：</td>
+                <td>
+                    <input type="text" name="Code" class="easyui-textbox width480" data-options="required:true" />
+                </td>
+            </tr>
+            <tr>
+                <td align="right">模块名称：</td>
+                <td>
+                    <input type="text" name="Name" class="easyui-textbox width480" data-options="required:true" />
+                </td>
+            </tr>
+            <tr>
+                <td align="right">图标：</td>
+                <td>
+                    <input type="text" name="iconCls" class="easyui-textbox width480" />
+                    &nbsp;<a id="ModuleSelectIcon" plain="true" class="easyui-linkbutton"
+                             icon="icon-zoom" title="选择图标"></a>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">选项：</td>
+                <td>
+                    <label><input type="checkbox" name="IsEnabled" value="true"/>有效</label>
+                    <label><input type="checkbox" name="IsPublic" value="true" />公共</label>
+                    <label><input type="checkbox" name="IsExpand" value="true" />展开</label>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">地址：</td>
+                <td><input type="text" name="WebUrl" class="easyui-textbox width480" style="height:100px;" data-options="multiline:true" /></td>
+            </tr>
+
+            <tr>
+                <td align="right">备注：</td>
+                <td>
+                    <input type="text" name="Note" class="easyui-textbox width480" style="height:100px;" data-options="multiline:true" />
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" name="Id" />
+        <input type="hidden" name="ParentId" />
+        <input type="hidden" name="SortPath" />
+        <input type="hidden" name="WebCls" />
+    </form>
+</div>
+
+<div id="ModuleGridToolbar">
+    <table cellspacing="0" cellpadding="0">
+        <tr>
+            <td>
+                <a id="ModuleBtnNewRoot" class="easyui-linkbutton" plain="true" iconcls="icon-add">新建根节点</a>
+            </td>
+            <td>
+                <div class="datagrid-btn-separator"></div>
+            </td>
+            <td>
+                <a id="ModuleBtnNew" class="easyui-linkbutton" plain="true" iconcls="icon-add">新建</a>
+            </td>
+            <td>
+                <div class="datagrid-btn-separator"></div>
+            </td>
+            <td>
+                <a id="ModuleBtnEdit" class="easyui-linkbutton" plain="true" iconcls="icon-pencil">编辑</a>
+            </td>
+            <td>
+                <div class="datagrid-btn-separator"></div>
+            </td>
+            <td>
+                <a id="ModuleBtnDelete" class="easyui-linkbutton" plain="true" iconcls="icon-delete">删除</a>
+            </td>
+            <td>
+                <div class="datagrid-btn-separator"></div>
+            </td>
+            <td>
+                <a id="ModuleBtnRefresh" class="easyui-linkbutton" plain="true" iconcls="icon-reload">刷新</a>
+            </td>
+            <td>
+                <div class="datagrid-btn-separator"></div>
+            </td>
+            <td>
+                <a id="ModuleBtnExport" class="easyui-linkbutton" plain="true" iconcls="icon-export">导出</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="ModuleDialogButtons">
+    <a id="ModuleBtnSave" class="easyui-linkbutton width70">保存</a>
+    <a id="ModuleBtnClose" class="easyui-linkbutton width70">取消</a>
+</div>
+
+@section script{
+    <script src="~/Areas/Auth/Content/js/systemMenu.js"></script>
+}
