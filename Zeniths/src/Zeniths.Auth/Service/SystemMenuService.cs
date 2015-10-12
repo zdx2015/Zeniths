@@ -10,6 +10,9 @@ using Zeniths.Utility;
 
 namespace Zeniths.Auth.Service
 {
+    /// <summary>
+    /// 系统菜单服务
+    /// </summary>
     public class SystemMenuService
     {
         /// <summary>
@@ -22,9 +25,10 @@ namespace Zeniths.Auth.Service
         /// </summary>
         /// <param name="entity">系统菜单实体</param>
         /// <returns>存在返回true</returns>
-        public bool Exists(SystemMenu entity)
+        public BoolMessage Exists(SystemMenu entity)
         {
-            return repos.Exists(p => p.Code == entity.Code && p.Id != entity.Id);
+            var has = repos.Exists(p => p.Code == entity.Code && p.Id != entity.Id);
+            return has ? new BoolMessage(false, "指定的菜单编码已经存在") : BoolMessage.True;
         }
 
         /// <summary>

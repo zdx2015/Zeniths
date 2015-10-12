@@ -46,6 +46,11 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         /// <param name="entity">模块实体</param>
         public ActionResult Save(SystemMenu entity)
         {
+            var hasResult = service.Exists(entity);
+            if (hasResult.Failure)
+            {
+                return JsonNet(hasResult);
+            }
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
             return JsonNetText(new JsonMessage(result));
         }

@@ -23,7 +23,7 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
             return View();
         }
 
-        public ActionResult _Grid(string formName, string formCategory)
+        public ActionResult Grid(string formName, string formCategory)
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();

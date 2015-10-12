@@ -50,7 +50,13 @@
                     <tr>
                         <th><label class="control-label">状态</label></th>
                         <td>
-                            <input class="switch-control" name="@nameof(Model.IsEnabled)" value="1" @Html.IsChecked(Model.IsEnabled) type="checkbox" data-on-text="启用" data-off-text="禁用">
+                            <div class="checkbox-list">
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.IsEnabled)" value="1" type="checkbox" @Html.IsChecked(Model.IsEnabled)/>
+                                    <span>启用</span>
+                                </label>
+                            </div>
+                            @*<input class="switch-control" name="@nameof(Model.IsEnabled)" value="1" @Html.IsChecked(Model.IsEnabled) type="checkbox" data-on-text="启用" data-off-text="禁用">*@
                         </td>
                     </tr>
                     <tr>
@@ -89,7 +95,7 @@
 
         //初始化表单
         function initForm() {
-            $('.editform').dataform().initColorPicker().initSelect2().initSwitch().initValidate({
+            $('.editform').dataform().initColorPicker().initSelect2().initiCheck().initValidate({
                 rules: {
                     WorkFlowButtonName: {
                         required: true,

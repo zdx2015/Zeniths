@@ -43,8 +43,11 @@
   <ItemGroup>
     <Compile Include="AuthDatabase.cs" />
     <Compile Include="AuthRepository.cs" />
+    <Compile Include="Entity\SystemDictionary.cs" />
+    <Compile Include="Entity\SystemDictionaryDetails.cs" />
     <Compile Include="Entity\SystemMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\SystemDictionaryService.cs" />
     <Compile Include="Service\SystemMenuService.cs" />
   </ItemGroup>
   <ItemGroup>

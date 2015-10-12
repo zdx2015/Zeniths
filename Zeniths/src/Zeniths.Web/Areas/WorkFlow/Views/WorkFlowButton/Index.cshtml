@@ -31,7 +31,7 @@
                     </a>
                 </form>
             </div>
-            <div class="datagrid" data-url="@Html.Raw(Url.Action("_Grid"))" data-query-form=".search-form">
+            <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid"))" data-query-form=".search-form">
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
 
         //数据编辑
         function editData(url, grid) {
-            zeniths.util.dialog(url, 800, 560, {
+            zeniths.util.dialog(url, 800, 545, {
                 callback: function () {
                     grid.reload();
                 }

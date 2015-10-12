@@ -500,6 +500,8 @@
     <Content Include="Areas\Auth\Views\Shared\_TreeGridLayout.cshtml" />
     <Content Include="Areas\Auth\Views\SystemMenu\Index.cshtml" />
     <Content Include="Areas\Auth\Views\System\WebIcons.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemDictionary\Index.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemDictionary\DetailsGrid.cshtml" />
     <None Include="Assets\_references.js" />
     <Content Include="Assets\web\js\zeniths.datagrid.js" />
     <Content Include="Areas\Auth\Content\js\systemMenu.js" />
@@ -512,6 +514,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemController.cs" />
+    <Compile Include="Areas\Auth\Controllers\SystemDictionaryController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemMenuController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\WorkFlow\WorkFlowAreaRegistration.cs" />
@@ -551,10 +554,10 @@
     <Content Include="Views\Demo\Details.cshtml" />
     <Content Include="Areas\WorkFlow\Views\WorkFlowForm\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\WorkFlowForm\Edit.cshtml" />
-    <Content Include="Areas\WorkFlow\Views\WorkFlowForm\_Grid.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\WorkFlowForm\Grid.cshtml" />
     <Content Include="Areas\WorkFlow\Views\WorkFlowButton\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\WorkFlowButton\Edit.cshtml" />
-    <Content Include="Areas\WorkFlow\Views\WorkFlowButton\_Grid.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\WorkFlowButton\Grid.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -33,8 +33,8 @@ var Menu = function () {
             toolbar: '#ModuleGridToolbar',
             columns: [
                 [
-                    { field: 'Name', title: '模块名称', width: 200 },
-                    { field: 'Code', title: '模块编码', width: 150 },
+                    { field: 'Name', title: '菜单名称', width: 200 },
+                    { field: 'Code', title: '菜单编码', width: 150 },
                     { field: 'WebCls', title: '图标', width: 200 },
                     { field: 'WebUrl', title: '链接地址', width: 250 },
                     { field: 'IsEnabled', title: '有效', align: 'center', fixed: true, formatter: xci.app.boolColumnFormatter, width: 50 },

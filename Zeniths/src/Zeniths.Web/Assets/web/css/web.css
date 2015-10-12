@@ -19,6 +19,7 @@
     color: #d2322d;
     font-family: arial;
     font-size: 24px;
+    margin-bottom:5px;
     content: '*';
 }
 
@@ -1575,30 +1576,25 @@ Bootstrap Time Picker
 
 /* Table form */
 
+
 .table-dialog-form {
     width: 95%;
 }
 
-.table-form {
+.table-form,.table-form label{
     margin-bottom: 0;
 }
 
+.table-form .radio-inline, .table-form .checkbox-inline {
+    padding-top: 0;
+}
     .table-form > tbody > tr > th {
         text-align: right;
         vertical-align: middle;
-        border-bottom: none;
     }
-
-        .table-form > tbody > tr > th.text-left,
-        .table-form > tbody > tr > tr.text-left th {
-            text-align: left;
-            vertical-align: middle;
-            border-bottom: none;
-        }
 
     .table-form > tbody > tr > td {
         vertical-align: middle;
-        border-bottom: none;
     }
 
     .table-form > tbody > tr > th,
@@ -1606,6 +1602,17 @@ Bootstrap Time Picker
         border-top: none;
         border-bottom: none;
     }
+/*.
+        .table-form > tbody > tr > th.text-left,
+        .table-form > tbody > tr > tr.text-left th {
+            text-align: left;
+            vertical-align: middle;
+            border-bottom: none;
+        }
+
+    
+
+    
 
 .table th.text-middle, .table td.text-middle,
 .text-middle {
@@ -1657,7 +1664,7 @@ Bootstrap Time Picker
 
 .table-form tr > td > .input-group {
     width: 100%;
-}
+}*/
 
 
 /***

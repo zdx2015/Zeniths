@@ -37,10 +37,11 @@
     <link href="~/assets/kindeditor/themes/default/default.css" rel="stylesheet" />
 
     <!-- 结束插件样式 -->
-    <link href="~/Assets/web/css/web.css" rel="stylesheet" />
     @RenderSection("style", required: false)
+    <link href="~/Assets/web/css/web.css" rel="stylesheet" />
+    
 </head>
-<body>
+<body class="@ViewBag.BodyClass">
     @RenderBody()
     <script src="~/assets/jquery/jquery.min.js"></script>
     <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
