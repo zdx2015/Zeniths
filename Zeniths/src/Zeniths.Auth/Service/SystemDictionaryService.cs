@@ -26,11 +26,12 @@ namespace Zeniths.Auth.Service
         /// <summary>
         /// 检测是否存在指定系统数据字典
         /// </summary>
-        /// <param name="entity">系统数据字典实体</param>
+        /// <param name="code">数据字典编码</param>
+        /// <param name="id">数据字典主键</param>
         /// <returns>存在返回true</returns>
-        public BoolMessage ExistsDictionary(SystemDictionary entity)
+        public BoolMessage ExistsDictionary(string code, int id)
         {
-            var has = dicRepos.Exists(p => p.Code == entity.Code && p.Id != entity.Id);
+            var has = dicRepos.Exists(p => p.Code == code && p.Id != id);
             return has ? new BoolMessage(false, "指定的数据字典编码已经存在") : BoolMessage.True;
         }
 
@@ -167,7 +168,7 @@ namespace Zeniths.Auth.Service
         /// <param name="orderName">排序列名</param>
         /// <param name="orderDir">排序方式</param>
         /// <returns>数据字典明细分页列表</returns>
-        public PageList<SystemDictionaryDetails> GetPageDetailsList(int pageIndex, int pageSize, string orderName,string orderDir)
+        public PageList<SystemDictionaryDetails> GetPageDetailsList(int pageIndex, int pageSize, string orderName, string orderDir)
         {
             orderName = orderName.IsEmpty() ? nameof(SystemDictionary.Id) : orderName;
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;

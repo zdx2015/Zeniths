@@ -23,6 +23,15 @@
     content: '*';
 }
 
+.panel-left-border {
+    border-left-width: 1px;
+}
+
+.panel-right-border {
+    border-right-width: 1px;
+}
+
+
 .text-split {
     overflow: hidden;
     text-overflow: ellipsis;

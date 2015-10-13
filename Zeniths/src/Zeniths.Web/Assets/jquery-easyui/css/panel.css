@@ -1,4 +1,4 @@
-.panel {
+.panelx {
   overflow: hidden;
   text-align: left;
   margin: 0;
@@ -8,7 +8,7 @@
   border-radius: 0 0 0 0;
 }
 .panel-header,
-.panel-body {
+.panelx-body {
   border-width: 1px;
   border-style: solid;
 }
@@ -22,7 +22,7 @@
 .panel-header-noborder {
   border-width: 0 0 1px 0;
 }
-.panel-body {
+.panelx-body {
   overflow: auto;
   border-top-width: 0;
   padding: 0;
@@ -108,7 +108,7 @@
   background: url('images/panel_tools.png') no-repeat -32px -16px;
 }
 .panel-header,
-.panel-body {
+.panelx-body {
   border-color: #95B8E7;
 }
 .panel-header {
@@ -120,7 +120,7 @@
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#EFF5FF,endColorstr=#E0ECFF,GradientType=0);
 }
-.panel-body {
+.panelx-body {
   background-color: #ffffff;
   color: #000000;
   font-size: 12px;

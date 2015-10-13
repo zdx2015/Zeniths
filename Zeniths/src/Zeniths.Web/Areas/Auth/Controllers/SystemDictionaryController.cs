@@ -40,6 +40,43 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             return JsonNet(nodes);
         }
 
+        public ActionResult CreateDictionary()
+        {
+            return EditDictionaryCore(new SystemDictionary());
+        }
+
+        public ActionResult EditDictionary(int id)
+        {
+            var entity = service.GetDictionary(id);
+            return EditDictionaryCore(entity);
+        }
+
+        private ActionResult EditDictionaryCore(SystemDictionary entity)
+        {
+            return View("DictionaryEdit", entity);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveDictionary(SystemDictionary entity)
+        {
+            var hasResult = service.ExistsDictionary(entity.Code, entity.Id);
+            if (hasResult.Failure)
+            {
+                return JsonNet(hasResult);
+            }
+
+            var result = entity.Id == 0 ? service.InsertDictionary(entity) : service.UpdateDictionary(entity);
+            return JsonNet(result);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteDictionary(string idArray)
+        {
+            var result = service.DeleteDictionary(StringHelper.ConvertToArrayInt(idArray));
+            return JsonNet(result);
+        }
+
 
         public ActionResult DetailsGrid()
         {

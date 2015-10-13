@@ -163,9 +163,12 @@
     <Content Include="Assets\jquery-easyui-full\js\easyui-lang-zh_CN.js" />
     <Content Include="Assets\jquery-easyui-full\js\jquery.easyui.min.js" />
     <Content Include="Assets\jquery-easyui-full\js\treegrid-dnd.js" />
+    <Content Include="Assets\jquery-easyui\css\images\menu_arrows.png" />
     <Content Include="Assets\jquery-easyui\css\images\tabs_icons.png" />
+    <Content Include="Assets\jquery-easyui\css\menu.css" />
     <Content Include="Assets\jquery-easyui\css\tabs.css" />
     <Content Include="Assets\jquery-easyui-full\js\jquery.tabs.extend.js" />
+    <Content Include="Assets\jquery-easyui\js\jquery.menu.js" />
     <Content Include="Assets\jquery-easyui\js\jquery.tabs.js" />
     <Content Include="Assets\jquery-form\jquery.form.js" />
     <Content Include="Assets\jquery-form\jquery.form.min.js" />
@@ -495,13 +498,12 @@
     <Content Include="Areas\HR\Views\web.config" />
     <Content Include="Areas\Auth\Views\web.config" />
     <Content Include="Areas\WorkFlow\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Auth\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Auth\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Auth\Views\Shared\_TreeGridLayout.cshtml" />
     <Content Include="Areas\Auth\Views\SystemMenu\Index.cshtml" />
     <Content Include="Areas\Auth\Views\System\WebIcons.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDictionary\Index.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDictionary\DetailsGrid.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemDictionary\DictionaryEdit.cshtml" />
     <None Include="Assets\_references.js" />
     <Content Include="Assets\web\js\zeniths.datagrid.js" />
     <Content Include="Areas\Auth\Content\js\systemMenu.js" />

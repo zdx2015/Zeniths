@@ -1,26 +1,24 @@
 ﻿@model SystemDictionary
 @{
-    var title = "系统数据字典管理";
-    ViewBag.BodyClass = "easyui-layout";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
- 
-    <div data-options="region:'west',split:true" title="数据字典"
-          style="width:200px; background-color: #fafafa;border-left:0; border-top: 0;border-bottom:0">
-        <div>
-            <ul class="treeDetails treeMenu"></ul>
-        </div>
+
+<div class="easyui-layout" fit="true" border="false">
+    <div region="west" split="true" title="数据字典" border="false" style="width:200px;background-color: #fafafa;"
+         data-options="headerCls:'panel-right-border',bodyCls:'panel-right-border'">
+        <ul class="treeDetails treeMenu" fit="true"></ul>
     </div>
-    <div data-options="region:'center'" title="字典明细" style="border-top: 0;border-bottom:0">
+    <div region="center" border="false" title="字典明细" style="background-color: #fafafa;"
+         data-options="headerCls:'panel-left-border',bodyCls:'panel-left-border'">
+
         <div class="container-zeniths">
             <div class="panel panel-default panel-zeniths">
-               
-                <div class="panel-body">
 
+                <div class="panel-body">
                     <div class="search-panel-zeniths">
                         <form class="form-inline search-form">
                             <div class="form-group">
-                                <input class="w-200px form-control" name="@nameof(SystemDictionaryDetails.Name)" type="text" placeholder="请输入明细项名称关键字查询">
+                                <input class="w-250px form-control" id="detailsKey" name="detailsKey" type="text" placeholder="请输入字典明细项名称关键字查询">
                             </div>
                             &nbsp;
                             <button class="btn btn-primary" type="submit">
@@ -40,65 +38,116 @@
                             </a>
                         </form>
                     </div>
-                    <div class="datagrid" data-url="@Html.Raw(Url.Action("DetailsGrid"))" data-query-form=".search-form">
+                    <div class="datagrid" data-url="@Html.Raw(Url.Action("DetailsGrid"))">
+                    </div>
+                    <!-- 右键菜单 -->
+                    <div class="easyui-menu" id="dictionary-menu">
+                        <div data-options="name:'add',iconCls:'icon-add'">新建</div>
+                        <div data-options="name:'edit',iconCls:'icon-pencil'">编辑</div>
+                        <div class="menu-sep"></div>
+                        <div data-options="name:'delete',iconCls:'icon-delete'">删除</div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
- 
-@section style{
-<link href="~/Assets/jquery-easyui/css/panel.css" rel="stylesheet" />
-    <link href="~/assets/jquery-easyui/css/layout.css" rel="stylesheet" />
 
+    </div>
+</div>
+
+@section style{
+    <link href="~/Assets/jquery-easyui/css/panel.css" rel="stylesheet" />
+    <link href="~/assets/jquery-easyui/css/layout.css" rel="stylesheet" />
     <link href="~/assets/jquery-easyui/css/tree.css" rel="stylesheet" />
+    <link href="~/Assets/jquery-easyui/css/menu.css" rel="stylesheet" />
     <link href="~/assets/web/css/easyui-fix.css" rel="stylesheet" />
     <link href="~/assets/jquery-easyui-full/css/icon.css" rel="stylesheet" />
 }
 @section script
 {
-<script src="~/Assets/jquery-easyui/js/jquery.parser.js"></script>
-<script src="~/Assets/jquery-easyui/js/jquery.draggable.js"></script>
-<script src="~/Assets/jquery-easyui/js/jquery.droppable.js"></script>
-<script src="~/Assets/jquery-easyui/js/jquery.resizable.js"></script>
-<script src="~/Assets/jquery-easyui/js/jquery.panel.js"></script>
-<script src="~/Assets/jquery-easyui/js/jquery.layout.js"></script>    
-<script src="~/Assets/jquery-easyui/js/jquery.tree.js"></script> 
+    <script src="~/Assets/jquery-easyui/js/jquery.parser.js"></script>
+    <script src="~/Assets/jquery-easyui/js/jquery.draggable.js"></script>
+    <script src="~/Assets/jquery-easyui/js/jquery.droppable.js"></script>
+    <script src="~/Assets/jquery-easyui/js/jquery.resizable.js"></script>
+    <script src="~/Assets/jquery-easyui/js/jquery.panel.js"></script>
+    <script src="~/Assets/jquery-easyui/js/jquery.layout.js"></script>
+    <script src="~/Assets/jquery-easyui/js/jquery.tree.js"></script>
+    <script src="~/Assets/jquery-easyui/js/jquery.menu.js"></script>
     <script>
-
-        //数据编辑
-        function editData(url, grid) {
-            zeniths.util.dialog(url, 600, 470, {
-                callback: function () {
-                    grid.reload();
-                }
-            });
-        }
-
-        function initTree() {
-            $('.treeDetails').tree({
-                //lines: true,
-                url: '/Auth/SystemDictionary/GetDictionaryList',
-                animate: true,
-                onBeforeLoad: function (node, param) {
-                    $(this).parent().parent().mask('正在加载菜单...');
-                },
-                onLoadSuccess: function (node, data) {
-                    $(this).parent().parent().unmask();
-                },
-                onClick: function (node) {
-                    //$(this).tree('toggle', node.target);
-                    //if (node.url) {
-                    //    self.createTab(node.text, node.url, node.iconCls);
-                    //}
-                }
-            });
-        }
 
         $(function () {
 
-            initTree();
+            function editDictionaryData(url, grid) {
+                zeniths.util.dialog(url, 600, 370, {
+                    callback: function () {
+                        grid.reload();
+                    }
+                });
+            }
 
+            function searchGrid() {
+                var node = $('.treeDetails').tree("getSelected");
+                if (!node) {
+                    zeniths.util.msg('请选择数据字典');
+                    return;
+                }
+
+                $('.datagrid').datagrid().search({
+                    dictionaryId: node.id,
+                    detailsKey: $('#detailsKey').val()
+                });
+            }
+
+            function initTree() {
+                $('.treeDetails').tree({
+                    //lines: true,
+                    url: '/Auth/SystemDictionary/GetDictionaryList',
+                    animate: true,
+                    onBeforeLoad: function (node, param) {
+                        $(this).parent().parent().mask('正在加载数据字典...');
+                    },
+                    onLoadSuccess: function (node, data) {
+                        $(this).parent().parent().unmask();
+                    },
+                    onContextMenu: function (e, node) {
+                        e.preventDefault();
+                        $(this).tree('select', node.target);
+                        $('#dictionary-menu').menu('show', {
+                            left: e.pageX,
+                            top: e.pageY
+                        });
+                    },
+                    onClick: function (node) {
+                        $(this).tree('toggle', node.target);
+                        searchGrid();
+                        //if (node.url) {
+                        //    self.createTab(node.text, node.url, node.iconCls);
+                        //}
+                    }
+                });
+            }
+
+            function menuHandler(item) {
+                if (item.name === 'add') {
+                    editDictionaryData('@Url.Action("CreateDictionary", new { parentId = 0 })', '');
+                }
+                else if (item.name === 'edit') {
+
+                }
+                else if (item.name === 'delete') {
+
+                }
+            }
+
+            $('#dictionary-menu').menu({
+                onClick: menuHandler
+            });
+
+            $('.search-form').find(':submit:first').on('click', function () {
+                searchGrid();
+                return false;
+            });
+
+            initTree();
         });
     </script>
 }

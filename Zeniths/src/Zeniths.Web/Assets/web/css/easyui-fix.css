@@ -11,7 +11,6 @@
     font-size: 14px;
 }
 
-
 .l-btn-text, .datagrid-header .datagrid-cell span {
     font-size: 14px;
 }
@@ -21,7 +20,10 @@
     height: 30px;
 }
 
-.textbox .textbox-text,.textbox .textbox-prompt {
+.textbox .textbox-text,
+.textbox .textbox-prompt,
+.menu-text,
+.menu-text span {
     font-family: "Microsoft Yahei";
     font-size: 14px;
 }
