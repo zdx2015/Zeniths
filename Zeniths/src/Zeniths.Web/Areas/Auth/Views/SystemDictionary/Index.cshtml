@@ -1,0 +1,104 @@
+﻿@model SystemDictionary
+@{
+    var title = "系统数据字典管理";
+    ViewBag.BodyClass = "easyui-layout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ 
+    <div data-options="region:'west',split:true" title="数据字典"
+          style="width:200px; background-color: #fafafa;border-left:0; border-top: 0;border-bottom:0">
+        <div>
+            <ul class="treeDetails treeMenu"></ul>
+        </div>
+    </div>
+    <div data-options="region:'center'" title="字典明细" style="border-top: 0;border-bottom:0">
+        <div class="container-zeniths">
+            <div class="panel panel-default panel-zeniths">
+               
+                <div class="panel-body">
+
+                    <div class="search-panel-zeniths">
+                        <form class="form-inline search-form">
+                            <div class="form-group">
+                                <input class="w-200px form-control" name="@nameof(SystemDictionaryDetails.Name)" type="text" placeholder="请输入明细项名称关键字查询">
+                            </div>
+                            &nbsp;
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fa fa-search"></i> 查询
+                            </button>
+                            <a class="btn btn-success" id="btnCreate" data-url="@Url.Action("Create")">
+                                <i class="fa fa-plus"></i> 新建
+                            </a>
+                            <a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
+                                <i class="fa fa-trash-o"></i> 删除
+                            </a>
+                            <a class="btn btn-default" id="btnRefresh">
+                                <i class="fa fa-repeat"></i> 刷新
+                            </a>
+                            <a class="btn btn-default" href="@Url.Action("Export")">
+                                <i class="fa fa-share-square-o"></i> 导出
+                            </a>
+                        </form>
+                    </div>
+                    <div class="datagrid" data-url="@Html.Raw(Url.Action("DetailsGrid"))" data-query-form=".search-form">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+@section style{
+<link href="~/Assets/jquery-easyui/css/panel.css" rel="stylesheet" />
+    <link href="~/assets/jquery-easyui/css/layout.css" rel="stylesheet" />
+
+    <link href="~/assets/jquery-easyui/css/tree.css" rel="stylesheet" />
+    <link href="~/assets/web/css/easyui-fix.css" rel="stylesheet" />
+    <link href="~/assets/jquery-easyui-full/css/icon.css" rel="stylesheet" />
+}
+@section script
+{
+<script src="~/Assets/jquery-easyui/js/jquery.parser.js"></script>
+<script src="~/Assets/jquery-easyui/js/jquery.draggable.js"></script>
+<script src="~/Assets/jquery-easyui/js/jquery.droppable.js"></script>
+<script src="~/Assets/jquery-easyui/js/jquery.resizable.js"></script>
+<script src="~/Assets/jquery-easyui/js/jquery.panel.js"></script>
+<script src="~/Assets/jquery-easyui/js/jquery.layout.js"></script>    
+<script src="~/Assets/jquery-easyui/js/jquery.tree.js"></script> 
+    <script>
+
+        //数据编辑
+        function editData(url, grid) {
+            zeniths.util.dialog(url, 600, 470, {
+                callback: function () {
+                    grid.reload();
+                }
+            });
+        }
+
+        function initTree() {
+            $('.treeDetails').tree({
+                //lines: true,
+                url: '/Auth/SystemDictionary/GetDictionaryList',
+                animate: true,
+                onBeforeLoad: function (node, param) {
+                    $(this).parent().parent().mask('正在加载菜单...');
+                },
+                onLoadSuccess: function (node, data) {
+                    $(this).parent().parent().unmask();
+                },
+                onClick: function (node) {
+                    //$(this).tree('toggle', node.target);
+                    //if (node.url) {
+                    //    self.createTab(node.text, node.url, node.iconCls);
+                    //}
+                }
+            });
+        }
+
+        $(function () {
+
+            initTree();
+
+        });
+    </script>
+}
