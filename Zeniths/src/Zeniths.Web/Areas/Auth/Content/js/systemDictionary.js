@@ -23,6 +23,11 @@
             },
             onLoadSuccess: function () {
                 $(this).parent().parent().unmask();
+
+                //加载根节点字典明细
+                var root = self.$tree.tree('getRoot');
+                self.$tree.tree('select', root.target);
+                self.reloadGrid();
             },
             onLoadError: function (result) {
                 $(this).parent().parent().unmask();
@@ -31,13 +36,13 @@
             onContextMenu: function (e, node) {
                 e.preventDefault();
                 $(this).tree('select', node.target);
-                $('#dictionary-menu').menu('show', {
+                self.$menu.menu('show', {
                     left: e.pageX,
                     top: e.pageY
                 });
             },
             onClick: function (node) {
-                $(this).tree('toggle', node.target);
+                //$(this).tree('toggle', node.target);
                 self.searchGrid();
             }
         });
@@ -96,6 +101,18 @@
     };
 
     /**
+     * 判断选中的节点是否是根节点
+     * @returns {} 
+     */
+    self.isSelectedRootNode = function () {
+        var node = self.getSelectedTreeNode();
+        if (node && node.id === '-1') {
+            return true;
+        }
+        return false;
+    };
+
+    /**
      * 显示字典编辑对话框
      * @param {String} url 页面Url 
      * @returns {} 
@@ -112,11 +129,11 @@
      * 创建数据字典
      * @returns {} 
      */
-    self.createDictionary = function (menuItem) {
+    self.createDictionary = function ($menuItem) {
         var node = self.getSelectedTreeNode();
         var id = node.id;
         var sortPath = zeniths.util.getTreeNodeSortPath(self.$tree, id);
-        var url = $(menuItem.target).data('url') + '?parentId=' + id + '&sortPath=' + sortPath;
+        var url = $menuItem.data('url') + '?parentId=' + id + '&sortPath=' + sortPath;
         self.showDictionaryDialog(url);
     };
 
@@ -124,10 +141,10 @@
      * 编辑数据字典
      * @returns {} 
      */
-    self.editDictionary = function (menuItem) {
+    self.editDictionary = function ($menuItem) {
         var node = self.getSelectedTreeNode();
         var id = node.id;
-        var url = $(menuItem.target).data('url') + '?id=' + id;
+        var url = $menuItem.data('url') + '?id=' + id;
         self.showDictionaryDialog(url);
     };
 
@@ -135,11 +152,12 @@
      * 删除数据字典
      * @returns {} 
      */
-    self.deleteDictionary = function () {
+    self.deleteDictionary = function ($menuItem) {
+        var node = self.getSelectedTreeNode();
         var ids = [];
         ids.push(node.id);
         var msg = '确定要删除选中的节点吗?';
-
+        
         if (node.children && node.children.length > 0) {
             var childs = self.$tree.tree('getChildren', node.target);
             msg = '选中的节点包含{0}个子节点,确定要删除当前节点及其全部子节点吗?'.format(childs.length);
@@ -148,11 +166,13 @@
             });
         }
 
+        var url = $menuItem.data('url');
         zeniths.util.confirm(msg, function (index) {
             zeniths.util.post(url, { id: ids.join() }, function (result) {
                 zeniths.util.layerClose(index);
                 if (result.success) {
-                    self.refreshTree();
+                    self.$tree.tree('remove',node.target);
+                    //self.refreshTree();
                 } else {
                     var msg = result.message;
                     zeniths.util.alert(msg);
@@ -165,7 +185,7 @@
      * 刷新数据字典树
      * @returns {} 
      */
-    self.refreshDictionary = function () {
+    self.reloadTree = function () {
         self.refreshTree();
     };
 
@@ -203,7 +223,7 @@
             return false;
         });
     };
-    
+
     /**
      * 搜索字典明细表
      * @returns {} 
@@ -225,7 +245,21 @@
     self.reloadGrid = function () {
         var hasSelected = self.hasSelectedTreeNode();
         if (hasSelected === true) {
-            self.$grid.datagrid().reload();
+            var node = self.getSelectedTreeNode();
+            self.$grid.datagrid().reload({ dictionaryId: node.id });
+        }
+    };
+
+    /**
+     * 导出字典明细项表格
+     * @returns {} 
+     */
+    self.ExportGrid = function ($btnItem) {
+        var hasSelected = self.hasSelectedTreeNode();
+        if (hasSelected === true) {
+            var node = self.getSelectedTreeNode();
+            var url = new URI($btnItem.data('url')).query({ dictionaryId: node.id }).toString();
+            window.location.href = url;
         }
     };
 
@@ -235,7 +269,7 @@
      * @returns {} 
      */
     self.showDetailsDialog = function (url) {
-        zeniths.util.dialog(url, 600, 450, {
+        zeniths.util.dialog(url, 600, 460, {
             callback: function () {
                 self.reloadGrid();
             }
@@ -251,7 +285,7 @@
         if (hasSelected === false) return;
 
         var node = self.getSelectedTreeNode();
-        var url = URI($btnItem.data('url')).search({ dictionaryId: node.id });
+        var url = new URI($btnItem.data('url')).query({ dictionaryId: node.id }).toString();
         self.showDetailsDialog(url);
     };
 
@@ -284,16 +318,40 @@
      * 绑定按钮事件
      * @returns {} 
      */
-    self.initButton = function() {
+    self.initButton = function () {
 
-        //$('#btnTreeCreate').on('click', );
-        //$('#btnTreeEdit').on('click', );
-        //$('#btnTreeDelete').on('click', );
-        //$('#btnTreeRefresh').on('click', );
-        
-        //$('#btnDetailsCreate').on('click', );
-        //$('#btnDetailsDelete').on('click', );
-        //$('#btnDetailsRefresh').on('click', );
+        $('#btnTreeCreate').on('click', function () {
+            self.createDictionary($(this));
+        });
+
+        $('#btnTreeEdit').on('click', function () {
+            self.editDictionary($(this));
+        });
+
+        $('#btnTreeDelete').on('click', function () {
+            self.deleteDictionary($(this));
+        });
+
+        $('#btnTreeRefresh').on('click', function () {
+            self.refreshTree();
+        });
+
+
+        $('#btnDetailsCreate').on('click', function () {
+            self.createDetails($(this));
+        });
+
+        $('#btnDetailsDelete').on('click', function () {
+            self.deleteDetails($(this));
+        });
+
+        $('#btnDetailsRefresh').on('click', function () {
+            self.reloadGrid();
+        });
+
+        $('#btnDetailsExport').on('click', function () {
+            self.ExportGrid($(this));
+        });
 
     };
 
@@ -303,11 +361,11 @@
          * @returns {} 
          */
         init: function () {
-            self.initTree();
             self.initTreeMenu();
             self.initGrid();
             self.initSearchForm();
             self.initButton();
+            self.initTree();
         }
     };
 }();

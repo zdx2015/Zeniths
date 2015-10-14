@@ -386,6 +386,8 @@
     <Content Include="Assets\kindeditor\themes\simple\simple.css" />
     <Content Include="Assets\jquery-inputlimiter\jquery.inputlimiter.js" />
     <Content Include="Assets\web\js\xci.js" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\default.css" />
     <Content Include="Assets\jquery-easyui-full\css\icon.css" />
     <Content Include="Content\css\images\header_bg.png" />
@@ -505,11 +507,22 @@
     <Content Include="Areas\Auth\Views\SystemDictionary\Index.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDictionary\DetailsGrid.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDictionary\DictionaryEdit.cshtml" />
+    <Content Include="Areas\Auth\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Auth\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemDictionary\DetailsEdit.cshtml" />
     <None Include="Assets\_references.js" />
     <Content Include="Assets\web\js\zeniths.datagrid.js" />
     <Content Include="Areas\Auth\Content\js\systemMenu.js" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -561,6 +574,10 @@
     <Content Include="Areas\WorkFlow\Views\WorkFlowButton\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\WorkFlowButton\Edit.cshtml" />
     <Content Include="Areas\WorkFlow\Views\WorkFlowButton\Grid.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

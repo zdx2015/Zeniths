@@ -537,7 +537,7 @@ zeniths.util.delete = function (url, data, callback) {
         callback = data;
         data = undefined;
     }
-    zeniths.util.confirm('确定要删除此数据吗?', function (index) {
+    zeniths.util.confirm('确定要删除当前记录吗?', function (index) {
         zeniths.util.post(url, data, function (result) {
             zeniths.util.layerClose(index);
             if (result.success) {
@@ -561,10 +561,22 @@ zeniths.util.delete = function (url, data, callback) {
  */
 zeniths.util.deleteBatch = function (url, ids, callback) {
     if (ids.length == 0) {
-        zeniths.util.msg('请选择需要删除的数据');
+        zeniths.util.msg('请选择需要删除的记录');
         return;
     }
-    zeniths.util.delete(url, { id: ids.join() }, callback);
+     zeniths.util.confirm('确定要删除选中的 '+ ids.length +' 条记录吗?', function (index) {
+        zeniths.util.post(url, { id: ids.join() }, function (result) {
+            zeniths.util.layerClose(index);
+            if (result.success) {
+                if (callback) {
+                    callback();
+                }
+            } else {
+                var msg = result.message;
+                zeniths.util.alert(msg);
+            }
+        });
+    });
 };
 
 /**

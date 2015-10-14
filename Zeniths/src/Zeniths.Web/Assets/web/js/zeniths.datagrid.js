@@ -252,7 +252,11 @@
      * 重新加载数据
      * @returns {} 
      */
-    DataGrid.prototype.reload = function () {
+    DataGrid.prototype.reload = function (extraQueryParams) {
+        if (!extraQueryParams) {
+            extraQueryParams = {};
+        }
+        $.extend(this.options.queryParams, extraQueryParams);
         _loadData(this);
     };
 

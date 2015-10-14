@@ -21,7 +21,7 @@ namespace Zeniths.Auth.Service
         /// <summary>
         /// 字典明细项存储器
         /// </summary>
-        private readonly AuthRepository<SystemDictionaryDetails> detilsRepos = new AuthRepository<SystemDictionaryDetails>();
+        private readonly AuthRepository<SystemDictionaryDetails> detailsRepos = new AuthRepository<SystemDictionaryDetails>();
 
         /// <summary>
         /// 检测是否存在指定系统数据字典
@@ -93,7 +93,6 @@ namespace Zeniths.Auth.Service
             }
         }
 
-
         /// <summary>
         /// 保存系统数据字典父节点
         /// </summary>
@@ -148,16 +147,114 @@ namespace Zeniths.Auth.Service
         public List<SystemDictionary> GetDictionaryList()
         {
             var query = dicRepos.NewQuery.OrderBy(p => p.SortPath);
-            return dicRepos.Query(query).ToList();
+            var list = dicRepos.Query(query).ToList();
+            list.Insert(0, new SystemDictionary
+            {
+                Id = -1,
+                ParentId = 0,
+                Code = "_root",
+                Name = "数据字典"
+            });
+            return list;
+        }
+
+
+        /// <summary>
+        /// 检测是否存在指定系统数据字典明细项
+        /// </summary>
+        /// <param name="name">数据字典明细项名称</param>
+        /// <param name="id">数据字典主键</param>
+        /// <returns>存在返回true</returns>
+        public BoolMessage ExistsDetails(string name, int id)
+        {
+            var has = detailsRepos.Exists(p => p.Name == name && p.Id != id);
+            return has ? new BoolMessage(false, "指定的字典明细项名称已经存在") : BoolMessage.True;
+        }
+
+        /// <summary>
+        /// 添加系统数据字典明细项
+        /// </summary>
+        /// <param name="entity">系统数据字典明细项实体</param>
+        public BoolMessage InsertDetails(SystemDictionaryDetails entity)
+        {
+            try
+            {
+                detailsRepos.Insert(entity);
+                return BoolMessage.True;
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// 更新系统数据字典明细项
+        /// </summary>
+        /// <param name="entity">系统数据字典明细项实体</param>
+        public BoolMessage UpdateDetails(SystemDictionaryDetails entity)
+        {
+            try
+            {
+                detailsRepos.Update(entity);
+                return BoolMessage.True;
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// 删除系统数据字典明细项
+        /// </summary>
+        /// <param name="ids">系统数据字典明细项主键数组</param>
+        public BoolMessage DeleteDetails(int[] ids)
+        {
+            try
+            {
+                if (ids.Length == 1)
+                {
+                    detailsRepos.Delete(ids[0]);
+                }
+                else
+                {
+                    detailsRepos.Delete(ids);
+                }
+                return BoolMessage.True;
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// 获取系统数据字典明细对象
+        /// </summary>
+        /// <param name="id">系统数据字典明细主键</param>
+        /// <returns>系统数据字典明细对象</returns>
+        public SystemDictionaryDetails GetDetails(int id)
+        {
+            return detailsRepos.Get(id);
         }
 
         /// <summary>
         /// 获取系统数据字典明细列表
         /// </summary>
-        public List<SystemDictionaryDetails> GetEnabledDetailsList()
+        /// <param name="dictionaryId">字典主键</param>
+        /// <param name="hasDisabled">是否包含未启用数据</param>
+        /// <returns></returns>
+        public List<SystemDictionaryDetails> GetDetailsList(int dictionaryId,bool hasDisabled)
         {
-            var query = detilsRepos.NewQuery.OrderBy(p => p.SortPath);
-            return detilsRepos.Query(query).ToList();
+            var query = detailsRepos.NewQuery.
+                Where(p => p.DictionaryId == dictionaryId).
+                OrderBy(p => p.SortIndex);
+            if (!hasDisabled)
+            {
+                query.Where(p => p.IsEnabled == true);
+            }
+            return detailsRepos.Query(query).ToList();
         }
 
         /// <summary>
@@ -167,14 +264,24 @@ namespace Zeniths.Auth.Service
         /// <param name="pageSize">分页大小</param>
         /// <param name="orderName">排序列名</param>
         /// <param name="orderDir">排序方式</param>
+        /// <param name="dictionaryId">字典主键</param>
+        /// <param name="name">明细项名称或者简拼</param>
         /// <returns>数据字典明细分页列表</returns>
-        public PageList<SystemDictionaryDetails> GetPageDetailsList(int pageIndex, int pageSize, string orderName, string orderDir)
+        public PageList<SystemDictionaryDetails> GetPageDetailsList(int pageIndex, int pageSize, 
+            string orderName, string orderDir, int dictionaryId,string name)
         {
-            orderName = orderName.IsEmpty() ? nameof(SystemDictionary.Id) : orderName;
-            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;
-            var query = detilsRepos.NewQuery.Take(pageSize).Page(pageIndex).
+            orderName = orderName.IsEmpty() ? nameof(SystemDictionaryDetails.SortIndex) : orderName;
+            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Asc) : orderDir;
+            var query = detailsRepos.NewQuery.Take(pageSize).Page(pageIndex).
+                Where(p=>p.DictionaryId == dictionaryId).
                 OrderBy(orderName, orderDir.IsAsc());
-            return detilsRepos.Page(query);
+            if (!string.IsNullOrEmpty(name))
+            {
+                name = name.Trim();
+                query.Where(p => p.Name.Contains(name) || p.NameSpell.Contains(name));
+            }
+            return detailsRepos.Page(query);
         }
+
     }
 }

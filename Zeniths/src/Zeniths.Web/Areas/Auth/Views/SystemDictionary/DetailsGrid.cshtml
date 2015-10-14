@@ -8,9 +8,10 @@
             <th class="w-checkbox">
                 <label><input class="checkbox-check" type="checkbox"><span></span></label>
             </th>
-            <th class="w-200px" data-order="@nameof(SystemDictionaryDetails.Name)">明细项名称 @Html.BuildOrderImage(nameof(SystemDictionaryDetails.Name))</th>
-            <th class="w-200px" data-order="@nameof(SystemDictionaryDetails.Value)">明细项值 @Html.BuildOrderImage(nameof(SystemDictionaryDetails.Value))</th>
-            <th class="w-80px text-center" data-order="@nameof(SystemDictionaryDetails.IsEnabled)">状态 @Html.BuildOrderImage(nameof(SystemDictionaryDetails.IsEnabled))</th>
+            <th class="w-350px" data-order="@nameof(SystemDictionaryDetails.Name)">明细项名称 @Html.BuildOrderImage(nameof(SystemDictionaryDetails.Name))</th>
+            <th class="w-350px" data-order="@nameof(SystemDictionaryDetails.Value)">明细项值 @Html.BuildOrderImage(nameof(SystemDictionaryDetails.Value))</th>
+            <th class="w-100px text-center" data-order="@nameof(SystemDictionaryDetails.IsEnabled)">状态 @Html.BuildOrderImage(nameof(SystemDictionaryDetails.IsEnabled))</th>
+            <th class="w-100px text-center" data-order="@nameof(SystemDictionaryDetails.SortIndex)">序号 @Html.BuildOrderImage(nameof(SystemDictionaryDetails.SortIndex))</th>
             <th class="w-130px text-center">操作</th>
         </tr>
     </thead>
@@ -24,11 +25,12 @@
                 <td>@record.Name</td>
                 <td>@record.Value</td>
                 <td class="text-center">@Html.BoolFaIcon(record.IsEnabled)</td>
+                <td class="text-center">@record.SortIndex</td>
                 <td>
-                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("EditDetails",new {id = record.Id})">
                         <i class="fa fa-edit"></i> 编辑
                     </a>
-                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("DeleteDetails",new {id = record.Id})">
                         <i class="fa fa-trash-o"></i> 删除
                     </a>
                 </td>

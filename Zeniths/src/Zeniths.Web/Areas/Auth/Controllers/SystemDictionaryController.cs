@@ -27,13 +27,6 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         public ActionResult GetDictionaryList()
         {
             var dics = service.GetDictionaryList();
-            dics.Insert(0, new SystemDictionary
-            {
-                Id = -1,
-                ParentId = 0,
-                Code = "_root",
-                Name = "数据字典"
-            });
             var nodes = TreeHelper.Build(dics, p => p.ParentId == 0, (node, instace) =>
             {
                 if (instace.Id == -1)
@@ -56,10 +49,6 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         {
             var parentId = Request.QueryString["parentId"].ToInt();
             var sortPath = Request.QueryString["sortPath"];
-            if (parentId > 0)
-            {
-                ViewBag.ParentEntity = service.GetDictionary(parentId);
-            }
             return EditDictionaryCore(new SystemDictionary
             {
                 ParentId = parentId,
@@ -70,15 +59,15 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         public ActionResult EditDictionary(int id)
         {
             var entity = service.GetDictionary(id);
-            if (entity.ParentId > 0)
-            {
-                ViewBag.ParentEntity = service.GetDictionary(entity.ParentId);
-            }
             return EditDictionaryCore(entity);
         }
 
         private ActionResult EditDictionaryCore(SystemDictionary entity)
         {
+            if (entity.ParentId > 0)
+            {
+                ViewBag.ParentEntity = service.GetDictionary(entity.ParentId);
+            }
             return View("DictionaryEdit", entity);
         }
 
@@ -110,8 +99,62 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = service.GetPageDetailsList(pageIndex, pageSize, orderName, orderDir);
+            var dictionaryId = Request.Form["dictionaryId"].ToInt();
+            var detailsKey = Request.Form["detailsKey"];
+            var list = service.GetPageDetailsList(pageIndex, pageSize, orderName, orderDir, dictionaryId, detailsKey);
             return View(list);
         }
+
+        public ActionResult CreateDetails()
+        {
+            var dictionaryId = Request.QueryString["dictionaryId"].ToInt();
+            return EditDetailsCore(new SystemDictionaryDetails
+            {
+                DictionaryId = dictionaryId
+            });
+        }
+
+        public ActionResult EditDetails(int id)
+        {
+            var entity = service.GetDetails(id);
+            return EditDetailsCore(entity);
+        }
+
+        private ActionResult EditDetailsCore(SystemDictionaryDetails entity)
+        {
+            if (entity.DictionaryId > 0)
+            {
+                ViewBag.DictionaryEntity = service.GetDictionary(entity.DictionaryId);
+            }
+            return View("DetailsEdit", entity);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveDetails(SystemDictionaryDetails entity)
+        {
+            var hasResult = service.ExistsDetails(entity.Name, entity.Id);
+            if (hasResult.Failure)
+            {
+                return JsonNet(hasResult);
+            }
+            entity.NameSpell = SpellHelper.ConvertSpell(entity.Name);
+            var result = entity.Id == 0 ? service.InsertDetails(entity) : service.UpdateDetails(entity);
+            return JsonNet(result);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteDetails(string id)
+        {
+            var result = service.DeleteDetails(StringHelper.ConvertToArrayInt(id));
+            return JsonNet(result);
+        }
+
+        public ActionResult ExportDetails()
+        {
+            var dictionaryId = Request.QueryString["dictionaryId"].ToInt();
+            return Export(service.GetDetailsList(dictionaryId,true));
+        }
+        
     }
 }

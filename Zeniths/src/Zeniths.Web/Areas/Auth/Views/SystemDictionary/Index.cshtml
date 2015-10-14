@@ -24,16 +24,16 @@
                             <button class="btn btn-primary" type="submit">
                                 <i class="fa fa-search"></i> 查询
                             </button>
-                            <button class="btn btn-success" id="btnDetailsCreate" data-url="@Url.Action("Create")">
+                            <a class="btn btn-success" id="btnDetailsCreate" data-url="@Url.Action("CreateDetails")">
                                 <i class="fa fa-plus"></i> 新建
-                            </button>
-                            <a class="btn btn-danger" id="btnDetailsDelete" data-url="@Url.Action("Delete")">
+                            </a>
+                            <a class="btn btn-danger" id="btnDetailsDelete" data-url="@Url.Action("DeleteDetails")">
                                 <i class="fa fa-trash-o"></i> 删除
                             </a>
                             <a class="btn btn-default" id="btnDetailsRefresh">
                                 <i class="fa fa-repeat"></i> 刷新
                             </a>
-                            <a class="btn btn-default" href="@Url.Action("Export")">
+                            <a class="btn btn-default" id="btnDetailsExport" data-url="@Url.Action("ExportDetails")">
                                 <i class="fa fa-share-square-o"></i> 导出
                             </a>
                         </form>
@@ -43,6 +43,7 @@
                     <!-- 右键菜单 -->
                     <div class="easyui-menu treeMenu" style="display:none">
                         <div id="btnTreeCreate" data-options="iconCls:'icon-add'" data-url="@Url.Action("CreateDictionary")">新建</div>
+                        <div class="menu-sep"></div>
                         <div id="btnTreeEdit" data-options="iconCls:'icon-pencil'" data-url="@Url.Action("EditDictionary")">编辑</div>
                         <div class="menu-sep"></div>
                         <div id="btnTreeDelete" data-options="iconCls:'icon-delete'" data-url="@Url.Action("DeleteDictionary")">删除</div>

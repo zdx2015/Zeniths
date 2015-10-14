@@ -1,0 +1,141 @@
+﻿@model SystemDictionaryDetails
+@{
+    var title = "编辑字典明细";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    SystemDictionary dictionaryEntity = ViewBag.DictionaryEntity;
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("SaveDetails")" method="post" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <input type="hidden" name="@nameof(Model.DictionaryId)" value="@Model.DictionaryId" />
+                <table class="table table-form table-dialog-form">
+                    <tr>
+                        <th class='w-100px'><label class="control-label">数据字典</label></th>
+                        <td>
+                            @Html.Write(dictionaryEntity != null, dictionaryEntity?.Name, "数据字典")
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class='w-100px'><label class="control-label">明细项名称</label></th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" placeholder="请输入数据字典明细项名称" />
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th class='w-100px'><label class="control-label">明细项值</label></th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Value)" value="@Model.Value" type="text" placeholder="请输入数据字典明细项值" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">状态</label></th>
+                        <td>
+                            <div class="checkbox-list">
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.IsEnabled)" value="1" type="checkbox" @Html.IsChecked(Model.IsEnabled)/>
+                                    <span>启用</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label class="control-label">序号</label></th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.SortIndex)" value="@Model.SortIndex" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">备注</label></th>
+                        <td>
+                            <textarea class="form-control" name="@nameof(Model.Note)" rows="3">@Model.Note</textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section script{
+    <script>
+
+        //初始化表单
+        function initForm() {
+            $('.editform').dataform().initiCheck().initValidate({
+                rules: {
+                    Name: {
+                        required: true,
+                        maxlength: 100
+                    },
+                    SortIndex: {
+                        required: true,
+                        digits: true,
+                        maxlength: 9
+                    }
+                },
+                messages: {
+                    Name: {
+                        required: '请填写数据字典明细项名称',
+                        maxlength: '数据字典明细项名称长度不能超过100'
+                    },
+                    SortIndex: {
+                        required: '请填写明细项序号',
+                        digits: '明细项序号只能输入正整数',
+                        maxlength: '明细项序号不能超过9位数'
+                    }
+                },
+                beforeSubmit: function () {
+
+                }
+            }).initAjax({
+                success: function (result) {
+                    zeniths.util.unmask();
+                    if (!result.success) {
+                        zeniths.util.alert(result.message);
+                    } else {
+                        zeniths.util.callDialogCallback(window);
+                        zeniths.util.closeFrameDialog(window);
+                    }
+                }
+            });
+        }
+
+        $(function () {
+
+            initForm();//初始化表单
+
+            //绑定关闭按钮事件
+            $('.btnClose').on('click', function () {
+                zeniths.util.closeFrameDialog(window);
+            });
+
+        });
+    </script>
+}
