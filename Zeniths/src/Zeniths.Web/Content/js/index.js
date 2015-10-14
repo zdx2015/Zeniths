@@ -13,7 +13,7 @@ zeniths.index = function () {
             //{ 'id': 'menu3', text: '流程按钮管理', 'iconCls': 'icon-ok', 'url': '/WorkFlow/WorkFlowButton' },
             //{ 'id': 'menu4', text: '流程表单管理', 'iconCls': 'icon-ok', 'url': '/WorkFlow/WorkFlowForm' }];
 
-            $('.treeMenu').tree({
+            $('.menuTree').tree({
                 //lines: true,
                 url: '/Default/Menu',
                 animate: true,

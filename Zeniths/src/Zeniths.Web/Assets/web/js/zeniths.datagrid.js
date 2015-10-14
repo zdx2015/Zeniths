@@ -14,12 +14,7 @@
         }
         var $queryForm = $(instance.options.queryForm);
         $queryForm.find(':submit:first').on('click', function () {
-            var ps = {};
-            var formParams = $queryForm.serializeArray();
-            $.each(formParams, function (i, v) {
-                ps[v.name] = v.value;
-            });
-
+            var ps = zeniths.util.getFormData($queryForm);
             instance.search(ps);
             return false;
         });
@@ -135,7 +130,7 @@
             });
         }
         window.onresize = function () {
-             _core();
+            _core();
         }
         _core();
     }
@@ -203,7 +198,9 @@
         this.$checkboxs = null;
         this.options = options;
         _init(this);
-        _loadData(this);
+        if (this.options.autoLoad === true) {
+            _loadData(this);
+        }
     };
 
     /*****************************公共函数*****************************/
@@ -275,9 +272,14 @@
             if (instance) {
                 $.extend(instance.options, options);
             } else {
-                instance = new DataGrid($this, $.extend({}, $.fn.datagrid.defaults, $.fn.datagrid.parseOptions($this), options));
+                var ops = $.extend({}, $.fn.datagrid.defaults, $.fn.datagrid.parseOptions($this), options);
+                //$.each($.fn.datagrid.parseOptions($this), function (k, v) {
+                //    console.log('k={0},v={1}'.format(k, v));
+                //});
+                instance = new DataGrid($this, ops);
                 $this.data('datagrid', instance);
             }
+
             instances.push(instance);
         });
         return instances[0];
@@ -306,6 +308,8 @@
         if (_value) {
             options['queryParams'] = (new Function('return ' + _value))();
         }
+        options['autoLoad'] = $element.data('auto-load');
+
         return options;
     };
 
@@ -314,6 +318,11 @@
      * 表格配置默认值
      */
     $.fn.datagrid.defaults = {
+        /**
+         * 自动加载数据
+         */
+        autoLoad: true,
+
         /**
          * 表格地址
          */

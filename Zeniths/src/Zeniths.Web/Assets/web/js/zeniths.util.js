@@ -566,3 +566,72 @@ zeniths.util.deleteBatch = function (url, ids, callback) {
     }
     zeniths.util.delete(url, { id: ids.join() }, callback);
 };
+
+/**
+ * 返回至少指定长度的字符串
+ * @param {String} str 字符串
+ * @param {Int} totalLength 字符串总长度
+ * @param {String} defaultStr 字符不够时的默认字符
+ * @returns {} 
+ */
+zeniths.util.FixLengthString = function (str, totalLength, defaultStr) {
+    var result = str;
+    var times = totalLength - (result.length);
+    for (var i = 1; i <= times; i++) {
+        result = defaultStr + result;
+    }
+    return result;
+};
+
+/**
+ * 获取数节点的排序路径
+ * @param {EasyUITree} treeControl 树控件
+ * @param {String} id 节点主键
+ * @returns {} 
+ */
+zeniths.util.getTreeNodeSortPath = function (treeControl, id) {
+    if (!id) {
+        return '';
+    }
+    var options = treeControl.tree('options');
+    var pkName = options.idField;
+    var parentNode = treeControl.tree('getParent', id);
+    if (parentNode != null) {
+        var pstring = zeniths.util.getTreeNodeSortPath(treeControl, parentNode[pkName]);
+        return pstring + zeniths.util.FixLengthString(zeniths.util.getTreeNodeIndex(id, parentNode.children, pkName), 4, '0');
+    } else {
+        return zeniths.util.FixLengthString(zeniths.util.getTreeNodeIndex(id, treeControl.tree('getRoots'), pkName), 4, '0');
+    }
+};
+
+/**
+ * 获取节点序号
+ * @param {String} id 节点主键
+ * @param {Array} nodes 待查找的节点集合
+ * @param {String} pkName 主键字段名
+ * @returns {} 
+ */
+zeniths.util.getTreeNodeIndex = function (id, nodes, pkName) {
+    var nodeIndex = -1;
+    $.each(nodes, function (index, value) {
+        if (value[pkName] == id) {
+            nodeIndex = index;
+            return false;
+        }
+    });
+    return nodeIndex.toString();
+}
+
+/**
+ * 获取表单数据对象
+ * @param {JQuery} $form JQuery表单对象
+ * @returns {Object}  
+ */
+zeniths.util.getFormData = function ($form) {
+    var ps = {};
+    var formParams = $form.serializeArray();
+    $.each(formParams, function (i, v) {
+        ps[v.name] = v.value;
+    });
+    return ps;
+}

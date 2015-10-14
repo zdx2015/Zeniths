@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Auth\Content\css\default.css" />
+    <Content Include="Areas\Auth\Content\js\systemDictionary.js" />
     <Content Include="Assets\bootstrap-clockpicker\css\bootstrap-clockpicker.css" />
     <Content Include="Assets\bootstrap-clockpicker\js\bootstrap-clockpicker.js" />
     <Content Include="Assets\bootstrap-clockpicker\css\bootstrap-clockpicker.min.css" />

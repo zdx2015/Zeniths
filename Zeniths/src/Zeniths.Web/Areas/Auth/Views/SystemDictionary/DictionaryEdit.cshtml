@@ -2,6 +2,7 @@
 @{
     var title = "编辑数据字典";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    SystemDictionary parentEntity = ViewBag.ParentEntity;
 }
 
 <div class="container-edit-zeniths">
@@ -20,7 +21,7 @@
                     <tr>
                         <th class='w-100px'><label class="control-label">上级字典</label></th>
                         <td>
-                            字典
+                            @Html.Write(parentEntity != null, parentEntity?.Name, "顶层")
                         </td>
                     </tr>
                     <tr>

@@ -6,7 +6,7 @@
 <div class="easyui-layout" fit="true" border="false">
     <div region="west" split="true" title="数据字典" border="false" style="width:200px;background-color: #fafafa;"
          data-options="headerCls:'panel-right-border',bodyCls:'panel-right-border'">
-        <ul class="treeDetails treeMenu" fit="true"></ul>
+        <ul class="zenithsTree treeDic" fit="true" data-url="@Url.Action("GetDictionaryList")"></ul>
     </div>
     <div region="center" border="false" title="字典明细" style="background-color: #fafafa;"
          data-options="headerCls:'panel-left-border',bodyCls:'panel-left-border'">
@@ -24,13 +24,13 @@
                             <button class="btn btn-primary" type="submit">
                                 <i class="fa fa-search"></i> 查询
                             </button>
-                            <a class="btn btn-success" id="btnCreate" data-url="@Url.Action("Create")">
+                            <button class="btn btn-success" id="btnDetailsCreate" data-url="@Url.Action("Create")">
                                 <i class="fa fa-plus"></i> 新建
-                            </a>
-                            <a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
+                            </button>
+                            <a class="btn btn-danger" id="btnDetailsDelete" data-url="@Url.Action("Delete")">
                                 <i class="fa fa-trash-o"></i> 删除
                             </a>
-                            <a class="btn btn-default" id="btnRefresh">
+                            <a class="btn btn-default" id="btnDetailsRefresh">
                                 <i class="fa fa-repeat"></i> 刷新
                             </a>
                             <a class="btn btn-default" href="@Url.Action("Export")">
@@ -38,14 +38,16 @@
                             </a>
                         </form>
                     </div>
-                    <div class="datagrid" data-url="@Html.Raw(Url.Action("DetailsGrid"))">
+                    <div class="datagrid" data-auto-load="false" data-url="@Html.Raw(Url.Action("DetailsGrid"))">
                     </div>
                     <!-- 右键菜单 -->
-                    <div class="easyui-menu" id="dictionary-menu">
-                        <div data-options="name:'add',iconCls:'icon-add'">新建</div>
-                        <div data-options="name:'edit',iconCls:'icon-pencil'">编辑</div>
+                    <div class="easyui-menu treeMenu" style="display:none">
+                        <div id="btnTreeCreate" data-options="iconCls:'icon-add'" data-url="@Url.Action("CreateDictionary")">新建</div>
+                        <div id="btnTreeEdit" data-options="iconCls:'icon-pencil'" data-url="@Url.Action("EditDictionary")">编辑</div>
                         <div class="menu-sep"></div>
-                        <div data-options="name:'delete',iconCls:'icon-delete'">删除</div>
+                        <div id="btnTreeDelete" data-options="iconCls:'icon-delete'" data-url="@Url.Action("DeleteDictionary")">删除</div>
+                        <div class="menu-sep"></div>
+                        <div id="btnTreeRefresh" data-options="iconCls:'icon-reload'">刷新</div>
                     </div>
                 </div>
             </div>
@@ -72,82 +74,5 @@
     <script src="~/Assets/jquery-easyui/js/jquery.layout.js"></script>
     <script src="~/Assets/jquery-easyui/js/jquery.tree.js"></script>
     <script src="~/Assets/jquery-easyui/js/jquery.menu.js"></script>
-    <script>
-
-        $(function () {
-
-            function editDictionaryData(url, grid) {
-                zeniths.util.dialog(url, 600, 370, {
-                    callback: function () {
-                        grid.reload();
-                    }
-                });
-            }
-
-            function searchGrid() {
-                var node = $('.treeDetails').tree("getSelected");
-                if (!node) {
-                    zeniths.util.msg('请选择数据字典');
-                    return;
-                }
-
-                $('.datagrid').datagrid().search({
-                    dictionaryId: node.id,
-                    detailsKey: $('#detailsKey').val()
-                });
-            }
-
-            function initTree() {
-                $('.treeDetails').tree({
-                    //lines: true,
-                    url: '/Auth/SystemDictionary/GetDictionaryList',
-                    animate: true,
-                    onBeforeLoad: function (node, param) {
-                        $(this).parent().parent().mask('正在加载数据字典...');
-                    },
-                    onLoadSuccess: function (node, data) {
-                        $(this).parent().parent().unmask();
-                    },
-                    onContextMenu: function (e, node) {
-                        e.preventDefault();
-                        $(this).tree('select', node.target);
-                        $('#dictionary-menu').menu('show', {
-                            left: e.pageX,
-                            top: e.pageY
-                        });
-                    },
-                    onClick: function (node) {
-                        $(this).tree('toggle', node.target);
-                        searchGrid();
-                        //if (node.url) {
-                        //    self.createTab(node.text, node.url, node.iconCls);
-                        //}
-                    }
-                });
-            }
-
-            function menuHandler(item) {
-                if (item.name === 'add') {
-                    editDictionaryData('@Url.Action("CreateDictionary", new { parentId = 0 })', '');
-                }
-                else if (item.name === 'edit') {
-
-                }
-                else if (item.name === 'delete') {
-
-                }
-            }
-
-            $('#dictionary-menu').menu({
-                onClick: menuHandler
-            });
-
-            $('.search-form').find(':submit:first').on('click', function () {
-                searchGrid();
-                return false;
-            });
-
-            initTree();
-        });
-    </script>
+    <script src="~/Areas/Auth/Content/js/systemDictionary.js"></script>
 }

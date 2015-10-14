@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Zeniths.Auth.Entity;
 using Zeniths.Auth.Service;
 using Zeniths.Auth.Utility;
+using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.Utility;
 
@@ -35,19 +36,44 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             });
             var nodes = TreeHelper.Build(dics, p => p.ParentId == 0, (node, instace) =>
             {
-                node.IconCls = "icon-plugin";
+                if (instace.Id == -1)
+                {
+                    node.IconCls = "icon-house";
+                }
+                else if (node.Children != null)
+                {
+                    node.IconCls = string.Empty;
+                }
+                else
+                {
+                    node.IconCls = "icon-plugin";
+                }
             });
             return JsonNet(nodes);
         }
 
         public ActionResult CreateDictionary()
         {
-            return EditDictionaryCore(new SystemDictionary());
+            var parentId = Request.QueryString["parentId"].ToInt();
+            var sortPath = Request.QueryString["sortPath"];
+            if (parentId > 0)
+            {
+                ViewBag.ParentEntity = service.GetDictionary(parentId);
+            }
+            return EditDictionaryCore(new SystemDictionary
+            {
+                ParentId = parentId,
+                SortPath = sortPath
+            });
         }
 
         public ActionResult EditDictionary(int id)
         {
             var entity = service.GetDictionary(id);
+            if (entity.ParentId > 0)
+            {
+                ViewBag.ParentEntity = service.GetDictionary(entity.ParentId);
+            }
             return EditDictionaryCore(entity);
         }
 
@@ -65,15 +91,15 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             {
                 return JsonNet(hasResult);
             }
-
+            entity.NameSpell = SpellHelper.ConvertSpell(entity.Name);
             var result = entity.Id == 0 ? service.InsertDictionary(entity) : service.UpdateDictionary(entity);
             return JsonNet(result);
         }
 
         [HttpPost]
-        public ActionResult DeleteDictionary(string idArray)
+        public ActionResult DeleteDictionary(string id)
         {
-            var result = service.DeleteDictionary(StringHelper.ConvertToArrayInt(idArray));
+            var result = service.DeleteDictionary(StringHelper.ConvertToArrayInt(id));
             return JsonNet(result);
         }
 

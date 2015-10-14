@@ -308,17 +308,17 @@ Buttons & Dropdown Buttons
 /* 
     EasyUI Tree
 */
-.treeMenu span {
+.zenithsTree span {
     font-size: 14px;
 }
 
-.treeMenu .tree-node {
+.zenithsTree .tree-node {
     padding: 4px;
     text-decoration: none;
     box-sizing: content-box;
 }
 
-.treeMenu li div {
+.zenithsTree li div {
     border: 1px dashed #fff;
     margin: 2px 0px;
     padding-left: 10px;
@@ -326,21 +326,21 @@ Buttons & Dropdown Buttons
     padding-bottom: 5px;
 }
 
-.treeMenu .tree-node-hover {
+.zenithsTree .tree-node-hover {
     border: 1px dashed #99BBE8;
     /*color: #416AA3;
     background: #fcde61;*/
     cursor: pointer;
 }
 
-.treeMenu .tree-node-selected {
+.zenithsTree .tree-node-selected {
     border: 1px dashed #99BBE8;
     /*background: #E0ECFF;
     color: #416AA3;*/
     cursor: default;
 }
 
-.treeMenu .tree-node-yellow {
+.zenithsTree .tree-node-yellow {
     background: #ffe48d;
     color: #416AA3;
     font-weight: bold;
