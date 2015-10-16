@@ -510,6 +510,7 @@
     <Content Include="Areas\Auth\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Auth\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDictionary\DetailsEdit.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\WorkFlowButton\Details.cshtml" />
     <None Include="Assets\_references.js" />
     <Content Include="Assets\web\js\zeniths.datagrid.js" />
     <Content Include="Areas\Auth\Content\js\systemMenu.js" />

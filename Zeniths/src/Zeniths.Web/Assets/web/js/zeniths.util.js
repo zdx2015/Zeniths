@@ -144,6 +144,16 @@ zeniths.util.showAlertDanger = function ($target, title, msg, allowClose) {
 }
 
 /**
+ * 显示数据加载失败错误信息
+ * @param {JQuery} $target 显示位置
+ * @param {String} msg 消息内容
+ * @returns {} 
+ */
+zeniths.util.showAlertDangerLoadFailure = function ($target, msg) {
+    zeniths.util.showAlertDanger($target, '<i class="fa-lg fa fa-warning"></i> 数据加载失败!', msg, true);
+}
+
+/**
  * 显示信息
  * @param {JQuery} $target 显示位置
  * @param {String} title 标题
@@ -647,3 +657,13 @@ zeniths.util.getFormData = function ($form) {
     });
     return ps;
 }
+
+/**
+ * 获取Ajax服务器返回的错误信息
+ * @param {XMLHttpRequest} result XMLHttpRequest 对象
+ * @returns {String}  
+ */
+zeniths.util.getAjaxErrorMessage = function (result) {
+    return result.responseJSON.message;
+}
+

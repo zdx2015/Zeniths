@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.WorkFlow.Entity;
 using Zeniths.WorkFlow.Service;
@@ -34,9 +35,9 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
             return EditCore(new WorkFlowButton());
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            var entity = service.Get(id);
+            var entity = service.Get(id.ToInt());
             return EditCore(entity);
         }
 
@@ -64,6 +65,12 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
         {
             var result = service.Delete(StringHelper.ConvertToArrayInt(id));
             return JsonNet(result);
+        }
+
+        public ActionResult Details(string id)
+        {
+            var entity = service.Get(id.ToInt());
+            return View(entity);
         }
 
         public ActionResult Export()

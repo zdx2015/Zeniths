@@ -50,6 +50,10 @@
             });
         }
 
+        function ViewData(url) {
+            zeniths.util.dialog(url, 800, 545);
+        }
+
         $(function () {
 
             //变量
@@ -63,8 +67,8 @@
 
                     //行双击事件
                     $('table>tbody>tr').on('dblclick', function () {
-                        var url = $(this).find('.btnRecordEdit').data('url') ;
-                        editData(url, datagrid);
+                        var url = $(this).data('url') ;
+                        ViewData(url);
                     });
 
                     //删除记录事件

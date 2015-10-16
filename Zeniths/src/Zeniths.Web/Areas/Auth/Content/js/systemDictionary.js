@@ -31,7 +31,7 @@
             },
             onLoadError: function (result) {
                 $(this).parent().parent().unmask();
-                zeniths.util.showAlertDanger($(this), '<i class="fa-lg fa fa-warning"></i> 数据加载失败!', result.responseJSON.message, true);
+                zeniths.util.showAlertDangerLoadFailure($(this), zeniths.util.getServerErrorMessage(result));
             },
             onContextMenu: function (e, node) {
                 e.preventDefault();
