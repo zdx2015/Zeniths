@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "_LayoutBase.cshtml";
+}
+@section style
+{
+    @Styles.Render("~/zeniths-css","~/zeniths-tree-css")
+    @RenderSection("style", required: false)
+}
+@section script
+{
+    @Scripts.Render("~/zeniths-js", "~/zeniths-tree-js")
+    @RenderSection("script", required: false)
+}
+@RenderBody()
