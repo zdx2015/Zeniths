@@ -1,6 +1,6 @@
 ﻿@model SystemDictionary
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutTreeBase.cshtml";
 }
 
 <div class="easyui-layout" fit="true" border="false">
@@ -56,24 +56,8 @@
 
     </div>
 </div>
-
-@section style{
-    <link href="~/Assets/jquery-easyui/css/panel.css" rel="stylesheet" />
-    <link href="~/assets/jquery-easyui/css/layout.css" rel="stylesheet" />
-    <link href="~/assets/jquery-easyui/css/tree.css" rel="stylesheet" />
-    <link href="~/Assets/jquery-easyui/css/menu.css" rel="stylesheet" />
-    <link href="~/assets/web/css/easyui-fix.css" rel="stylesheet" />
-    <link href="~/assets/jquery-easyui-full/css/icon.css" rel="stylesheet" />
-}
+ 
 @section script
 {
-    <script src="~/Assets/jquery-easyui/js/jquery.parser.js"></script>
-    <script src="~/Assets/jquery-easyui/js/jquery.draggable.js"></script>
-    <script src="~/Assets/jquery-easyui/js/jquery.droppable.js"></script>
-    <script src="~/Assets/jquery-easyui/js/jquery.resizable.js"></script>
-    <script src="~/Assets/jquery-easyui/js/jquery.panel.js"></script>
-    <script src="~/Assets/jquery-easyui/js/jquery.layout.js"></script>
-    <script src="~/Assets/jquery-easyui/js/jquery.tree.js"></script>
-    <script src="~/Assets/jquery-easyui/js/jquery.menu.js"></script>
-    <script src="~/Areas/Auth/Content/js/systemDictionary.js"></script>
+    <script src="~/Assets/js/auth/system.dictionary.js"></script>
 }

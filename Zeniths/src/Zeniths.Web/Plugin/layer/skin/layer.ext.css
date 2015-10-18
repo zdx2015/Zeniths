@@ -13,7 +13,7 @@
 }
 
 .layui-layer-iconext {
-    background: url(default/icon-ext.png) no-repeat;
+    background: url(/plugin/layer/skin/default/icon-ext.png) no-repeat;
 }
 
 html #layui_layer_skinlayerextcss {
@@ -97,7 +97,7 @@ html #layui_layer_skinlayerextcss {
 .layui-layer-photos {
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
-    background: url(default/xubox_loading1.gif) center center no-repeat #000;
+    background: url(/plugin/layer/skin/default/xubox_loading1.gif) center center no-repeat #000;
 }
 
     .layui-layer-photos .layui-layer-content {

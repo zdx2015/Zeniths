@@ -1,6 +1,6 @@
 ﻿@{
     Layout = null;
-    var files = FileHelper.GetFiles(Server.MapPath("~/assets/jquery-easyui-full/css/icon"));
+    var files = FileHelper.GetFiles(Server.MapPath("~/plugin/jquery-easyui/css/icon"));
     var nameList = new List<string>();
     files.ForEach(p => nameList.Add(Path.GetFileName(p)));
     var names = nameList.ToArray();

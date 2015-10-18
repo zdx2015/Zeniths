@@ -23,14 +23,14 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
             return View();
         }
 
-        public ActionResult Grid(string formName, string formCategory)
+        public ActionResult Grid(string name, string category)
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
             var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir,
-                formName, formCategory);
+                name, category);
             return View(list);
         }
 
@@ -69,6 +69,12 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
         {
             var result = service.Delete(StringHelper.ConvertToArrayInt(id));
             return JsonNet(result);
+        }
+
+        public ActionResult Details(string id)
+        {
+            var entity = service.Get(id.ToInt());
+            return View(entity);
         }
 
         public ActionResult Export()

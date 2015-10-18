@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "_LayoutBase.cshtml";
+}
+@section style
+{
+    @Styles.Render("~/bootstrap-css")
+    @RenderSection("style", required: false)
+}
+@section script
+{
+    @Scripts.Render("~/bootstrap-js")
+    @RenderSection("script", required: false)
+}
+@RenderBody()

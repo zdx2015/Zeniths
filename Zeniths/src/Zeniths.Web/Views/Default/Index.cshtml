@@ -1,26 +1,23 @@
-﻿@{Layout = null;}
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>正得信股份综合管控平台</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link href="~/assets/jquery-easyui/css/panel.css" rel="stylesheet" />
-    <link href="~/assets/jquery-easyui/css/layout.css" rel="stylesheet" />
-    <link href="~/assets/jquery-easyui/css/tree.css" rel="stylesheet" />
-    <link href="~/assets/jquery-easyui/css/tabs.css" rel="stylesheet" />
-    <link href="~/assets/web/css/easyui-fix.css" rel="stylesheet" />
-    <link href="~/assets/jquery-easyui-full/css/icon.css" rel="stylesheet" />
-<link href="~/Assets/jquery-loadmask/jquery.loadmask.css" rel="stylesheet" />
-    <link href="~/assets/web/css/web.css" rel="stylesheet" />
-    <link href="~/Content/css/default.css" rel="stylesheet" />
-</head>
-<body class="easyui-layout" style="display:none">
+﻿@{
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+@section style
+{
+    @Styles.Render("~/easyui-tab-tree-css")
+    <link href="~/plugin/jquery-easyui/css/icon.css" rel="stylesheet" />
+    <link href="~/assets/css/default.css" rel="stylesheet" />
+}
+@section script
+{
+    @Scripts.Render("~/easyui-tab-tree-js")
+    <script src="~/plugin/layer/layer.js"></script>
+    <script>layer.config({ extend: 'extend/layer.ext.js' });</script>
+    <script src="~/assets/js/default.js"></script>
+}
+<div class="easyui-layout" fit="true">
     <div data-options="region:'north'" class="header">
         <div class="logo">
-            <img src="~/Content/css/images/logo.png" alt="Logo">
+            <img src="~/assets/css/images/maintitle.png" alt="Logo">
         </div>
 
         <div class="topbar">
@@ -50,33 +47,4 @@
         分辨率：<span id="statusScreen"></span>&nbsp;&nbsp;
         正得信股份 &copy;@DateTime.Now.Year
     </div>
-
-    <script src="~/assets/jquery/jquery.min.js"></script>
-    <script src="~/assets/jquery-easyui/js/jquery.parser.js"></script>
-    <script src="~/assets/jquery-easyui/js/jquery.resizable.js"></script>
-    <script src="~/assets/jquery-easyui/js/jquery.panel.js"></script>
-    <script src="~/assets/jquery-easyui/js/jquery.layout.js"></script>
-    <script src="~/assets/jquery-easyui/js/jquery.tree.js"></script>
-    <script src="~/assets/jquery-easyui/js/jquery.tabs.js"></script>
-    <script src="~/assets/jquery-easyui-full/js/jquery.tabs.extend.js"></script>
-<script src="~/Assets/jquery-loadmask/jquery.loadmask.js"></script>
-
-    <script>
-        var $body = $(document.body);
-        $body.css({ 'overflow': 'hidden', 'position': 'relative' });
-        var $mask = $('<div style="position:absolute;z-index:2;width:100%;height:100%;background:#ccc;z-index:1000;opacity:0.3;filter:alpha(opacity=30);"><div>').appendTo($body);
-        var $maskMessage = $('<div class="mask-message" style="z-index:3;width:auto;height:16px;line-height:16px;position:absolute;top:50%;left:50%;margin-top:-20px;margin-left:-92px;border:2px solid #d4d4d4;padding: 12px 5px 10px 30px;background: #ffffff url(/assets/jquery-easyui/css/images/loading.gif) no-repeat scroll 5px center;"> 正在加载资源 ... </div>').appendTo($body);
-
-        $.parser.onComplete = function () {
-            $([$mask[0], $maskMessage[0]]).fadeOut('fast', function () {
-                $(this).remove();
-            });
-            $(document.body).css('display', '');
-            $(document.body).layout('resize');
-        };
-    </script>
-    <script src="~/assets/layer/layer.js"></script>
-    <script src="~/assets/web/js/zeniths.util.js"></script>
-    <script src="~/Content/js/index.js"></script>
-</body>
-</html>
+</div> 

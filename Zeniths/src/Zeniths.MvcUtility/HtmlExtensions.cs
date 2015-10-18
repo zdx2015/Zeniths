@@ -262,6 +262,14 @@ namespace Zeniths.MvcUtility
             }
             return MvcHtmlString.Create("<i class=\"fa fa-lg fa-close\" style=\"color: red\"></i>");
         }
-        
+
+        public static MvcHtmlString BoolLabel(this HtmlHelper helper, bool result)
+        {
+            if (result)
+            {
+                return MvcHtmlString.Create("<span class=\"label label-success\">启用</span>");
+            }
+            return MvcHtmlString.Create("<span class=\"label label-danger\">禁用</span>");
+        }
     }
 }

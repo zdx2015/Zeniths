@@ -1,6 +1,7 @@
-﻿@model WorkFlowButton
+﻿@model SystemDictionaryDetails
 @{
-    var title = "查看流程按钮";
+    var title = "查看字典明细";
+    SystemDictionary dictionaryEntity = ViewBag.DictionaryEntity;
 }
 
 <div class="container-edit-zeniths">
@@ -11,32 +12,27 @@
         </div>
         <div class="panel-body">
             <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+            <input type="hidden" name="@nameof(Model.DictionaryId)" value="@Model.DictionaryId" />
             <table class="table table-form table-dialog-form">
                 <tr>
-                    <th class='w-100px'><label class="control-label">名称：</label></th>
+                    <th class='w-100px'><label class="control-label">数据字典：</label></th>
+                    <td>
+                        @Html.Write(dictionaryEntity != null, dictionaryEntity?.Name, "数据字典")
+                    </td>
+                </tr>
+                <tr>
+                    <th class='w-120px'>
+                        <label class="control-label">明细项名称：</label>
+                    </th>
                     <td>
                         <p class="form-control-static">@Model.Name</p>
                     </td>
                 </tr>
-                <tr>
-                    <th><label class="control-label">样式：</label></th>
-                    <td>
-                        <p class="form-control-static">
-                            <i class="@Model.IconClass fa-2x" style="color: @Model.IconColor"></i> @Model.IconClass
-                        </p>
-                    </td>
-                </tr>
-                <tr>
-                    <th><label class="control-label">颜色：</label></th>
-                    <td>
-                        <p class="form-control-static">@Model.IconColor</p>
-                    </td>
-                </tr>
 
                 <tr>
-                    <th><label class="control-label">脚本：</label></th>
+                    <th class='w-100px'><label class="control-label">明细项值：</label></th>
                     <td>
-                        <p class="form-control-static">@Model.Script</p>
+                        <p class="form-control-static">@Model.Value</p>
                     </td>
                 </tr>
                 <tr>
@@ -45,8 +41,11 @@
                         <p class="form-control-static">@Html.BoolLabel(Model.IsEnabled)</p>
                     </td>
                 </tr>
+
                 <tr>
-                    <th><label class="control-label">序号：</label></th>
+                    <th>
+                        <label class="control-label">序号：</label>
+                    </th>
                     <td>
                         <p class="form-control-static">@Model.SortIndex</p>
                     </td>

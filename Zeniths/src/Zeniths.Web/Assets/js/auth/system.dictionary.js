@@ -160,7 +160,7 @@
      * @returns {} 
      */
     self.initGrid = function () {
-        self.gridObject = $('.datagrid').datagrid({
+        self.gridObject = self.$grid.datagrid({
             onLoadSuccess: function () {
                 //编辑记录事件
                 $('.btnRecordEdit').on('click', function () {
@@ -172,6 +172,18 @@
                     zeniths.util.delete($(this).data('url'), function () {
                         self.reloadGrid();
                     });
+                });
+
+                //查看记录事件
+                $('.btnRecordView').on('click', function () {
+                    var url = $(this).data('url');
+                    self.showDetailsViewDialog(url);
+                });
+
+                //行双击事件
+                $('table>tbody>tr').on('dblclick', function () {
+                    var url = $(this).data('url');
+                    self.showDetailsViewDialog(url);
                 });
             }
         });
@@ -238,6 +250,15 @@
                 self.reloadGrid();
             }
         });
+    };
+
+    /**
+     * 显示字典明细查看对话框
+     * @param {String} url 页面Url 
+     * @returns {} 
+     */
+    self.showDetailsViewDialog = function (url) {
+        zeniths.util.dialog(url, 600, 420);
     };
 
     /**

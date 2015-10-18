@@ -150,6 +150,16 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             return JsonNet(result);
         }
 
+        public ActionResult DetailsView(string id)
+        {
+            var entity = service.GetDetails(id.ToInt());
+            if (entity.DictionaryId > 0)
+            {
+                ViewBag.DictionaryEntity = service.GetDictionary(entity.DictionaryId);
+            }
+            return View(entity);
+        }
+
         public ActionResult ExportDetails()
         {
             var dictionaryId = Request.QueryString["dictionaryId"].ToInt();

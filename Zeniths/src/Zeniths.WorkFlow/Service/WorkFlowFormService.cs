@@ -113,25 +113,25 @@ namespace Zeniths.WorkFlow.Service
         /// <param name="pageSize">分页大小</param>
         /// <param name="orderName">排序列名</param>
         /// <param name="orderDir">排序方式</param>
-        /// <param name="formName">表单名称</param>
-        /// <param name="formCategory">表单分类</param>
+        /// <param name="name">表单名称</param>
+        /// <param name="category">表单分类</param>
         /// <returns>流程表单分页列表</returns>
         public PageList<WorkFlowForm> GetPageList(int pageIndex, int pageSize, string orderName,
-            string orderDir, string formName, string formCategory)
+            string orderDir, string name, string category)
         {
             orderName = orderName.IsEmpty() ? nameof(WorkFlowForm.Id) : orderName;
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;
             var query = repos.NewQuery.Take(pageSize).Page(pageIndex).
                 OrderBy(orderName, orderDir.IsAsc());
-            if (formName.IsNotEmpty())
+            if (name.IsNotEmpty())
             {
-                formName = formName.Trim();
-                query.Where(p => p.Name.Contains(formName));
+                name = name.Trim();
+                query.Where(p => p.Name.Contains(name));
             }
-            if (formCategory.IsNotEmpty())
+            if (category.IsNotEmpty())
             {
-                formCategory = formCategory.Trim();
-                query.Where(p => p.Category == formCategory);
+                category = category.Trim();
+                query.Where(p => p.Category == category);
             }
             return repos.Page(query);
         }

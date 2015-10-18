@@ -26,15 +26,7 @@
                 <td>@record.Name</td>
                 <td class="text-center"><i class="@record.IconClass fa-2x" style="color: @record.IconColor"></i></td>
                 <td class="text-center">
-                    @*@Html.BoolFaIcon(record.IsEnabled)*@
-                    @if (record.IsEnabled)
-                    {
-                        <span class="label label-success">启用</span>
-                    }
-                    else
-                    {
-                        <span class="label label-danger">禁用</span>
-                    }
+                    @Html.BoolLabel(record.IsEnabled)
                 </td>
                 <td class="text-center">@record.SortIndex</td>
                 <td>

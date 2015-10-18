@@ -41,66 +41,74 @@
 {
     <script>
 
-        //数据编辑
-        function editData(url, grid) {
-            zeniths.util.dialog(url, 800, 550, {
-                callback: function () {
-                    grid.reload();
-                }
-            });
-        }
-
-        function ViewData(url) {
-            zeniths.util.dialog(url, 800, 545);
-        }
-
-        $(function () {
-
-            //变量
-            var datagrid = $('.datagrid').datagrid({
+        //初始化表格
+        function initGrid() {
+            $('.datagrid').datagrid({
                 onLoadSuccess: function () {
 
                     //编辑记录事件
                     $('.btnRecordEdit').on('click', function () {
-                        editData($(this).data('url'), datagrid);
-                    });
-
-                    //行双击事件
-                    $('table>tbody>tr').on('dblclick', function () {
-                        var url = $(this).data('url') ;
-                        ViewData(url);
+                        editData($(this).data('url'));
                     });
 
                     //删除记录事件
                     $('.btnRecordDelete').on('click', function () {
                         zeniths.util.delete($(this).data('url'), function () {
-                            datagrid.reload();
+                            reloadData();
                         });
                     });
-
+                    
+                    //行双击事件
+                    $('table>tbody>tr').on('dblclick', function () {
+                        var url = $(this).data('url') ;
+                        viewData(url);
+                    });
                 }
             });
+        }
+        
+        //刷新数据
+        function reloadData() {
+            $('.datagrid').datagrid().reload();
+        }
 
-            //初始化Select控件
-            $('.search-form').dataform().initSelect2();
+        //数据编辑
+        function editData(url) {
+            zeniths.util.dialog(url, 800, 550, {
+                callback: function () {
+                    reloadData();
+                }
+            });
+        }
 
-            //刷新事件
+        //数据查看
+        function viewData(url) {
+            zeniths.util.dialog(url, 800, 490);
+        }
+
+        $(function () {
+
+            //初始化表格
+            initGrid();
+
+            //绑定刷新事件
             $('#btnRefresh').on('click', function () {
-                datagrid.reload();
+                reloadData();
             });
 
-            //新建事件
+            //绑定新建事件
             $('#btnCreate').on('click', function () {
-                editData($(this).data('url'), datagrid);
+                editData($(this).data('url'));
             });
 
-            //删除事件
+            //绑定批量删除事件
             $('#btnDelete').on('click', function () {
                 zeniths.util.deleteBatch($(this).data('url'), datagrid.getSelectedIds(), function () {
-                    datagrid.reload();
+                    reloadData();
                 });
             });
 
         });
+
     </script>
 }

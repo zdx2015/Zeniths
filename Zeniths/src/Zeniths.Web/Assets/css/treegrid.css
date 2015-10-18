@@ -1,0 +1,312 @@
+﻿ 
+.tableForm {
+    border-collapse: collapse;
+}
+
+    .tableForm th {
+        text-align: right;
+        border-bottom: 1px dotted #ccc;
+        padding: 5px;
+    }
+
+    .tableForm td {
+        text-align: left;
+        border-bottom: 1px dotted #ccc;
+        padding: 5px;
+    }
+
+.width60 {
+    width: 60px;
+}
+.width70 {
+    width: 70px;
+}
+.width80 {
+    width: 80px;
+}
+
+.width100 {
+    width: 100px;
+}
+
+.width120 {
+    width: 120px;
+}
+
+.width150 {
+    width: 150px;
+}
+
+.width200 {
+    width: 200px;
+}
+
+.width250 {
+    width: 250px;
+}
+
+.width280 {
+    width: 280px;
+}
+
+.width300 {
+    width: 300px;
+}
+
+.width400 {
+    width: 400px;
+}
+
+.width450 {
+    width: 450px;
+}
+
+.width480 {
+    width: 480px;
+}
+
+.width500 {
+    width: 500px;
+}
+
+.width550 {
+    width: 550px;
+}
+
+.width600 {
+    width: 600px;
+}
+
+.pad1 {
+    padding: 1px;
+}
+
+.pad3 {
+    padding: 3px;
+}
+
+.pad5 {
+    padding: 5px;
+}
+
+.nodisplay {
+    display: none;
+}
+ 
+
+.z-body {
+    background: none repeat scroll 0 0 #ffffff;
+    border: medium none;
+    height: 100%;
+    overflow: hidden;
+    padding: 2px;
+}
+
+.z-txt {
+    background: none repeat scroll 0 0 white;
+    border: 1px solid #a4bed4;
+    display: inline-block;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    margin: 0;
+    padding: 0 3px;
+    width: 122px;
+}
+
+.z-txt-on {
+    background: none repeat scroll 0 0 #ffffcc;
+    border: 1px solid #cc9933;
+}
+
+.z-text {
+    background: url("images/userInputBg.jpg") repeat-x scroll left top rgba(0, 0, 0, 0);
+    border: 1px solid #9296ac;
+    color: #000100;
+    height: 16px;
+    line-height: 16px;
+    margin: 2px 0;
+    padding: 3px 2px;
+}
+
+.z-check {
+    background: url("images/checkbox1.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 12px;
+    padding-left: 12px;
+}
+
+.z-check-on {
+    background: url("images/checkbox1.png") no-repeat scroll 0 -12px rgba(0, 0, 0, 0);
+    display: inline-block;
+    height: 13px;
+    padding-left: 12px;
+}
+
+.z-radio {
+    background: url("images/radio.png") no-repeat scroll left top transparent;
+    cursor: pointer;
+    display: inline-block;
+    height: 19px;
+    line-height: 20px;
+    padding-left: 22px;
+    vertical-align: middle;
+}
+
+.z-radio-on {
+    background-position: left bottom;
+}
+
+.z-toolbar {
+    background-color: #e0ecff;
+    border: 1px solid #8db2e3;
+    height: 26px;
+    margin-bottom: 2px;
+    padding: 3px;
+}
+
+    .z-toolbar a {
+        float: left;
+    }
+
+.z-toolbar-dialog {
+    background-color: #e0ecff;
+    border-top: 1px solid #8db2e3;
+    height: 26px;
+    padding: 3px;
+    text-align: center;
+}
+
+.readonly {
+    background-color: #f6f6f6;
+}
+
+.hide {
+    display: none;
+}
+
+.lookup .combo-arrow {
+    background: url("images/lookup.gif") no-repeat scroll center center rgba(0, 0, 0, 0);
+}
+
+.lookup .combo-arrow-hover {
+    background-color: #e0ecff;
+    border: 1px solid #a4bed4;
+    height: 16px !important;
+    margin: 1px;
+    width: 14px;
+}
+
+.footer {
+    color: #15428b;
+    font-weight: bold;
+    line-height: 23px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.head a {
+    color: White;
+    text-decoration: underline;
+}
+
+.grid {
+    background-color: #fff;
+    border-collapse: collapse;
+    border-left: 1px solid #dbe2e6;
+    border-top: 1px solid #dbe2e6;
+    width: 100%;
+}
+
+    .grid * {
+        font-family: arial,"宋体";
+    }
+
+        .grid * img {
+            vertical-align: middle;
+        }
+
+    .grid th, .grid td {
+        border-bottom: 1px solid #dbe2e6;
+        border-right: 1px solid #dbe2e6;
+        font-size: 12px;
+        padding: 4px;
+    }
+
+    .grid th {
+        background: url("images/grid_head.gif") repeat-x scroll center center rgba(0, 0, 0, 0);
+        font-size: 12px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .grid td {
+        text-align: center;
+    }
+
+    .grid caption {
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 24px;
+        padding: 3px;
+    }
+
+    .grid tfoot td {
+        background: url("images/grid_foot.gif") repeat-x scroll center bottom #fff;
+        color: #424c52;
+        height: 22px;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+        .grid tfoot td .rightpart {
+            display: inline-block;
+            float: right;
+            height: 22px;
+        }
+
+        .grid tfoot td .leftpart {
+            display: inline-block;
+            float: left;
+            height: 22px;
+        }
+
+        .grid tfoot td input {
+            vertical-align: middle;
+        }
+
+        .grid tfoot td img {
+            margin-right: 3px;
+            vertical-align: middle;
+        }
+
+    .grid tbody td {
+        color: #373737;
+    }
+
+    .grid tbody a {
+        color: #1871bd;
+        text-decoration: none;
+    }
+
+        .grid tbody a:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+
+    .grid tr:hover {
+        background-color: #d7ecf5;
+    }
+
+.searchTable td {
+    padding-right: 10px;
+}
+
+.panel-left-border {
+    border-left-width: 1px;
+}
+
+.panel-right-border {
+    border-right-width: 1px;
+}

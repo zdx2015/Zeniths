@@ -34,7 +34,7 @@
                                 <div class='col-sm-6'>
                                     <div class='input-group'>
                                         <span class='input-group-addon fix-border'>颜色</span>
-                                        <input class="color-control form-control" name="@nameof(Model.IconColor)" 
+                                        <input class="color-control form-control" name="@nameof(Model.IconColor)"
                                                value="@Model.IconColor" type="text" title="请选择图标颜色" />
                                     </div>
                                 </div>
@@ -56,7 +56,7 @@
                         <td>
                             <div class="checkbox-list">
                                 <label class="checkbox-inline">
-                                    <input class="icheckbox-control" name="@nameof(Model.IsEnabled)" value="1" type="checkbox" @Html.IsChecked(Model.IsEnabled)/>
+                                    <input class="icheckbox-control" name="@nameof(Model.IsEnabled)" value="1" type="checkbox" @Html.IsChecked(Model.IsEnabled) />
                                     <span>启用</span>
                                 </label>
                             </div>
@@ -87,7 +87,7 @@
                         <i class="fa fa-save"></i> 保存
                     </button>
                     &nbsp;
-                    <a class="btn btn-default btnClose">
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
                         <i class="fa fa-sign-in"></i> 关闭
                     </a>
                 </div>
@@ -95,12 +95,16 @@
         </div>
     </form>
 </div>
-
+@section style{
+    <link href="~/plugin/bootstrap-colorpickersliders/css/bootstrap.colorpickersliders.min.css" rel="stylesheet" />
+}
 @section script{
+    <script src="~/plugin/bootstrap-colorpickersliders/js/tinycolor.js"></script>
+    <script src="~/plugin/bootstrap-colorpickersliders/js/bootstrap.colorpickersliders.min.js"></script>
     <script>
 
-        //初始化表单
-        function initForm() {
+        $(function () {
+
             $('.editform').dataform().initColorPicker().initSelect2().initiCheck().initValidate({
                 rules: {
                     Name: {
@@ -133,27 +137,7 @@
                 beforeSubmit: function () {
 
                 }
-            }).initAjax({
-                success: function (result) {
-                    zeniths.util.unmask();
-                    if (!result.success) {
-                        zeniths.util.alert(result.message);
-                    } else {
-                        zeniths.util.callDialogCallback(window);
-                        zeniths.util.closeFrameDialog(window);
-                    }
-                }
-            });
-        }
-
-        $(function () {
-
-            initForm();//初始化表单
-
-            //绑定关闭按钮事件
-            $('.btnClose').on('click', function () {
-                zeniths.util.closeFrameDialog(window);
-            });
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
 
         });
     </script>

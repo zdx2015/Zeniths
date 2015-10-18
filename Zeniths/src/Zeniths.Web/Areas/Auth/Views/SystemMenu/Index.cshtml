@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "~/Areas/Auth/Views/Shared/_TreeGridLayout.cshtml";
+    Layout = "~/Views/Shared/_LayoutTreeGrid.cshtml";
 }
 <table id="ModuleGrid" fit="true" border="false" striped="true"></table>
 
@@ -35,7 +35,7 @@
             <tr>
                 <td align="right">选项：</td>
                 <td>
-                    <label><input type="checkbox" name="IsEnabled" value="true"/>有效</label>
+                    <label><input type="checkbox" name="IsEnabled" value="true" />有效</label>
                     <label><input type="checkbox" name="IsPublic" value="true" />公共</label>
                     <label><input type="checkbox" name="IsExpand" value="true" />展开</label>
                 </td>
@@ -104,6 +104,9 @@
     <a id="ModuleBtnClose" class="easyui-linkbutton width70">取消</a>
 </div>
 
+@section style{
+<link href="~/Assets/css/treegrid.css" rel="stylesheet" />
+}
 @section script{
-    <script src="~/Areas/Auth/Content/js/systemMenu.js"></script>
+    <script src="~/Assets/js/auth/system.menu.js"></script>
 }

@@ -1,7 +1,6 @@
 ﻿@model SystemDictionary
 @{
     var title = "编辑数据字典";
-    Layout = "~/Views/Shared/_Layout.cshtml";
     SystemDictionary parentEntity = ViewBag.ParentEntity;
 }
 
@@ -19,14 +18,14 @@
                 <input type="hidden" name="@nameof(Model.SortPath)" value="@Model.SortPath" />
                 <table class="table table-form table-dialog-form">
                     <tr>
-                        <th class='w-100px'><label class="control-label">上级字典</label></th>
+                        <th class='w-100px'><label class="control-label">上级字典：</label></th>
                         <td>
                             @Html.Write(parentEntity != null, parentEntity?.Name, "顶层")
                         </td>
                     </tr>
                     <tr>
                         <th class='w-100px'>
-                            <label class="control-label">编码</label>
+                            <label class="control-label">编码：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
@@ -36,7 +35,7 @@
                     </tr>
                     <tr>
                         <th class='w-100px'>
-                            <label class="control-label">名称</label>
+                            <label class="control-label">名称：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
@@ -45,7 +44,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th><label class="control-label">备注</label></th>
+                        <th><label class="control-label">备注：</label></th>
                         <td>
                             <textarea class="form-control" name="@nameof(Model.Note)" rows="3">@Model.Note</textarea>
                         </td>
@@ -58,7 +57,7 @@
                         <i class="fa fa-save"></i> 保存
                     </button>
                     &nbsp;
-                    <a class="btn btn-default btnClose">
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
                         <i class="fa fa-sign-in"></i> 关闭
                     </a>
                 </div>
@@ -70,9 +69,8 @@
 @section script{
     <script>
 
-        //初始化表单
-        function initForm() {
-            $('.editform').dataform().initSelect2().initiCheck().initValidate({
+        $(function () {
+            $('.editform').dataform().initValidate({
                 rules: {
                     Code: {
                         required: true,
@@ -96,28 +94,7 @@
                 beforeSubmit: function () {
 
                 }
-            }).initAjax({
-                success: function (result) {
-                    zeniths.util.unmask();
-                    if (!result.success) {
-                        zeniths.util.alert(result.message);
-                    } else {
-                        zeniths.util.callDialogCallback(window);
-                        zeniths.util.closeFrameDialog(window);
-                    }
-                }
-            });
-        }
-
-        $(function () {
-
-            initForm();//初始化表单
-
-            //绑定关闭按钮事件
-            $('.btnClose').on('click', function () {
-                zeniths.util.closeFrameDialog(window);
-            });
-
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
         });
     </script>
 }

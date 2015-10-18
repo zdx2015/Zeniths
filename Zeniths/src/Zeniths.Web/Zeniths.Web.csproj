@@ -97,12 +97,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\css\default.css" />
+    <Content Include="Assets\css\images\headerbg.png" />
     <Content Include="Assets\css\images\loginbg.jpg" />
     <Content Include="Assets\css\images\cloud.png" />
     <Content Include="Assets\css\images\logo128.png" />
+    <Content Include="Assets\css\images\maintitle.png" />
     <Content Include="Assets\css\login.css" />
+    <Content Include="Assets\css\treegrid.css" />
     <Content Include="Assets\js\auth\system.dictionary.js" />
+    <Content Include="Areas\WorkFlow\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\HR\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Auth\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\WorkFlowForm\Details.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemDictionary\DetailsView.cshtml" />
     <None Include="Plugin\_references.js" />
+    <Content Include="Assets\js\default.js" />
     <Content Include="Plugin\bootstrap-clockpicker\css\bootstrap-clockpicker.css" />
     <Content Include="Plugin\bootstrap-clockpicker\js\bootstrap-clockpicker.js" />
     <Content Include="Plugin\bootstrap-clockpicker\css\bootstrap-clockpicker.min.css" />
@@ -116,7 +126,7 @@
     <Content Include="Plugin\bootstrap-datepicker\css\bootstrap-datepicker3.min.css" />
     <Content Include="Plugin\bootstrap-datepicker\js\bootstrap-datepicker.js" />
     <Content Include="Plugin\bootstrap-datepicker\js\bootstrap-datepicker.min.js" />
-    <Content Include="Plugin\bootstrap-datepicker\js\bootstrap-datepicker.zh-CN.min.js" />
+    <Content Include="Plugin\bootstrap-datepicker\js\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Plugin\bootstrap-daterangepicker\css\daterangepicker.css" />
     <Content Include="Plugin\bootstrap-daterangepicker\js\daterangepicker.js" />
     <Content Include="Plugin\bootstrap-daterangepicker\js\moment.js" />
@@ -141,7 +151,7 @@
     <Content Include="Plugin\jquery-chosen\css\images\chosen-sprite.png" />
     <Content Include="Plugin\jquery-chosen\js\chosen.jquery.js" />
     <Content Include="Plugin\jquery-chosen\js\chosen.jquery.min.js" />
-    <Content Include="Plugin\jquery-blockui\jquery.blockui.min.js" />
+    <Content Include="Plugin\jquery-blockui\jquery.blockui.js" />
     <Content Include="Plugin\jquery-easyui\css\easyui.css" />
     <Content Include="Plugin\jquery-easyui\css\images\accordion_arrows.png" />
     <Content Include="Plugin\jquery-easyui\css\images\blank.gif" />
@@ -407,7 +417,7 @@
     <Content Include="Plugin\bootstrap\js\bootstrap.min.js" />
     <Content Include="Plugin\font-awesome\css\font-awesome.css" />
     <Content Include="Plugin\font-awesome\fonts\fontawesome-webfont.svg" />
-    <Content Include="Plugin\jquery-cookie\jquery.cookie.min.js" />
+    <Content Include="Plugin\jquery-cookie\jquery.cookie.js" />
     <Content Include="Plugin\jquery-easyui\css\layout.css" />
     <Content Include="Plugin\jquery-easyui\css\panel.css" />
     <Content Include="Plugin\jquery-easyui\css\tree.css" />
@@ -445,7 +455,7 @@
     <Content Include="Areas\WorkFlow\Views\web.config" />
     <Content Include="Areas\HR\Views\web.config" />
     <Content Include="Areas\Auth\Views\web.config" />
-    <Content Include="Views\Shared\_TreeGridLayout.cshtml" />
+    <Content Include="Views\Shared\_LayoutTreeGrid.cshtml" />
     <Content Include="Areas\Auth\Views\SystemMenu\Index.cshtml" />
     <Content Include="Areas\Auth\Views\System\WebIcons.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDictionary\Index.cshtml" />
@@ -507,6 +517,8 @@
     <Content Include="Areas\WorkFlow\Views\WorkFlowButton\Edit.cshtml" />
     <Content Include="Areas\WorkFlow\Views\WorkFlowButton\Grid.cshtml" />
     <Content Include="Views\Shared\_LayoutBase.cshtml" />
+    <Content Include="Views\Shared\_LayoutBootstrapBase.cshtml" />
+    <Content Include="Views\Shared\_LayoutTreeBase.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -516,7 +528,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\HR\Controllers\" />
-    <Folder Include="Areas\WorkFlow\Views\Shared\" />
     <Folder Include="Assets\js\hr\" />
     <Folder Include="Assets\js\workflow\" />
   </ItemGroup>

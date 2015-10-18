@@ -9,12 +9,10 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    @Styles.Render("~/bootstrap-css")
     @RenderSection("style", required: false)
 </head>
 <body>
     @RenderBody()
-    @Scripts.Render("~/bootstrap-js")
     @RenderSection("script", required: false)
 </body>
 </html>

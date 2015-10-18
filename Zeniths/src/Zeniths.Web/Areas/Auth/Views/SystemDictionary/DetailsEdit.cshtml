@@ -1,7 +1,6 @@
 ﻿@model SystemDictionaryDetails
 @{
     var title = "编辑字典明细";
-    Layout = "~/Views/Shared/_Layout.cshtml";
     SystemDictionary dictionaryEntity = ViewBag.DictionaryEntity;
 }
 
@@ -18,14 +17,14 @@
                 <input type="hidden" name="@nameof(Model.DictionaryId)" value="@Model.DictionaryId" />
                 <table class="table table-form table-dialog-form">
                     <tr>
-                        <th class='w-100px'><label class="control-label">数据字典</label></th>
+                        <th class='w-100px'><label class="control-label">数据字典：</label></th>
                         <td>
                             @Html.Write(dictionaryEntity != null, dictionaryEntity?.Name, "数据字典")
                         </td>
                     </tr>
                     <tr>
-                        <th class='w-100px'>
-                            <label class="control-label">明细项名称</label>
+                        <th class='w-120px'>
+                            <label class="control-label">明细项名称：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
@@ -33,9 +32,9 @@
                             </div>
                         </td>
                     </tr>
-                    
+
                     <tr>
-                        <th class='w-100px'><label class="control-label">明细项值</label></th>
+                        <th class='w-100px'><label class="control-label">明细项值：</label></th>
                         <td>
                             <div class="input-icon right">
                                 <input class="form-control" name="@nameof(Model.Value)" value="@Model.Value" type="text" placeholder="请输入数据字典明细项值" />
@@ -43,11 +42,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <th><label class="control-label">状态</label></th>
+                        <th><label class="control-label">状态：</label></th>
                         <td>
                             <div class="checkbox-list">
                                 <label class="checkbox-inline">
-                                    <input class="icheckbox-control" name="@nameof(Model.IsEnabled)" value="1" type="checkbox" @Html.IsChecked(Model.IsEnabled)/>
+                                    <input class="icheckbox-control" name="@nameof(Model.IsEnabled)" value="1" type="checkbox" @Html.IsChecked(Model.IsEnabled) />
                                     <span>启用</span>
                                 </label>
                             </div>
@@ -56,7 +55,7 @@
 
                     <tr>
                         <th>
-                            <label class="control-label">序号</label>
+                            <label class="control-label">序号：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
@@ -65,7 +64,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th><label class="control-label">备注</label></th>
+                        <th><label class="control-label">备注：</label></th>
                         <td>
                             <textarea class="form-control" name="@nameof(Model.Note)" rows="3">@Model.Note</textarea>
                         </td>
@@ -78,7 +77,7 @@
                         <i class="fa fa-save"></i> 保存
                     </button>
                     &nbsp;
-                    <a class="btn btn-default btnClose">
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
                         <i class="fa fa-sign-in"></i> 关闭
                     </a>
                 </div>
@@ -90,8 +89,8 @@
 @section script{
     <script>
 
-        //初始化表单
-        function initForm() {
+        $(function () {
+
             $('.editform').dataform().initiCheck().initValidate({
                 rules: {
                     Name: {
@@ -118,27 +117,7 @@
                 beforeSubmit: function () {
 
                 }
-            }).initAjax({
-                success: function (result) {
-                    zeniths.util.unmask();
-                    if (!result.success) {
-                        zeniths.util.alert(result.message);
-                    } else {
-                        zeniths.util.callDialogCallback(window);
-                        zeniths.util.closeFrameDialog(window);
-                    }
-                }
-            });
-        }
-
-        $(function () {
-
-            initForm();//初始化表单
-
-            //绑定关闭按钮事件
-            $('.btnClose').on('click', function () {
-                zeniths.util.closeFrameDialog(window);
-            });
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
 
         });
     </script>

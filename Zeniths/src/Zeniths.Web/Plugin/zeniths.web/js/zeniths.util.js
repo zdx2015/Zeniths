@@ -629,6 +629,16 @@ zeniths.util.getAjaxErrorMessage = function (result) {
     return result.responseJSON.message;
 }
 
+zeniths.util.formAjaxSuccess = function (result) {
+    zeniths.util.unmask();
+    if (!result.success) {
+        zeniths.util.alert(result.message);
+    } else {
+        zeniths.util.callDialogCallback(window);
+        zeniths.util.closeFrameDialog(window);
+    }
+}
+
 /************************************Tree*************************************************************/
 
 /**
@@ -650,7 +660,7 @@ zeniths.tree.reloadTree = function ($tree) {
  * @returns {} 
  */
 zeniths.tree.deleteTreeNode = function ($tree, url, data, msg, callback) {
-    
+
     var node = zeniths.tree.getTreeNodeSelected($tree);
     var ids = [];
     ids.push(node.id);

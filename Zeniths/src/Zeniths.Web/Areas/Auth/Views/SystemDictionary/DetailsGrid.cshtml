@@ -18,7 +18,7 @@
     <tbody>
         @foreach (var record in Model)
         {
-            <tr>
+            <tr class="cursor-pointer" data-url="@Url.Action("DetailsView",new {id = record.Id})">
                 <td>
                     <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
                 </td>
@@ -27,6 +27,9 @@
                 <td class="text-center">@Html.BoolFaIcon(record.IsEnabled)</td>
                 <td class="text-center">@record.SortIndex</td>
                 <td>
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("DetailsView",new {id = record.Id})">
+                        <i class="fa fa-eye"></i> 查看
+                    </a>
                     <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("EditDetails",new {id = record.Id})">
                         <i class="fa fa-edit"></i> 编辑
                     </a>

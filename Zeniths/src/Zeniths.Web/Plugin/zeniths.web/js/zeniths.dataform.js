@@ -444,6 +444,7 @@
         var ops = $.extend({}, {
             size: 'sm',
             hsvpanel: true,
+            sliders:false,
             previewformat: 'hex',
             order: {
                 rgb: 1,
