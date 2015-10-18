@@ -29,8 +29,8 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir,
-                name, category);
+            var list = service.GetPageList(pageIndex, pageSize,
+                orderName, orderDir,name, category);
             return View(list);
         }
 

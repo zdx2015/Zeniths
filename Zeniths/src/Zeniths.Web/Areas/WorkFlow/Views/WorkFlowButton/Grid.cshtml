@@ -13,7 +13,7 @@
             <th class="w-80px text-center" data-order="@nameof(WorkFlowButton.IsEnabled)">状态</th>
             <th class="w-80px text-center" data-order="@nameof(WorkFlowButton.SortIndex)">序号</th>
             <th>备注</th>
-            <th class="w-130px text-center">操作</th>
+            <th class="w-200px text-center">操作</th>
         </tr>
     </thead>
     <tbody>
@@ -35,6 +35,9 @@
                     </div>
                 </td>
                 <td>
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
+                        <i class="fa fa-eye"></i> 查看
+                    </a>
                     <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
                         <i class="fa fa-edit"></i> 编辑
                     </a>

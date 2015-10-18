@@ -629,6 +629,11 @@ zeniths.util.getAjaxErrorMessage = function (result) {
     return result.responseJSON.message;
 }
 
+/**
+ * 表单Ajax提交成功回调默认函数
+ * @param {Object} result 
+ * @returns {} 
+ */
 zeniths.util.formAjaxSuccess = function (result) {
     zeniths.util.unmask();
     if (!result.success) {
@@ -637,6 +642,94 @@ zeniths.util.formAjaxSuccess = function (result) {
         zeniths.util.callDialogCallback(window);
         zeniths.util.closeFrameDialog(window);
     }
+}
+
+/**
+ * 标准表格绑定
+ * @param {Object} options 配置参数
+ * @returns {} 
+ */
+zeniths.util.standardGridBind = function (options) {
+    var gridSelector = '.datagrid';
+    var editWidth = options.editWidth;
+    var editHeight = options.editHeight;
+    var viewWidth = options.viewWidth;
+    var viewHeight = options.viewHeight;
+    if (options.gridSelector) {
+        gridSelector = options.gridSelector;
+    }
+
+    //初始化表格
+    function initGrid() {
+        $(gridSelector).datagrid({
+            onLoadSuccess: function () {
+
+                //编辑记录事件
+                $(gridSelector + ' .btnRecordEdit').on('click', function () {
+                    editData($(this).data('url'));
+                });
+
+                //删除记录事件
+                $(gridSelector + ' .btnRecordDelete').on('click', function () {
+                    zeniths.util.delete($(this).data('url'), function () {
+                        reloadData();
+                    });
+                });
+
+                //查看记录事件
+                $(gridSelector + ' .btnRecordView').on('click', function () {
+                    var url = $(this).data('url');
+                    viewData(url);
+                });
+
+                //行双击事件
+                $(gridSelector + ' table>tbody>tr').on('dblclick', function () {
+                    var url = $(this).data('url');
+                    viewData(url);
+                });
+            }
+        });
+    }
+
+    //刷新数据
+    function reloadData() {
+        $(gridSelector).datagrid().reload();
+    }
+
+    //数据编辑
+    function editData(url) {
+        zeniths.util.dialog(url, editWidth, editHeight, {
+            callback: function () {
+                reloadData();
+            }
+        });
+    }
+
+    //数据查看
+    function viewData(url) {
+        zeniths.util.dialog(url, viewWidth, viewHeight);
+    }
+
+    initGrid();
+
+    $('.search-form').dataform().initSelect2();
+
+    //绑定刷新事件
+    $('#btnRefresh').on('click', function () {
+        reloadData();
+    });
+
+    //绑定新建事件
+    $('#btnCreate').on('click', function () {
+        editData($(this).data('url'));
+    });
+
+    //绑定批量删除事件
+    $('#btnDelete').on('click', function () {
+        zeniths.util.deleteBatch($(this).data('url'), $(gridSelector).datagrid().getSelectedIds(), function () {
+            reloadData();
+        });
+    });
 }
 
 /************************************Tree*************************************************************/

@@ -80,8 +80,9 @@ namespace Zeniths.Auth.Service
             {
                 if (ids.Length == 1)
                 {
-                    dicRepos.Delete(ids[0]);
-                    detailsRepos.Delete(p => p.DictionaryId == ids[0]);
+                    var id = ids[0];
+                    dicRepos.Delete(id);
+                    detailsRepos.Delete(p => p.DictionaryId == id);
                 }
                 else
                 {
@@ -169,9 +170,9 @@ namespace Zeniths.Auth.Service
         /// <param name="dictionaryId">数据字典主键</param>
         /// <param name="id">字典明细项主键</param>
         /// <returns>存在返回true</returns>
-        public BoolMessage ExistsDetails(string name,int dictionaryId, int id)
+        public BoolMessage ExistsDetails(string name, int dictionaryId, int id)
         {
-            var has = detailsRepos.Exists(p => p.Name == name && p.DictionaryId== dictionaryId && p.Id != id);
+            var has = detailsRepos.Exists(p => p.Name == name && p.DictionaryId == dictionaryId && p.Id != id);
             return has ? new BoolMessage(false, "指定的字典明细项名称已经存在") : BoolMessage.True;
         }
 
@@ -247,18 +248,27 @@ namespace Zeniths.Auth.Service
         /// 获取系统数据字典明细列表
         /// </summary>
         /// <param name="dictionaryId">字典主键</param>
-        /// <param name="hasDisabled">是否包含未启用数据</param>
         /// <returns></returns>
-        public List<SystemDictionaryDetails> GetDetailsList(int dictionaryId, bool hasDisabled)
+        public List<SystemDictionaryDetails> GetEnabledDetailsListByDicId(int dictionaryId)
         {
             var query = detailsRepos.NewQuery.
                 Where(p => p.DictionaryId == dictionaryId).
                 OrderBy(p => p.SortIndex);
-            if (!hasDisabled)
-            {
-                query.Where(p => p.IsEnabled == true);
-            }
             return detailsRepos.Query(query).ToList();
+        }
+
+        /// <summary>
+        /// 获取系统数据字典明细列表
+        /// </summary>
+        /// <param name="dicCode">字典编码</param>
+        /// <returns></returns>
+        public List<SystemDictionaryDetails> GetEnabledDetailsListByDicCode(string dicCode)
+        {
+            var sql = @"
+SELECT details.Id ,details.DictionaryId ,details.Name ,details.NameSpell ,details.Value ,details.IsEnabled ,
+details.SortIndex ,details.Note FROM SystemDictionary dic JOIN SystemDictionaryDetails details
+ON dic.Id = details.DictionaryId AND dic.Code=@code ORDER BY details.SortIndex";
+            return detailsRepos.Database.Query<SystemDictionaryDetails>(sql, new { code = dicCode }).ToList();
         }
 
         /// <summary>

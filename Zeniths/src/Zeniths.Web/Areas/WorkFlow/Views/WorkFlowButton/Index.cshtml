@@ -31,7 +31,8 @@
                     </a>
                 </form>
             </div>
-            <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid"))" data-query-form=".search-form">
+            <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid"))"
+                 data-query-form=".search-form">
             </div>
         </div>
     </div>
@@ -40,75 +41,13 @@
 @section script
 {
     <script>
-
-        //初始化表格
-        function initGrid() {
-            $('.datagrid').datagrid({
-                onLoadSuccess: function () {
-
-                    //编辑记录事件
-                    $('.btnRecordEdit').on('click', function () {
-                        editData($(this).data('url'));
-                    });
-
-                    //删除记录事件
-                    $('.btnRecordDelete').on('click', function () {
-                        zeniths.util.delete($(this).data('url'), function () {
-                            reloadData();
-                        });
-                    });
-                    
-                    //行双击事件
-                    $('table>tbody>tr').on('dblclick', function () {
-                        var url = $(this).data('url') ;
-                        viewData(url);
-                    });
-                }
-            });
-        }
-        
-        //刷新数据
-        function reloadData() {
-            $('.datagrid').datagrid().reload();
-        }
-
-        //数据编辑
-        function editData(url) {
-            zeniths.util.dialog(url, 800, 550, {
-                callback: function () {
-                    reloadData();
-                }
-            });
-        }
-
-        //数据查看
-        function viewData(url) {
-            zeniths.util.dialog(url, 800, 490);
-        }
-
         $(function () {
-
-            //初始化表格
-            initGrid();
-
-            //绑定刷新事件
-            $('#btnRefresh').on('click', function () {
-                reloadData();
+            zeniths.util.standardGridBind({
+                editWidth: 800,
+                editHeight: 550,
+                viewWidth: 800,
+                viewHeight: 490
             });
-
-            //绑定新建事件
-            $('#btnCreate').on('click', function () {
-                editData($(this).data('url'));
-            });
-
-            //绑定批量删除事件
-            $('#btnDelete').on('click', function () {
-                zeniths.util.deleteBatch($(this).data('url'), datagrid.getSelectedIds(), function () {
-                    reloadData();
-                });
-            });
-
         });
-
     </script>
 }

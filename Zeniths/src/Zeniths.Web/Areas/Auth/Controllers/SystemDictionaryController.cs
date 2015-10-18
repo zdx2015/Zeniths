@@ -163,7 +163,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         public ActionResult ExportDetails()
         {
             var dictionaryId = Request.QueryString["dictionaryId"].ToInt();
-            return Export(service.GetDetailsList(dictionaryId,true));
+            return Export(service.GetEnabledDetailsListByDicId(dictionaryId));
         }
         
     }
