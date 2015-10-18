@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Zeniths.Auth.Entity;
 using Zeniths.Collections;
+using Zeniths.Data.Extensions;
 using Zeniths.Extensions;
 using Zeniths.Utility;
 
@@ -80,10 +81,12 @@ namespace Zeniths.Auth.Service
                 if (ids.Length == 1)
                 {
                     dicRepos.Delete(ids[0]);
+                    detailsRepos.Delete(p => p.DictionaryId == ids[0]);
                 }
                 else
                 {
                     dicRepos.Delete(ids);
+                    detailsRepos.Delete(p => p.DictionaryId.In(ids));
                 }
                 return BoolMessage.True;
             }
@@ -163,11 +166,12 @@ namespace Zeniths.Auth.Service
         /// 检测是否存在指定系统数据字典明细项
         /// </summary>
         /// <param name="name">数据字典明细项名称</param>
-        /// <param name="id">数据字典主键</param>
+        /// <param name="dictionaryId">数据字典主键</param>
+        /// <param name="id">字典明细项主键</param>
         /// <returns>存在返回true</returns>
-        public BoolMessage ExistsDetails(string name, int id)
+        public BoolMessage ExistsDetails(string name,int dictionaryId, int id)
         {
-            var has = detailsRepos.Exists(p => p.Name == name && p.Id != id);
+            var has = detailsRepos.Exists(p => p.Name == name && p.DictionaryId== dictionaryId && p.Id != id);
             return has ? new BoolMessage(false, "指定的字典明细项名称已经存在") : BoolMessage.True;
         }
 
@@ -245,7 +249,7 @@ namespace Zeniths.Auth.Service
         /// <param name="dictionaryId">字典主键</param>
         /// <param name="hasDisabled">是否包含未启用数据</param>
         /// <returns></returns>
-        public List<SystemDictionaryDetails> GetDetailsList(int dictionaryId,bool hasDisabled)
+        public List<SystemDictionaryDetails> GetDetailsList(int dictionaryId, bool hasDisabled)
         {
             var query = detailsRepos.NewQuery.
                 Where(p => p.DictionaryId == dictionaryId).
@@ -267,13 +271,13 @@ namespace Zeniths.Auth.Service
         /// <param name="dictionaryId">字典主键</param>
         /// <param name="name">明细项名称或者简拼</param>
         /// <returns>数据字典明细分页列表</returns>
-        public PageList<SystemDictionaryDetails> GetPageDetailsList(int pageIndex, int pageSize, 
-            string orderName, string orderDir, int dictionaryId,string name)
+        public PageList<SystemDictionaryDetails> GetPageDetailsList(int pageIndex, int pageSize,
+            string orderName, string orderDir, int dictionaryId, string name)
         {
             orderName = orderName.IsEmpty() ? nameof(SystemDictionaryDetails.SortIndex) : orderName;
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Asc) : orderDir;
             var query = detailsRepos.NewQuery.Take(pageSize).Page(pageIndex).
-                Where(p=>p.DictionaryId == dictionaryId).
+                Where(p => p.DictionaryId == dictionaryId).
                 OrderBy(orderName, orderDir.IsAsc());
             if (!string.IsNullOrEmpty(name))
             {

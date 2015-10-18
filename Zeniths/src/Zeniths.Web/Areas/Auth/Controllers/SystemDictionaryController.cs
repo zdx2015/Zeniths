@@ -133,7 +133,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SaveDetails(SystemDictionaryDetails entity)
         {
-            var hasResult = service.ExistsDetails(entity.Name, entity.Id);
+            var hasResult = service.ExistsDetails(entity.Name,entity.DictionaryId, entity.Id);
             if (hasResult.Failure)
             {
                 return JsonNet(hasResult);
