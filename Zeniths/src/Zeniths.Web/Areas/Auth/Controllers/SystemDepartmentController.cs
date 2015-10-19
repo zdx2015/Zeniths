@@ -7,9 +7,9 @@ using Zeniths.Auth.Utility;
 
 namespace Zeniths.Web.Areas.Auth.Controllers
 {
-    public class SystemController : AuthBaseController
+    public class SystemDepartmentController : AuthBaseController
     {
-        public ActionResult WebIcons()
+        public ActionResult Index()
         {
             return View();
         }

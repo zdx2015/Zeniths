@@ -111,6 +111,12 @@
     <Content Include="Areas\Auth\Views\_ViewStart.cshtml" />
     <Content Include="Areas\WorkFlow\Views\WorkFlowForm\Details.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDictionary\DetailsView.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemDoc\Index.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemDoc\Details.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemDoc\Edit.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemDoc\Grid.cshtml" />
+    <Content Include="Plugin\kindeditor\asp.net\file_manager_json.ashx" />
+    <Content Include="Plugin\kindeditor\asp.net\upload_json.ashx" />
     <None Include="Plugin\_references.js" />
     <Content Include="Assets\js\default.js" />
     <Content Include="Plugin\bootstrap-clockpicker\css\bootstrap-clockpicker.css" />
@@ -198,9 +204,11 @@
     <Content Include="Plugin\jquery-validation\messages_zh.min.js" />
     <Content Include="Plugin\jquery.pin\jquery.pin.js" />
     <Content Include="Plugin\jquery.pin\jquery.pin.min.js" />
+    <Content Include="Plugin\kindeditor\asp.net\demo.aspx" />
+    <Content Include="Plugin\kindeditor\kindeditor-all-min.js" />
+    <Content Include="Plugin\kindeditor\kindeditor-all.js" />
     <Content Include="Plugin\kindeditor\kindeditor-min.js" />
     <Content Include="Plugin\kindeditor\kindeditor.js" />
-    <Content Include="Plugin\kindeditor\lang\en.js" />
     <Content Include="Plugin\kindeditor\lang\zh_CN.js" />
     <Content Include="Plugin\kindeditor\plugins\anchor\anchor.js" />
     <Content Include="Plugin\kindeditor\plugins\autoheight\autoheight.js" />
@@ -375,6 +383,20 @@
     <Content Include="Plugin\kindeditor\plugins\plainpaste\plainpaste.js" />
     <Content Include="Plugin\kindeditor\plugins\preview\preview.js" />
     <Content Include="Plugin\kindeditor\plugins\quickformat\quickformat.js" />
+    <Content Include="Plugin\kindeditor\plugins\syntaxHighlighter\scripts\shBrushCpp.js" />
+    <Content Include="Plugin\kindeditor\plugins\syntaxHighlighter\scripts\shBrushCSharp.js" />
+    <Content Include="Plugin\kindeditor\plugins\syntaxHighlighter\scripts\shBrushCss.js" />
+    <Content Include="Plugin\kindeditor\plugins\syntaxHighlighter\scripts\shBrushDelphi.js" />
+    <Content Include="Plugin\kindeditor\plugins\syntaxHighlighter\scripts\shBrushJava.js" />
+    <Content Include="Plugin\kindeditor\plugins\syntaxHighlighter\scripts\shBrushJScript.js" />
+    <Content Include="Plugin\kindeditor\plugins\syntaxHighlighter\scripts\shBrushPhp.js" />
+    <Content Include="Plugin\kindeditor\plugins\syntaxHighlighter\scripts\shBrushPython.js" />
+    <Content Include="Plugin\kindeditor\plugins\syntaxHighlighter\scripts\shBrushSass.js" />
+    <Content Include="Plugin\kindeditor\plugins\syntaxHighlighter\scripts\shBrushSql.js" />
+    <Content Include="Plugin\kindeditor\plugins\syntaxHighlighter\scripts\shBrushVb.js" />
+    <Content Include="Plugin\kindeditor\plugins\syntaxHighlighter\scripts\shBrushXml.js" />
+    <Content Include="Plugin\kindeditor\plugins\syntaxHighlighter\shCore.js" />
+    <Content Include="Plugin\kindeditor\plugins\syntaxHighlighter\shCoreDefault.css" />
     <Content Include="Plugin\kindeditor\plugins\table\table.js" />
     <Content Include="Plugin\kindeditor\plugins\template\html\1.html" />
     <Content Include="Plugin\kindeditor\plugins\template\html\2.html" />
@@ -390,9 +412,6 @@
     <Content Include="Plugin\kindeditor\themes\default\background.png" />
     <Content Include="Plugin\kindeditor\themes\default\default.css" />
     <Content Include="Plugin\kindeditor\themes\default\default.png" />
-    <Content Include="Plugin\kindeditor\themes\qq\editor.gif" />
-    <Content Include="Plugin\kindeditor\themes\qq\qq.css" />
-    <Content Include="Plugin\kindeditor\themes\simple\simple.css" />
     <Content Include="Plugin\jquery-inputlimiter\jquery.inputlimiter.js" />
     <Content Include="Plugin\zeniths.web\js\xci.js" />
     <Content Include="Plugin\jquery-easyui\css\icon.css" />
@@ -475,7 +494,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemController.cs" />
+    <Compile Include="Areas\Auth\Controllers\SystemDepartmentController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemDictionaryController.cs" />
+    <Compile Include="Areas\Auth\Controllers\SystemDocController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemMenuController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\WorkFlow\WorkFlowAreaRegistration.cs" />
@@ -527,6 +548,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Auth\Views\SystemDepartment\" />
     <Folder Include="Areas\HR\Controllers\" />
     <Folder Include="Assets\js\hr\" />
     <Folder Include="Assets\js\workflow\" />

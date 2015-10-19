@@ -57,7 +57,6 @@ namespace Zeniths.Web
                ));
 
             bundles.Add(new ScriptBundle("~/zeniths-tree-js").Include(
-                "~/zeniths-js",
                 "~/plugin/jquery-easyui/js/jquery.parser.js",
                 "~/plugin/jquery-easyui/js/jquery.draggable.js",
                 "~/plugin/jquery-easyui/js/jquery.droppable.js",
@@ -69,6 +68,10 @@ namespace Zeniths.Web
                 ));
 
 
+            //syntaxHighlighter
+            bundles.Add(new ScriptBundle("~/syntaxHighlighter-js").Include(
+                "~/plugin/kindeditor/plugins/syntaxHighlighter/shCore.js",
+               "~/plugin/kindeditor/plugins/syntaxHighlighter/scripts/*.js"));
 
             #endregion
 
@@ -103,6 +106,7 @@ namespace Zeniths.Web
                 "~/plugin/jquery-easyui/css/layout.css",
                 "~/plugin/jquery-easyui/css/tree.css",
                 "~/plugin/jquery-easyui/css/menu.css"));
+
 
             #endregion
 

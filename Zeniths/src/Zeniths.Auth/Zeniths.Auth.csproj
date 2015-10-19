@@ -43,11 +43,16 @@
   <ItemGroup>
     <Compile Include="AuthDatabase.cs" />
     <Compile Include="AuthRepository.cs" />
+    <Compile Include="Entity\SystemDepartment.cs" />
     <Compile Include="Entity\SystemDictionary.cs" />
     <Compile Include="Entity\SystemDictionaryDetails.cs" />
+    <Compile Include="Entity\SystemDoc.cs" />
     <Compile Include="Entity\SystemMenu.cs" />
+    <Compile Include="Entity\SystemRole.cs" />
+    <Compile Include="Entity\SystemUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\SystemDictionaryService.cs" />
+    <Compile Include="Service\SystemDocService.cs" />
     <Compile Include="Service\SystemMenuService.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -14,15 +14,14 @@ namespace Zeniths.Auth.Utility
     public static class HtmlExtensions
     {
         /// <summary>
-        /// 获取数据字典下拉选项
+        /// 获取系统文档下拉选项
         /// </summary>
         /// <param name="helper"></param>
-        /// <param name="dicCode">数据字典编码</param>
         /// <param name="selected">选中的值</param>
         /// <returns></returns>
-        public static MvcHtmlString DictionaryOptions(this HtmlHelper helper,string dicCode, string selected = null)
+        public static MvcHtmlString SystemDocCategory(this HtmlHelper helper, string selected = null)
         {
-            var options = AuthHelper.DictionaryOptions(dicCode, selected);
+            var options = AuthHelper.DictionaryOptions("SystemDocCategory", selected);
             return MvcHtmlString.Create(options);
         }
     }

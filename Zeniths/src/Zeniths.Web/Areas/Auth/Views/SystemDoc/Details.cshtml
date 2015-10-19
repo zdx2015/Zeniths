@@ -1,0 +1,33 @@
+﻿@using System.Web.Optimization
+@model SystemDoc
+<div class="container-edit-zeniths">
+    <div class="panel panel-default panel-zeniths">
+
+        <div class="panel-body" style="margin:10px;">
+            <div class="text-center">
+                <h3>
+                    @Model.Name
+                </h3>
+                @Model.Category
+                @DateTimeHelper.FormatDateHasSecond(Model.CreateDateTime)
+                最后编辑：<span style="color:green">@DateTimeHelper.FormatDateHasSecond(Model.ModifyDateTime) </span>
+            </div>
+            <hr />
+            @Html.Raw(Model.Contents)
+        </div>
+        <div class="panel-footer text-center">
+            <div class="buttons">
+                <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                    <i class="fa fa-sign-in"></i> 关闭
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+@section style{
+<link href="~/Plugin/kindeditor/plugins/syntaxHighlighter/shCoreDefault.css" rel="stylesheet" />  
+}
+@section script{
+    @Scripts.Render("~/syntaxHighlighter-js")
+    <script>SyntaxHighlighter.all();</script>
+}

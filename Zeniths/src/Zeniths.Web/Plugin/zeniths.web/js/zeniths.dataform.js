@@ -138,38 +138,41 @@
     DataForm.prototype.initKindEditor = function (options) {
         //var editor = { "id": ["desc"], "tools": "simpleTools" };
 
-        var bugTools =
-        [
-            'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', '|',
-            'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', '|',
-            'emoticons', 'image', 'code', 'link', '|', 'removeformat', 'undo', 'redo', 'fullscreen', 'source', 'about'
-        ];
+        //var bugTools =
+        //[
+        //    'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', '|',
+        //    'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', '|',
+        //    'emoticons', 'image', 'code', 'link', '|', 'removeformat', 'undo', 'redo', 'fullscreen', 'source', 'about'
+        //];
 
-        var simpleTools =
-        [
-            'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', '|',
-            'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', '|',
-            'emoticons', 'image', 'code', 'link', '|', 'removeformat', 'undo', 'redo', 'fullscreen', 'source', 'about'
-        ];
+        //var simpleTools =
+        //[
+        //    'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline', '|',
+        //    'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist', 'insertunorderedlist', '|',
+        //    'emoticons', 'image', 'code', 'link', '|', 'removeformat', 'undo', 'redo', 'fullscreen', 'source', 'about'
+        //];
 
-        var fullTools =
-        [
-            'formatblock', 'fontname', 'fontsize', 'lineheight', '|', 'forecolor', 'hilitecolor', '|', 'bold', 'italic', 'underline', 'strikethrough', '|',
-            'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', '|',
-            'insertorderedlist', 'insertunorderedlist', '|',
-            'emoticons', 'image', 'insertfile', 'hr', '|', 'link', 'unlink', '/',
-            'undo', 'redo', '|', 'selectall', 'cut', 'copy', 'paste', '|', 'plainpaste', 'wordpaste', '|', 'removeformat', 'clearhtml', 'quickformat', '|',
-            'indent', 'outdent', 'subscript', 'superscript', '|',
-            'table', 'code', '|', 'pagebreak', 'anchor', '|',
-            'fullscreen', 'source', 'preview', 'about'
-        ];
+        //var fullTools =
+        //[
+        //    'formatblock', 'fontname', 'fontsize', 'lineheight', '|', 'forecolor', 'hilitecolor', '|', 'bold', 'italic', 'underline', 'strikethrough', '|',
+        //    'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', '|',
+        //    'insertorderedlist', 'insertunorderedlist', '|',
+        //    'emoticons', 'image', 'insertfile', 'hr', '|', 'link', 'unlink', '/',
+        //    'undo', 'redo', '|', 'selectall', 'cut', 'copy', 'paste', '|', 'plainpaste', 'wordpaste', '|', 'removeformat', 'clearhtml', 'quickformat', '|',
+        //    'indent', 'outdent', 'subscript', 'superscript', '|',
+        //    'table', 'code', '|', 'pagebreak', 'anchor', '|',
+        //    'fullscreen', 'source', 'preview', 'about'
+        //];
 
         var ops = $.extend({}, {
-            cssPath: ['/assets/bootstrap/css/bootstrap.css'],
+            cssPath: ['/plugin/bootstrap/css/bootstrap.css'],
             resizeType: 1,
-            allowPreviewEmoticons: false,
-            allowImageUpload: false,
-            bodyClass: 'article-content',
+            allowPreviewEmoticons: true,
+            allowImageUpload: true,
+            uploadJson: '/plugin/kindeditor/asp.net/upload_json.ashx',
+            fileManagerJson: '/plugin/kindeditor/asp.net/file_manager_json.ashx',
+            allowFileManager: true,
+            //bodyClass: 'article-content',
             afterBlur: function () {
                 this.sync();
                 $editor.prev('.ke-container').removeClass('focus');
@@ -177,8 +180,8 @@
             afterFocus: function () { $editor.prev('.ke-container').addClass('focus'); },
             afterChange: function () {
                 $editor.change().hide();
-            },
-            items: fullTools
+            }
+            //,items: fullTools
         }, options);
 
         var editor;
