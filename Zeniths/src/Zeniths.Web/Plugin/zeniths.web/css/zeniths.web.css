@@ -1789,3 +1789,12 @@ Input icons
     font-family: "Microsoft Yahei";
     font-size: 14px;
 }
+.tree-node-top {
+  border-top: 1px dotted red !important;
+}
+.tree-node-bottom {
+  border-bottom: 1px dotted red !important;
+}
+.tree-node-append .tree-title {
+  border: 1px dotted red !important;
+}

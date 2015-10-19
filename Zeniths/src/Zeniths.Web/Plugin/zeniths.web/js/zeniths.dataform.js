@@ -246,6 +246,22 @@
     };
 
     /**
+     * 初始化TagsInput控件
+     * @param {Object} options 控件配置
+     * @returns {DataForm} 
+     */
+    DataForm.prototype.initTagsInput = function (options) {
+        var self = this;
+        var ops = $.extend({}, {
+            'defaultText': '',
+            'minChars':1
+        }, options);
+        $('.tag-control').tagsInput(ops);
+
+        return this;
+    };
+
+    /**
      * 初始化下拉选择Chosen控件
      * @param {Object} options 控件配置
      * @returns {DataForm} 
@@ -447,7 +463,7 @@
         var ops = $.extend({}, {
             size: 'sm',
             hsvpanel: true,
-            sliders:false,
+            sliders: false,
             previewformat: 'hex',
             order: {
                 rgb: 1,

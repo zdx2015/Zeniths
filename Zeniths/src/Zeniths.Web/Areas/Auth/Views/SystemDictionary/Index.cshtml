@@ -6,7 +6,11 @@
 <div class="easyui-layout" fit="true" border="false">
     <div region="west" split="true" title="数据字典" border="false" style="width:200px;background-color: #fafafa;"
          data-options="headerCls:'panel-right-border',bodyCls:'panel-right-border'">
-        <ul class="zenithsTree treeDic" fit="true" data-url="@Url.Action("GetDictionaryList")"></ul>
+        <ul class="zenithsTree treeDic" fit="true" 
+            data-url="@Url.Action("GetDictionaryList")"
+            data-parenturl="@Url.Action("SaveParent")"
+            data-sorturl="@Url.Action("SaveSort")"
+            ></ul>
     </div>
     <div region="center" border="false" title="字典明细" style="background-color: #fafafa;"
          data-options="headerCls:'panel-left-border',bodyCls:'panel-left-border'">

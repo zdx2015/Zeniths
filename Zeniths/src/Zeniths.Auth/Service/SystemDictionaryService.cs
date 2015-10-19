@@ -101,10 +101,9 @@ namespace Zeniths.Auth.Service
         /// 保存系统数据字典父节点
         /// </summary>
         /// <param name="id">系统数据字典主键</param>
-        /// <param name="oldParentId">原父节点Id</param>
         /// <param name="newParentId">新父节点Id</param>
         /// <returns>操作成功返回True</returns>
-        public BoolMessage SaveParentDictionary(int id, int oldParentId, int newParentId)
+        public BoolMessage SaveParentDictionary(int id, int newParentId)
         {
             try
             {

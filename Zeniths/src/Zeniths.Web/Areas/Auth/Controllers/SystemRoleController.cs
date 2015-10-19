@@ -9,56 +9,55 @@ using Zeniths.Auth.Utility;
 using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.WorkFlow.Entity;
-using Zeniths.WorkFlow.Service;
 
 namespace Zeniths.Web.Areas.Auth.Controllers
 {
-    public class SystemDocController : AuthBaseController
+    public class SystemRoleController : AuthBaseController
     {
-        private readonly SystemDocService service = new SystemDocService();
+        private readonly SystemRoleService service = new SystemRoleService();
 
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Grid(string name)
+        public ActionResult Grid(string name, string category)
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name);
+            var list = service.GetPageList(pageIndex, pageSize,
+                orderName, orderDir, name, category);
             return View(list);
         }
 
         public ActionResult Create()
         {
-            return EditCore(new SystemDoc());
+            return EditCore(new SystemRole());
         }
 
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
-            var entity = service.Get(id.ToInt());
+            var entity = service.Get(id);
             return EditCore(entity);
         }
 
-        private ActionResult EditCore(SystemDoc entity)
+        private ActionResult EditCore(SystemRole entity)
         {
             return View("Edit", entity);
         }
 
         [HttpPost]
-        [ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(SystemDoc entity)
+        public ActionResult Save(SystemRole entity)
         {
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {
                 return JsonNet(hasResult);
             }
-
+            entity.NameSpell = SpellHelper.ConvertSpell(entity.Name);
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
             return JsonNet(result);
         }
@@ -78,7 +77,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
 
         public ActionResult Export()
         {
-            return Export(service.GetList());
+            return Export(service.GetEnabledList());
         }
     }
 }

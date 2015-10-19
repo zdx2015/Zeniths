@@ -1,6 +1,6 @@
-﻿@model WorkFlowForm
+﻿@model SystemRole
 @{
-    var title = "编辑流程表单";
+    var title = "编辑系统角色";
 }
 
 <div class="container-edit-zeniths">
@@ -20,7 +20,7 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" placeholder="请输入表单名称" />
+                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" placeholder="请输入角色名称" />
                             </div>
                         </td>
                     </tr>
@@ -30,20 +30,10 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <select class="select2-control form-control" name="@nameof(Model.Category)" data-placeholder="请选择表单分类">
+                                <select class="select2-control form-control" name="@nameof(Model.Category)" data-placeholder="请选择角色分类">
                                     <option></option>
-                                    @Html.WorkFlowFormCategoryOptions(Model.Category)
+                                    @Html.RoleCategoryOptions(Model.Category)
                                 </select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <label class="control-label">地址：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Url)" value="@Model.Url" type="text" />
                             </div>
                         </td>
                     </tr>
@@ -56,7 +46,6 @@
                                     <span>启用</span>
                                 </label>
                             </div>
-                            @*<input class="switch-control" name="@nameof(Model.IsEnabled)" value="1" @Html.IsChecked(Model.IsEnabled) type="checkbox" data-on-text="启用" data-off-text="禁用">*@
                         </td>
                     </tr>
 
@@ -108,9 +97,6 @@
                     Category: {
                         required: true
                     },
-                    Url: {
-                        required: true
-                    },
                     SortIndex: {
                         required: true,
                         digits: true,
@@ -119,19 +105,16 @@
                 },
                 messages: {
                     Name: {
-                        required: '请填写表单名称',
-                        maxlength: '表单名称长度不能超过100'
+                        required: '请填写角色名称',
+                        maxlength: '角色名称长度不能超过100'
                     },
                     Category: {
-                        required: '请选择表单分类'
-                    },
-                    Url: {
-                        required: '请填写表单路径'
+                        required: '请选择角色分类'
                     },
                     SortIndex: {
-                        required: '请填写表单排序号',
-                        digits: '表单排序号只能输入正整数',
-                        maxlength: '表单排序号不能超过9位数'
+                        required: '请填写角色排序号',
+                        digits: '角色排序号只能输入正整数',
+                        maxlength: '角色排序号不能超过9位数'
                     }
                 },
                 beforeSubmit: function () {

@@ -15,7 +15,7 @@ namespace Zeniths.WorkFlow.Utility
         /// <param name="helper"></param>
         /// <param name="selected">选中的值</param>
         /// <returns></returns>
-        public static MvcHtmlString WorkFlowFormCategory(this HtmlHelper helper, string selected = null)
+        public static MvcHtmlString WorkFlowFormCategoryOptions(this HtmlHelper helper, string selected = null)
         {
             var options = AuthHelper.DictionaryOptions("WorkFlow", selected);
             return MvcHtmlString.Create(options);

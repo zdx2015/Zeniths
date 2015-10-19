@@ -115,8 +115,18 @@
     <Content Include="Areas\Auth\Views\SystemDoc\Details.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDoc\Edit.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDoc\Grid.cshtml" />
+    <Content Include="Plugin\jquery-tags-input\jquery.tagsinput.min.css" />
+    <Content Include="Plugin\jquery-tags-input\jquery.tagsinput.min.js" />
     <Content Include="Plugin\kindeditor\asp.net\file_manager_json.ashx" />
     <Content Include="Plugin\kindeditor\asp.net\upload_json.ashx" />
+    <Content Include="Areas\Auth\Views\SystemRole\Details.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemRole\Edit.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemRole\Grid.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemRole\Index.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemParam\Index.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemParam\Details.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemParam\Edit.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemParam\Grid.cshtml" />
     <None Include="Plugin\_references.js" />
     <Content Include="Assets\js\default.js" />
     <Content Include="Plugin\bootstrap-clockpicker\css\bootstrap-clockpicker.css" />
@@ -498,6 +508,8 @@
     <Compile Include="Areas\Auth\Controllers\SystemDictionaryController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemDocController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemMenuController.cs" />
+    <Compile Include="Areas\Auth\Controllers\SystemParamController.cs" />
+    <Compile Include="Areas\Auth\Controllers\SystemRoleController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\WorkFlow\WorkFlowAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />

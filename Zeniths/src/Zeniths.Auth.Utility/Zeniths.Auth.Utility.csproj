@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthBaseController.cs" />
+    <Compile Include="AuthExceptionAttribute.cs" />
     <Compile Include="AuthHelper.cs" />
     <Compile Include="HtmlExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

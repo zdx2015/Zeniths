@@ -271,6 +271,15 @@
         _loadData(this);
     };
 
+    /**
+     * 清除当前表格数据行
+     * @returns {} 
+     */
+    DataGrid.prototype.clearRows = function () {
+        this.$table.find('tbody').empty();
+        this.$element.find('.paginateArea').empty();
+    };
+
     /*****************************表格插件*****************************/
     /**
      * 表格插件

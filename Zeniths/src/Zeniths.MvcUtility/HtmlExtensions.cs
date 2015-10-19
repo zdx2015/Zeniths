@@ -271,5 +271,14 @@ namespace Zeniths.MvcUtility
             }
             return MvcHtmlString.Create("<span class=\"label label-danger\">禁用</span>");
         }
+
+        public static MvcHtmlString TableRowStatusClass(this HtmlHelper helper, bool isEnabled)
+        {
+            if (!isEnabled)
+            {
+                return MvcHtmlString.Create("danger");
+            }
+            return MvcHtmlString.Create(string.Empty);
+        }
     }
 }

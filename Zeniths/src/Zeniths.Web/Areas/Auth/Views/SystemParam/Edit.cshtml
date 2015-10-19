@@ -1,6 +1,6 @@
-﻿@model WorkFlowForm
+﻿@model SystemParam
 @{
-    var title = "编辑流程表单";
+    var title = "编辑系统参数";
 }
 
 <div class="container-edit-zeniths">
@@ -16,11 +16,21 @@
                 <table class="table table-form table-dialog-form">
                     <tr>
                         <th class='w-100px'>
+                            <label class="control-label">编码：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Code)" value="@Model.Code" type="text" placeholder="请输入参数编码" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             <label class="control-label">名称：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" placeholder="请输入表单名称" />
+                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" placeholder="请输入参数名称" />
                             </div>
                         </td>
                     </tr>
@@ -30,46 +40,26 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <select class="select2-control form-control" name="@nameof(Model.Category)" data-placeholder="请选择表单分类">
+                                <select class="select2-control form-control" name="@nameof(Model.Category)" data-placeholder="请选择参数分类">
                                     <option></option>
-                                    @Html.WorkFlowFormCategoryOptions(Model.Category)
+                                    @Html.ParamCategoryOptions(Model.Category)
                                 </select>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th>
-                            <label class="control-label">地址：</label>
-                        </th>
+                        <th><label class="control-label">参数值：</label></th>
                         <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Url)" value="@Model.Url" type="text" />
-                            </div>
+                            <textarea class="form-control" name="@nameof(Model.Value)" rows="3">@Model.Value</textarea>
                         </td>
                     </tr>
                     <tr>
-                        <th><label class="control-label">状态：</label></th>
+                        <th><label class="control-label">默认值：</label></th>
                         <td>
-                            <div class="checkbox-list">
-                                <label class="checkbox-inline">
-                                    <input class="icheckbox-control" name="@nameof(Model.IsEnabled)" value="1" type="checkbox" @Html.IsChecked(Model.IsEnabled) />
-                                    <span>启用</span>
-                                </label>
-                            </div>
-                            @*<input class="switch-control" name="@nameof(Model.IsEnabled)" value="1" @Html.IsChecked(Model.IsEnabled) type="checkbox" data-on-text="启用" data-off-text="禁用">*@
+                            <textarea class="form-control" name="@nameof(Model.DefaultValue)" rows="3">@Model.DefaultValue</textarea>
                         </td>
                     </tr>
 
-                    <tr>
-                        <th>
-                            <label class="control-label">序号：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.SortIndex)" value="@Model.SortIndex" type="text" />
-                            </div>
-                        </td>
-                    </tr>
                     <tr>
                         <th><label class="control-label">备注：</label></th>
                         <td>
@@ -101,37 +91,23 @@
 
             $('.editform').dataform().initSelect2().initiCheck().initValidate({
                 rules: {
-                    Name: {
+                    Code: {
                         required: true,
                         maxlength: 100
                     },
-                    Category: {
-                        required: true
-                    },
-                    Url: {
-                        required: true
-                    },
-                    SortIndex: {
+                    Name: {
                         required: true,
-                        digits: true,
-                        maxlength: 9
+                        maxlength: 100
                     }
                 },
                 messages: {
+                    Code: {
+                        required: '请填写参数编码',
+                        maxlength: '参数编码长度不能超过100'
+                    },
                     Name: {
-                        required: '请填写表单名称',
-                        maxlength: '表单名称长度不能超过100'
-                    },
-                    Category: {
-                        required: '请选择表单分类'
-                    },
-                    Url: {
-                        required: '请填写表单路径'
-                    },
-                    SortIndex: {
-                        required: '请填写表单排序号',
-                        digits: '表单排序号只能输入正整数',
-                        maxlength: '表单排序号不能超过9位数'
+                        required: '请填写参数名称',
+                        maxlength: '参数名称长度不能超过100'
                     }
                 },
                 beforeSubmit: function () {

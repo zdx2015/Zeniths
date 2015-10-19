@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using Zeniths.MvcUtility;
+using Zeniths.Auth.Utility;
 
 namespace Zeniths.Web
 {
@@ -14,7 +14,7 @@ namespace Zeniths.Web
         /// <param name="filters">全局过滤器集合</param>
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new JsonExceptionAttribute());
+            filters.Add(new AuthExceptionAttribute());
         }
     }
 }

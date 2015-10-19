@@ -1,0 +1,69 @@
+﻿@model SystemParam
+@{
+    var title = "查看系统参数";
+}
+
+<div class="container-edit-zeniths">
+    <div class="panel panel-default panel-zeniths">
+        <div class="panel-heading">
+            <span class="prefix"> <strong>@Model.Id</strong></span>
+            @title
+        </div>
+        <div class="panel-body">
+            <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+            <table class="table table-form table-dialog-form">
+                <tr>
+                    <th>
+                        <label class="control-label">分类：</label>
+                    </th>
+                    <td>
+                        <p class="form-control-static">@Model.Category</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">编码：</label></th>
+                    <td>
+                        <p class="form-control-static">@Model.Code</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th class='w-100px'>
+                        <label class="control-label">名称：</label>
+                    </th>
+                    <td>
+                        <p class="form-control-static">@Model.Name</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="control-label">参数值：</label>
+                    </th>
+                    <td>
+                        <p class="form-control-static">@Model.Value</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="control-label">默认值：</label>
+                    </th>
+                    <td>
+                        <p class="form-control-static">@Model.DefaultValue</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">备注：</label></th>
+                    <td>
+                        <p class="form-control-static">@Model.Note</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel-footer text-center">
+            <div class="buttons">
+                <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                    <i class="fa fa-sign-in"></i> 关闭
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

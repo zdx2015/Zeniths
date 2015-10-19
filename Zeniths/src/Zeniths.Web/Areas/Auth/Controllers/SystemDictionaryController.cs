@@ -92,6 +92,27 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             return JsonNet(result);
         }
 
+        /// <summary>
+        /// 保存树父节点
+        /// </summary>
+        public ActionResult SaveParent()
+        {
+            int id = Request.Form["id"].ToInt();
+            int newParentId = Request.Form["newParentId"].ToInt();
+            var result = service.SaveParentDictionary(id, newParentId);
+            return JsonNet(result);
+        }
+
+        /// <summary>
+        /// 树排序路径
+        /// </summary>
+        public ActionResult SaveSort()
+        {
+            var list = Request.Form.AllKeys.Select(key => new PrimaryKeyValue(key, nameof(SystemDictionary.SortPath), Request.Form[key]));
+            var result = service.UpdateSortPathDictionary(list);
+            return JsonNet(result);
+        }
+
 
         public ActionResult DetailsGrid()
         {
@@ -133,7 +154,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SaveDetails(SystemDictionaryDetails entity)
         {
-            var hasResult = service.ExistsDetails(entity.Name,entity.DictionaryId, entity.Id);
+            var hasResult = service.ExistsDetails(entity.Name, entity.DictionaryId, entity.Id);
             if (hasResult.Failure)
             {
                 return JsonNet(hasResult);
@@ -165,6 +186,6 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             var dictionaryId = Request.QueryString["dictionaryId"].ToInt();
             return Export(service.GetEnabledDetailsListByDicId(dictionaryId));
         }
-        
+
     }
 }

@@ -44,15 +44,21 @@ namespace Zeniths.Auth.Entity
         [Column(Caption = "分类")]
         public string Category { get; set; }
 
-		/// <summary>
+        /// <summary>
         /// 是否启用
         /// </summary>
         //[Required(ErrorMessage = "请输入是否启用")]
         //[StringLength(1, ErrorMessage = "是否启用长度不能超过{1}")]
         [Column(Caption = "是否启用")]
-        public bool IsEnabled { get; set; }
+        public bool IsEnabled { get; set; } = true;
 
-		/// <summary>
+        /// <summary>
+        /// 序号
+        /// </summary>
+        [Column(Caption = "序号")]
+        public int SortIndex { get; set; }
+
+        /// <summary>
         /// 备注
         /// </summary>
         //[StringLength(1000, ErrorMessage = "备注长度不能超过{1}")]

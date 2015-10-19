@@ -8,26 +8,17 @@ using Zeniths.Entity;
 namespace Zeniths.Auth.Entity
 {
     /// <summary>
-    /// 系统数据字典
+    /// 系统参数
     /// </summary>
-    [Table(Caption = "系统数据字典")]
+    [Table(Caption = "系统参数")]
     [PrimaryKey("Id", true)]
-    [ParentKey("ParentId")]
-    [TextKey("Name")]
-    [SortPath("SortPath")]
-    public class SystemDictionary
+    public class SystemParam
     {
         /// <summary>
         /// 主键
         /// </summary>
         [Column(Caption = "主键", Exported = false)]
         public int Id { get; set; }
-
-        /// <summary>
-        /// 父级主键
-        /// </summary>
-        [Column(Caption = "父级主键")]
-        public int ParentId { get; set; }
 
         /// <summary>
         /// 编码
@@ -42,16 +33,22 @@ namespace Zeniths.Auth.Entity
         public string Name { get; set; }
 
         /// <summary>
-        /// 简拼
+        /// 参数值
         /// </summary>
-        [Column(Caption = "简拼")]
-        public string NameSpell { get; set; }
+        [Column(Caption = "参数值")]
+        public string Value { get; set; }
 
         /// <summary>
-        /// 排序路径
+        /// 参数默认值
         /// </summary>
-        [Column(Caption = "排序路径")]
-        public string SortPath { get; set; }
+        [Column(Caption = "参数默认值")]
+        public string DefaultValue { get; set; }
+
+        /// <summary>
+        /// 分类
+        /// </summary>
+        [Column(Caption = "分类")]
+        public string Category { get; set; }
 
         /// <summary>
         /// 备注
@@ -62,9 +59,9 @@ namespace Zeniths.Auth.Entity
         /// <summary>
         /// 复制对象
         /// </summary>
-        public SystemDictionary Clone()
+        public SystemParam Clone()
         {
-            return (SystemDictionary)this.MemberwiseClone();
+            return (SystemParam)this.MemberwiseClone();
         }
     }
 }

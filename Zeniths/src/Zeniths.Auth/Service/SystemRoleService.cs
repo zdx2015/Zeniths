@@ -3,39 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using Zeniths.Auth.Entity;
 using Zeniths.Collections;
-using Zeniths.Entity;
 using Zeniths.Extensions;
 using Zeniths.Utility;
 
 namespace Zeniths.Auth.Service
 {
-    public class SystemDocService
+    public class SystemRoleService
     {
         /// <summary>
         /// 存储器
         /// </summary>
-        private readonly AuthRepository<SystemDoc> repos = new AuthRepository<SystemDoc>();
+        private readonly AuthRepository<SystemRole> repos = new AuthRepository<SystemRole>();
 
         /// <summary>
-        /// 检测是否存在指定系统文档
+        /// 检测是否存在指定角色
         /// </summary>
-        /// <param name="entity">系统文档实体</param>
+        /// <param name="entity">角色实体</param>
         /// <returns>存在返回true</returns>
-        public BoolMessage Exists(SystemDoc entity)
+        public BoolMessage Exists(SystemRole entity)
         {
             var has = repos.Exists(p => p.Name == entity.Name && p.Id != entity.Id);
-            return has ? new BoolMessage(false, "指定的系统文档已经存在") : BoolMessage.True;
+            return has ? new BoolMessage(false, "输入流程角色名称已经存在") : BoolMessage.True;
         }
 
         /// <summary>
-        /// 添加系统文档
+        /// 添加角色
         /// </summary>
-        /// <param name="entity">系统文档实体</param>
-        public BoolMessage Insert(SystemDoc entity)
+        /// <param name="entity">角色实体</param>
+        public BoolMessage Insert(SystemRole entity)
         {
             try
             {
-                entity.CreateDateTime = entity.ModifyDateTime = DateTime.Now;
                 repos.Insert(entity);
                 return BoolMessage.True;
             }
@@ -46,14 +44,13 @@ namespace Zeniths.Auth.Service
         }
 
         /// <summary>
-        /// 更新系统文档
+        /// 更新角色
         /// </summary>
-        /// <param name="entity">系统文档实体</param>
-        public BoolMessage Update(SystemDoc entity)
+        /// <param name="entity">角色实体</param>
+        public BoolMessage Update(SystemRole entity)
         {
             try
             {
-                entity.ModifyDateTime = DateTime.Now;
                 repos.Update(entity);
                 return BoolMessage.True;
             }
@@ -64,9 +61,9 @@ namespace Zeniths.Auth.Service
         }
 
         /// <summary>
-        /// 删除系统文档
+        /// 删除角色
         /// </summary>
-        /// <param name="ids">系统文档主键数组</param>
+        /// <param name="ids">角色主键数组</param>
         public BoolMessage Delete(int[] ids)
         {
             try
@@ -88,42 +85,51 @@ namespace Zeniths.Auth.Service
         }
 
         /// <summary>
-        /// 获取系统文档对象
+        /// 获取角色
         /// </summary>
-        /// <param name="id">系统文档主键</param>
-        public SystemDoc Get(int id)
+        /// <param name="id">角色主键</param>
+        /// <returns>角色对象</returns>
+        public SystemRole Get(int id)
         {
             return repos.Get(id);
         }
 
         /// <summary>
-        /// 获取系统文档列表
+        /// 获取启用的角色列表
         /// </summary>
-        public List<SystemDoc> GetList()
+        /// <returns>返回启用的角色列表</returns>
+        public List<SystemRole> GetEnabledList()
         {
-            var query = repos.NewQuery.OrderByDescending(p => p.ModifyDateTime);
+            var query = repos.NewQuery.Where(p => p.IsEnabled == true).OrderBy(p => p.SortIndex);
             return repos.Query(query).ToList();
         }
 
         /// <summary>
-        /// 获取系统文档列表
+        /// 获取角色列表(包括禁用记录)
         /// </summary>
         /// <param name="pageIndex">页面索引</param>
         /// <param name="pageSize">分页大小</param>
         /// <param name="orderName">排序列名</param>
         /// <param name="orderDir">排序方式</param>
-        /// <param name="name">文档标题</param>
-        public PageList<SystemDoc> GetPageList(int pageIndex, int pageSize, string orderName,
-            string orderDir, string name)
+        /// <param name="name">角色名称</param>
+        /// <param name="category">角色分类</param>
+        /// <returns>角色分页列表</returns>
+        public PageList<SystemRole> GetPageList(int pageIndex, int pageSize, string orderName,
+            string orderDir, string name, string category)
         {
-            orderName = orderName.IsEmpty() ? nameof(SystemDoc.ModifyDateTime) : orderName;
+            orderName = orderName.IsEmpty() ? nameof(SystemRole.SortIndex) : orderName;
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;
             var query = repos.NewQuery.Take(pageSize).Page(pageIndex).
                 OrderBy(orderName, orderDir.IsAsc());
             if (name.IsNotEmpty())
             {
                 name = name.Trim();
-                query.Where(p => p.Name.Contains(name) || p.Tag.Contains(name));
+                query.Where(p => p.Name.Contains(name) || p.NameSpell.Contains(name));
+            }
+            if (category.IsNotEmpty())
+            {
+                category = category.Trim();
+                query.Where(p => p.Category == category);
             }
             return repos.Page(query);
         }

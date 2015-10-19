@@ -1,5 +1,6 @@
-﻿@{
-    var title = "管理系统文档";
+﻿@model SystemRole
+@{
+    var title = "管理系统角色";
 }
 <div class="container-zeniths">
     <div class="panel panel-default panel-zeniths">
@@ -10,7 +11,13 @@
             <div class="search-panel-zeniths">
                 <form class="form-inline search-form">
                     <div class="form-group">
-                        <input class="w-300px form-control" name="@nameof(SystemDoc.Name)" type="text" placeholder="请输入文档标题、标签关键字查询">
+                        <input class="w-200px form-control" name="@nameof(SystemRole.Name)" type="text" placeholder="请输入角色名称关键字查询">
+                    </div>
+                    <div class="form-group">
+                        <select class="select2-control w-200px form-control" name="@nameof(SystemRole.Category)" data-placeholder="请选择角色分类">
+                            <option></option>
+                            @Html.RoleCategoryOptions()
+                        </select>
                     </div>
                     &nbsp;
                     <button class="btn btn-primary" type="submit">
@@ -41,10 +48,10 @@
     <script>
         $(function () {
             zeniths.util.standardGridBind({
-                editWidth: 1000,
-                editHeight: 760,
-                viewWidth: 1000,
-                viewHeight: 750
+                editWidth: 800,
+                editHeight: 430,
+                viewWidth: 800,
+                viewHeight: 390
             });
         });
     </script>

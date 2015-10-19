@@ -19,7 +19,8 @@
     self.initTree = function () {
         self.$tree.tree({
             url: self.$tree.data('url'),
-            animate: true,
+            animate: false,
+            dnd: true,
             onBeforeLoad: function () {
                 $(this).parent().parent().mask('正在加载数据字典...');
             },
@@ -30,6 +31,7 @@
                 var node = self.$tree.tree('find', self.selectedNodeId);
                 if (!node) {
                     node = self.$tree.tree('getRoot');
+                    zeniths.tree.expandRoot(self.$tree);
                 }
                 self.$tree.tree('select', node.target);
                 self.reloadGrid();
@@ -45,6 +47,12 @@
                     left: e.pageX,
                     top: e.pageY
                 });
+            },
+            onSelect:function(node) {
+                self.selectedNodeId = node.id;
+            },
+            onDrop: function (target, source, point) {
+                zeniths.tree.saveDrop(self.$tree, target, source);
             },
             onClick: function (node) {
                 self.searchGrid();
@@ -138,7 +146,9 @@
      */
     self.deleteDictionary = function ($menuItem) {
         zeniths.tree.deleteTreeNode(self.$tree, $menuItem.data('url'), {},
-            '选择的 {0} 个数据字典(包括当前节点及其子节点),对应的数据字典明细也会删除,确定要删除吗?');
+            '选择的 {0} 个数据字典(包括当前节点及其子节点),对应的数据字典明细也会删除,确定要删除吗?', function () {
+                self.gridObject.clearRows();
+            });
     };
 
     /**
@@ -146,10 +156,6 @@
      * @returns {} 
      */
     self.reloadDictionary = function () {
-        var node = zeniths.tree.getTreeNodeSelected(self.$tree);
-        if (node) {
-            self.selectedNodeId = node.id;
-        }
         zeniths.tree.reloadTree(self.$tree);
     };
 

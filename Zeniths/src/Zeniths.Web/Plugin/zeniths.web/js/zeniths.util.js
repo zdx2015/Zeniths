@@ -806,14 +806,13 @@ zeniths.tree.getTreeNodeSortPath = function ($tree, id) {
     if (!id) {
         return '';
     }
-    var options = $tree.tree('options');
-    var pkName = options.idField;
-    var parentNode = $tree.tree('getParent', id);
-    if (parentNode != null) {
-        var pstring = zeniths.tree.getTreeNodeSortPath($tree, parentNode[pkName]);
-        return pstring + zeniths.util.FixLengthString(zeniths.tree.getTreeNodeIndex(id, parentNode.children, pkName), 4, '0');
+    var node = $tree.tree('find', id);
+    var parentNode = $tree.tree('getParent', node.target);
+    if (parentNode) {
+        var pstring = zeniths.tree.getTreeNodeSortPath($tree, parentNode.id);
+        return pstring + zeniths.util.FixLengthString(zeniths.tree.getTreeNodeIndex(id, parentNode.children), 4, '0');
     } else {
-        return zeniths.util.FixLengthString(zeniths.tree.getTreeNodeIndex(id, $tree.tree('getRoots'), pkName), 4, '0');
+        return zeniths.util.FixLengthString(zeniths.tree.getTreeNodeIndex(id, $tree.tree('getRoots')), 4, '0');
     }
 };
 
@@ -827,10 +826,58 @@ zeniths.tree.getTreeNodeSortPath = function ($tree, id) {
 zeniths.tree.getTreeNodeIndex = function (id, nodes, pkName) {
     var nodeIndex = -1;
     $.each(nodes, function (index, value) {
-        if (value[pkName] == id) {
+        if (value.id == id) {
             nodeIndex = index;
             return false;
         }
     });
     return nodeIndex.toString();
-}
+};
+
+/**
+ * 保存树拖拽数据
+ * @param {JQueryTree} $tree JQueryTree对象
+ * @param {Dom} target DOM对象，需要被拖动动的目标节点
+ * @param {TreeNode} source 源节点
+ * @returns {} 
+ */
+zeniths.tree.saveDrop = function($tree, target, source) {
+    var targetId = $tree.tree('getNode', target).id;
+    var sourceId = source.id;
+    var sourceParentId = source.parentid;
+
+    var sourceNode = $tree.tree('find', sourceId);
+    var newParentNode = $tree.tree('getParent', sourceNode.target);
+    var newParentId = newParentNode.id;
+
+    if (sourceParentId !== newParentId) {
+        //改变父节点
+        zeniths.util.post($tree.data('parenturl'), { id: sourceId, newParentId: newParentId });
+    }
+
+    var node = $tree.tree('find', newParentId);
+    if (!node) {
+        zeniths.util.msg('更新节点顺序出错,无效的节点Id');
+        return;
+    }
+    var sortData = {};
+    var childs = $tree.tree('getChildren', node.target);
+    $.each(childs, function(index, value) {
+        sortData[value.id] = zeniths.tree.getTreeNodeSortPath($tree, value.id);
+    });
+    //更新节点序号
+    zeniths.util.post($tree.data('sorturl'), sortData);
+};
+
+/**
+ * 合上所有节点,并展开根节点
+ * @param {} $tree 
+ * @returns {} 
+ */
+zeniths.tree.expandRoot = function($tree) {
+    $tree.tree('collapseAll');
+    var root = $tree.tree('getRoot');
+    if (root) {
+        $tree.tree('expand',root.target);
+    }
+};

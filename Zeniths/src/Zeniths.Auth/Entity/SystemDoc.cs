@@ -31,11 +31,11 @@ namespace Zeniths.Auth.Entity
         public string Name { get; set; }
 
         /// <summary>
-        /// 分类
+        /// 分类标签
         /// </summary>
         //[StringLength(50, ErrorMessage = "分类长度不能超过{1}")]
-        [Column(Caption = "分类")]
-        public string Category { get; set; }
+        [Column(Caption = "分类标签")]
+        public string Tag { get; set; }
 
         /// <summary>
         /// 内容

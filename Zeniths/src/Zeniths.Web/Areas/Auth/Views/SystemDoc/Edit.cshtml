@@ -27,21 +27,18 @@
                     </tr>
                     <tr>
                         <th>
-                            <label class="control-label">分类：</label>
+                            <label class="control-label">标签：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <select class="select2-control form-control" name="@nameof(Model.Category)" data-placeholder="请选择文档分类">
-                                    <option></option>
-                                    @Html.SystemDocCategory(Model.Category)
-                                </select>
+                                <input class="tag-control form-control" name="@nameof(Model.Tag)" value="@Model.Tag" type="text" placeholder="请输入分类标签" />
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th><label class="control-label">内容：</label></th>
                         <td>
-                            <textarea class="editor-control form-control" name="@nameof(Model.Contents)" rows="25">@Model.Contents</textarea>
+                            <textarea class="editor-control form-control" name="@nameof(Model.Contents)" rows="24">@Model.Contents</textarea>
                         </td>
                     </tr>
                 </table>
@@ -61,14 +58,21 @@
     </form>
 </div>
 
-
+@section style{
+    <link href="~/Plugin/jquery-tags-input/jquery.tagsinput.min.css" rel="stylesheet" />
+}
 @section script{
-<script src="~/Plugin/kindeditor/kindeditor-min.js"></script>
+    <script src="~/Plugin/jquery-tags-input/jquery.tagsinput.min.js"></script>
+    <script src="~/Plugin/kindeditor/kindeditor-min.js"></script>
     <script>
 
         $(function () {
 
-            $('.editform').dataform().initSelect2().initKindEditor().initValidate({
+            $('.editform').dataform().initSelect2().initTagsInput({
+                'height': '60px',
+                'width': '100%',
+                'defaultText': '添加标签'
+            }).initKindEditor().initValidate({
                 rules: {
                     Name: {
                         required: true,
