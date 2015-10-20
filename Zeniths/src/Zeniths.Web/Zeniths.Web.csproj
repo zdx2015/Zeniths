@@ -105,6 +105,8 @@
     <Content Include="Assets\css\images\maintitle.png" />
     <Content Include="Assets\css\login.css" />
     <Content Include="Assets\css\treegrid.css" />
+    <Content Include="Assets\js\auth\system.user.js" />
+    <Content Include="Assets\js\auth\system.department.js" />
     <Content Include="Assets\js\auth\system.dictionary.js" />
     <Content Include="Areas\WorkFlow\Views\_ViewStart.cshtml" />
     <Content Include="Areas\HR\Views\_ViewStart.cshtml" />
@@ -115,8 +117,19 @@
     <Content Include="Areas\Auth\Views\SystemDoc\Details.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDoc\Edit.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDoc\Grid.cshtml" />
+    <Content Include="Plugin\bootstrap-datepicker\js\bootstrap-datepicker.zh-CN.js" />
+    <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.date.extensions.js" />
+    <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.extensions.js" />
+    <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.js" />
+    <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.numeric.extensions.js" />
+    <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.phone.extensions.js" />
+    <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.regex.extensions.js" />
+    <Content Include="Plugin\jquery-inputmask\jquery.inputmask.bundle.js" />
+    <Content Include="Plugin\jquery-inputmask\jquery.inputmask.bundle.min.js" />
+    <Content Include="Plugin\jquery-ip-address\jquery.input-ip-address-control-1.0.min.js" />
     <Content Include="Plugin\jquery-tags-input\jquery.tagsinput.min.css" />
     <Content Include="Plugin\jquery-tags-input\jquery.tagsinput.min.js" />
+    <Content Include="Plugin\jquery\jquery-migrate.min.js" />
     <Content Include="Plugin\kindeditor\asp.net\file_manager_json.ashx" />
     <Content Include="Plugin\kindeditor\asp.net\upload_json.ashx" />
     <Content Include="Areas\Auth\Views\SystemRole\Details.cshtml" />
@@ -127,6 +140,17 @@
     <Content Include="Areas\Auth\Views\SystemParam\Details.cshtml" />
     <Content Include="Areas\Auth\Views\SystemParam\Edit.cshtml" />
     <Content Include="Areas\Auth\Views\SystemParam\Grid.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemDepartment\Index.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemDepartment\Details.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemDepartment\Edit.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemDepartment\Grid.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemException\Index.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemException\Grid.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemException\Details.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemUser\Index.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemUser\Grid.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemUser\Edit.cshtml" />
+    <Content Include="Areas\Auth\Views\SystemUser\Details.cshtml" />
     <None Include="Plugin\_references.js" />
     <Content Include="Assets\js\default.js" />
     <Content Include="Plugin\bootstrap-clockpicker\css\bootstrap-clockpicker.css" />
@@ -142,7 +166,6 @@
     <Content Include="Plugin\bootstrap-datepicker\css\bootstrap-datepicker3.min.css" />
     <Content Include="Plugin\bootstrap-datepicker\js\bootstrap-datepicker.js" />
     <Content Include="Plugin\bootstrap-datepicker\js\bootstrap-datepicker.min.js" />
-    <Content Include="Plugin\bootstrap-datepicker\js\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Plugin\bootstrap-daterangepicker\css\daterangepicker.css" />
     <Content Include="Plugin\bootstrap-daterangepicker\js\daterangepicker.js" />
     <Content Include="Plugin\bootstrap-daterangepicker\js\moment.js" />
@@ -507,9 +530,11 @@
     <Compile Include="Areas\Auth\Controllers\SystemDepartmentController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemDictionaryController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemDocController.cs" />
+    <Compile Include="Areas\Auth\Controllers\SystemExceptionController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemMenuController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemParamController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemRoleController.cs" />
+    <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\WorkFlow\WorkFlowAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -560,7 +585,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Auth\Views\SystemDepartment\" />
     <Folder Include="Areas\HR\Controllers\" />
     <Folder Include="Assets\js\hr\" />
     <Folder Include="Assets\js\workflow\" />

@@ -1,0 +1,210 @@
+﻿@model SystemUser
+@{
+    var title = "编辑系统用户";
+    SystemDepartment departmentEntity = ViewBag.DepartmentEntity;
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <input type="hidden" name="@nameof(Model.DepartmentId)" value="@Model.DepartmentId" />
+                <input type="hidden" name="@nameof(Model.DepartmentName)" value="@departmentEntity.Name" />
+                <table class="table table-form table-dialog-form">
+                    <tr>
+                        <th class='w-120px'><label class="control-label">部门：</label></th>
+                        <td colspan="3">
+                            @Html.Write(departmentEntity != null, departmentEntity?.Name, "")
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class='w-150px'>
+                            <label class="control-label">账号：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Account)" value="@Model.Account" type="text" autocomplete="off" />
+                            </div>
+                        </td>
+                        <th class='w-150px'>
+                            <label class="control-label">姓名：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" autocomplete="off" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">密码：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" id="@nameof(Model.Password)" name="@nameof(Model.Password)" value="@Model.Password" type="password" autocomplete="off" />
+                            </div>
+                        </td>
+                        <th>
+                            <label class="control-label">确认密码：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="ConfirmPassword" value="@Model.Password" type="password" autocomplete="off" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">授权开始时间：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="date-control form-control" name="@nameof(Model.AllowStartDateTime)" value="@Model.AllowStartDateTime" type="text" autocomplete="off" />
+                            </div>
+                        </td>
+                        <th>
+                            <label class="control-label">授权结束时间：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="date-control form-control" name="@nameof(Model.AllowEndDateTime)" value="@Model.AllowEndDateTime" type="text" autocomplete="off" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">电子邮件：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Email)" value="@Model.Email" type="text" autocomplete="off" />
+                            </div>
+                        </td>
+                        <th>
+                            <label class="control-label">序号：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.SortIndex)" value="@Model.SortIndex" type="text" autocomplete="off" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">密码提示问题：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.HintQuestion)" value="@Model.HintQuestion" type="text" autocomplete="off" />
+                            </div>
+                        </td>
+                        <th>
+                            <label class="control-label">密码提示答案：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.HintAnswer)" value="@Model.HintAnswer" type="text" autocomplete="off" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">状态：</label></th>
+                        <td colspan="3">
+                            <div class="checkbox-list">
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.IsEnabled)" value="true" type="checkbox" @Html.IsChecked(Model.IsEnabled) />
+                                    <span>启用</span>
+                                </label>
+
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.IsAdmin)" value="true" type="checkbox" @Html.IsChecked(Model.IsAdmin) />
+                                    <span>管理员</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label class="control-label">备注：</label></th>
+                        <td colspan="3">
+                            <textarea class="form-control" name="@nameof(Model.Note)" rows="3">@Model.Note</textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section script{
+    <script>
+
+        $(function () {
+
+            $('.editform').dataform().initDatePicker().initiCheck().initValidate({
+                rules: {
+                    Account: {
+                        required: true,
+                        maxlength: 100
+                    },
+                    Name: {
+                        required: true,
+                        maxlength: 100
+                    },
+                    Password: {
+                        required: true
+                    },
+                    ConfirmPassword: {
+                        required: true,
+                        equalTo: '#Password'
+                    },
+                    Email: {
+                        required: false,
+                        email: true
+                    }
+                },
+                messages: {
+                    Account: {
+                        required: '请填写账号',
+                        maxlength: '账号长度不能超过100'
+                    },
+                    Name: {
+                        required: '请填写姓名',
+                        maxlength: '姓名长度不能超过100'
+                    },
+                    Password: {
+                        required: '请填写密码'
+                    },
+                    ConfirmPassword: {
+                        required: '请填写确认密码',
+                        equalTo: '两次密码输入必须一致'
+                    },
+                    Email: {
+                        email: '请输入正确的电子邮件'
+                    }
+                },
+                beforeSubmit: function () {
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+        });
+    </script>
+}

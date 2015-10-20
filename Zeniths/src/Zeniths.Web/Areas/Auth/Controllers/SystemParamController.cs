@@ -36,9 +36,9 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             return EditCore(new SystemParam());
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            var entity = service.Get(id);
+            var entity = service.Get(id.ToInt());
             return EditCore(entity);
         }
 

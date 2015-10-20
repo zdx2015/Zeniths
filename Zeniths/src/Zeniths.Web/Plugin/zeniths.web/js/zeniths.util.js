@@ -501,6 +501,14 @@ zeniths.util.closeFrameDialog = function (win) {
 //    layero.find('iframe').css({ width: wid + scrollWid, height: heg + scrollWid });
 //};
 
+/**
+ * 获取ip地址控件值
+ * @param {JQuery} $ipControl IP控件
+ * @returns {} 
+ */
+zeniths.util.getIpAddressValue = function($ipControl) {
+    return $ipControl.val().replace('___.___.___.___','').replace('____:____:____:____:____:____:____:____','');
+};
 
 /**
  * Post异步提交数据
@@ -712,7 +720,7 @@ zeniths.util.standardGridBind = function (options) {
 
     initGrid();
 
-    $('.search-form').dataform().initSelect2();
+    $('.search-form').dataform().initSelect2().initDatePicker();
 
     //绑定刷新事件
     $('#btnRefresh').on('click', function () {
@@ -745,7 +753,7 @@ zeniths.tree.reloadTree = function ($tree) {
 
 /**
  * 删除树节点
- * @param {tree} $tree 树对象
+ * @param {JQueryTree} $tree JQueryTree对象
  * @param {String} url 删除地址
  * @param {Object} data 提交的数据对象
  * @param {String} name 数据名称
@@ -789,7 +797,7 @@ zeniths.tree.deleteTreeNode = function ($tree, url, data, msg, callback) {
 
 /**
  * 获取选中的树节点对象
- * @param {tree} $tree 树对象
+ * @param {JQueryTree} $tree JQueryTree对象
  * @returns {Node} 
  */
 zeniths.tree.getTreeNodeSelected = function ($tree) {
@@ -798,7 +806,7 @@ zeniths.tree.getTreeNodeSelected = function ($tree) {
 
 /**
  * 获取数节点的排序路径
- * @param {EasyUITree} $tree 树控件
+ * @param {JQueryTree} $tree JQueryTree对象
  * @param {String} id 节点主键
  * @returns {} 
  */
@@ -814,6 +822,20 @@ zeniths.tree.getTreeNodeSortPath = function ($tree, id) {
     } else {
         return zeniths.util.FixLengthString(zeniths.tree.getTreeNodeIndex(id, $tree.tree('getRoots')), 4, '0');
     }
+};
+
+/**
+ * 获取新建节点排序路径
+ * @param {JQueryTree} $tree JQueryTree对象
+ * @param {String} parentId 父节点主键
+ * @returns {} 
+ */
+zeniths.tree.getNewNodeSortPath = function ($tree, parentId) {
+    var parentSortPath = zeniths.tree.getTreeNodeSortPath($tree, parentId);
+    var parentNode = $tree.tree('find', parentId);
+    var childs = $tree.tree('getChildren', parentNode.target);
+    var currentPath = zeniths.util.FixLengthString(childs.length.toString(), 4, '0');
+    return parentSortPath + currentPath;
 };
 
 /**
@@ -841,7 +863,7 @@ zeniths.tree.getTreeNodeIndex = function (id, nodes, pkName) {
  * @param {TreeNode} source 源节点
  * @returns {} 
  */
-zeniths.tree.saveDrop = function($tree, target, source) {
+zeniths.tree.saveDrop = function ($tree, target, source) {
     var targetId = $tree.tree('getNode', target).id;
     var sourceId = source.id;
     var sourceParentId = source.parentid;
@@ -862,7 +884,7 @@ zeniths.tree.saveDrop = function($tree, target, source) {
     }
     var sortData = {};
     var childs = $tree.tree('getChildren', node.target);
-    $.each(childs, function(index, value) {
+    $.each(childs, function (index, value) {
         sortData[value.id] = zeniths.tree.getTreeNodeSortPath($tree, value.id);
     });
     //更新节点序号
@@ -871,13 +893,37 @@ zeniths.tree.saveDrop = function($tree, target, source) {
 
 /**
  * 合上所有节点,并展开根节点
- * @param {} $tree 
+ * @param {JQueryTree} $tree JQueryTree对象
  * @returns {} 
  */
-zeniths.tree.expandRoot = function($tree) {
+zeniths.tree.expandRoot = function ($tree) {
     $tree.tree('collapseAll');
     var root = $tree.tree('getRoot');
     if (root) {
-        $tree.tree('expand',root.target);
+        $tree.tree('expand', root.target);
     }
+};
+
+/**
+ * 获取节点以及所有子节点的id数组
+ * @param {JQueryTree} $tree JQueryTree对象
+ * @param {Node} node 节点对象
+ * @param {Boolean} isAddSelf 是否添加当前节点Id
+ * @returns {} 
+ */
+zeniths.tree.getChildrenIds = function ($tree,node,isAddSelf) {
+    var ids = [];
+    if (!node) {
+        return ids;
+    }
+    if (isAddSelf===true) {
+        ids.push(node.id);
+    }
+    if (node.children) {
+        var childs = $tree.tree("getChildren", node.target);
+        $.each(childs, function (i, v) {
+            ids.push(v.id);
+        });
+    }
+    return ids;
 };

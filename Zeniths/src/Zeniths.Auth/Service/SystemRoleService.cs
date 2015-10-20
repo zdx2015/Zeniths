@@ -23,7 +23,7 @@ namespace Zeniths.Auth.Service
         public BoolMessage Exists(SystemRole entity)
         {
             var has = repos.Exists(p => p.Name == entity.Name && p.Id != entity.Id);
-            return has ? new BoolMessage(false, "输入流程角色名称已经存在") : BoolMessage.True;
+            return has ? new BoolMessage(false, "输入角色名称已经存在") : BoolMessage.True;
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Zeniths.Auth.Service
             string orderDir, string name, string category)
         {
             orderName = orderName.IsEmpty() ? nameof(SystemRole.SortIndex) : orderName;
-            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;
+            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Asc) : orderDir;
             var query = repos.NewQuery.Take(pageSize).Page(pageIndex).
                 OrderBy(orderName, orderDir.IsAsc());
             if (name.IsNotEmpty())

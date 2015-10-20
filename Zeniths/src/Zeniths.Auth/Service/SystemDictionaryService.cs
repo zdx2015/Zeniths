@@ -151,13 +151,6 @@ namespace Zeniths.Auth.Service
         {
             var query = dicRepos.NewQuery.OrderBy(p => p.SortPath);
             var list = dicRepos.Query(query).ToList();
-            list.Insert(0, new SystemDictionary
-            {
-                Id = -1,
-                ParentId = 0,
-                Code = "_root",
-                Name = "数据字典"
-            });
             return list;
         }
 

@@ -177,6 +177,17 @@ namespace Zeniths.Helper
         }
 
         /// <summary>
+        /// 获取web客户端ip地址
+        /// </summary>
+        /// <returns></returns>
+        public static string GetClientIP()
+        {
+            string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
+            //或 string ip = System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+            return ip;
+        }
+
+        /// <summary>
         /// 获取Request.QueryString参数
         /// </summary>
         /// <param name="key">键值</param>

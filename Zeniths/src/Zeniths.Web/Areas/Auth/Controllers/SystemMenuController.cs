@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Zeniths.Auth.Entity;
 using Zeniths.Auth.Service;
 using Zeniths.Auth.Utility;
+using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.MvcUtility;
 using Zeniths.Utility;
@@ -34,9 +35,9 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         /// 获取指定主键的模块数据
         /// </summary>
         /// <param name="id">模块主键</param>
-        public ActionResult Get(int id)
+        public ActionResult Get(string id)
         {
-            var entity = service.Get(id);
+            var entity = service.Get(id.ToInt());
             return JsonNet(entity == null ? new EntityMessage(false, "没有找到相应的记录,Id=" + id) : new EntityMessage(entity));
         }
 

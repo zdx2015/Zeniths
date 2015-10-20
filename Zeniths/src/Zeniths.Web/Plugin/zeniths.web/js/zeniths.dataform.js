@@ -20,7 +20,10 @@
 
         //if (instance.options.validOptions.autoAddRequired === true) {
         $.each(instance.options.validOptions.rules, function (k, v) {
-            $('form [name=' + k + ']').closest('td').prev('th').prepend('<label class="required"></label>');
+            if (v.required === true) {
+                $('form [name=' + k + ']').closest('td').prev('th').prepend('<label class="required"></label>');
+            }
+            
             //var parent = $('form [name=' + k + ']').parent();
             ////console.log(parent);
             //if (parent.is('.input-group')) {
@@ -99,7 +102,10 @@
                             }
                             instance.$element.find('input[type=checkbox]').each(function () {
                                 var name = $(this).attr('name');
-                                instance.options.ajaxOptions.data[name] = $(this).prop('checked');
+                                var checked = $(this).prop('checked');
+                                if (!checked) {
+                                    instance.options.ajaxOptions.data[name] = checked;
+                                }
                             });
                             instance.$element.ajaxSubmit(instance.options.ajaxOptions);
                         }
@@ -225,6 +231,15 @@
     };
 
     /**
+     * 初始化IP地址控件
+     * @param {Object} options 控件配置
+     * @returns {} 
+     */
+    DataForm.prototype.initIpAddress = function(options) {
+        $('.ip-control').ipAddress(options);
+    };
+
+    /**
      * 初始化下拉选择Select2控件
      * @param {Object} options 控件配置
      * @returns {DataForm} 
@@ -254,7 +269,7 @@
         var self = this;
         var ops = $.extend({}, {
             'defaultText': '',
-            'minChars':1
+            'minChars': 1
         }, options);
         $('.tag-control').tagsInput(ops);
 
@@ -351,6 +366,10 @@
             todayHighlight: true
         }, options);
         $('.date-control').datepicker(ops);
+        $('.date-control').next('span.input-group-addon').on('click', function () {
+            $(this).prev().datepicker('show');
+        });
+
 
         $('.date-control').datepicker().on('changeDate', function (e) {
             self.$element.validate().element($(this));

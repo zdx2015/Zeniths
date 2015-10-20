@@ -531,16 +531,16 @@ namespace Zeniths.Helper
         /// <summary>
         /// 生成异常信息
         /// </summary>
-        /// <param name="e">异常对象</param>
-        public static string BuildExceptionDetails(Exception e)
+        /// <param name="ex">异常对象</param>
+        public static string BuildExceptionDetails(Exception ex)
         {
             string targetSiteFullName = string.Empty;
-            if (e.TargetSite.DeclaringType != null)
+            if (ex.TargetSite.DeclaringType != null)
             {
-                targetSiteFullName = e.TargetSite.DeclaringType.FullName;
+                targetSiteFullName = ex.TargetSite.DeclaringType.FullName;
             }
             return string.Format("消息:{0}\r\n异常类:{1}\r\n异常方法:{2}\r\n异常程序集:{3}\r\n堆栈跟踪:\r\n{4}",
-                e.Message, targetSiteFullName, e.TargetSite.Name, e.Source, e.StackTrace);
+                ex.Message, targetSiteFullName, ex.TargetSite.Name, ex.Source, ex.StackTrace);
         }
 
         #region Base64 编码

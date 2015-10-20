@@ -1,13 +1,13 @@
-﻿@model SystemDictionary
-@{
+﻿@{
     Layout = "~/Views/Shared/_LayoutTreeBase.cshtml";
 }
 
 <div class="easyui-layout" fit="true" border="false">
-    <div region="west" split="true" title="数据字典" border="false" style="width:200px;background-color: #fafafa;"
+    <div region="west" split="true" title="数据字典" border="false" 
+         style="width:300px;background-color: #fafafa;"
          data-options="headerCls:'panel-right-border',bodyCls:'panel-right-border'">
         <ul class="zenithsTree treeDic" fit="true" 
-            data-url="@Url.Action("GetDictionaryList")"
+            data-url="@Url.Action("GetDictionaryTree")"
             data-parenturl="@Url.Action("SaveParent")"
             data-sorturl="@Url.Action("SaveSort")"
             ></ul>
@@ -61,19 +61,8 @@
     </div>
 </div>
 @section style{
-
     <link href="~/Plugin/jquery-easyui/css/icon.css" rel="stylesheet" />
-    <style>
-        .panel-left-border {
-            border-left-width: 1px;
-        }
-
-        .panel-right-border {
-            border-right-width: 1px;
-        }
-    </style>
 }
-@section script
-{
+@section script{
     <script src="~/Assets/js/auth/system.dictionary.js"></script>
 }

@@ -22,14 +22,19 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         }
 
         /// <summary>
-        /// 获取系统数据字典列表
+        /// 获取系统数据字典树节点
         /// </summary>
-        public ActionResult GetDictionaryList()
+        public ActionResult GetDictionaryTree()
         {
             var dics = service.GetDictionaryList();
-            var nodes = TreeHelper.Build(dics, p => p.ParentId == 0, (node, instace) =>
+            dics.Insert(0, new SystemDictionary
             {
-                if (instace.Id == -1)
+                ParentId = -1,
+                Name = "数据字典"
+            });
+            var nodes = TreeHelper.Build(dics, p => p.ParentId == -1, (node, instace) =>
+            {
+                if (instace.Id == 0)
                 {
                     node.IconCls = "icon-house";
                 }
@@ -56,9 +61,9 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             });
         }
 
-        public ActionResult EditDictionary(int id)
+        public ActionResult EditDictionary(string id)
         {
-            var entity = service.GetDictionary(id);
+            var entity = service.GetDictionary(id.ToInt());
             return EditDictionaryCore(entity);
         }
 
@@ -135,9 +140,9 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             });
         }
 
-        public ActionResult EditDetails(int id)
+        public ActionResult EditDetails(string id)
         {
-            var entity = service.GetDetails(id);
+            var entity = service.GetDetails(id.ToInt());
             return EditDetailsCore(entity);
         }
 

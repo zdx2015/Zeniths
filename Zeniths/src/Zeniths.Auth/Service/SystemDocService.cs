@@ -106,7 +106,7 @@ namespace Zeniths.Auth.Service
         }
 
         /// <summary>
-        /// 获取系统文档列表
+        /// 获取系统文档分页列表
         /// </summary>
         /// <param name="pageIndex">页面索引</param>
         /// <param name="pageSize">分页大小</param>

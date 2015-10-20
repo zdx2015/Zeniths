@@ -24,7 +24,9 @@
             onBeforeLoad: function () {
                 $(this).parent().parent().mask('正在加载数据字典...');
             },
-            onLoadSuccess: function () {
+            onLoadSuccess: function (_node, _data) {
+                if(_node!=null) return;
+
                 $(this).parent().parent().unmask();
 
                 //加载节点字典明细
@@ -61,7 +63,7 @@
     };
 
     /**
-     * 初始化字典树邮件菜单
+     * 初始化字典树右键菜单
      * @returns {} 
      */
     self.initTreeMenu = function () {
@@ -98,7 +100,7 @@
      */
     self.isRootNode = function () {
         var node = zeniths.tree.getTreeNodeSelected(self.$tree);
-        if (node && node.id === '-1') {
+        if (node && node.parentid === '-1') {
             return true;
         }
         return false;
@@ -124,8 +126,9 @@
     self.createDictionary = function ($menuItem) {
         var node = zeniths.tree.getTreeNodeSelected(self.$tree);
         var id = node.id;
-        var sortPath = zeniths.tree.getTreeNodeSortPath(self.$tree, id);
+        var sortPath = zeniths.tree.getNewNodeSortPath(self.$tree, id);
         var url = $menuItem.data('url') + '?parentId=' + id + '&sortPath=' + sortPath;
+        console.log('createTreeNode:sortPath='+sortPath);
         self.showDictionaryDialog(url);
     };
 

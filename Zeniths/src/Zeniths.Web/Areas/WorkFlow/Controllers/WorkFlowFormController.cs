@@ -39,9 +39,9 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
             return EditCore(new WorkFlowForm());
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            var entity = service.Get(id);
+            var entity = service.Get(id.ToInt());
             return EditCore(entity);
         }
 

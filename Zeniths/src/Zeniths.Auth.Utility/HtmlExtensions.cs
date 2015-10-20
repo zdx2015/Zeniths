@@ -41,8 +41,7 @@ namespace Zeniths.Auth.Utility
         /// <returns></returns>
         public static MvcHtmlString RoleCategoryOptions(this HtmlHelper helper,string selected = null)
         {
-            var options = AuthHelper.DictionaryOptions("RoleCategory", selected);
-            return MvcHtmlString.Create(options);
+            return MvcHtmlString.Create(AuthHelper.BuildDicOptions("RoleCategory", selected));
         }
 
         /// <summary>
@@ -53,8 +52,7 @@ namespace Zeniths.Auth.Utility
         /// <returns></returns>
         public static MvcHtmlString ParamCategoryOptions(this HtmlHelper helper, string selected = null)
         {
-            var options = AuthHelper.DictionaryOptions("ParamCategory", selected);
-            return MvcHtmlString.Create(options);
+            return MvcHtmlString.Create(AuthHelper.BuildDicOptions("ParamCategory", selected));
         }
     }
 }

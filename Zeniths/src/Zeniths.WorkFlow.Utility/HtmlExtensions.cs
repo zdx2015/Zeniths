@@ -17,8 +17,7 @@ namespace Zeniths.WorkFlow.Utility
         /// <returns></returns>
         public static MvcHtmlString WorkFlowFormCategoryOptions(this HtmlHelper helper, string selected = null)
         {
-            var options = AuthHelper.DictionaryOptions("WorkFlow", selected);
-            return MvcHtmlString.Create(options);
+            return MvcHtmlString.Create(AuthHelper.BuildDicOptions("WorkFlow", selected));
         }
     }
 }
