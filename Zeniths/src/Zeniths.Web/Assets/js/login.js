@@ -21,12 +21,12 @@
             data: { account: self.$account.val(), password: self.$password.val() },
             type: "post",
             success: function (result) {
-                self.$button.removeAttr('disabled');
                 self.$button.val('登录');
                 if (result.success) {
                     self.$button.val('登陆成功,正在跳转...');
                     window.location.href = result.url;
                 } else {
+                    self.$button.removeAttr('disabled');
                     self.msg(result.message);
                 }
             },

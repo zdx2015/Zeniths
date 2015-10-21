@@ -114,7 +114,7 @@ v\:group,v\:rect,v\:imagedata,v\:oval,v\:line,v\:polyline,v\:stroke,v\:textbox {
 	height:15px;background-color:#D8E8FC;border:#ccc 1px solid;position:absolute;
 	z-index:10000;
 }
-.GooFlow .GooFlow_line_move{filter:Alpha(Opacity=50);-moz-opacity:0.5;opacity:0.5;overflow:hidden;position:absolute;z-index:9999;background:url(0) no-repeat}
+.GooFlow .GooFlow_line_move{filter:Alpha(Opacity=50);-moz-opacity:0.5;opacity:0.5;overflow:hidden;position:absolute;z-index:9999;background-repeat:no-repeat}
 .GooFlow .GooFlow_line_oper b{display:inline-block;width:15px;height:15px;margin-left:2px;cursor:pointer}
 .GooFlow .b_l1{background:url(img/GooFlow_line_oper.png) no-repeat 1px 1px}
 .GooFlow .b_l2{background:url(img/GooFlow_line_oper.png) no-repeat 1px -14px}

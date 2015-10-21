@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Zeniths.Extensions;
@@ -19,6 +20,13 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
         public ActionResult Test()
         {
             return View();
+        }
+
+        public ActionResult GetTestData()
+        {
+            var path =  Server.MapPath("~/assets/gooflow/data.json");
+            var content = System.IO.File.ReadAllText(path);
+            return Content(content, "text/html", Encoding.UTF8);
         }
 
         public ActionResult Index()

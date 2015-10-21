@@ -560,9 +560,10 @@ function FullDialog(url, _id, _title) {
         title: _title,
         max: false,
         min: false,
-        width: top.$(window).width() - 40,
-        height: top.$('body').height() - 100,
-        content: 'url:' + RootPath() + url
+        width: $(window).width() - 40,
+        height: $(window).height() - 100,
+        //content: 'url:' + RootPath() + url
+        content: 'url:/WorkFlow/Flow/Test'
     })
 }
 /*
