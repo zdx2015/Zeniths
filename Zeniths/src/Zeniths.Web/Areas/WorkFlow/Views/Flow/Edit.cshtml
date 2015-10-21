@@ -1,0 +1,52 @@
+﻿@model Flow
+@{
+    var title = "设计流程";
+}
+
+<div class="container-edit-zeniths">
+
+    <div class="panel panel-default panel-zeniths">
+        <div class="panel-heading">
+            @title
+        </div>
+        <div class="panel-body">
+            <div class="search-panel-zeniths">
+                <a class="btn btn-default" id="btnDelete">
+                    <i class="fa fa-random"></i> 新建步骤
+                </a>
+                <a class="btn btn-default" id="btnRefresh">
+                    <i class="fa fa-vine"></i> 连线
+                </a>
+                <a class="btn btn-danger">
+                    <i class="fa fa-trash-o"></i> 删除对象
+                </a>
+                <a class="btn btn-primary">
+                    <i class="fa fa-save"></i> 保存
+                </a>
+
+                <a class="btn btn-default" id="btnCreate">
+                    <i class="fa fa-cog"></i> 属性
+                </a>
+                <a class="btn btn-default pull-right">
+                    <i class="fa fa-share"></i> 返回
+                </a>
+            </div>
+
+            <div id="flowdiv" style="margin:5px 0 0 0; padding:0;border:1px dashed green;overflow: auto;height:400px"></div>
+
+        </div>
+    </div>
+
+</div>
+
+
+@section script{
+    <script src="~/Assets/js/workflow/flowdesinger/draw-min.js"></script>
+    <script src="~/Assets/js/workflow/flowdesinger/workflow.js"></script>
+    <script>
+
+        $(function () {
+
+        });
+    </script>
+}
