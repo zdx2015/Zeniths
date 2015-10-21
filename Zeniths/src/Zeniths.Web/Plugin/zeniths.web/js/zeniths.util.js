@@ -400,7 +400,7 @@ zeniths.util.dialog = function (url, width, height, options) {
         skin: 'layui-layer-zdx', //加上边框
         scrollbar: false,
         moveOut: true,
-        shift: zeniths.util.isChrome ? -1 : 3,
+        shift: 3,//zeniths.util.isChrome ? -1 : 3,
         fix: true,
         closeBtn: 2,
         title: ' ',

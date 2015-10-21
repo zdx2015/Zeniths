@@ -105,19 +105,28 @@
     <Content Include="Assets\css\images\maintitle.png" />
     <Content Include="Assets\css\login.css" />
     <Content Include="Assets\css\treegrid.css" />
+    <Content Include="Assets\gooflow\GooFlow.css" />
+    <Content Include="Assets\gooflow\GooFlow.js" />
+    <Content Include="Assets\gooflow\jquery-1.8.2.min.js" />
+    <Content Include="Assets\gooflow\jquery.jqprint-0.3.js" />
+    <Content Include="Assets\gooflow\learunui-framework.css" />
+    <Content Include="Assets\gooflow\learunui-framework.js" />
     <Content Include="Assets\js\auth\system.user.js" />
     <Content Include="Assets\js\auth\system.department.js" />
     <Content Include="Assets\js\auth\system.dictionary.js" />
     <Content Include="Areas\WorkFlow\Views\_ViewStart.cshtml" />
     <Content Include="Areas\HR\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Auth\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\WorkFlow\Views\WorkFlowForm\Details.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowForm\Details.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDictionary\DetailsView.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDoc\Index.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDoc\Details.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDoc\Edit.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDoc\Grid.cshtml" />
     <Content Include="Assets\js\login.js" />
+    <Content Include="Assets\js\workflow\flowdesinger\draw-min.js" />
+    <Content Include="Assets\js\workflow\flowdesinger\workflow-show.js" />
+    <Content Include="Assets\js\workflow\flowdesinger\workflow.js" />
     <Content Include="Plugin\bootstrap-datepicker\js\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.date.extensions.js" />
     <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.extensions.js" />
@@ -152,6 +161,11 @@
     <Content Include="Areas\Auth\Views\SystemUser\Grid.cshtml" />
     <Content Include="Areas\Auth\Views\SystemUser\Edit.cshtml" />
     <Content Include="Areas\Auth\Views\SystemUser\Details.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\Flow\Details.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\Flow\Edit.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\Flow\Grid.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\Flow\Index.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\Flow\Test.cshtml" />
     <None Include="Plugin\_references.js" />
     <Content Include="Assets\js\default.js" />
     <Content Include="Plugin\bootstrap-clockpicker\css\bootstrap-clockpicker.css" />
@@ -515,7 +529,7 @@
     <Content Include="Areas\Auth\Views\SystemDictionary\DetailsGrid.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDictionary\DictionaryEdit.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDictionary\DetailsEdit.cshtml" />
-    <Content Include="Areas\WorkFlow\Views\WorkFlowButton\Details.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowButton\Details.cshtml" />
     <Content Include="Plugin\zeniths.web\js\zeniths.datagrid.js" />
     <Content Include="Assets\js\auth\system.menu.js" />
     <Content Include="favicon.ico" />
@@ -537,10 +551,11 @@
     <Compile Include="Areas\Auth\Controllers\SystemRoleController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
+    <Compile Include="Areas\WorkFlow\Controllers\FlowController.cs" />
     <Compile Include="Areas\WorkFlow\WorkFlowAreaRegistration.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
-    <Compile Include="Areas\WorkFlow\Controllers\WorkFlowButtonController.cs" />
-    <Compile Include="Areas\WorkFlow\Controllers\WorkFlowFormController.cs" />
+    <Compile Include="Areas\WorkFlow\Controllers\FlowButtonController.cs" />
+    <Compile Include="Areas\WorkFlow\Controllers\FlowFormController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -564,12 +579,12 @@
     <Content Include="Plugin\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Shared\EditDemo.cshtml" />
-    <Content Include="Areas\WorkFlow\Views\WorkFlowForm\Index.cshtml" />
-    <Content Include="Areas\WorkFlow\Views\WorkFlowForm\Edit.cshtml" />
-    <Content Include="Areas\WorkFlow\Views\WorkFlowForm\Grid.cshtml" />
-    <Content Include="Areas\WorkFlow\Views\WorkFlowButton\Index.cshtml" />
-    <Content Include="Areas\WorkFlow\Views\WorkFlowButton\Edit.cshtml" />
-    <Content Include="Areas\WorkFlow\Views\WorkFlowButton\Grid.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowForm\Index.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowForm\Edit.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowForm\Grid.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowButton\Index.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowButton\Edit.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowButton\Grid.cshtml" />
     <Content Include="Views\Shared\_LayoutBase.cshtml" />
     <Content Include="Views\Shared\_LayoutBootstrapBase.cshtml" />
     <Content Include="Views\Shared\_LayoutTreeBase.cshtml" />
@@ -583,7 +598,6 @@
   <ItemGroup>
     <Folder Include="Areas\HR\Controllers\" />
     <Folder Include="Assets\js\hr\" />
-    <Folder Include="Assets\js\workflow\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zeniths.Auth.Utility\Zeniths.Auth.Utility.csproj">

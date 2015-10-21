@@ -1,4 +1,4 @@
-﻿@model PageList<WorkFlowButton>
+﻿@model PageList<FlowForm>
 @{
     Layout = null;
 }
@@ -8,11 +8,11 @@
             <th class="w-checkbox">
                 <label><input class="checkbox-check" type="checkbox"><span></span></label>
             </th>
-            <th class="w-200px" data-order="@nameof(WorkFlowButton.Name)">名称</th>
-            <th class="w-80px text-center">图标</th>
-            <th class="w-80px text-center" data-order="@nameof(WorkFlowButton.IsEnabled)">状态</th>
-            <th class="w-80px text-center" data-order="@nameof(WorkFlowButton.SortIndex)">序号</th>
-            <th>备注</th>
+            <th class="w-200px" data-order="@nameof(FlowForm.Name)">名称</th>
+            <th class="w-200px" data-order="@nameof(FlowForm.Category)">分类</th>
+            <th class="w-80px text-center" data-order="@nameof(FlowForm.IsEnabled)">状态</th>
+            <th class="w-80px text-center" data-order="@nameof(FlowForm.SortIndex)">序号</th>
+            <th data-order="@nameof(FlowForm.Url)">地址</th>
             <th class="w-200px text-center">操作</th>
         </tr>
     </thead>
@@ -24,14 +24,12 @@
                     <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
                 </td>
                 <td>@record.Name</td>
-                <td class="text-center"><i class="@record.IconClass fa-2x" style="color: @record.IconColor"></i></td>
-                <td class="text-center">
-                    @Html.BoolLabel(record.IsEnabled)
-                </td>
+                <td>@record.Category</td>
+                <td class="text-center">@Html.BoolFaIcon(record.IsEnabled)</td>
                 <td class="text-center">@record.SortIndex</td>
                 <td>
                     <div class="text-split">
-                        @record.Note
+                        @record.Url
                     </div>
                 </td>
                 <td>

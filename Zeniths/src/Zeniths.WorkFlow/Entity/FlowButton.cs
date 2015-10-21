@@ -12,7 +12,7 @@ namespace Zeniths.WorkFlow.Entity
     /// </summary>
     [Table(Caption = "流程按钮")]
     [PrimaryKey("Id", true)]
-    public class WorkFlowButton
+    public class FlowButton
     {
         /// <summary>
         /// 按钮主键
@@ -77,6 +77,6 @@ namespace Zeniths.WorkFlow.Entity
         /// <summary>
         /// 复制对象
         /// </summary>
-        public WorkFlowButton Clone() => this.MemberwiseClone() as WorkFlowButton;
+        public FlowButton Clone() => this.MemberwiseClone() as FlowButton;
     }
 }

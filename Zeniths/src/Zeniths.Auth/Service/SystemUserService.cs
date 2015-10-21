@@ -23,6 +23,7 @@ namespace Zeniths.Auth.Service
         /// <returns>操作成功返回True</returns>
         public BoolMessage Login(string account, string password)
         {
+            account = account.Trim();
             var entity = repos.Get(p => p.Account.Equals(account));
             if (entity == null)
             {

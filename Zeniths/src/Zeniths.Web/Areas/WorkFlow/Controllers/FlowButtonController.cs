@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using Zeniths.Entity;
 using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.WorkFlow.Entity;
@@ -15,29 +12,28 @@ using Zeniths.WorkFlow.Utility;
 namespace Zeniths.Web.Areas.WorkFlow.Controllers
 {
     [Authorize]
-    public class WorkFlowFormController : WorkFlowBaseController
+    public class FlowButtonController : WorkFlowBaseController
     {
-        private readonly WorkFlowFormService service = new WorkFlowFormService();
+        private readonly FlowButtonService service = new FlowButtonService();
 
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Grid(string name, string category)
+        public ActionResult Grid(string name)
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = service.GetPageList(pageIndex, pageSize,
-                orderName, orderDir,name, category);
+            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name);
             return View(list);
         }
 
         public ActionResult Create()
         {
-            return EditCore(new WorkFlowForm());
+            return EditCore(new FlowButton());
         }
 
         public ActionResult Edit(string id)
@@ -46,14 +42,14 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
             return EditCore(entity);
         }
 
-        private ActionResult EditCore(WorkFlowForm entity)
+        private ActionResult EditCore(FlowButton entity)
         {
-            return View("Edit",entity);
+            return View("Edit", entity);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(WorkFlowForm entity)
+        public ActionResult Save(FlowButton entity)
         {
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)

@@ -1,5 +1,5 @@
 ﻿@{
-    var title = "管理流程按钮";
+    var title = "管理流程表单";
 }
 <div class="container-zeniths">
     <div class="panel panel-default panel-zeniths">
@@ -10,7 +10,13 @@
             <div class="search-panel-zeniths">
                 <form class="form-inline search-form">
                     <div class="form-group">
-                        <input class="w-200px form-control" name="@nameof(WorkFlowButton.Name)" type="text" placeholder="请输入按钮名称关键字查询">
+                        <input class="w-200px form-control" name="@nameof(FlowForm.Name)" type="text" placeholder="请输入表单名称关键字查询">
+                    </div>
+                    <div class="form-group">
+                        <select class="select2-control w-200px form-control" name="@nameof(FlowForm.Category)" data-placeholder="请选择表单分类">
+                            <option></option>
+                            @Html.FlowFormCategoryOptions()
+                        </select>
                     </div>
                     &nbsp;
                     <button class="btn btn-primary" type="submit">
@@ -30,8 +36,7 @@
                     </a>
                 </form>
             </div>
-            <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid"))"
-                 data-query-form=".search-form">
+            <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid"))" data-query-form=".search-form">
             </div>
         </div>
     </div>
@@ -43,9 +48,9 @@
         $(function () {
             zeniths.util.standardGridBind({
                 editWidth: 800,
-                editHeight: 550,
+                editHeight: 480,
                 viewWidth: 800,
-                viewHeight: 490
+                viewHeight: 430
             });
         });
     </script>

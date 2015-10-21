@@ -8,41 +8,41 @@ using Zeniths.Entity;
 namespace Zeniths.WorkFlow.Entity
 {
     /// <summary>
-    /// 流程表单
+    /// 流程
     /// </summary>
-    [Table(Caption = "流程表单")]
+    [Table(Caption = "流程")]
     [PrimaryKey("Id", true)]
-    public class WorkFlowForm
+    public class Flow
     {
         /// <summary>
-        /// 表单主键
+        /// 流程主键
         /// </summary>
-        [Column(Caption = "表单主键", Exported = false)]
-        public int Id { get; set; }
+        [Column(Caption = "流程主键", Exported = true)]
+        public string Id { get; set; }
 
         /// <summary>
-        /// 表单名称
+        /// 流程名称
         /// </summary>
-        [Column(Caption = "表单名称")]
+        [Column(Caption = "流程名称")]
         public string Name { get; set; }
 
         /// <summary>
-        /// 表单分类
+        /// 流程分类
         /// </summary>
-        [Column(Caption = "表单分类")]
+        [Column(Caption = "流程分类")]
         public string Category { get; set; }
 
         /// <summary>
-        /// 表单地址
+        /// 流程信息
         /// </summary>
-        [Column(Caption = "表单地址")]
-        public string Url { get; set; }
+        [Column(Caption = "流程信息")]
+        public string Json { get; set; }
 
         /// <summary>
-        /// 启用状态
+        /// 是否启用
         /// </summary>
-        [Column(Caption = "启用状态")]
-        public bool IsEnabled { get; set; } = true;
+        [Column(Caption = "是否启用")]
+        public bool IsEnabled { get; set; }
 
         /// <summary>
         /// 序号
@@ -59,6 +59,9 @@ namespace Zeniths.WorkFlow.Entity
         /// <summary>
         /// 复制对象
         /// </summary>
-        public WorkFlowForm Clone() => MemberwiseClone() as WorkFlowForm;
+        public Flow Clone()
+        {
+            return (Flow)this.MemberwiseClone();
+        }
     }
 }

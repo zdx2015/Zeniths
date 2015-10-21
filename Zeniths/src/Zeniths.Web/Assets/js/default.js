@@ -62,7 +62,7 @@
             var id = node.id;
             var text = node.text;
             var url = node.url;
-            var icon = node.icon;
+            var iconCls = node.iconCls;
             if ($("#tabs").tabs('exists', text)) {
                 $("#tabs").tabs('select', text);
             } else {
@@ -72,7 +72,7 @@
                         id: id,
                         title: text,
                         closable: true,
-                        icon: icon,
+                        icon: iconCls,
                         url: url
                     },
                     iframe: { src: url }

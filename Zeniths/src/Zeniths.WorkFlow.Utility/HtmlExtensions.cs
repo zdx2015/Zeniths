@@ -10,14 +10,25 @@ namespace Zeniths.WorkFlow.Utility
     public static class HtmlExtensions
     {
         /// <summary>
-        /// 获取流程表单下拉选项
+        /// 获取流程表单分类下拉选项
         /// </summary>
         /// <param name="helper"></param>
         /// <param name="selected">选中的值</param>
         /// <returns></returns>
-        public static MvcHtmlString WorkFlowFormCategoryOptions(this HtmlHelper helper, string selected = null)
+        public static MvcHtmlString FlowFormCategoryOptions(this HtmlHelper helper, string selected = null)
         {
-            return MvcHtmlString.Create(AuthHelper.BuildDicOptions("WorkFlow", selected));
+            return MvcHtmlString.Create(AuthHelper.BuildDicOptions("FormCategory", selected));
+        }
+
+        /// <summary>
+        /// 获取流程分类下拉选项
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="selected">选中的值</param>
+        /// <returns></returns>
+        public static MvcHtmlString FlowCategoryOptions(this HtmlHelper helper, string selected = null)
+        {
+            return MvcHtmlString.Create(AuthHelper.BuildDicOptions("FlowCategory", selected));
         }
     }
 }

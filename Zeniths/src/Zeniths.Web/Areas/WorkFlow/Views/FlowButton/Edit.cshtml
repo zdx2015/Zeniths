@@ -1,6 +1,6 @@
-﻿@model WorkFlowForm
+﻿@model FlowButton
 @{
-    var title = "编辑流程表单";
+    var title = "编辑流程按钮";
 }
 
 <div class="container-edit-zeniths">
@@ -20,30 +20,34 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" placeholder="请输入表单名称" />
+                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" placeholder="请输入按钮名称" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">样式：</label></th>
+                        <td>
+                            <div class='row'>
+                                <div class='col-sm-6'>
+                                    <input class="form-control" name="@nameof(Model.IconClass)" value="@Model.IconClass" type="text" />
+                                </div>
+                                <div class='col-sm-6'>
+                                    <div class='input-group'>
+                                        <span class='input-group-addon fix-border'>颜色</span>
+                                        <input class="color-control form-control" name="@nameof(Model.IconColor)"
+                                               value="@Model.IconColor" type="text" title="请选择图标颜色" />
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            <label class="control-label">分类：</label>
+                            <label class="control-label">脚本：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <select class="select2-control form-control" name="@nameof(Model.Category)" data-placeholder="请选择表单分类">
-                                    <option></option>
-                                    @Html.WorkFlowFormCategoryOptions(Model.Category)
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <label class="control-label">地址：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Url)" value="@Model.Url" type="text" />
+                                <textarea class="form-control" name="@nameof(Model.Script)" rows="5">@Model.Script</textarea>
                             </div>
                         </td>
                     </tr>
@@ -59,7 +63,6 @@
                             @*<input class="switch-control" name="@nameof(Model.IsEnabled)" value="1" @Html.IsChecked(Model.IsEnabled) type="checkbox" data-on-text="启用" data-off-text="禁用">*@
                         </td>
                     </tr>
-
                     <tr>
                         <th>
                             <label class="control-label">序号：</label>
@@ -92,23 +95,23 @@
         </div>
     </form>
 </div>
-
-
+@section style{
+    <link href="~/plugin/bootstrap-colorpickersliders/css/bootstrap.colorpickersliders.min.css" rel="stylesheet" />
+}
 @section script{
+    <script src="~/plugin/bootstrap-colorpickersliders/js/tinycolor.js"></script>
+    <script src="~/plugin/bootstrap-colorpickersliders/js/bootstrap.colorpickersliders.min.js"></script>
     <script>
 
         $(function () {
 
-            $('.editform').dataform().initSelect2().initiCheck().initValidate({
+            $('.editform').dataform().initColorPicker().initSelect2().initiCheck().initValidate({
                 rules: {
                     Name: {
                         required: true,
                         maxlength: 100
                     },
-                    Category: {
-                        required: true
-                    },
-                    Url: {
+                    Script: {
                         required: true
                     },
                     SortIndex: {
@@ -119,22 +122,20 @@
                 },
                 messages: {
                     Name: {
-                        required: '请填写表单名称',
-                        maxlength: '表单名称长度不能超过100'
+                        required: '请填写按钮名称',
+                        maxlength: '按钮名称长度不能超过100'
                     },
-                    Category: {
-                        required: '请选择表单分类'
-                    },
-                    Url: {
-                        required: '请填写表单路径'
+                    Script: {
+                        required: '请填写按钮脚本'
                     },
                     SortIndex: {
-                        required: '请填写表单排序号',
-                        digits: '表单排序号只能输入正整数',
-                        maxlength: '表单排序号不能超过9位数'
+                        required: '请填写按钮排序号',
+                        digits: '按钮排序号只能输入正整数',
+                        maxlength: '按钮排序号不能超过9位数'
                     }
                 },
                 beforeSubmit: function () {
+
                 }
             }).initAjax({ success: zeniths.util.formAjaxSuccess });
 

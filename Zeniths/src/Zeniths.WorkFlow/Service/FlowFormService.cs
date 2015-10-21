@@ -10,19 +10,16 @@ using Zeniths.WorkFlow.Entity;
 
 namespace Zeniths.WorkFlow.Service
 {
-    public class WorkFlowFormService
+    public class FlowFormService
     {
-        /// <summary>
-        /// 存储器
-        /// </summary>
-        private readonly WorkFlowRepository<WorkFlowForm> repos = new WorkFlowRepository<WorkFlowForm>();
+        private readonly WorkFlowRepository<FlowForm> repos = new WorkFlowRepository<FlowForm>();
 
         /// <summary>
         /// 检测是否存在指定流程表单
         /// </summary>
         /// <param name="entity">流程表单实体</param>
         /// <returns>存在返回true</returns>
-        public BoolMessage Exists(WorkFlowForm entity)
+        public BoolMessage Exists(FlowForm entity)
         {
             var has = repos.Exists(p => p.Name == entity.Name && p.Category == entity.Category && p.Id != entity.Id);
             return has ? new BoolMessage(false, "输入流程表单名称已经存在") : BoolMessage.True;
@@ -32,7 +29,7 @@ namespace Zeniths.WorkFlow.Service
         /// 添加流程表单
         /// </summary>
         /// <param name="entity">流程表单实体</param>
-        public BoolMessage Insert(WorkFlowForm entity)
+        public BoolMessage Insert(FlowForm entity)
         {
             try
             {
@@ -49,7 +46,7 @@ namespace Zeniths.WorkFlow.Service
         /// 更新流程表单
         /// </summary>
         /// <param name="entity">流程表单实体</param>
-        public BoolMessage Update(WorkFlowForm entity)
+        public BoolMessage Update(FlowForm entity)
         {
             try
             {
@@ -91,7 +88,7 @@ namespace Zeniths.WorkFlow.Service
         /// </summary>
         /// <param name="id">流程表单主键</param>
         /// <returns>流程表单对象</returns>
-        public WorkFlowForm Get(int id)
+        public FlowForm Get(int id)
         {
             return repos.Get(id);
         }
@@ -100,7 +97,7 @@ namespace Zeniths.WorkFlow.Service
         /// 获取启用的表单列表
         /// </summary>
         /// <returns>返回启用的表单列表</returns>
-        public List<WorkFlowForm> GetEnabledList()
+        public List<FlowForm> GetEnabledList()
         {
             var query = repos.NewQuery.Where(p => p.IsEnabled == true).OrderBy(p => p.SortIndex);
             return repos.Query(query).ToList();
@@ -116,10 +113,10 @@ namespace Zeniths.WorkFlow.Service
         /// <param name="name">表单名称</param>
         /// <param name="category">表单分类</param>
         /// <returns>流程表单分页列表</returns>
-        public PageList<WorkFlowForm> GetPageList(int pageIndex, int pageSize, string orderName,
+        public PageList<FlowForm> GetPageList(int pageIndex, int pageSize, string orderName,
             string orderDir, string name, string category)
         {
-            orderName = orderName.IsEmpty() ? nameof(WorkFlowForm.Id) : orderName;
+            orderName = orderName.IsEmpty() ? nameof(FlowForm.Id) : orderName;
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;
             var query = repos.NewQuery.Take(pageSize).Page(pageIndex).
                 OrderBy(orderName, orderDir.IsAsc());

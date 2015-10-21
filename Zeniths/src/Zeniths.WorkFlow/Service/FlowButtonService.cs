@@ -17,19 +17,19 @@ namespace Zeniths.WorkFlow.Service
     /// <summary>
     /// 流程按钮服务
     /// </summary>
-    public class WorkFlowButtonService
+    public class FlowButtonService
     {
         /// <summary>
         /// 存储器
         /// </summary>
-        private readonly WorkFlowRepository<WorkFlowButton> repos = new WorkFlowRepository<WorkFlowButton>();
+        private readonly WorkFlowRepository<FlowButton> repos = new WorkFlowRepository<FlowButton>();
 
         /// <summary>
         /// 检测是否存在指定流程按钮
         /// </summary>
         /// <param name="entity">流程按钮实体</param>
         /// <returns>存在返回true</returns>
-        public BoolMessage Exists(WorkFlowButton entity)
+        public BoolMessage Exists(FlowButton entity)
         {
             var has = repos.Exists(p => p.Name == entity.Name && p.Id != entity.Id);
             return has ? new BoolMessage(false, "输入流程按钮名称已经存在") : BoolMessage.True;
@@ -39,7 +39,7 @@ namespace Zeniths.WorkFlow.Service
         /// 添加流程按钮
         /// </summary>
         /// <param name="entity">流程按钮实体</param>
-        public BoolMessage Insert(WorkFlowButton entity)
+        public BoolMessage Insert(FlowButton entity)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace Zeniths.WorkFlow.Service
         /// 更新流程按钮
         /// </summary>
         /// <param name="entity">流程按钮实体</param>
-        public BoolMessage Update(WorkFlowButton entity)
+        public BoolMessage Update(FlowButton entity)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace Zeniths.WorkFlow.Service
         /// </summary>
         /// <param name="id">流程表单主键</param>
         /// <returns>流程表单对象</returns>
-        public WorkFlowButton Get(int id)
+        public FlowButton Get(int id)
         {
             return repos.Get(id);
         }
@@ -107,7 +107,7 @@ namespace Zeniths.WorkFlow.Service
         /// 获取启用的表单列表
         /// </summary>
         /// <returns>返回启用的表单列表</returns>
-        public List<WorkFlowButton> GetEnabledList()
+        public List<FlowButton> GetEnabledList()
         {
             var query = repos.NewQuery.Where(p => p.IsEnabled == true).OrderBy(p => p.SortIndex);
             return repos.Query(query).ToList();
@@ -122,10 +122,10 @@ namespace Zeniths.WorkFlow.Service
         /// <param name="orderDir">排序方式</param>
         /// <param name="buttonName">按钮名称</param>
         /// <returns></returns>
-        public PageList<WorkFlowButton> GetPageList(int pageIndex, int pageSize, string orderName,
+        public PageList<FlowButton> GetPageList(int pageIndex, int pageSize, string orderName,
             string orderDir, string buttonName)
         {
-            orderName = orderName.IsEmpty() ? nameof(WorkFlowButton.Id) : orderName;
+            orderName = orderName.IsEmpty() ? nameof(FlowButton.Id) : orderName;
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;
             var query = repos.NewQuery.Take(pageSize).Page(pageIndex).
                 OrderBy(orderName, orderDir.IsAsc());
