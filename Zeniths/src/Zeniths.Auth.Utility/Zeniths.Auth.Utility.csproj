@@ -71,6 +71,7 @@
     <Compile Include="AuthHelper.cs" />
     <Compile Include="HtmlExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ZenithsAuthorizeAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zeniths.Auth\Zeniths.Auth.csproj">

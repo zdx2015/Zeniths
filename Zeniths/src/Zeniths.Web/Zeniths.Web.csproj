@@ -117,6 +117,7 @@
     <Content Include="Areas\Auth\Views\SystemDoc\Details.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDoc\Edit.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDoc\Grid.cshtml" />
+    <Content Include="Assets\js\login.js" />
     <Content Include="Plugin\bootstrap-datepicker\js\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.date.extensions.js" />
     <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.extensions.js" />
@@ -537,9 +538,7 @@
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\WorkFlow\WorkFlowAreaRegistration.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
-    <Compile Include="Controllers\DemoController.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\WorkFlowButtonController.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\WorkFlowFormController.cs" />
     <Compile Include="Global.asax.cs">
@@ -550,7 +549,7 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Default\Login.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="App_Data\project.json" />
@@ -564,10 +563,7 @@
     <Content Include="Plugin\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Plugin\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Views\Default\Index.cshtml" />
-    <Content Include="Views\Demo\Index.cshtml" />
-    <Content Include="Views\Demo\Data\_UserTable.cshtml" />
-    <Content Include="Views\Demo\Edit.cshtml" />
-    <Content Include="Views\Demo\Details.cshtml" />
+    <Content Include="Views\Shared\EditDemo.cshtml" />
     <Content Include="Areas\WorkFlow\Views\WorkFlowForm\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\WorkFlowForm\Edit.cshtml" />
     <Content Include="Areas\WorkFlow\Views\WorkFlowForm\Grid.cshtml" />

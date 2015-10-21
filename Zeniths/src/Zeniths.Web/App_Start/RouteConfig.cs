@@ -16,7 +16,7 @@ namespace Zeniths.Web
             routes.MapRoute(
                 name: "Login",
                 url: "login",
-                defaults: new { controller = "Account", action = "Login" }
+                defaults: new { controller = "Default", action = "Login" }
             );
 
             routes.MapRoute(

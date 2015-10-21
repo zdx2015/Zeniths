@@ -9,6 +9,8 @@
 @section script
 {
     @Scripts.Render("~/zeniths-js", "~/zeniths-tree-js")
+    <script src="~/plugin/layer/layer.js"></script>
+    <script>layer.config({ extend: 'extend/layer.ext.js' });</script>
     @RenderSection("script", required: false)
 }
 @RenderBody()

@@ -79,3 +79,44 @@
     width: 100%;
     border: none;
 }
+
+
+
+
+.nl-footer {
+    text-align: center;
+    padding-bottom: 20px;
+    margin-top:30px;
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    width: 100%;
+    color: #fff;
+}
+
+ 
+.nl-f-nav {
+    margin-bottom: 10px;
+}
+
+.nl-f-nav a {
+    display: inline-block;
+    text-decoration: none;
+    outline: 0 none; 
+    color: #fff;
+    padding: 0 6px;
+    line-height: 1.2;
+}
+
+.nl-f-nav  a:link {
+    /*color: #666;*/
+    outline: 0 none;
+}
+
+.nl-f-nav a:hover {
+    color: #d14836;
+}
+
+.nl-f-copyright {
+    color: #fff;
+}

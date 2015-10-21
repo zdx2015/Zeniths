@@ -1,5 +1,4 @@
-﻿
-zeniths.index = function () {
+﻿var index = function () {
 
     return {
 
@@ -9,41 +8,72 @@ zeniths.index = function () {
          */
         bindTreeMenu: function () {
             var self = this;
+            var url = $('.menuTree').data('url');
             $('.menuTree').tree({
-                url: '/Default/Menu',
+                url: url,
                 animate: true,
                 onBeforeLoad: function (node, param) {
                     $(this).parent().parent().mask('正在加载菜单...');
                 },
                 onLoadSuccess: function (node, data) {
                     $(this).parent().parent().unmask();
+                    var menuId = window.location.hash.replace('#', '');
+                    if (menuId) {
+                        var node = $(this).tree('find', menuId);
+                        if (node) {
+                            $(this).tree('expandTo', node.target);
+                            $(this).tree('select', node.target);
+                            self.createTab(node);
+                        }
+                    }
                 },
                 onClick: function (node) {
                     $(this).tree('expand', node.target);
                     if (node.url) {
-                        self.createTab(node.text, node.url, node.iconCls);
+                        self.createTab(node);
                     }
                 }
             });
         },
 
         /**
-         * 创建并添加标签页,如果这个标题的标签存在，则选择该标签. 否则添加一个标签到标签组.
-         * @param {String} title 标题
-         * @param {String} url 地址
-         * @param {String} icon 图标
+         * 初始化Tab控件
          * @returns {} 
          */
-        createTab: function (title, url, icon) {
-            if ($("#tabs").tabs('exists', title)) {
-                $("#tabs").tabs('select', title);
+        initTab: function () {
+            $('#tabs').tabs({
+                onSelect: function (title, index) {
+                    var panel = $(this).tabs('getTab', index);
+                    var ops = $(panel).panel("options");
+                    window.location.hash = ops.id;
+                },
+                onClose:function(title, index) {
+                    window.location.hash = '';
+                }
+            });
+
+        },
+        /**
+         * 创建并添加标签页,如果这个标题的标签存在，则选择该标签. 否则添加一个标签到标签组.
+         * @param {node} node TreeNode
+         * @returns {} 
+         */
+        createTab: function (node) {
+            var id = node.id;
+            var text = node.text;
+            var url = node.url;
+            var icon = node.icon;
+            if ($("#tabs").tabs('exists', text)) {
+                $("#tabs").tabs('select', text);
             } else {
 
                 $('#tabs').tabs('addIframeTab', {
                     tab: {
-                        title: title,
+                        id: id,
+                        title: text,
                         closable: true,
-                        icon: icon
+                        icon: icon,
+                        url: url
                     },
                     iframe: { src: url }
                 });
@@ -67,7 +97,24 @@ zeniths.index = function () {
             $('#statusScreen').html(zeniths.util.getScreen());
         },
 
+        /**
+         * 绑定按钮事件
+         * @returns {} 
+         */
+        initButton: function () {
+            $('#btnLogout').on('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var url = $(this).attr('href');
+                zeniths.util.confirm('确定要退出系统吗？', function () {
+                    window.location.href = url;
+                });
+            });
+        },
+
         init: function () {
+            this.initTab();
+            this.initButton();
             this.bindTreeMenu();
             this.bindUserInfo();
             this.bindStatusInfo();
@@ -76,18 +123,5 @@ zeniths.index = function () {
 }();
 
 $(function () {
-    //var $body = $(document.body);
-    //$body.css({ 'overflow': 'hidden', 'position': 'relative' });
-    //var $mask = $('<div style="position:absolute;z-index:2;width:100%;height:100%;background:#ccc;z-index:1000;opacity:0.3;filter:alpha(opacity=30);"><div>').appendTo($body);
-    //var $maskMessage = $('<div class="mask-message" style="z-index:3;width:auto;height:16px;line-height:16px;position:absolute;top:50%;left:50%;margin-top:-20px;margin-left:-92px;border:2px solid #d4d4d4;padding: 12px 5px 10px 30px;background: #ffffff url(/plugin/jquery-easyui/css/images/loading.gif) no-repeat scroll 5px center;"> 正在加载 ... </div>').appendTo($body);
-
-    //$.parser.onComplete = function () {
-    //    $([$mask[0], $maskMessage[0]]).fadeOut('fast', function () {
-    //        $(this).remove();
-    //    });
-    //    $(document.body).css('display', '');
-    //    $(document.body).layout('resize');
-    //};
-
-     zeniths.index.init();
+    index.init();
 })

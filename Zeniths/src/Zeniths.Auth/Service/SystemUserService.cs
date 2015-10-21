@@ -171,6 +171,7 @@ namespace Zeniths.Auth.Service
                     nameof(SystemUser.AllowEndDateTime),
                     nameof(SystemUser.IsAdmin),
                     nameof(SystemUser.IsEnabled),
+                    nameof(SystemUser.IsAudit),
                     nameof(SystemUser.HintQuestion),
                     nameof(SystemUser.HintAnswer),
                     nameof(SystemUser.SortIndex),

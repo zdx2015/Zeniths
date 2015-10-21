@@ -12,6 +12,7 @@ using Zeniths.Utility;
 
 namespace Zeniths.Web.Areas.Auth.Controllers
 {
+    //[Authorize]
     public class SystemUserController : AuthBaseController
     {
         private readonly SystemUserService service = new SystemUserService();
@@ -51,7 +52,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             {
                 node.IconCls = AuthHelper.GetDepartmentIconCls(instace);
             });
-            return JsonNet(nodes);
+            return Json(nodes);
         }
 
         public ActionResult Grid(string name, string departmentIds)
@@ -60,7 +61,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir,name, StringHelper.ConvertToArrayInt(departmentIds));
+            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name, StringHelper.ConvertToArrayInt(departmentIds));
             return View(list);
         }
 
@@ -81,6 +82,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
 
         private ActionResult EditCore(SystemUser entity)
         {
+            if (entity == null) throw new ArgumentNullException(nameof(entity), "请指定实体对象");
             SetDepartmentEntity(entity.DepartmentId);
             return View("Edit", entity);
         }
@@ -99,18 +101,18 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {
-                return JsonNet(hasResult);
+                return Json(hasResult);
             }
             entity.NameSpell = SpellHelper.ConvertSpell(entity.Name);
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
-            return JsonNet(result);
+            return Json(result);
         }
 
         [HttpPost]
         public ActionResult Delete(string id)
         {
             var result = service.Delete(StringHelper.ConvertToArrayInt(id));
-            return JsonNet(result);
+            return Json(result);
         }
 
         public ActionResult Export()

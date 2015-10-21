@@ -11,6 +11,7 @@ using Zeniths.WorkFlow.Utility;
 
 namespace Zeniths.Web.Areas.WorkFlow.Controllers
 {
+    [Authorize]
     public class WorkFlowButtonController : WorkFlowBaseController
     {
         private readonly WorkFlowButtonService service = new WorkFlowButtonService();
@@ -53,18 +54,18 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {
-                return JsonNet(hasResult);
+                return Json(hasResult);
             }
 
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
-            return JsonNet(result);
+            return Json(result);
         }
 
         [HttpPost]
         public ActionResult Delete(string id)
         {
             var result = service.Delete(StringHelper.ConvertToArrayInt(id));
-            return JsonNet(result);
+            return Json(result);
         }
 
         public ActionResult Details(string id)

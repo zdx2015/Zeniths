@@ -134,11 +134,15 @@
     /**
      * 显示数据编辑对话框
      * @param {String} url 页面Url 
-     * @param {Function} callback 回调函数
+     * @param {Boolean} isCreate 是否新建
      * @returns {} 
      */
-    self.showEditDialog = function (url, callback) {
-        zeniths.util.dialog(url, 1000, 600, {
+    self.showEditDialog = function (url,isCreate) {
+        var height = 500;
+        if (isCreate) {
+            height = 560;
+        }
+        zeniths.util.dialog(url, 1000, height, {
             callback: function () {
                 self.reloadGrid();
             }
@@ -151,7 +155,7 @@
      * @returns {} 
      */
     self.showViewDialog = function (url) {
-        zeniths.util.dialog(url, 1000, 600);
+        zeniths.util.dialog(url, 1000, 480);
     };
 
     /**
@@ -164,7 +168,7 @@
 
         var node = zeniths.tree.getTreeNodeSelected(self.$tree);
         var url = new URI($btnItem.data('url')).query({ departmentId: node.id}).toString();
-        self.showEditDialog(url);
+        self.showEditDialog(url,true);
     };
 
     /**
@@ -176,7 +180,7 @@
         if (hasSelected === false) return;
 
         var url = $btnItem.data('url');
-        self.showEditDialog(url);
+        self.showEditDialog(url,false);
     };
 
     /**

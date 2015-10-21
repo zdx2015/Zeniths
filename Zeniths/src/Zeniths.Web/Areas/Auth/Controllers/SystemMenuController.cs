@@ -13,6 +13,7 @@ using Zeniths.Utility;
 
 namespace Zeniths.Web.Areas.Auth.Controllers
 {
+    [Authorize]
     public class SystemMenuController : AuthBaseController
     {
         private readonly SystemMenuService service = new SystemMenuService();
@@ -28,7 +29,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         public ActionResult GetList()
         {
             var list = service.GetList();
-            return JsonNet(new EasyUIGrid(list.Count, list));
+            return Json(new EasyUIGrid(list.Count, list));
         }
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         public ActionResult Get(string id)
         {
             var entity = service.Get(id.ToInt());
-            return JsonNet(entity == null ? new EntityMessage(false, "没有找到相应的记录,Id=" + id) : new EntityMessage(entity));
+            return Json(entity == null ? new EntityMessage(false, "没有找到相应的记录,Id=" + id) : new EntityMessage(entity));
         }
 
         /// <summary>
@@ -50,10 +51,10 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {
-                return JsonNet(hasResult);
+                return Json(hasResult);
             }
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
-            return JsonNetText(new JsonMessage(result));
+            return JsonText(new JsonMessage(result));
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         public ActionResult SaveParent(int id, int oldParentId, int newParentId)
         {
             var result = service.SaveParent(id, oldParentId, newParentId);
-            return JsonNet(new JsonMessage(result));
+            return Json(new JsonMessage(result));
         }
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         {
             var list = Request.Form.AllKeys.Select(key => new PrimaryKeyValue(key, nameof(SystemMenu.SortPath), Request.Form[key]));
             var result = service.UpdateSortPath(list);
-            return JsonNet(new JsonMessage(result));
+            return Json(new JsonMessage(result));
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         {
             var idsz = StringHelper.ConvertToArrayInt(ids);
             var result = service.Delete(idsz);
-            return JsonNet(new JsonMessage(result));
+            return Json(new JsonMessage(result));
         }
 
         /// <summary>

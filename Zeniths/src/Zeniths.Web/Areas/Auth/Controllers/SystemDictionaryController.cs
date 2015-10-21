@@ -12,6 +12,7 @@ using Zeniths.Utility;
 
 namespace Zeniths.Web.Areas.Auth.Controllers
 {
+    [Authorize]
     public class SystemDictionaryController : AuthBaseController
     {
         private readonly SystemDictionaryService service = new SystemDictionaryService();
@@ -47,7 +48,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
                     node.IconCls = "icon-plugin";
                 }
             });
-            return JsonNet(nodes);
+            return Json(nodes);
         }
 
         public ActionResult CreateDictionary()
@@ -83,18 +84,18 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             var hasResult = service.ExistsDictionary(entity.Code, entity.Id);
             if (hasResult.Failure)
             {
-                return JsonNet(hasResult);
+                return Json(hasResult);
             }
             entity.NameSpell = SpellHelper.ConvertSpell(entity.Name);
             var result = entity.Id == 0 ? service.InsertDictionary(entity) : service.UpdateDictionary(entity);
-            return JsonNet(result);
+            return Json(result);
         }
 
         [HttpPost]
         public ActionResult DeleteDictionary(string id)
         {
             var result = service.DeleteDictionary(StringHelper.ConvertToArrayInt(id));
-            return JsonNet(result);
+            return Json(result);
         }
 
         /// <summary>
@@ -105,7 +106,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             int id = Request.Form["id"].ToInt();
             int newParentId = Request.Form["newParentId"].ToInt();
             var result = service.SaveParentDictionary(id, newParentId);
-            return JsonNet(result);
+            return Json(result);
         }
 
         /// <summary>
@@ -115,7 +116,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         {
             var list = Request.Form.AllKeys.Select(key => new PrimaryKeyValue(key, nameof(SystemDictionary.SortPath), Request.Form[key]));
             var result = service.UpdateSortPathDictionary(list);
-            return JsonNet(result);
+            return Json(result);
         }
 
 
@@ -162,18 +163,18 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             var hasResult = service.ExistsDetails(entity.Name, entity.DictionaryId, entity.Id);
             if (hasResult.Failure)
             {
-                return JsonNet(hasResult);
+                return Json(hasResult);
             }
             entity.NameSpell = SpellHelper.ConvertSpell(entity.Name);
             var result = entity.Id == 0 ? service.InsertDetails(entity) : service.UpdateDetails(entity);
-            return JsonNet(result);
+            return Json(result);
         }
 
         [HttpPost]
         public ActionResult DeleteDetails(string id)
         {
             var result = service.DeleteDetails(StringHelper.ConvertToArrayInt(id));
-            return JsonNet(result);
+            return Json(result);
         }
 
         public ActionResult DetailsView(string id)

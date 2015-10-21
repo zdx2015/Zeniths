@@ -41,31 +41,34 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            <label class="control-label">密码：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" id="@nameof(Model.Password)" name="@nameof(Model.Password)" value="@Model.Password" type="password" autocomplete="off" />
-                            </div>
-                        </td>
-                        <th>
-                            <label class="control-label">确认密码：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="ConfirmPassword" value="@Model.Password" type="password" autocomplete="off" />
-                            </div>
-                        </td>
-                    </tr>
+                    @if (Model.Id == 0)
+                    {
+                        <tr>
+                            <th>
+                                <label class="control-label">密码：</label>
+                            </th>
+                            <td>
+                                <div class="input-icon right">
+                                    <input class="form-control" id="@nameof(Model.Password)" name="@nameof(Model.Password)" value="@Model.Password" type="password" autocomplete="off"/>
+                                </div>
+                            </td>
+                            <th>
+                                <label class="control-label">确认密码：</label>
+                            </th>
+                            <td>
+                                <div class="input-icon right">
+                                    <input class="form-control" name="ConfirmPassword" value="@Model.Password" type="password" autocomplete="off"/>
+                                </div>
+                            </td>
+                        </tr>
+                    }
                     <tr>
                         <th>
                             <label class="control-label">授权开始时间：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="date-control form-control" name="@nameof(Model.AllowStartDateTime)" value="@Model.AllowStartDateTime" type="text" autocomplete="off" />
+                                <input class="datetime-control form-control" name="@nameof(Model.AllowStartDateTime)" value="@Model.AllowStartDateTime" type="text" autocomplete="off" />
                             </div>
                         </td>
                         <th>
@@ -73,7 +76,7 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="date-control form-control" name="@nameof(Model.AllowEndDateTime)" value="@Model.AllowEndDateTime" type="text" autocomplete="off" />
+                                <input class="datetime-control form-control" name="@nameof(Model.AllowEndDateTime)" value="@Model.AllowEndDateTime" type="text" autocomplete="off" />
                             </div>
                         </td>
                     </tr>
@@ -121,11 +124,15 @@
                                     <input class="icheckbox-control" name="@nameof(Model.IsEnabled)" value="true" type="checkbox" @Html.IsChecked(Model.IsEnabled) />
                                     <span>启用</span>
                                 </label>
-
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.IsAudit)" value="true" type="checkbox" @Html.IsChecked(Model.IsAudit) />
+                                    <span>审核</span>
+                                </label>
                                 <label class="checkbox-inline">
                                     <input class="icheckbox-control" name="@nameof(Model.IsAdmin)" value="true" type="checkbox" @Html.IsChecked(Model.IsAdmin) />
                                     <span>管理员</span>
                                 </label>
+
                             </div>
                         </td>
                     </tr>
@@ -153,13 +160,17 @@
     </form>
 </div>
 
-
+@section style{
+<link href="~/Plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" /> 
+}
 @section script{
+<script src="~/Plugin/bootstrap-daterangepicker/js/moment.min.js"></script>    
+<script src="~/Plugin/bootstrap-daterangepicker/js/zh-cn.js"></script>
+<script src="~/Plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
     <script>
 
         $(function () {
-
-            $('.editform').dataform().initDatePicker().initiCheck().initValidate({
+            $('.editform').dataform().initDateTimePicker().initiCheck().initValidate({
                 rules: {
                     Account: {
                         required: true,

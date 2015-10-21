@@ -11,6 +11,7 @@ using Zeniths.Helper;
 
 namespace Zeniths.Web.Areas.Auth.Controllers
 {
+    [Authorize]
     public class SystemParamController : AuthBaseController
     {
         private readonly SystemParamService service = new SystemParamService();
@@ -54,17 +55,17 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {
-                return JsonNet(hasResult);
+                return Json(hasResult);
             }
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
-            return JsonNet(result);
+            return Json(result);
         }
 
         [HttpPost]
         public ActionResult Delete(string id)
         {
             var result = service.Delete(StringHelper.ConvertToArrayInt(id));
-            return JsonNet(result);
+            return Json(result);
         }
 
         public ActionResult Details(string id)

@@ -3,10 +3,13 @@
 }
 
 @section style{
+    <link href="~/Plugin/jquery-loadmask/css/jquery.loadmask.css" rel="stylesheet" />
     <link href="~/Assets/css/login.css" rel="stylesheet" />
 }
 @section script{
-    
+    <script src="~/Plugin/jquery-loadmask/js/jquery.loadmask.min.js"></script>
+    <script src="~/Plugin/layer/layer.js"></script>
+    <script src="~/Assets/js/login.js"></script>
 }
 <div class="loginBackground">
     <div class="container">
@@ -23,19 +26,30 @@
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <div class="row marginBottom20 has-feedback">
-                            <input name="username" type="text" id="username" size="20" class="form-control input-lg" placeholder="账号" />
+                            <input class="form-control input-lg" id="account" name="account" type="text" placeholder="账号" />
                             <i class="fa fa-user fa-2x form-control-feedback" style="color:#5BC0DE"></i>
                         </div>
                         <div class="row marginBottom20 has-feedback">
-                            <input name="password" type="password" id="password" class="form-control input-lg" placeholder="密码" />
+                            <input class="form-control input-lg" id="password" name="password" type="password" placeholder="密码" />
                             <i class="fa fa-lock fa-2x form-control-feedback" style="color:#5BC0DE"></i>
                         </div>
                         <div class="row marginBottom20">
-                            <input type="submit" name="IbtnEnter" value="登 录" id="IbtnEnter"
-                                   class="btn btn-primary btn-block btn-lg apply_btn" style="font-weight: bold;" />
+                            <input class="btn btn-warning btn-block btn-lg apply_btn" type="submit" value="登 录"
+                                   style="font-weight: bold;" data-url="@Url.Action("Login")" />
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="nl-footer">
+                @*<div class="nl-f-nav">推荐系统：win7及以上；推荐浏览器：google,firefox；推荐分辨率：1280*800及以上</div>
+                <div class="nl-f-nav">
+                    <a href="javascript:void(0);">关于正得信股份</a>|
+                    <a href="javascript:void(0);">联系我们</a>|
+                    <a href="javascript:void(0);">帮助中心</a>
+                </div>*@
+                <p class="nl-f-copyright">正得信股份版权所有&copy;2015&nbsp;&nbsp;</p>
             </div>
         </div>
     </div>

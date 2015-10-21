@@ -81,6 +81,7 @@ $.extend($.fn.tabs.methods, {
                     });
                 });
             } else {
+                //执行这个
                 iframe.onload = function () {
                     $([$mask[0], $maskMessage[0]]).fadeOut(params.iframe.delay || 'slow', function () {
                         $(this).remove();

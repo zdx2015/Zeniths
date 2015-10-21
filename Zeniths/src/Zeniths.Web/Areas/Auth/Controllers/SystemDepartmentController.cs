@@ -12,6 +12,7 @@ using Zeniths.Utility;
 
 namespace Zeniths.Web.Areas.Auth.Controllers
 {
+    [Authorize]
     public class SystemDepartmentController : AuthBaseController
     {
         private readonly SystemDepartmentService service = new SystemDepartmentService();
@@ -53,7 +54,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             {
                 node.IconCls = AuthHelper.GetDepartmentIconCls(instace);
             });
-            return JsonNet(nodes);
+            return Json(nodes);
         }
 
         public ActionResult Grid(string departmentId, string name)
@@ -104,17 +105,17 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {
-                return JsonNet(hasResult);
+                return Json(hasResult);
             }
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
-            return JsonNet(result);
+            return Json(result);
         }
 
         [HttpPost]
         public ActionResult Delete(string id)
         {
             var result = service.Delete(StringHelper.ConvertToArrayInt(id));
-            return JsonNet(result);
+            return Json(result);
         }
 
         /// <summary>
@@ -125,7 +126,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             int id = Request.Form["id"].ToInt();
             int newParentId = Request.Form["newParentId"].ToInt();
             var result = service.SaveParent(id, newParentId);
-            return JsonNet(result);
+            return Json(result);
         }
 
         /// <summary>
@@ -135,7 +136,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         {
             var list = Request.Form.AllKeys.Select(key => new PrimaryKeyValue(key, nameof(SystemDepartment.SortPath), Request.Form[key]));
             var result = service.SaveSort(list);
-            return JsonNet(result);
+            return Json(result);
         }
 
         public ActionResult Export()

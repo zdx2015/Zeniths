@@ -9,6 +9,7 @@ using Zeniths.Extensions;
 
 namespace Zeniths.Web.Areas.Auth.Controllers
 {
+    [Authorize]
     public class SystemExceptionController : AuthBaseController
     {
         private readonly SystemExceptionService service = new SystemExceptionService();

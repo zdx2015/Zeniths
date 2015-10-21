@@ -421,6 +421,9 @@
             }
         }, options);
         $('.datetime-control').datetimepicker(ops);
+        //    .on("dp.change", function (e) {
+        //    //$(this).data("DateTimePicker").hide();
+        //});
         return this;
     };
 
@@ -571,7 +574,7 @@
     /**
      * 表单插件
      * @param {Object} options 配置对象
-     * @returns {DataGrid} 返回第一个表单实例
+     * @returns {DataForm} 返回第一个表单实例
      */
     $.fn.dataform = function (options) {
         var instances = [];

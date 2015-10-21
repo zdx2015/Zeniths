@@ -12,6 +12,7 @@ using Zeniths.WorkFlow.Entity;
 
 namespace Zeniths.Web.Areas.Auth.Controllers
 {
+    [Authorize]
     public class SystemRoleController : AuthBaseController
     {
         private readonly SystemRoleService service = new SystemRoleService();
@@ -55,18 +56,18 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {
-                return JsonNet(hasResult);
+                return Json(hasResult);
             }
             entity.NameSpell = SpellHelper.ConvertSpell(entity.Name);
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
-            return JsonNet(result);
+            return Json(result);
         }
 
         [HttpPost]
         public ActionResult Delete(string id)
         {
             var result = service.Delete(StringHelper.ConvertToArrayInt(id));
-            return JsonNet(result);
+            return Json(result);
         }
 
         public ActionResult Details(string id)

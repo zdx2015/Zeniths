@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Web;
 using Zeniths.Auth.Entity;
 using Zeniths.Auth.Service;
 using Zeniths.Extensions;
@@ -67,6 +68,40 @@ namespace Zeniths.Auth.Utility
         public static bool IsUserExpire(SystemUser entity)
         {
             return new SystemUserService().IsUserExpire(entity);
+        }
+
+        /// <summary>
+        /// 获取当前登录用户对象
+        /// </summary>
+        public static SystemUser GetLoginUser()
+        {
+            var key = "_Zeniths.User";
+            if (HttpContext.Current.Session[key] == null)
+            {
+                var userService = new SystemUserService();
+                var account = HttpContext.Current.User.Identity.Name;
+                HttpContext.Current.Session[key] = userService.GetByAccount(account);
+            }
+            return HttpContext.Current.Session[key] as SystemUser;
+        }
+
+        /// <summary>
+        /// 获取当前登录用户部门对象
+        /// </summary>
+        public static SystemDepartment GetLoginDepartment()
+        {
+            var key = "_Zeniths.Department";
+            if (HttpContext.Current.Session[key] == null)
+            {
+                var deptService = new SystemDepartmentService();
+                var currentUser = GetLoginUser();
+                if (currentUser.DepartmentId == 0)
+                {
+                    throw new ApplicationException($"请指定当前用户 {currentUser.Account} 的部门主键");
+                }
+                HttpContext.Current.Session[key] = deptService.Get(currentUser.DepartmentId);
+            }
+            return HttpContext.Current.Session[key] as SystemDepartment;
         }
     }
 }

@@ -28,13 +28,13 @@
                 <li class="item"><a href="#">个人信息</a></li>
                 <li class="item"><a href="#">修改密码</a></li>
                 <li class="item"><a href="#">帮助中心</a></li>
-                <li class="item"><a href="@Url.Action("Login","Account")">安全退出</a></li>
+                <li class="item"><a id="btnLogout" href="@Url.Action("Logout")">安全退出</a></li>
             </ul>
         </div>
     </div>
     <div data-options="region:'west',split:true" title="导航菜单" style="width:200px; background-color: #fafafa;">
         <div>
-            <ul class="zenithsTree menuTree"></ul>
+            <ul class="zenithsTree menuTree" data-url="@Url.Action("GetMenuTree")"></ul>
         </div>
     </div>
     <div data-options="region:'center'">
