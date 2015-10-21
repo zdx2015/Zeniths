@@ -67,6 +67,9 @@
             padding-right: 6px;
             padding-left: 3px;
         }
+        .header .topbar .item a{
+            cursor: pointer;
+        }
 
 .footer {
     background: #e6eef8;

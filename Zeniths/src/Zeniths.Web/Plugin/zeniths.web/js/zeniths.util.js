@@ -502,12 +502,35 @@ zeniths.util.closeFrameDialog = function (win) {
 //};
 
 /**
+ * 获取当前登录用户信息
+ * @returns {} 
+ */
+zeniths.util.getCurrentUser = function () {
+    if (!top.CurrentUser) {
+        $.ajax({
+            url: '/Default/GetCurrentUser',
+            type: "post",
+            async: false,
+            success: function (result) {
+                top.CurrentUser = result;
+            },
+            error: function (result) {
+                var msg = result.responseJSON.message;
+                zeniths.util.alert(msg);
+            }
+        });
+    }
+    return top.CurrentUser;
+};
+
+
+/**
  * 获取ip地址控件值
  * @param {JQuery} $ipControl IP控件
  * @returns {} 
  */
-zeniths.util.getIpAddressValue = function($ipControl) {
-    return $ipControl.val().replace('___.___.___.___','').replace('____:____:____:____:____:____:____:____','');
+zeniths.util.getIpAddressValue = function ($ipControl) {
+    return $ipControl.val().replace('___.___.___.___', '').replace('____:____:____:____:____:____:____:____', '');
 };
 
 /**
@@ -911,12 +934,12 @@ zeniths.tree.expandRoot = function ($tree) {
  * @param {Boolean} isAddSelf 是否添加当前节点Id
  * @returns {} 
  */
-zeniths.tree.getChildrenIds = function ($tree,node,isAddSelf) {
+zeniths.tree.getChildrenIds = function ($tree, node, isAddSelf) {
     var ids = [];
     if (!node) {
         return ids;
     }
-    if (isAddSelf===true) {
+    if (isAddSelf === true) {
         ids.push(node.id);
     }
     if (node.children) {

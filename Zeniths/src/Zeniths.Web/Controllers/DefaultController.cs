@@ -65,5 +65,10 @@ namespace Zeniths.Web.Controllers
             });
             return Json(nodes);
         }
+
+        public ActionResult GetCurrentUser()
+        {
+            return Json(AuthHelper.GetLoginUser());
+        }
     }
 }

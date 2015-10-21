@@ -47,7 +47,7 @@
                     var ops = $(panel).panel("options");
                     window.location.hash = ops.id;
                 },
-                onClose:function(title, index) {
+                onClose: function (title, index) {
                     window.location.hash = '';
                 }
             });
@@ -84,7 +84,15 @@
          * @return {}
          */
         bindUserInfo: function () {
-            $('#userNameInfo').html('配置管理员(技术部)');
+            //$('#userNameInfo').html('配置管理员(技术部)');
+        },
+
+        /**
+         * 获取当前时间
+         * @returns {} 
+         */
+        setCurrentTime: function () {
+            $('#timeInfo').html(new Date().format('yyyy-MM-dd hh:mm:ss'));
         },
 
         /**
@@ -102,6 +110,18 @@
          * @returns {} 
          */
         initButton: function () {
+            $('#btnUserInfo').on('click', function (e) {
+                zeniths.util.dialog($(this).data('url'), 1000, 480);
+            });
+
+            //$('btnModifyPassowrd').on('click', function (e) {
+
+            //});
+
+            //$('btnHelper').on('click', function (e) {
+
+            //});
+
             $('#btnLogout').on('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -110,8 +130,14 @@
                     window.location.href = url;
                 });
             });
+
+            setInterval(this.setCurrentTime, 1000);
         },
 
+        /**
+         * 初始化页面
+         * @returns {} 
+         */
         init: function () {
             this.initTab();
             this.initButton();

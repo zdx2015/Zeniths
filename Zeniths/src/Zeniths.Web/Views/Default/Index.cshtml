@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutBase.cshtml";
+    var currentUser = AuthHelper.GetLoginUser();
 }
 @section style
 {
@@ -10,6 +11,7 @@
 @section script
 {
     @Scripts.Render("~/easyui-tab-tree-js")
+    <script src="~/Plugin/zeniths.web/js/date.format.js"></script>
     <script src="~/plugin/layer/layer.js"></script>
     <script>layer.config({ extend: 'extend/layer.ext.js' });</script>
     <script src="~/assets/js/default.js"></script>
@@ -22,12 +24,14 @@
 
         <div class="topbar">
             <div class="userinfo">
-                欢迎您：<span id="userNameInfo"></span>  登陆IP：192.168.1.103  当前时间：
+                欢迎您：<span id="userNameInfo">@currentUser.Name</span>&nbsp;
+                <span id="IPInfo">@WebHelper.GetClientIP()</span>&nbsp;
+                <span id="timeInfo">@DateTimeHelper.FormatDateHasSecond(DateTime.Now)</span>
             </div>
             <ul class="menu">
-                <li class="item"><a href="#">个人信息</a></li>
-                <li class="item"><a href="#">修改密码</a></li>
-                <li class="item"><a href="#">帮助中心</a></li>
+                <li class="item"><a id="btnUserInfo" data-url="@Url.Action("Details","SystemUser", new { area="Auth",id=currentUser.Id })">个人信息</a></li>
+                <li class="item"><a id="btnModifyPassowrd">修改密码</a></li>
+                <li class="item"><a id="btnHelper">帮助中心</a></li>
                 <li class="item"><a id="btnLogout" href="@Url.Action("Logout")">安全退出</a></li>
             </ul>
         </div>
