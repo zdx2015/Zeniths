@@ -1,0 +1,70 @@
+﻿@model FlowForm
+@{
+    var title = "查看流程表单";
+}
+
+<div class="container-edit-zeniths">
+    <div class="panel panel-default panel-zeniths">
+        <div class="panel-heading">
+            <span class="prefix"> <strong>@Model.Id</strong></span>
+            @title
+        </div>
+        <div class="panel-body">
+            <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+            <table class="table table-form table-dialog-form">
+                <tr>
+                    <th class='w-100px'>
+                        <label class="control-label">名称：</label>
+                    </th>
+                    <td>
+                        <p class="form-control-static">@Model.Name</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="control-label">分类：</label>
+                    </th>
+                    <td>
+                        <p class="form-control-static">@Model.Category</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="control-label">地址：</label>
+                    </th>
+                    <td>
+                        <p class="form-control-static">@Model.Url</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">状态：</label></th>
+                    <td>
+                        <p class="form-control-static">@Html.BoolLabel(Model.IsEnabled)</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>
+                        <label class="control-label">序号：</label>
+                    </th>
+                    <td>
+                        <p class="form-control-static">@Model.SortIndex</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">备注：</label></th>
+                    <td>
+                        <p class="form-control-static">@Model.Note</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel-footer text-center">
+            <div class="buttons">
+                <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                    <i class="fa fa-sign-in"></i> 关闭
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

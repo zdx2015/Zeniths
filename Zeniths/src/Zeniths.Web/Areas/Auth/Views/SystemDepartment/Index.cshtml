@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutTreeBase.cshtml";
+}
+
+<div class="easyui-layout" fit="true" border="false">
+    <div region="west" split="true" title="组织结构树" border="false" 
+         style="width:300px;background-color: #fafafa;"
+         data-options="headerCls:'panel-right-border',bodyCls:'panel-right-border'">
+        <ul class="zenithsTree" fit="true"
+            data-url="@Url.Action("GetTree")"
+            data-parenturl="@Url.Action("SaveParent")"
+            data-sorturl="@Url.Action("SaveSort")"></ul>
+    </div>
+    <div region="center" border="false" title="组织结构列表" style="background-color: #fafafa;"
+         data-options="headerCls:'panel-left-border',bodyCls:'panel-left-border'">
+        <div class="container-zeniths">
+            <div class="panel panel-default panel-zeniths">
+                <div class="panel-body">
+                    <div class="search-panel-zeniths">
+                        <form class="form-inline search-form">
+                            <div class="form-group">
+                                <input class="w-250px form-control" name="@nameof(SystemDepartment.Name)" type="text"
+                                       placeholder="请输入部门名称关键字查询">
+                            </div>
+                            &nbsp;
+                            <button class="btn btn-primary" type="submit">
+                                <i class="fa fa-search"></i> 查询
+                            </button>
+                            <a class="btn btn-success" id="btnCreate" data-url="@Url.Action("Create")">
+                                <i class="fa fa-plus"></i> 新建
+                            </a>
+                            <a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
+                                <i class="fa fa-trash-o"></i> 删除
+                            </a>
+                            <a class="btn btn-default" id="btnRefresh">
+                                <i class="fa fa-repeat"></i> 刷新
+                            </a>
+                            <a class="btn btn-default" id="btnExport" href="@Url.Action("Export")">
+                                <i class="fa fa-share-square-o"></i> 导出
+                            </a>
+                        </form>
+                    </div>
+                    <div class="datagrid" data-auto-load="false" data-url="@Html.Raw(Url.Action("Grid"))">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 右键菜单 -->
+<div class="easyui-menu treeMenu" style="display:none">
+    <div id="btnTreeCreate" data-options="iconCls:'icon-chart_organisation_add'" data-url="@Url.Action("Create")">新建</div>
+    <div class="menu-sep"></div>
+    <div id="btnTreeEdit" data-options="iconCls:'icon-pencil'" data-url="@Url.Action("Edit")">编辑</div>
+    <div class="menu-sep"></div>
+    <div id="btnTreeDelete" data-options="iconCls:'icon-chart_organisation_delete'" data-url="@Url.Action("Delete")">删除</div>
+    <div class="menu-sep"></div>
+    <div id="btnTreeRefresh" data-options="iconCls:'icon-reload'">刷新</div>
+</div>
+@section style{
+    <link href="~/Plugin/jquery-easyui/css/icon.css" rel="stylesheet" />
+}
+@section script{
+    <script src="~/Assets/js/auth/system.department.js"></script>
+}

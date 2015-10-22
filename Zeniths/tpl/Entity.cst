@@ -52,11 +52,11 @@ namespace <%= NameSpace %>.Entity
 		/// <summary>
         /// <%= columnRemark %>
         /// </summary>
-        <% if(!column.AllowDBNull){ %>
-        //[Required(ErrorMessage = "请输入<%= columnRemark %>")]
-        <%} %>
-        //[StringLength(<%=column.Size%>, ErrorMessage = "<%= columnRemark %>长度不能超过{1}")]
-        [Column(Caption = "<%= columnRemark %>")]
+		<% if (Table.HasPrimaryKey && Table.PrimaryKey.MemberColumns[0].Name.Equals(column.Name)){ %>
+        [Column(Caption = "<%= columnRemark %>", Exported = false)]
+		<%} else{ %>
+		[Column(Caption = "<%= columnRemark %>")]
+		<%} %>
         public <%=CSharpAlias[column.SystemType.Name]%><%if(!column.SystemType.Name.Equals("String")) if(column.AllowDBNull) Response.Write("?");%> <%= column.Name%> { get; set; }
 		<% 
         if(i!=Table.Columns.Count-1) Response.WriteLine();

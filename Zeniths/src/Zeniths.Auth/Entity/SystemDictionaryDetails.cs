@@ -19,15 +19,9 @@ namespace Zeniths.Auth.Entity
         /// <summary>
         /// 主键
         /// </summary>
-        [Column(Caption = "主键")]
+        [Column(Caption = "主键", Exported = false)]
         public int Id { get; set; }
-
-        /// <summary>
-        /// 父级主键
-        /// </summary>
-        [Column(Caption = "父级主键")]
-        public int ParentId { get; set; }
-
+         
         /// <summary>
         /// 字典主键
         /// </summary>
@@ -53,22 +47,23 @@ namespace Zeniths.Auth.Entity
         public string Value { get; set; }
 
         /// <summary>
-        /// 排序路径
+        /// 序号
         /// </summary>
-        [Column(Caption = "排序路径")]
-        public string SortPath { get; set; }
+        [Column(Caption = "序号")]
+        public int SortIndex { get; set; }
 
         /// <summary>
         /// 是否启用
         /// </summary>
         [Column(Caption = "是否启用")]
-        public bool IsEnabled { get; set; }
+        public bool IsEnabled { get; set; } = true;
 
         /// <summary>
         /// 备注
         /// </summary>
         [Column(Caption = "备注")]
         public string Note { get; set; }
+        
 
         /// <summary>
         /// 复制对象

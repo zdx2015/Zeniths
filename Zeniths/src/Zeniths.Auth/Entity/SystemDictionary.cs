@@ -20,7 +20,7 @@ namespace Zeniths.Auth.Entity
         /// <summary>
         /// 主键
         /// </summary>
-        [Column(Caption = "主键")]
+        [Column(Caption = "主键", Exported = false)]
         public int Id { get; set; }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Zeniths.Auth.Entity
         /// </summary>
         [Column(Caption = "排序路径")]
         public string SortPath { get; set; }
-        
+
         /// <summary>
         /// 备注
         /// </summary>

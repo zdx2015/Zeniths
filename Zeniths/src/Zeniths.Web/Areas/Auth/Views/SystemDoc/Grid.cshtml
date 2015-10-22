@@ -1,0 +1,54 @@
+﻿@model PageList<SystemDoc>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-checkbox">
+                <label><input class="checkbox-check" type="checkbox"><span></span></label>
+            </th>
+            <th class="w-200px" data-order="@nameof(SystemDoc.Name)">标题</th>
+            <th class="w-200px" data-order="@nameof(SystemDoc.Tag)">分类</th>
+            <th class="w-200px text-center" data-order="@nameof(SystemDoc.ModifyDateTime)">修改日期</th>
+            <th class="w-200px text-center" data-order="@nameof(SystemDoc.CreateDateTime)">创建日期</th>
+            <th class="w-150px text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
+                </td>
+                <td>
+                    <div class="text-split">
+                        @record.Name
+                    </div>
+                </td>
+                <td>
+                    <div class="text-split">
+                        @Html.ShowSystemDocTags(record.Tag)
+                    </div>
+                </td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.ModifyDateTime)</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.CreateDateTime)</td>
+
+                <td>
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
+                        <i class="fa fa-eye"></i> 查看
+                    </a>
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                        <i class="fa fa-edit"></i> 编辑
+                    </a>
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)

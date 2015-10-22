@@ -1,0 +1,47 @@
+﻿@model PageList<SystemParam>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-checkbox">
+                <label><input class="checkbox-check" type="checkbox"><span></span></label>
+            </th>
+            <th class="w-100px" data-order="@nameof(SystemParam.Category)">分类</th>
+            <th class="w-200px" data-order="@nameof(SystemParam.Code)">编码</th>
+            <th class="w-300px" data-order="@nameof(SystemParam.Name)">名称</th>
+            <th class="w-300px" data-order="@nameof(SystemParam.Value)">值</th>
+            <th class="w-300px" data-order="@nameof(SystemParam.DefaultValue)">默认值</th>
+            <th class="w-150px text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
+                </td>
+                <td>@record.Category</td>
+                <td>@record.Code</td>
+                <td>@record.Name</td>
+                <td><div class="text-split">@record.Value</div></td>
+                <td><div class="text-split">@record.DefaultValue</div></td>
+                <td>
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
+                        <i class="fa fa-eye"></i> 查看
+                    </a>
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                        <i class="fa fa-edit"></i> 编辑
+                    </a>
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)

@@ -1,0 +1,94 @@
+﻿@model SystemDoc
+@{
+    var title = "编辑系统文档";
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <input type="hidden" name="@nameof(Model.CreateDateTime)" value="@Model.CreateDateTime" />
+                <table class="table table-form table-dialog-form">
+                    <tr>
+                        <th class='w-100px'>
+                            <label class="control-label">标题：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" placeholder="请输入文档标题" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">标签：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="tag-control form-control" name="@nameof(Model.Tag)" value="@Model.Tag" type="text" placeholder="请输入分类标签" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">内容：</label></th>
+                        <td>
+                            <textarea class="editor-control form-control" name="@nameof(Model.Contents)" rows="24">@Model.Contents</textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section style{
+    <link href="~/Plugin/jquery-tags-input/jquery.tagsinput.min.css" rel="stylesheet" />
+}
+@section script{
+    <script src="~/Plugin/jquery-tags-input/jquery.tagsinput.min.js"></script>
+    <script src="~/Plugin/kindeditor/kindeditor-min.js"></script>
+    <script>
+
+        $(function () {
+
+            $('.editform').dataform().initSelect2().initTagsInput({
+                'height': '60px',
+                'width': '100%',
+                'defaultText': '添加标签'
+            }).initKindEditor().initValidate({
+                rules: {
+                    Name: {
+                        required: true,
+                        maxlength: 100
+                    }
+                },
+                messages: {
+                    Name: {
+                        required: '请输入文档标题',
+                        maxlength: '文档标题长度不能超过100'
+                    }
+                },
+                beforeSubmit: function () {
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+        });
+    </script>
+}

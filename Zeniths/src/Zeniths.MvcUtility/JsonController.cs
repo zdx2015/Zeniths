@@ -24,22 +24,22 @@ namespace Zeniths.MvcUtility
         /// </summary>
         /// <param name="data">要序列化的 JavaScript 对象图。</param>
         /// <returns>将指定对象序列化为 JSON 格式的 JSON 结果对象。在执行此方法所准备的结果对象时，ASP.NET MVC 框架会将该对象写入响应。</returns>
-        protected JsonNetResult JsonNet(object data)
+        protected new JsonNetResult Json(object data)
         {
             return new JsonNetResult(data);
         }
 
-        protected JsonNetResult JsonNet(bool success, string message)
+        protected JsonNetResult Json(bool success, string message)
         {
             return new JsonNetResult(new JsonMessage(success, message));
         }
 
-        protected JsonNetResult JsonNet(bool success)
+        protected JsonNetResult Json(bool success)
         {
             return new JsonNetResult(new JsonMessage(success));
         }
 
-        protected JsonNetResult JsonNet(BoolMessage boolMessage)
+        protected JsonNetResult Json(BoolMessage boolMessage)
         {
             return new JsonNetResult(new JsonMessage(boolMessage));
         }
@@ -51,7 +51,7 @@ namespace Zeniths.MvcUtility
         /// <param name="data">要序列化的 JavaScript 对象图。</param>
         /// <param name="contentType">内容类型（MIME 类型）。</param>
         /// <returns>将指定对象序列化为 JSON 格式的结果对象。</returns>
-        protected JsonNetResult JsonNet(object data, string contentType)
+        protected new JsonNetResult Json(object data, string contentType)
         {
             return new JsonNetResult(data, contentType);
         }
@@ -63,7 +63,7 @@ namespace Zeniths.MvcUtility
         /// <param name="contentType">内容类型（MIME 类型）。</param>
         /// <param name="contentEncoding">内容编码。</param>
         /// <returns>将指定对象序列化为 JSON 格式的结果对象。</returns>
-        protected JsonNetResult JsonNet(object data, string contentType, Encoding contentEncoding)
+        protected new JsonNetResult Json(object data, string contentType, Encoding contentEncoding)
         {
             return new JsonNetResult(data, contentType, contentEncoding);
         }
@@ -76,7 +76,7 @@ namespace Zeniths.MvcUtility
         /// <param name="contentEncoding">内容编码。</param>
         /// <param name="behavior">JSON 请求行为</param>
         /// <returns>将指定对象序列化为 JSON 格式的结果对象。</returns>
-        protected JsonNetResult JsonNet(object data, string contentType, Encoding contentEncoding,
+        protected new JsonNetResult Json(object data, string contentType, Encoding contentEncoding,
             JsonRequestBehavior behavior)
         {
             return new JsonNetResult(data, contentType, contentEncoding, behavior);
@@ -87,7 +87,7 @@ namespace Zeniths.MvcUtility
         /// </summary>
         /// <param name="data">要序列化的 JavaScript 对象图。</param>
         /// <returns>将指定对象序列化为 JSON 格式的 JSON 结果对象。在执行此方法所准备的结果对象时，ASP.NET MVC 框架会将该对象写入响应。</returns>
-        protected JsonNetResult JsonNetText(object data)
+        protected JsonNetResult JsonText(object data)
         {
             return new JsonNetResult(data, "text/html", Encoding.UTF8);
         }

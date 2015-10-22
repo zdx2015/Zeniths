@@ -1,0 +1,129 @@
+﻿@model SystemUser
+@{
+    var title = "查看系统用户";
+}
+
+<div class="container-edit-zeniths">
+    <div class="panel panel-default panel-zeniths">
+        <div class="panel-heading">
+            <span class="prefix"> <strong>@Model.Id</strong></span>
+            @title
+        </div>
+        <div class="panel-body">
+            <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+            <table class="table table-form table-dialog-form">
+                 <tr>
+                    <th  class='w-150px'><label class="control-label">账号：</label></th>
+                    <td>
+                        <p class="form-control-static">@Model.Account</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">姓名：</label></th>
+                    <td>
+                        <p class="form-control-static">@Model.Name</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="control-label">部门：</label>
+                    </th>
+                    <td>
+                        <p class="form-control-static">@Model.DepartmentName</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">电子邮件：</label></th>
+                    <td>
+                        <p class="form-control-static">@Model.Email</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">授权开始时间：</label></th>
+                    <td>
+                        <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.AllowStartDateTime)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">授权结束时间：</label></th>
+                    <td>
+                        <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.AllowEndDateTime)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">首次登陆时间：</label></th>
+                    <td>
+                        <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.FirstVisitDateTime)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">最后登陆时间：</label></th>
+                    <td>
+                        <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.LastVisitDateTime)</p>
+                    </td>
+                </tr>
+                 <tr>
+                    <th><label class="control-label">登陆次数：</label></th>
+                    <td>
+                        <p class="form-control-static">@Model.LoginCount</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">管理员：</label></th>
+                    <td>
+                        <p class="form-control-static">@Html.BoolFaIcon(Model.IsAdmin)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">审核：</label></th>
+                    <td>
+                        <p class="form-control-static">@Html.BoolFaIcon(Model.IsAudit)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">启用：</label></th>
+                    <td>
+                        <p class="form-control-static">@Html.BoolFaIcon(Model.IsEnabled)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">过期：</label></th>
+                    <td>
+                        <p class="form-control-static">@Html.BoolLabel(!AuthHelper.IsUserExpire(Model), null, "过期")</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">密码提示问题：</label></th>
+                    <td>
+                        <p class="form-control-static">@Model.HintAnswer</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">密码提示答案：</label></th>
+                    <td>
+                        <p class="form-control-static">@Model.HintQuestion</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">序号：</label></th>
+                    <td>
+                        <p class="form-control-static">@Model.SortIndex</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">备注：</label></th>
+                    <td>
+                        <p class="form-control-static">@Model.Note</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel-footer text-center">
+            <div class="buttons">
+                <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                    <i class="fa fa-sign-in"></i> 关闭
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

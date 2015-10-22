@@ -1,0 +1,132 @@
+﻿@model SystemDepartment
+@{
+    var title = "编辑系统部门";
+    SystemDepartment parentEntity = ViewBag.ParentEntity;
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <input type="hidden" name="@nameof(Model.ParentId)" value="@Model.ParentId" />
+                <input type="hidden" name="@nameof(Model.SortPath)" value="@Model.SortPath" />
+                <table class="table table-form table-dialog-form">
+                    <tr>
+                        <th class='w-100px'><label class="control-label">上级部门：</label></th>
+                        <td>
+                            @Html.Write(parentEntity != null, parentEntity?.Name, "组织机构")
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class='w-100px'>
+                            <label class="control-label">部门名称：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" placeholder="请输入部门名称" autocomplete="off" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">部门领导：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <select class="select2-control form-control" name="@nameof(Model.DepartmentLeaderId)">
+                                    <option></option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">分管领导：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <select class="select2-control form-control" name="@nameof(Model.ChargeLeaderId)">
+                                    <option></option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">主管领导：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <select class="select2-control form-control" name="@nameof(Model.MainLeaderId)">
+                                    <option></option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">状态：</label></th>
+                        <td>
+                            <div class="checkbox-list">
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.IsEnabled)" value="1" type="checkbox" @Html.IsChecked(Model.IsEnabled) />
+                                    <span>启用</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+ 
+                    <tr>
+                        <th><label class="control-label">备注：</label></th>
+                        <td>
+                            <textarea class="form-control" name="@nameof(Model.Note)" rows="3">@Model.Note</textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section script{
+    <script>
+
+        $(function () {
+
+            $('.editform').dataform().initSelect2().initiCheck().initValidate({
+                rules: {
+                    Name: {
+                        required: true,
+                        maxlength: 100
+                    }
+                },
+                messages: {
+                    Name: {
+                        required: '请填写部门名称',
+                        maxlength: '部门名称长度不能超过100'
+                    }
+                },
+                beforeSubmit: function () {
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+        });
+    </script>
+}

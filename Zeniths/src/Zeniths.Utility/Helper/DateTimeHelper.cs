@@ -509,6 +509,20 @@ namespace Zeniths.Helper
         }
 
         /// <summary>
+        /// 获取格式化的日期字符串(默认格式 yyyy-MM-dd HH:mm:ss)
+        /// </summary>
+        /// <param name="datetime">指定的日期</param>
+        /// <returns>返回日期格式化后的字符串</returns>
+        public static string FormatDateHasSecond(DateTime? datetime)
+        {
+            if (datetime.HasValue)
+            {
+                return FormatDate(datetime.Value, "yyyy-MM-dd HH:mm:ss");
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
         /// 获取格式化的日期字符串(默认格式 HH:mm:ss)
         /// </summary>
         /// <param name="datetime">指定的日期</param>

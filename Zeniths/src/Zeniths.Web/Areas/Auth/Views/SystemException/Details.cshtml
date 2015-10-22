@@ -1,0 +1,53 @@
+﻿@model Zeniths.Auth.Entity.SystemException
+@{
+    var title = "异常";
+}
+
+<div class="container-edit-zeniths">
+    <div class="panel panel-default panel-zeniths">
+        <div class="panel-heading">
+            <span class="prefix"> <strong>@Model.Id</strong></span>
+            @title
+        </div>
+        <div class="panel-body">
+            <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+            <table class="table table-form table-dialog-form">
+                <tr>
+                    <th class='w-100px'>
+                        <label class="control-label">消息：</label>
+                    </th>
+                    <td>
+                        <p class="form-control-static">@Model.Message</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">创建时间：</label></th>
+                    <td>
+                        <p class="form-control-static">@Model.CreateDateTime</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label class="control-label">IP地址：</label></th>
+                    <td>
+                        <p class="form-control-static">@Model.IPAddress</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="control-label">详细信息：</label>
+                    </th>
+                    <td>
+                        <p class="form-control-static">@Model.Details</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="panel-footer text-center">
+            <div class="buttons">
+                <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                    <i class="fa fa-sign-in"></i> 关闭
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "_LayoutBase.cshtml";
+}
+@section style
+{
+    <link href="~/plugin/jquery-easyui/css/easyui.css" rel="stylesheet" />
+    <link href="~/plugin/jquery-easyui/css/icon.css" rel="stylesheet" />
+    <link href="~/plugin/zeniths.web/css/zeniths.web.css" rel="stylesheet" />
+    @RenderSection("style", required: false)
+}
+@section script
+{
+    <script src="~/plugin/jquery/jquery.min.js"></script>
+    <script src="~/plugin/jquery-easyui/js/jquery.easyui.min.js"></script>
+    <script src="~/plugin/jquery-easyui/js/treegrid-dnd.js"></script>
+    <script src="~/plugin/jquery-easyui/js/jquery.tabs.extend.js"></script>
+    <script src="~/plugin/jquery-easyui/js/easyui-lang-zh_CN.js"></script>
+    <script src="~/plugin/zeniths.web/js/xci.js"></script>
+    @RenderSection("script", required: false)
+} 
+@RenderBody()

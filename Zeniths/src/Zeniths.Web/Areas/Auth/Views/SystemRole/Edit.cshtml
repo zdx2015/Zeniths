@@ -1,0 +1,126 @@
+﻿@model SystemRole
+@{
+    var title = "编辑系统角色";
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <table class="table table-form table-dialog-form">
+                    <tr>
+                        <th class='w-100px'>
+                            <label class="control-label">名称：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" placeholder="请输入角色名称" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">分类：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <select class="select2-control form-control" name="@nameof(Model.Category)" data-placeholder="请选择角色分类">
+                                    <option></option>
+                                    @Html.RoleCategoryOptions(Model.Category)
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">状态：</label></th>
+                        <td>
+                            <div class="checkbox-list">
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.IsEnabled)" value="1" type="checkbox" @Html.IsChecked(Model.IsEnabled) />
+                                    <span>启用</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            <label class="control-label">序号：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.SortIndex)" value="@Model.SortIndex" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">备注：</label></th>
+                        <td>
+                            <textarea class="form-control" name="@nameof(Model.Note)" rows="3">@Model.Note</textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section script{
+    <script>
+
+        $(function () {
+
+            $('.editform').dataform().initSelect2().initiCheck().initValidate({
+                rules: {
+                    Name: {
+                        required: true,
+                        maxlength: 100
+                    },
+                    Category: {
+                        required: true
+                    },
+                    SortIndex: {
+                        required: true,
+                        digits: true,
+                        maxlength: 9
+                    }
+                },
+                messages: {
+                    Name: {
+                        required: '请填写角色名称',
+                        maxlength: '角色名称长度不能超过100'
+                    },
+                    Category: {
+                        required: '请选择角色分类'
+                    },
+                    SortIndex: {
+                        required: '请填写角色排序号',
+                        digits: '角色排序号只能输入正整数',
+                        maxlength: '角色排序号不能超过9位数'
+                    }
+                },
+                beforeSubmit: function () {
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+        });
+    </script>
+}

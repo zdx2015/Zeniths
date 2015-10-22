@@ -1,0 +1,83 @@
+﻿body {
+    font-family: "Microsoft Yahei";
+    font-size: 14px;
+    margin: 0;
+    overflow: hidden;
+}
+
+.header {
+    width: 100%;
+    height: 70px;
+    position: relative;
+    z-index: 0;
+    margin-top: 0;
+    overflow: hidden;
+    border-width: 0;
+    background: transparent url("images/headerbg.png");
+}
+
+    .header .logo {
+        margin-top: 5px;
+        float: left;
+    }
+
+    .header .topbar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 72px;
+        width: 625px;
+        color: #fff;
+    }
+
+        .header .topbar .userinfo {
+            height: 30px;
+            line-height: 30px;
+            text-align: right;
+            padding-right: 5px;
+        }
+
+        .header .topbar .menu {
+            vertical-align: middle;
+            margin-top: 15px;
+            height: 22px;
+            text-align: right;
+            float: right;
+        }
+
+            .header .topbar .menu a:visited,
+            .header .topbar .menu a:active,
+            .header .topbar .menu a:link {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .header .topbar .menu a:hover {
+                color: red;
+                text-decoration: none;
+            }
+
+            .header .topbar .menu li {
+                float: left;
+                list-style: none;
+            }
+
+        .header .topbar .item {
+            background-repeat: repeat-x;
+            padding-right: 6px;
+            padding-left: 3px;
+        }
+        .header .topbar .item a{
+            cursor: pointer;
+        }
+
+.footer {
+    background: #e6eef8;
+    line-height: 38px;
+    height: 40px;
+    text-align: center;
+}
+
+.iframenosco {
+    overflow-y: hidden;
+}

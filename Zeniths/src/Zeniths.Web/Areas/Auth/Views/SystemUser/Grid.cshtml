@@ -1,0 +1,70 @@
+﻿@using Zeniths.Auth.Service
+@model PageList<SystemUser>
+@{
+    Layout = null;
+    var userService = new SystemUserService();
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-checkbox">
+                <label><input class="checkbox-check" type="checkbox"><span></span></label>
+            </th>
+            <th class="w-80px" data-order="@nameof(SystemUser.Account)">账号</th>
+            <th class="w-80px" data-order="@nameof(SystemUser.Name)">姓名</th>
+            <th class="w-100px" data-order="@nameof(SystemUser.DepartmentName)">部门</th>
+            <th class="w-80px">邮件</th>
+            @*<th class="w-100px">授权开始时间</th>
+                <th class="w-100px">授权结束时间</th>*@
+            @*<th class="w-100px" data-order="@nameof(SystemUser.FirstVisitDateTime)">首次登陆时间</th>*@
+            <th class="w-100px" data-order="@nameof(SystemUser.LastVisitDateTime)">最后登陆时间</th>
+            <th class="w-80px text-center" data-order="@nameof(SystemUser.LoginCount)">登陆次数</th>
+            @*<th class="w-60px" data-order="@nameof(SystemUser.IsAdmin)">管理员</th>*@
+            <th class="w-60px text-center" data-order="@nameof(SystemUser.IsAudit)">审核</th>
+            <th class="w-60px text-center" data-order="@nameof(SystemRole.IsEnabled)">启用</th>
+            <th class="w-60px text-center">过期</th>
+            <th class="w-80px text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer @Html.TableRowStatusClass(record.IsEnabled)" data-url="@Url.Action("Details",new {id = record.Id})">
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
+                </td>
+                <td>@record.Account</td>
+                <td>@record.Name</td>
+                <td>@record.DepartmentName</td>
+                <td>@record.Email</td>
+                @*<td>
+                        @DateTimeHelper.FormatDateHasSecond(record.AllowStartDateTime)
+                    </td>
+                    <td>
+                        @DateTimeHelper.FormatDateHasSecond(record.AllowEndDateTime)
+                    </td>*@
+                @*<td>
+                    @DateTimeHelper.FormatDateHasSecond(record.FirstVisitDateTime)
+                </td>*@
+                <td>
+                    @DateTimeHelper.FormatDateHasSecond(record.LastVisitDateTime)
+                </td>
+                <td class="text-center">@record.LoginCount</td>
+                @*<td class="text-center">@Html.BoolFaIcon(record.IsAdmin)</td>*@
+                <td class="text-center">@Html.BoolLabel(record.IsAudit, "已审", "未审")</td>
+                <td class="text-center">@Html.BoolLabel(record.IsEnabled)</td>
+                <td class="text-center">@Html.BoolLabel(!userService.IsUserExpire(record), null, "过期")</td>
+                <td>
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                        <i class="fa fa-edit"></i> 编辑
+                    </a>
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)

@@ -1,0 +1,35 @@
+﻿@model PageList<Zeniths.Auth.Entity.SystemException>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-400px">消息</th>
+            <th class="w-100px text-center">IP地址</th>
+            <th class="w-120px text-center" data-order="CreateDateTime">创建时间</th>
+            @*<th class="w-150px text-center">操作</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
+                <td>
+                    <a class="btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
+                        @record.Message
+                    </a>
+                </td>
+                <td>@record.IPAddress</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.CreateDateTime)</td>
+                @*<td>
+                        <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
+                            <i class="fa fa-eye"></i> 查看
+                        </a>
+                    </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)
