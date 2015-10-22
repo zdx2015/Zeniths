@@ -119,7 +119,7 @@
     border: 1px solid #cc9933;
 }
 
-.z-text {
+/*.z-text {
     background: url("images/userInputBg.jpg") repeat-x scroll left top rgba(0, 0, 0, 0);
     border: 1px solid #9296ac;
     color: #000100;
@@ -151,7 +151,7 @@
     line-height: 20px;
     padding-left: 22px;
     vertical-align: middle;
-}
+}*/
 
 .z-radio-on {
     background-position: left bottom;
@@ -185,9 +185,9 @@
     display: none;
 }
 
-.lookup .combo-arrow {
+/*.lookup .combo-arrow {
     background: url("images/lookup.gif") no-repeat scroll center center rgba(0, 0, 0, 0);
-}
+}*/
 
 .lookup .combo-arrow-hover {
     background-color: #e0ecff;
@@ -234,12 +234,12 @@
         padding: 4px;
     }
 
-    .grid th {
+    /*.grid th {
         background: url("images/grid_head.gif") repeat-x scroll center center rgba(0, 0, 0, 0);
         font-size: 12px;
         font-weight: bold;
         text-align: center;
-    }
+    }*/
 
     .grid td {
         text-align: center;
@@ -252,13 +252,13 @@
         padding: 3px;
     }
 
-    .grid tfoot td {
+    /*.grid tfoot td {
         background: url("images/grid_foot.gif") repeat-x scroll center bottom #fff;
         color: #424c52;
         height: 22px;
         text-align: left;
         vertical-align: middle;
-    }
+    }*/
 
         .grid tfoot td .rightpart {
             display: inline-block;
