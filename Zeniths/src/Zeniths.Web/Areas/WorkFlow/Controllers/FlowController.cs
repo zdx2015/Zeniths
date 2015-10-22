@@ -17,14 +17,10 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
     {
         private readonly FlowService service = new FlowService();
 
-        public ActionResult Test()
-        {
-            return View();
-        }
 
         public ActionResult GetTestData()
         {
-            var path =  Server.MapPath("~/assets/gooflow/data.json");
+            var path =  Server.MapPath("~/Areas/WorkFlow/Assets/js/data.json");
             var content = System.IO.File.ReadAllText(path);
             return Content(content, "text/html", Encoding.UTF8);
         }
@@ -59,6 +55,11 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
         private ActionResult EditCore(Flow entity)
         {
             return View("Edit", entity);
+        }
+
+        public ActionResult Design()
+        {
+            return View();
         }
 
         [HttpPost]

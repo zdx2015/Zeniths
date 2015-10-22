@@ -529,7 +529,7 @@ zeniths.util.closeFrameDialog = function (win) {
 zeniths.util.getCurrentUser = function () {
     if (!top.CurrentUser) {
         $.ajax({
-            url: '/Default/GetCurrentUser',
+            url: '/Auth/System/GetCurrentUser',
             type: "post",
             async: false,
             success: function (result) {

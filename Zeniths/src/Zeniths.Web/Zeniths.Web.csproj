@@ -97,41 +97,40 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\css\default.css" />
-    <Content Include="Assets\css\images\headerbg.png" />
-    <Content Include="Assets\css\images\loginbg.jpg" />
-    <Content Include="Assets\css\images\cloud.png" />
-    <Content Include="Assets\css\images\logo128.png" />
-    <Content Include="Assets\css\images\maintitle.png" />
-    <Content Include="Assets\css\login.css" />
-    <Content Include="Assets\css\treegrid.css" />
-    <None Include="Assets\gooflow\data.json" />
-    <Content Include="Assets\gooflow\GooFlow.css" />
-    <Content Include="Assets\gooflow\GooFlow.js" />
-    <Content Include="Assets\gooflow\img\1.png" />
-    <Content Include="Assets\gooflow\img\10.png" />
-    <Content Include="Assets\gooflow\img\11.png" />
-    <Content Include="Assets\gooflow\img\2.png" />
-    <Content Include="Assets\gooflow\img\3.png" />
-    <Content Include="Assets\gooflow\img\4.png" />
-    <Content Include="Assets\gooflow\img\5.png" />
-    <Content Include="Assets\gooflow\img\6.png" />
-    <Content Include="Assets\gooflow\img\7.png" />
-    <Content Include="Assets\gooflow\img\9.png" />
-    <Content Include="Assets\gooflow\img\gooflow_blank3.gif" />
-    <Content Include="Assets\gooflow\img\gooflow_bullet.png" />
-    <Content Include="Assets\gooflow\img\GooFlow_line_oper.png" />
-    <Content Include="Assets\gooflow\img\gooflow_tip.png" />
-    <Content Include="Assets\gooflow\img\ui_close.png" />
-    <Content Include="Assets\gooflow\jquery-1.8.2.min.js" />
-    <Content Include="Assets\gooflow\jquery.jqprint-0.3.js" />
-    <Content Include="Assets\gooflow\learunui-framework.css" />
-    <Content Include="Assets\gooflow\learunui-framework.js" />
-    <Content Include="Assets\gooflow\default.css" />
-    <Content Include="Assets\gooflow\lhgdialog.min.js" />
-    <Content Include="Assets\js\auth\system.user.js" />
-    <Content Include="Assets\js\auth\system.department.js" />
-    <Content Include="Assets\js\auth\system.dictionary.js" />
+    <Content Include="Areas\Auth\Assets\js\default.js" />
+    <Content Include="Areas\Auth\Assets\js\login.js" />
+    <Content Include="Areas\Auth\Assets\js\system.department.js" />
+    <Content Include="Areas\Auth\Assets\js\system.dictionary.js" />
+    <Content Include="Areas\Auth\Assets\js\system.menu.js" />
+    <Content Include="Areas\Auth\Assets\js\system.user.js" />
+    <Content Include="Areas\Auth\Assets\css\default.css" />
+    <Content Include="Areas\Auth\Assets\css\images\headerbg.png" />
+    <Content Include="Areas\Auth\Assets\css\images\loginbg.jpg" />
+    <Content Include="Areas\Auth\Assets\css\images\cloud.png" />
+    <Content Include="Areas\Auth\Assets\css\images\logo128.png" />
+    <Content Include="Areas\Auth\Assets\css\images\maintitle.png" />
+    <Content Include="Areas\Auth\Assets\css\login.css" />
+    <Content Include="Areas\Auth\Assets\css\treegrid.css" />
+    <Content Include="Areas\Auth\Views\System\Login.cshtml" />
+    <Content Include="Areas\Auth\Views\System\Index.cshtml" />
+    <None Include="Areas\WorkFlow\Assets\js\data.json" />
+    <Content Include="Areas\WorkFlow\Assets\css\flow.css" />
+    <Content Include="Areas\WorkFlow\Assets\js\flow.js" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\1.png" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\10.png" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\11.png" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\2.png" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\3.png" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\4.png" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\5.png" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\6.png" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\7.png" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\9.png" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\gooflow_blank3.gif" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\gooflow_bullet.png" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\GooFlow_line_oper.png" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\gooflow_tip.png" />
+    <Content Include="Areas\WorkFlow\Assets\css\images\ui_close.png" />
     <Content Include="Areas\WorkFlow\Views\_ViewStart.cshtml" />
     <Content Include="Areas\HR\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Auth\Views\_ViewStart.cshtml" />
@@ -141,10 +140,6 @@
     <Content Include="Areas\Auth\Views\SystemDoc\Details.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDoc\Edit.cshtml" />
     <Content Include="Areas\Auth\Views\SystemDoc\Grid.cshtml" />
-    <Content Include="Assets\js\login.js" />
-    <Content Include="Assets\js\workflow\flowdesinger\draw-min.js" />
-    <Content Include="Assets\js\workflow\flowdesinger\workflow-show.js" />
-    <Content Include="Assets\js\workflow\flowdesinger\workflow.js" />
     <Content Include="Plugin\bootstrap-datepicker\js\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.date.extensions.js" />
     <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.extensions.js" />
@@ -183,10 +178,9 @@
     <Content Include="Areas\WorkFlow\Views\Flow\Edit.cshtml" />
     <Content Include="Areas\WorkFlow\Views\Flow\Grid.cshtml" />
     <Content Include="Areas\WorkFlow\Views\Flow\Index.cshtml" />
-    <Content Include="Areas\WorkFlow\Views\Flow\Test.cshtml" />
-    <Content Include="Assets\gooflow\data2.json" />
+    <Content Include="Areas\WorkFlow\Views\Flow\Design.cshtml" />
+    <Content Include="Areas\WorkFlow\Assets\js\data2.json" />
     <None Include="Plugin\_references.js" />
-    <Content Include="Assets\js\default.js" />
     <Content Include="Plugin\bootstrap-clockpicker\css\bootstrap-clockpicker.css" />
     <Content Include="Plugin\bootstrap-clockpicker\js\bootstrap-clockpicker.js" />
     <Content Include="Plugin\bootstrap-clockpicker\css\bootstrap-clockpicker.min.css" />
@@ -550,7 +544,6 @@
     <Content Include="Areas\Auth\Views\SystemDictionary\DetailsEdit.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowButton\Details.cshtml" />
     <Content Include="Plugin\zeniths.web\js\zeniths.datagrid.js" />
-    <Content Include="Assets\js\auth\system.menu.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
@@ -572,7 +565,6 @@
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\FlowController.cs" />
     <Compile Include="Areas\WorkFlow\WorkFlowAreaRegistration.cs" />
-    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\FlowButtonController.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\FlowFormController.cs" />
     <Compile Include="Global.asax.cs">
@@ -583,7 +575,6 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="Views\Default\Login.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="App_Data\project.json" />
@@ -596,7 +587,6 @@
     <Content Include="Plugin\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Plugin\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Plugin\font-awesome\fonts\FontAwesome.otf" />
-    <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Shared\EditDemo.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowForm\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowForm\Edit.cshtml" />
@@ -615,8 +605,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\HR\Assets\css\" />
+    <Folder Include="Areas\HR\Assets\js\" />
     <Folder Include="Areas\HR\Controllers\" />
-    <Folder Include="Assets\js\hr\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zeniths.Auth.Utility\Zeniths.Auth.Utility.csproj">

@@ -1,15 +1,7 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
 }
-
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>设计流程</title>
-    <!--框架必需start-->
+@section style{
     <style>
         ::-webkit-scrollbar{width: 7px; height: 7px;}
         ::-webkit-scrollbar-track{/*border-radius: 10px;*/ -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0);}
@@ -38,14 +30,12 @@
         .nui-dropdownData-item{height:24px; line-height:24px;cursor:pointer;padding:0 15px;}
         .nui-dropdownData-item:hover{background:#4A5B79; color:#fff;}
     </style>
-    @*<link href="/Assets/gooflow/learunui-framework.css" rel="stylesheet" />*@
+    <link href="~/Areas/WorkFlow/Assets/css/flow.css" rel="stylesheet" />
+}
+@section script{
     <script src="~/Plugin/jquery/jquery.js"></script>
     <script src="~/Plugin/zeniths.web/js/zeniths.util.js"></script>
-    <!--框架必需end-->
-    <!--流程设计器start-->
-    <link href="/Assets/gooflow/GooFlow.css" rel="stylesheet" />
-    <script src="/Assets/gooflow/GooFlow.js"></script>
-    <!--流程设计器end-->
+    <script src="~/Areas/WorkFlow/Assets/js/flow.js"></script>
     <script type="text/javascript">
         var KeyValue = zeniths.util.GetUrlQuery('KeyValue');//主键
         $(document).ready(function () {
@@ -211,7 +201,7 @@
                 //    ConditionString: $("#ConditionString").val(),
                 //    ConditionType: ConditionType
                 //}
-                
+
                 var url = "/WorkflowModule/FlowDesign/FlowLineCondition?LineNo=" + LineNo + "&LineName=" + escape(LineName) + "&BindTable=" + escape(BindTable);
                 alert(url);
                 //openDialog(url, "FlowLineCondition", "流转条件设置", 650, 350, function (iframe) {
@@ -227,24 +217,23 @@
             }
         }
     </script>
-</head>
-<body>
-    <div class="nui-toolbar leftline rightline" style="margin: 1px;">
-        @*<div class="nui-toolbar-item" onclick="Replace()">
+}
+
+<div class="nui-toolbar leftline rightline" style="margin: 1px;">
+    <div class="nui-toolbar-item" onclick="Replace()">
             <span class="nui-btn-text">刷新</span>
         </div>
         <div id="save" class="nui-toolbar-item">
             <span class="nui-btn-text">保存</span>
-        </div>*@
-        <div class="nui-toolbar-item nui-btn-right" onclick="$('.GooFlow_head_btn').find('.ico_undo').trigger('click')">
-            <span class="nui-btn-text">撤销</span>
         </div>
-        <div class="nui-toolbar-item nui-btn-left" onclick="$('.GooFlow_head_btn').find('.ico_redo').trigger('click')">
-            <span class="nui-btn-text">重做</span>
-        </div>
-        <div style="position: absolute; float: right; top: 5px; right: 5px;">
-        </div>
+    <div class="nui-toolbar-item nui-btn-right" onclick="$('.GooFlow_head_btn').find('.ico_undo').trigger('click')">
+        <span class="nui-btn-text">撤销</span>
     </div>
-    <div id="FlowPanel" style="margin: 1px; margin-top: 0px;"></div>
-</body>
-</html>
+    <div class="nui-toolbar-item nui-btn-left" onclick="$('.GooFlow_head_btn').find('.ico_redo').trigger('click')">
+        <span class="nui-btn-text">重做</span>
+    </div>
+    <div style="position: absolute; float: right; top: 5px; right: 5px;">
+    </div>
+</div>
+<div id="FlowPanel" style="margin: 1px; margin-top: 0px;"></div>
+
