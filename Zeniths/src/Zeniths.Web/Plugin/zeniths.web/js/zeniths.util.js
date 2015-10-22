@@ -523,6 +523,14 @@ zeniths.util.closeFrameDialog = function (win) {
 //};
 
 /**
+ * 获取最大对话框大小
+ * @returns {Object} width和height属性 
+ */
+zeniths.util.getFullDialogSize = function() {
+    return { width: top.$(window).width() - 40,height: top.$('body').height() - 100};
+}
+
+/**
  * 获取当前登录用户信息
  * @returns {} 
  */

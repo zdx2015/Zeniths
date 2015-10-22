@@ -37,17 +37,19 @@
     <script src="~/Plugin/zeniths.web/js/zeniths.util.js"></script>
     <script src="~/Areas/WorkFlow/Assets/js/flow.js"></script>
     <script type="text/javascript">
-        var KeyValue = zeniths.util.GetUrlQuery('KeyValue');//主键
+        var KeyValue = zeniths.util.GetUrlQuery('KeyValue'); //主键
         $(document).ready(function () {
             document.onselectstart = function () { return false; };
             LoadGooFlow();
         });
         //初始化设计流程器
         var FlowPanel;
+
         function LoadGooFlow() {
+
             FlowPanel = $.createGooFlow($("#FlowPanel"), {
-                width: $(window).width()- 40,// - 40 - 2,
-                height: $(window).height()- 100,// - 100 - 45,
+                width: $(window).width() - 4, // - 40 - 2,
+                height: $(window).height() - 45, // - 100 - 45,
                 haveHead: true,
                 headBtns: ["undo", "redo"],
                 haveTool: true,
@@ -165,16 +167,18 @@
                 }, 200);
             });
         }
+
         //节点设置
         var NodeInfoJson = {};
+
         function OpenNode(This) {
             var _nodeData = This.$nodeData[$('.item_focus').attr('id')];
             var NodeNo = $('.item_focus').attr('id');
             var NodeName = _nodeData.name;
             var url = "/WorkflowModule/FlowDesign/FlowNode?NodeNo=" + NodeNo + "&NodeName=" + escape(NodeName) + "&NodeType=" + _nodeData.type;
 
-            alert(url);
-
+            //alert(url);
+            zeniths.util.dialog('@Url.Action("NodeSetting")', 800, 600);
 
             //openDialog(url, "FlowNode", "节点设置【" + NodeName + "】", 650, 330, function (iframe) {
             //    top.frames[iframe].AcceptClick(function (data) {
@@ -184,8 +188,10 @@
             //    });
             //});
         };
+
         //流转线设置
         var LineInfoJson = {};
+
         function OpenLine(id, This) {
             var NodeId = JSON.stringify(FlowPanel.exportData().lines[id].from).replace(/"/g, '');
             if (NodeInfoJson[NodeId]) {
@@ -221,11 +227,11 @@
 
 <div class="nui-toolbar leftline rightline" style="margin: 1px;">
     <div class="nui-toolbar-item" onclick="Replace()">
-            <span class="nui-btn-text">刷新</span>
-        </div>
-        <div id="save" class="nui-toolbar-item">
-            <span class="nui-btn-text">保存</span>
-        </div>
+        <span class="nui-btn-text">刷新</span>
+    </div>
+    <div id="save" class="nui-toolbar-item">
+        <span class="nui-btn-text">保存</span>
+    </div>
     <div class="nui-toolbar-item nui-btn-right" onclick="$('.GooFlow_head_btn').find('.ico_undo').trigger('click')">
         <span class="nui-btn-text">撤销</span>
     </div>

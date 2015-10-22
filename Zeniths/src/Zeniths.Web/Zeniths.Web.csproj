@@ -180,6 +180,9 @@
     <Content Include="Areas\WorkFlow\Views\Flow\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\Flow\Design.cshtml" />
     <Content Include="Areas\WorkFlow\Assets\js\data2.json" />
+    <Content Include="Areas\WorkFlow\Views\Flow\NodeSetting.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\Flow\FlowSetting.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\Flow\LineSetting.cshtml" />
     <None Include="Plugin\_references.js" />
     <Content Include="Plugin\bootstrap-clockpicker\css\bootstrap-clockpicker.css" />
     <Content Include="Plugin\bootstrap-clockpicker\js\bootstrap-clockpicker.js" />
@@ -642,6 +645,9 @@
       <Project>{696a6fd8-904f-41f6-af24-8bf154ac9472}</Project>
       <Name>Zeniths.WorkFlow</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Plugin\zeniths.web\css\form.layout.css" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

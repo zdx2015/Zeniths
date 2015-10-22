@@ -62,6 +62,22 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
             return View();
         }
 
+        public ActionResult NodeSetting()
+        {
+            return View();
+        }
+
+        public ActionResult LineSetting()
+        {
+            return View();
+        }
+
+        public ActionResult FlowSetting()
+        {
+            return View();
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save(Flow entity)

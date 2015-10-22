@@ -11,6 +11,7 @@ using Zeniths.Utility;
 
 namespace Zeniths.Web.Areas.Auth.Controllers
 {
+    [Authorize]
     public class SystemController : AuthBaseController
     {
         [AllowAnonymous]
@@ -40,7 +41,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             return RedirectToAction("Login");
         }
 
-        [ZenithsAuthorize]
+        //[ZenithsAuthorize]
         public ActionResult Index()
         {
             return View();
