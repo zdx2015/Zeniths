@@ -58,6 +58,8 @@ if(Table.HasPrimaryKey)
                                     <span>启用</span>
                                 </label>
                             </div>
+                            <% } else if(column.SystemType==typeof(DateTime)){%>
+                                <input class="date-control form-control" name="@nameof(Model.<%= column.Name %>)" value="@Model.<%= column.Name %>" type="text" />
                             <% } else {%>
                             <div class="input-icon right">
                                 <input class="form-control" name="@nameof(Model.<%= column.Name %>)" value="@Model.<%= column.Name %>" type="text" />
@@ -89,7 +91,7 @@ if(Table.HasPrimaryKey)
     <script>
 
         $(function () {
-            //$('.editform').dataform().initSelect2().initiCheck()
+            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
             $('.editform').dataform().initValidate({
                 rules: {
                     <% for(int i= 0;i< Table.Columns.Count;i++) { 

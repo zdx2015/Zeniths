@@ -31,7 +31,6 @@ if(Table.HasPrimaryKey)
                 string columnRemark = column.Description.Replace("\n","").Replace("\r","").Replace(" ","");
                  if(column.Name==pkName) continue;
             %>
-            <th><%= columnRemark %></th>
             <th class="w-100px" data-order="@nameof(<%= TableName %>.<%= column.Name %>)"><%= columnRemark %></th>
             <% } %>
             <th class="w-120px text-center">操作</th>

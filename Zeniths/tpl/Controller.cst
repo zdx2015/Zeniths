@@ -5,7 +5,7 @@
 <%@ Import Namespace="SchemaExplorer" %>
 <%@ Map Name="CSharpAlias" Src="DbType-CSharp.csmap" Reverse="False"%>
 <%@ Property Name="NameSpace" Type="String" Category="参数" Description="命名空间" Default="Zeniths.Web" %>
-<%@ Property Name="Area" Type="String" Category="参数" Description="区域" Default="HR" %>
+<%@ Property Name="Area" Type="String" Category="参数" Description="区域" Default="Hr" %>
 <%@ Property Name="Table" Type="SchemaExplorer.TableSchema" Category="参数" Description="表名" Optional="False" %>
 <%@ Property Name="IsDialog" Type="Boolean" Category="参数" Description="是否对话框模式" Default="True" Optional="True" %>
 <%
@@ -28,18 +28,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using XCI.Doc;
-using XCI.Web;
 using <%= NameSpace %>.Entity;
 using <%= NameSpace %>.Service;
-using ZDX.Entity;
-using ZDX.Extensions;
-using ZDX.Helper;
-using ZDX.Utility;
-using ZDX.WebUtility;
-using ZDX.WebUtility.Helper;
+using Zeniths.Entity;
+using Zeniths.Extensions;
+using Zeniths.Helper;
+using Zeniths.Utility;
+using <%= NameSpace %>.Utility;
 
-namespace <%= NameSpace %>.Areas.<%= Area %>.Controllers
+namespace Zeniths.Web.Areas.<%= Area %>.Controllers
 {
     /// <summary>
     /// 流程按钮控制器
@@ -155,7 +152,7 @@ namespace <%= NameSpace %>.Areas.<%= Area %>.Controllers
         /// <returns>返回文件下载流</returns>
         public ActionResult Export()
         {
-            return Export(service.GetEnabledList());
+            return Export(service.GetList());
         }
     }
 }

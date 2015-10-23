@@ -26,10 +26,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using <%= NameSpace %>.Entity;
-using ZDX.Collections;
-using ZDX.Data;
-using ZDX.Extensions;
-using ZDX.Utility;
+using Zeniths.Collections;
+using Zeniths.Data;
+using Zeniths.Extensions;
+using Zeniths.Utility;
 
 namespace <%= NameSpace %>.Service
 {
@@ -48,9 +48,9 @@ namespace <%= NameSpace %>.Service
         /// </summary>
         /// <param name="entity"><%= TableRemark %>实体</param>
         /// <returns>如果存在指定记录返回BoolMessage.False</returns>
-        public BoolMessage Exists(FlowButton entity)
+        public BoolMessage Exists(<%=TableName%> entity)
         {
-            return false;
+            return BoolMessage.True;
             //var has = repos.Exists(p => p.Name == entity.Name && p.Id != entity.Id);
             //return has ? new BoolMessage(false, "输入名称已经存在") : BoolMessage.True;
         }
@@ -125,8 +125,7 @@ namespace <%= NameSpace %>.Service
         {
             return repos.Get(id);
         }
-        
-        /*
+                
         /// <summary>
         /// 获取<%= TableRemark %>列表
         /// </summary>
@@ -137,6 +136,7 @@ namespace <%= NameSpace %>.Service
             return repos.Query(query).ToList();
         }
         
+        /*
         /// <summary>
         /// 获取启用的<%= TableRemark %>列表
         /// </summary>
