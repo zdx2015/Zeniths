@@ -68,7 +68,7 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="datetime-control form-control" name="@nameof(Model.AllowStartDateTime)" value="@Model.AllowStartDateTime" type="text" autocomplete="off" />
+                                <input class="datetime-control form-control" name="@nameof(Model.AllowStartDateTime)" value="@DateTimeHelper.FormatDate(Model.AllowStartDateTime,"yyyy-MM-dd HH:mm")" type="text" autocomplete="off" />
                             </div>
                         </td>
                         <th>
@@ -76,7 +76,7 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="datetime-control form-control" name="@nameof(Model.AllowEndDateTime)" value="@Model.AllowEndDateTime" type="text" autocomplete="off" />
+                                <input class="datetime-control form-control" name="@nameof(Model.AllowEndDateTime)" value="@DateTimeHelper.FormatDate(Model.AllowEndDateTime,"yyyy-MM-dd HH:mm")" type="text" autocomplete="off" />
                             </div>
                         </td>
                     </tr>

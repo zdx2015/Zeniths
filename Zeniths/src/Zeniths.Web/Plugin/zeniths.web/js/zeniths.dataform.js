@@ -398,7 +398,7 @@
             //showClose: true,
             dayViewHeaderFormat: 'YYYY年MM月',
             format: 'YYYY-MM-DD HH:mm',
-            useCurrent: false,
+            //useCurrent: false,
             //sideBySide: true,
             keepOpen: true,
             useStrict: true,

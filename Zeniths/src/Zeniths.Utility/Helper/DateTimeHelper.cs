@@ -479,6 +479,25 @@ namespace Zeniths.Helper
         }
 
         /// <summary>
+        /// 格式化日期
+        /// </summary>
+        /// <param name="datetime">日期</param>
+        /// <param name="format">格式字符串</param>
+        /// <returns>返回日期格式化后的字符串</returns>
+        public static string FormatDate(DateTime? datetime, string format)
+        {
+            if (datetime.HasValue)
+            {
+                if (datetime.Value == DateTime.MinValue || datetime.Value == DateTime.MaxValue)
+                {
+                    return string.Empty;
+                }
+                return datetime.Value.ToString(format);
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
         /// 格式化日期(默认格式yyyy-MM-dd)
         /// </summary>
         /// <param name="datetime">日期</param>
