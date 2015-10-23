@@ -23,6 +23,10 @@
     content: '*';
 }
 
+.field-help {
+    cursor: pointer;
+}
+
 .panel-left-border {
     border-left-width: 1px;
 }

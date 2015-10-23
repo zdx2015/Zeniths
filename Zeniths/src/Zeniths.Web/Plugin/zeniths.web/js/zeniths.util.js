@@ -526,8 +526,8 @@ zeniths.util.closeFrameDialog = function (win) {
  * 根据屏幕大小自动获取最大可以显示的对话框大小
  * @returns {Object} width和height属性 
  */
-zeniths.util.getFullDialogSize = function() {
-    return { width: top.$(window).width() - 40,height: top.$('body').height() - 100};
+zeniths.util.getFullDialogSize = function () {
+    return { width: top.$(window).width() - 40, height: top.$('body').height() - 100 };
 }
 
 /**
@@ -678,7 +678,7 @@ zeniths.util.getFormData = function ($form) {
         ps[v.name] = v.value;
     });
     return ps;
-}
+};
 
 /**
  * 获取Ajax服务器返回的错误信息
@@ -687,7 +687,7 @@ zeniths.util.getFormData = function ($form) {
  */
 zeniths.util.getAjaxErrorMessage = function (result) {
     return result.responseJSON.message;
-}
+};
 
 /**
  * 表单Ajax提交成功回调默认函数
@@ -702,7 +702,61 @@ zeniths.util.formAjaxSuccess = function (result) {
         zeniths.util.callDialogCallback(window);
         zeniths.util.closeFrameDialog(window);
     }
-}
+};
+
+/**
+ * 初始化字段帮助按钮
+ * @param {String} maxWidth 最大宽度
+ * @returns {} 
+ */
+zeniths.util.initFieldHelp = function (maxWidth) {
+
+    /* 模板
+    <span class="help-block">
+	
+	    <a class="field-help"
+	       data-placement="bottom"
+	       title=""
+	       data-content="">
+		    <i class="fa fa-lg fa-info-circle"></i>
+	    </a>
+    </span>
+
+    */
+
+    $('.field-help').popover({ trigger: 'manual', html: true });
+
+    $(document.body).click(function (event) {
+        var $target = $(event.target);
+        //console.log($target);
+        if ($target.hasClass("popover-content") || $target.hasClass("popover-title")) {
+
+        } else if ($target.hasClass("fa")) {
+            $('.field-help').popover('hide');
+            if ($('#' + $target.parent().attr('aria-describedby')).length > 0) {
+                $target.parent().popover('hide');
+            } else {
+                setTimeout(function () {
+                    $target.parent().popover('show');
+                }, 200);
+            }
+        }
+        //else if ($target.hasClass("field-help")) {
+        //    $('.field-help').popover('hide');
+
+        //    if ($('#' + $target.parent().attr('aria-describedby')).length > 0) {
+        //        $targe.popover('hide');
+        //    } else {
+        //        setTimeout(function () {
+        //            $target.popover('show');
+        //        }, 200);
+        //    }
+        //}
+        else {
+            $('.field-help').popover('hide');
+        }
+    });
+};
 
 /**
  * 标准表格绑定
