@@ -577,7 +577,7 @@ Custom tabs
                 }
 
             .tabbable-custom > .nav-tabs > li.active {
-                border-top: 3px solid #F3565D;
+                border-top: 4px solid #F3565D;
                 margin-top: 0;
                 position: relative;
             }

@@ -27,8 +27,8 @@
                 <td class="text-center">@Html.BoolFaIcon(record.IsEnabled)</td>
                 <td class="text-center">@record.SortIndex</td>
                 <td>
-                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
-                        <i class="fa fa-eye"></i> 查看
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Design",new {id = record.Id})">
+                        <i class="fa fa-tv"></i> 设计
                     </a>
                     <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
                         <i class="fa fa-edit"></i> 编辑

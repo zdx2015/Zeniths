@@ -4,7 +4,7 @@
 }
 
 .loginBackground {
-    background: url(/assets/css/images/loginbg.jpg);
+    background: url(images/loginbg.jpg);
     background-position: center;
     left: 0;
     top: 0;
@@ -70,7 +70,7 @@
 
 .loginfoot {
     height: 177px;
-    background: url(/assets/css/images/cloud.png) bottom repeat-x;
+    background: url(images/cloud.png) bottom repeat-x;
     -webkit-animation: animate-cloud 20s linear infinite;
     -moz-animation: animate-cloud 20s linear infinite;
     -ms-animation: animate-cloud 20s linear infinite;
