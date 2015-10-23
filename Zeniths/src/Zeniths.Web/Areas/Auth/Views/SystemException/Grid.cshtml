@@ -5,9 +5,9 @@
 <table class="table table-zeniths table-striped table-bordered table-hover">
     <thead>
         <tr>
-            <th class="w-400px">消息</th>
-            <th class="w-100px text-center">IP地址</th>
-            <th class="w-120px text-center" data-order="CreateDateTime">创建时间</th>
+            <th class="w-200px">消息</th>
+            <th class="w-150px text-center">IP地址</th>
+            <th class="w-150px text-center" data-order="CreateDateTime">创建时间</th>
             @*<th class="w-150px text-center">操作</th>*@
         </tr>
     </thead>
@@ -16,9 +16,11 @@
         {
             <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
                 <td>
-                    <a class="btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
-                        @record.Message
-                    </a>
+                    <div class="text-split" style="width:200px;">@record.Message</div>
+                        @*<a class="btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
+                            @record.Message
+                        </a>*@
+                   
                 </td>
                 <td>@record.IPAddress</td>
                 <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.CreateDateTime)</td>

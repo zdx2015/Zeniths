@@ -16,14 +16,14 @@ namespace Zeniths.Web
             routes.MapRoute(
                 name: "Login",
                 url: "login",
-                defaults: new { controller = "Default", action = "Login" }
-            );
+                defaults: new { controller = "System", action = "Login" }
+            ).DataTokens.Add("Area", "Auth");
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Default", action = "Index", id = UrlParameter.Optional }
-            );
+                defaults: new { controller = "System", action = "Index", id = UrlParameter.Optional }
+            ).DataTokens.Add("Area", "Auth");
         }
     }
 }

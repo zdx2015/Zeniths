@@ -28,7 +28,7 @@ v\:group,v\:rect,v\:imagedata,v\:oval,v\:line,v\:polyline,v\:stroke,v\:textbox {
 }
 
 .GooFlow_work{float:right;margin:0px;border-left:#ccc 1px solid;position:relative;overflow:scroll}
-.GooFlow_work .GooFlow_work_inner{background-image:url(img/gooflow_blank3.gif) ;position:relative;overflow:hidden}
+.GooFlow_work .GooFlow_work_inner{background-image:url(images/gooflow_blank3.gif) ;position:relative;overflow:hidden}
 .GooFlow_work .GooFlow_work_group{cursor:default;position:absolute;overflow:hidden;top:0px;left:0px}
 
 .GooFlow_area{position:absolute;}
@@ -39,13 +39,13 @@ v\:group,v\:rect,v\:imagedata,v\:oval,v\:line,v\:polyline,v\:stroke,v\:textbox {
 .GooFlow_work .lock label{cursor:default;}
 .GooFlow_area b{display:block;height:18px;width:18px;top:0px;left:0px;position:absolute;cursor:pointer}
 .GooFlow_work .area_red .bg{border:1px solid red;background-color:#EB4F2D}
-.GooFlow_work .area_red label{color:red;background:url(img/gooflow_bullet.png) no-repeat 1px 1px}
+.GooFlow_work .area_red label{color:red;background:url(images/gooflow_bullet.png) no-repeat 1px 1px}
 .GooFlow_work .area_yellow .bg{border:1px solid #CD925A;background-color:#F5B93D}
-.GooFlow_work .area_yellow label{color:#FFBA1D;background:url(img/gooflow_bullet.png) no-repeat 1px -16px}
+.GooFlow_work .area_yellow label{color:#FFBA1D;background:url(images/gooflow_bullet.png) no-repeat 1px -16px}
 .GooFlow_work .area_blue .bg{border:1px solid #347BB1;background-color:#43A4EE}
-.GooFlow_work .area_blue label{color:#347BB1;background:url(img/gooflow_bullet.png) no-repeat 1px -33px}
+.GooFlow_work .area_blue label{color:#347BB1;background:url(images/gooflow_bullet.png) no-repeat 1px -33px}
 .GooFlow_work .area_green .bg{border:1px solid green;background-color:#7FBA2E}
-.GooFlow_work .area_green label{color:green;background:url(img/gooflow_bullet.png) no-repeat 1px -50px}
+.GooFlow_work .area_green label{color:green;background:url(images/gooflow_bullet.png) no-repeat 1px -50px}
 
 .GooFlow_work svg{display:block;position:absolute}
 .GooFlow_work v\:group{position:relative;display:block}
@@ -90,11 +90,11 @@ v\:group,v\:rect,v\:imagedata,v\:oval,v\:line,v\:polyline,v\:stroke,v\:textbox {
 .GooFlow div .rs_right{display:none;overflow:hidden;position:absolute;right:-1px;top:-1px;height:100%;width:6px;cursor:w-resize}
 .GooFlow div .rs_bottom{display:none;overflow:hidden;position:absolute;left:-1px;bottom:-1px;width:100%;height:6px;cursor:n-resize}
 .GooFlow div .rs_rb{
-	position:absolute;right:-1px;bottom:-1px;width:9px;height:9px;overflow:hidden;cursor:nw-resize;background:url(img/gooflow_tip.png) no-repeat 0px -8px;
+	position:absolute;right:-1px;bottom:-1px;width:9px;height:9px;overflow:hidden;cursor:nw-resize;background:url(images/gooflow_tip.png) no-repeat 0px -8px;
 }
 .GooFlow div .rs_close{
     z-index:10;
-	position:absolute;right:-12px;top:-12px;width:24px;height:24px;overflow:hidden;cursor:pointer;background:url(img/ui_close.png) no-repeat 0px 0px
+	position:absolute;right:-12px;top:-12px;width:24px;height:24px;overflow:hidden;cursor:pointer;background:url(images/ui_close.png) no-repeat 0px 0px
 }
 .GooFlow .rs_ghost{
 	position:absolute;display:none;overflow:hidden;border:#8EA4C1 1px dashed; background:#F2F2F2;
@@ -116,32 +116,32 @@ v\:group,v\:rect,v\:imagedata,v\:oval,v\:line,v\:polyline,v\:stroke,v\:textbox {
 }
 .GooFlow .GooFlow_line_move{filter:Alpha(Opacity=50);-moz-opacity:0.5;opacity:0.5;overflow:hidden;position:absolute;z-index:9999;background-repeat:no-repeat}
 .GooFlow .GooFlow_line_oper b{display:inline-block;width:15px;height:15px;margin-left:2px;cursor:pointer}
-.GooFlow .b_l1{background:url(img/GooFlow_line_oper.png) no-repeat 1px 1px}
-.GooFlow .b_l2{background:url(img/GooFlow_line_oper.png) no-repeat 1px -14px}
-.GooFlow .b_l3{background:url(img/GooFlow_line_oper.png) no-repeat 1px -29px}
-.GooFlow .b_x{background:url(img/GooFlow_line_oper.png) no-repeat 1px -44px;margin-left:10px}
+.GooFlow .b_l1{background:url(images/GooFlow_line_oper.png) no-repeat 1px 1px}
+.GooFlow .b_l2{background:url(images/GooFlow_line_oper.png) no-repeat 1px -14px}
+.GooFlow .b_l3{background:url(images/GooFlow_line_oper.png) no-repeat 1px -29px}
+.GooFlow .b_x{background:url(images/GooFlow_line_oper.png) no-repeat 1px -44px;margin-left:10px}
 
 .GooFlow .ico_cursor {
-    background:url(img/10.png) no-repeat 0px 0px
+    background:url(images/10.png) no-repeat 0px 0px
 }
 .GooFlow .ico_direct {
-    background:url(img/9.png) no-repeat 0px 0px
+    background:url(images/9.png) no-repeat 0px 0px
 }
 .GooFlow .ico_startround {
-    background:url(img/2.png) no-repeat 0px 0px
+    background:url(images/2.png) no-repeat 0px 0px
 }
 .GooFlow .ico_endround {
-    background:url(img/7.png) no-repeat 0px 0px
+    background:url(images/7.png) no-repeat 0px 0px
 }
 .GooFlow .ico_stepnode {
-    background:url(img/4.png) no-repeat 0px 0px
+    background:url(images/4.png) no-repeat 0px 0px
 }
 .GooFlow .ico_shuntnode {
-    background:url(img/5.png) no-repeat 0px 0px
+    background:url(images/5.png) no-repeat 0px 0px
 }
 .GooFlow .ico_confluencenode {
-    background:url(img/3.png) no-repeat 0px 0px
+    background:url(images/3.png) no-repeat 0px 0px
 }
 .GooFlow .ico_group{
-    background:url(img/11.png) no-repeat 0px 0px
+    background:url(images/11.png) no-repeat 0px 0px
 }

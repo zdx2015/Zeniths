@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Zeniths.Auth.Utility
 {
@@ -14,7 +15,7 @@ namespace Zeniths.Auth.Utility
         {
             if (!httpContext.User.Identity.IsAuthenticated)
             {
-                httpContext.Response.Redirect("~/login");
+                httpContext.Response.Redirect(FormsAuthentication.LoginUrl);
             }
             return base.AuthorizeCore(httpContext);
         }
