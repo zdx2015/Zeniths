@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Zeniths.Collections;
 using Zeniths.Extensions;
 using Zeniths.Hr.Entity;
-using Zeniths.HR;
 using Zeniths.Utility;
 
 namespace Zeniths.Hr.Service
@@ -16,7 +15,7 @@ namespace Zeniths.Hr.Service
         /// <summary>
         /// 存储器
         /// </summary>
-        private readonly HRRepository<GoOutRegistration> repos = new HRRepository<GoOutRegistration>();
+        private readonly HrRepository<GoOutRegistration> repos = new HrRepository<GoOutRegistration>();
 
 
         /// <summary>
