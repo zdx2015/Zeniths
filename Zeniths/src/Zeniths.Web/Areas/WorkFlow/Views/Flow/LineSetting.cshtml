@@ -1,7 +1,155 @@
-﻿
-@{
-    ViewBag.Title = "LineSetting";
+﻿@section style{
+    <link href="~/Plugin/zeniths.web/css/form.layout.css" rel="stylesheet" />
 }
+<div class="container-edit-zeniths">
 
-<h2>LineSetting</h2>
+    <div class="panel panel-default panel-zeniths">
+        <div class="panel-heading">
+            流转条件设置
+        </div>
+        <div class="panel-body form" style="margin:10px">
+
+            <form class="form-horizontal">
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#tab_base" data-toggle="tab">
+                                基本
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tab_organize" data-toggle="tab">
+                                组织机构
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_base">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">条件标签：</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">测试方法：</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="tab-pane" id="tab_organize">
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">发送者属于：</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">发送者不属于：</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">发起者属于：</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">发起者不属于：</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是领导：</label>
+                                <div class="col-sm-9">
+                                    <div class="checkbox-list">
+                                        <label class="checkbox-inline">
+                                            <input class="icheckbox-control" value="1" type="checkbox" />
+                                            <span>发送者是部门领导</span>
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input class="icheckbox-control" value="1" type="checkbox" />
+                                            <span>发送者是部门分管领导</span>
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input class="icheckbox-control" value="1" type="checkbox" />
+                                            <span>发起者是部门领导</span>
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input class="icheckbox-control" value="1" type="checkbox" />
+                                            <span>发起者是部门分管领导</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">不是领导：</label>
+                                <div class="col-sm-9">
+                                    <div class="checkbox-list">
+                                        <label class="checkbox-inline">
+                                            <input class="icheckbox-control" value="1" type="checkbox" />
+                                            <span>发送者不是部门领导</span>
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input class="icheckbox-control" value="1" type="checkbox" />
+                                            <span>发送者不是部门分管领导</span>
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input class="icheckbox-control" value="1" type="checkbox" />
+                                            <span>发起者不是部门领导</span>
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input class="icheckbox-control" value="1" type="checkbox" />
+                                            <span>发起者不是部门分管领导</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="panel-footer text-center">
+            <div class="buttons">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fa fa-save"></i> 确定
+                </button>
+                &nbsp;
+                <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                    <i class="fa fa-sign-in"></i> 取消
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section script{
+    <script>
+        $(function () {
+            $('form').dataform().initSelect2({
+                allowClear: false,
+                width: '100%'
+            }).initiCheck();
+
+            var baseHeight = $('#').height();
+            $('.tab-content>.tab-pane').height(baseHeight);
+
+        });
+    </script>
+}
 

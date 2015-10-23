@@ -724,7 +724,7 @@ zeniths.util.initFieldHelp = function (maxWidth) {
 
     */
 
-    $('.field-help').popover({ trigger: 'manual', html: true });
+    $('.field-help').popover({ trigger: 'manual', html: true, container: 'body' });
 
     $(document.body).click(function (event) {
         var $target = $(event.target);

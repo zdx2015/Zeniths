@@ -175,60 +175,103 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">处理策略：</label>
-                                <div class="col-sm-9">
-                                    <select class="select2-control form-control">
-                                        <option value="0">所有人必须同意</option>
-                                        <option value="1">一人同意即可</option>
-                                        <option value="3">独立处理</option>
-                                        <option value="2">依据人数比例</option>
-                                    </select>
-                                    <span class="help-block">
-                                        设置当前步骤的处理策略。
-                                        <a class="field-help"
-                                           title="设置当前步骤的处理策略"
-                                           data-html="true"
-                                           data-placement="bottom"
-                                           data-content="
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">处理策略：</label>
+                                        <div class="col-sm-7">
+                                            <select class="select2-control form-control">
+                                                <option value="0">所有人必须同意</option>
+                                                <option value="1">一人同意即可</option>
+                                                <option value="3">独立处理</option>
+                                                <option value="2">依据比例</option>
+                                            </select>
+                                            <span class="help-block">
+                                                设置当前步骤的处理策略。
+                                                <a class="field-help"
+                                                   title="设置当前步骤的处理策略"
+                                                   data-html="true"
+                                                   data-placement="bottom"
+                                                   data-content="
                                             1.所有人必须同意：如果当前步骤有多个人处理时，所有人都要同意才能发送到下一步，如果其中一人退回，则所有人的待办任务都将退回。<br>
                                             2.一人同意即可：当前步骤有多人处理时，只要其中一个人处理了就发送到下一步，其他人就不须要再处理了。<br>
                                             3.依据人数比例：按照下面的 策略百分比 来判断是否发送到下一步。如当有步骤有5人处理，策略设置为50，则只要有3人处理了则会发送到下一步。<br>
                                             4.独立处理：每个人独立处理，如当前步骤有5人处理，则每个人发送了，下一步处理者都会收到一个待办任务。">
-                                            <i class="fa fa-lg fa-info-circle" title="帮助文档"></i>
-                                        </a>
+                                                    <i class="fa fa-lg fa-info-circle" title="帮助文档"></i>
+                                                </a>
 
-                                    </span>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">处理百分比：</label>
-                                <div class="col-sm-9">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control">
-                                        <span class="input-group-addon">%</span>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">处理比例：</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">%</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">会签策略：</label>
-                                <div class="col-sm-9">
-                                    <select class="select2-control form-control">
-                                        <option value="0">不会签</option>
-                                        <option value="1">所有步骤同意</option>
-                                        <option value="2">一个步骤同意即可</option>
-                                        <option value="3">依据比例</option>
-                                    </select>
-                                    <span class="help-block">
-                                        设置当前步骤的会签策略。
-                                        <a class="field-help"
-                                           data-placement="bottom"
-                                           title="设置当前步骤的会签策略"
-                                           data-content="处理策略和会签策略的区别是：<br>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">会签策略：</label>
+                                        <div class="col-sm-7">
+                                            <select class="select2-control form-control">
+                                                <option value="0">不会签</option>
+                                                <option value="1">所有步骤同意</option>
+                                                <option value="2">一个步骤同意即可</option>
+                                                <option value="3">依据比例</option>
+                                            </select>
+                                            <span class="help-block">
+                                                设置当前步骤的会签策略。
+                                                <a class="field-help"
+                                                   data-placement="bottom"
+                                                   title="设置当前步骤的会签策略"
+                                                   data-content="处理策略和会签策略的区别是：<br>
                                                1.处理策略是以人为单位来判断；而会签策略是以步骤为单位来判断。<br>
                                                2.处理策略针对的是当前步骤的所有处理人员；而会签策略针对的是到达当前步骤之前的所有步骤。">
+                                                    <i class="fa fa-lg fa-info-circle"></i>
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">会签比例：</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control">
+                                                <span class="input-group-addon">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">退回策略：</label>
+                                <div class="col-sm-9">
+                                    <select class="select2-control form-control">
+                                        <option value="1">根据处理策略退回</option>
+                                        <option value="0">不能退回</option>
+                                    </select>
+                                    <span class="help-block">
+                                        设置当前步骤的退回策略。
+                                        <a class="field-help"
+                                           data-placement="bottom"
+                                           title="设置当前步骤的退回策略"
+                                           data-content="
+                                            1.根据处理策略退回：根据设置的处理策略来退回，如一人同意即可，则只要有一人退回，则该步骤的其他处理者也将退回。<br>
+                                            2.不能退回：即设置当前步骤不能退回。">
                                             <i class="fa fa-lg fa-info-circle"></i>
                                         </a>
                                     </span>
@@ -236,23 +279,12 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">会签百分比：</label>
-                                <div class="col-sm-9">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control">
-                                        <span class="input-group-addon">%</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">退回策略：</label>
+                                <label class="col-sm-2 control-label">退回类型：</label>
                                 <div class="col-sm-9">
                                     <select class="select2-control form-control">
-                                        <option value="0">不能退回</option>
-                                        <option value="1">退回前一步</option>
-                                        <option value="2">退回第一步</option>
-                                        <option value="3">退回某一步</option>
+                                        <option value="0">退回前一步</option>
+                                        <option value="1">退回第一步</option>
+                                        <option value="2">退回某一步</option>
                                     </select>
                                     <span class="help-block">
                                         设置当前步骤的退回类型。
@@ -268,6 +300,8 @@
                                     </span>
                                 </div>
                             </div>
+
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">退回步骤：</label>
                                 <div class="col-sm-9">
@@ -281,33 +315,29 @@
                                 </div>
                             </div>
 
-
-
-
                         </div>
                         <div class="tab-pane" id="tab_handler">
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">选项：</label>
+                                <label class="col-sm-2 control-label">处理者选择：</label>
                                 <div class="col-sm-9">
-                                    <div class="checkbox-list">
-                                        <label class="checkbox-inline">
-                                            <input class="icheckbox-control" value="1" type="checkbox" />
-                                            <span>运行时选择</span>
-                                        </label>
-                                        <label class="checkbox-inline">
-                                            <input class="icheckbox-control" value="1" type="checkbox" />
-                                            <span>不允许选择并且有默认处理者时不弹出选择框</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">默认处理者：</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control">
-                                    <span class="help-block">指定默认处理者</span>
+                                    <select class="select2-control form-control">
+                                        <option value="0">自动</option>
+                                        <option value="1">允许</option>
+                                        <option value="2">不允许</option>
+                                    </select>
+                                    <span class="help-block">
+                                        设置当前步骤在发送到下一步的时候是否允许选择步骤和人员。
+                                        <a class="field-help"
+                                           data-placement="bottom"
+                                           title="设置当前步骤发送时步骤和人员选项"
+                                           data-content="
+                                            1.自动：如果指定默认处理者，则不允许选择；否则允许选择。<br>
+                                            2.允许：允许当前步骤在发送到下一步的时候可以选择步骤和接收人员。<br>
+                                            3.不允许：只能发送给默认设置的处理者。">
+                                            <i class="fa fa-lg fa-info-circle"></i>
+                                        </a>
+                                    </span>
                                 </div>
                             </div>
 
@@ -329,11 +359,41 @@
                                             <option value="7">某一步骤处理者</option>
                                             <option value="8">字段值</option>*@
                                     </select>
+                                    <span class="help-block">
+                                        设定当前步骤的处理者类型。
+                                        <a class="field-help"
+                                           data-placement="bottom"
+                                           title="设定本步骤的处理者类型"
+                                           data-content="
+                                                1.所有成员：当前步骤处理者可以是组织机构中的任意类型，可以选择部门，岗位，人员，工作组。如果选择的是部门或岗位则发送到部门或岗位下的所有人。<br>
+                                                2.部门：设定当前步骤的处理者只能是部门，也就是上一步在发送时选择该步骤的接收人的时候只能选择部门。<br>
+                                                3.人员：设定当前步骤的处理者只能是人员，上一步在发送到该步骤时接收人处只能选择人员，不能选择部门岗位等类型。<br>
+                                                4.发起者：设定当前步骤的处理者为当前流程实例的发起人员。<br>
+                                                5.发起者领导：即当前步骤处理者为流程实例发起者的部门领导。<br>
+                                                6.发起者分管领导：当前步骤处理者为流程实例发起者的分管领导，比如张总分管信息部，如果发起者是信息部的人员则此步由张总审核。<br>
+                                                7.前一步骤处理者：当前步骤的处理者为前一步骤的处理人员。<br>
+                                                8.前一步处理者领导：当前步骤的前一步处理者的部门分层。<br>
+                                                9.前一步处理者分管领导：当前步骤的前一步处理者的分管领导。
+                                           ">
+                                            <i class="fa fa-lg fa-info-circle"></i>
+                                        </a>
+                                    </span>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">选择范围：</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control">
+                                    <span class="help-block">
+                                        限定流程处理人员在选择下一步接收人的选择范围
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">默认处理者：</label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control">
                                 </div>
