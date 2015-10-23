@@ -105,6 +105,10 @@
     <Content Include="Assets\css\images\maintitle.png" />
     <Content Include="Assets\css\login.css" />
     <Content Include="Assets\css\treegrid.css" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Details.cshtml" />
     <None Include="Assets\gooflow\data.json" />
     <Content Include="Assets\gooflow\GooFlow.css" />
     <Content Include="Assets\gooflow\GooFlow.js" />
@@ -569,6 +573,7 @@
     <Compile Include="Areas\Auth\Controllers\SystemParamController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemRoleController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
+    <Compile Include="Areas\HR\Controllers\GoOutRegistrationController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\FlowController.cs" />
     <Compile Include="Areas\WorkFlow\WorkFlowAreaRegistration.cs" />
@@ -615,7 +620,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\HR\Controllers\" />
     <Folder Include="Assets\js\hr\" />
   </ItemGroup>
   <ItemGroup>
