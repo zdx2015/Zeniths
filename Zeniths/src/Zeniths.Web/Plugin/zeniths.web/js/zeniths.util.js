@@ -523,7 +523,7 @@ zeniths.util.closeFrameDialog = function (win) {
 //};
 
 /**
- * 获取最大对话框大小
+ * 根据屏幕大小自动获取最大可以显示的对话框大小
  * @returns {Object} width和height属性 
  */
 zeniths.util.getFullDialogSize = function() {
