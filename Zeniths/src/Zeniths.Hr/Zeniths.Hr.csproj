@@ -36,8 +36,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HRDatabase.cs" />
-    <Compile Include="HRRepository.cs" />
+    <Compile Include="HrDatabase.cs" />
+    <Compile Include="HrRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

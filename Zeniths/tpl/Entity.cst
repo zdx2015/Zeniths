@@ -4,7 +4,7 @@
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="SchemaExplorer" %>
 <%@ Map Name="CSharpAlias" Src="DbType-CSharp.csmap" Reverse="False"%>
-<%@ Property Name="NameSpace" Type="String" Category="参数" Description="命名空间" Default="ZDX" %>
+<%@ Property Name="NameSpace" Type="String" Category="参数" Description="命名空间" Default="Zeniths.HR" %>
 <%@ Property Name="Table" Type="SchemaExplorer.TableSchema" Category="参数" Description="表名" Optional="False" %>
 <%
 string TableRemark = Table.Description.Replace("\n","").Replace("\r","").Replace(" ","");
@@ -18,7 +18,7 @@ if (Table.HasPrimaryKey)
 }
 %>
 // ===============================================================================
-//  Copyright (c) 2015 正得信集团股份有限公司
+// 正得信股份 版权所有
 // ===============================================================================
 
 using System;

@@ -15,9 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.tpl", "7.tpl", "{E6E58216
 	ProjectSection(SolutionItems) = preProject
 		tpl\Builder.cst = tpl\Builder.cst
 		tpl\Controller.cst = tpl\Controller.cst
+		tpl\Details.cst = tpl\Details.cst
 		tpl\Edit.cst = tpl\Edit.cst
 		tpl\Entity.cst = tpl\Entity.cst
 		tpl\EntityView.cst = tpl\EntityView.cst
+		tpl\Grid.cst = tpl\Grid.cst
 		tpl\Index.cst = tpl\Index.cst
 		tpl\Service.cst = tpl\Service.cst
 	EndProjectSection

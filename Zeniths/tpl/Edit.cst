@@ -4,9 +4,7 @@
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="SchemaExplorer" %>
 <%@ Map Name="CSharpAlias" Src="DbType-CSharp.csmap" Reverse="False"%>
-<%@ Property Name="NameSpace" Type="String" Category="参数" Description="命名空间" Default="ZDX" %>
 <%@ Property Name="Table" Type="SchemaExplorer.TableSchema" Category="参数" Description="表名" Optional="False" %>
-<%@ Property Name="IsDialog" Type="Boolean" Category="参数" Description="是否对话框模式" Default="True" Optional="True" %>
 <%
 string TableRemark = Table.Description.Replace("\n","").Replace("\r","").Replace(" ","");
 string TableName = Table.Name.Replace("\n","").Replace("\r","").Replace(" ","");
@@ -20,74 +18,111 @@ if(Table.HasPrimaryKey)
 %>
 @model <%= TableName %>
 @{
-    ViewBag.PageTitle = "<%= TableRemark %>编辑";
-    <% if(IsDialog) {%>
-    Layout = "~/Views/Shared/_WindowLayout.cshtml";
-    <% } %>
+    var title = "编辑<%= TableRemark %>";
 }
-<div class="page-header">
-    <h1>
-        <%= TableRemark %>编辑
-        <small>
-            <i class="ace-icon fa fa-angle-double-right"></i>
-            修改<%= TableRemark %>基本信息
-        </small>
-    </h1>
-</div>
-<form id="editForm<%= TableName %>" method="POST" action="@Url.Action("Save", Html.GetQueryRouteValues())">
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.<%= pkName %>)
-    <table class="table table-striped table-bordered zdxEditTable">
-    <% for(int i= 0;i< Table.Columns.Count;i++) { 
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.<%= pkName %></strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.<%= pkName %>)" value="@Model.<%= pkName %>" />
+                <table class="table table-form table-dialog-form">
+                
+                <% 
+                var j = 0;
+                for(int i= 0;i< Table.Columns.Count;i++) { 
                 ColumnSchema column = Table.Columns[i];
                 string columnRemark = column.Description.Replace("\n","").Replace("\r","").Replace(" ","");
                 if(column.Name==pkName) continue;
-    %>
-        <tr>
-            <th style="width:200px"><span class="red">*</span> <span class="Validform_label"><%=columnRemark  %>：</span></th>
-            <td>@Html.TextBoxFor(m => m.<%= column.Name %>, new { @class = "zdxWidth-300", datatype = "*", nullmsg = "请填写<%=columnRemark  %>！"})</td>
-        </tr>
-    <% } %>
-        <tr>
-        <% if(!IsDialog) {%>
-        <td colspan="2" class="center">
-        <% } else {%>
-        <td colspan="2" class="center">
-        <% } %>
-            <% if(!IsDialog) {%>
-                <button type="submit" class="btn btn-white btn-primary btn-round">
-                    <i class="ace-icon fa fa-save bigger-120"></i>保存
-                </button>
-                &nbsp;
-                <a class="btn btn-white btn-default btn-round" href="@Url.Action("Index", Html.GetQueryRouteValuesNoId())">
-                    <i class="ace-icon fa fa-arrow-right bigger-120"></i>关闭
-                </a>
-            <% } else {%>
-             <button type="submit" class="btn btn-white btn-primary btn-round">
-                    <i class="ace-icon fa fa-save bigger-120"></i>保存
-                </button>
-                &nbsp;
-                <a id="btnClose" class="btn btn-white btn-default btn-round" href="javascript:void(0);" onclick="zdx.helper.closeParentWindow();">
-                    <i class="ace-icon fa fa-arrow-right bigger-120"></i>关闭
-                </a>
-            <% } %>
-            </td>
-        </tr>
-    </table>
-
-</form>
-@section script{
-    <script type="text/javascript">
-        $(function() {
-           var errorMessage = '@ViewBag.ErrorMessage';
-           var successMessage = '@ViewBag.SuccessMessage';
-           zdx.helper.editFormInit(errorMessage, successMessage, 'editForm<%= TableName %>', {
-                beforeCheck: function(curform) {
-                },
-                beforeSubmit: function(curform) {
-                    //$("#CategoryName").val($("#CategoryId").find("option:selected").text());
+                string thClass = string.Empty;
+                if(j==0)
+                {
+                    thClass = "class=\"w-100px\"";
+                    j++;
                 }
-            });
+                %>
+                    <tr>
+                        <th <%= thClass %>>
+                            <label class="control-label"><%=columnRemark  %>：</label>
+                        </th>
+                        <td>
+                            <% if(column.SystemType==typeof(bool)) {%>
+                            <div class="checkbox-list">
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.<%= column.Name %>)" value="true" type="checkbox" @Html.IsChecked(Model.<%= column.Name %>) />
+                                    <span>启用</span>
+                                </label>
+                            </div>
+                            <% } else {%>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.<%= column.Name %>)" value="@Model.<%= column.Name %>" type="text" />
+                            </div>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% } %>
+                                    
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section script{
+    <script>
+
+        $(function () {
+            //$('.editform').dataform().initSelect2().initiCheck()
+            $('.editform').dataform().initValidate({
+                rules: {
+                    <% for(int i= 0;i< Table.Columns.Count;i++) { 
+                        ColumnSchema column = Table.Columns[i];
+                        string columnRemark = column.Description.Replace("\n","").Replace("\r","").Replace(" ","");
+                        if(column.Name==pkName) continue;
+                    %>
+                    <%= column.Name %>: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }<% if(i!=Table.Columns.Count-1) {Response.Write(",");} %> 
+                    <%}%>
+                },
+                messages: {
+                    <% for(int i= 0;i< Table.Columns.Count;i++) { 
+                        ColumnSchema column = Table.Columns[i];
+                        string columnRemark = column.Description.Replace("\n","").Replace("\r","").Replace(" ","");
+                        if(column.Name==pkName) continue;
+                    %>
+                    <%= column.Name %>: {
+                        required: '请填写<%= columnRemark %>'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }<% if(i!=Table.Columns.Count-1) {Response.Write(",");} %> 
+                    <%}%>
+                },
+                beforeSubmit: function () {
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
         });
     </script>
 }
