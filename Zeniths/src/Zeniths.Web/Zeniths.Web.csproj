@@ -113,7 +113,6 @@
     <Content Include="Areas\Auth\Assets\css\treegrid.css" />
     <Content Include="Areas\Auth\Views\System\Login.cshtml" />
     <Content Include="Areas\Auth\Views\System\Index.cshtml" />
-    <None Include="Areas\WorkFlow\Assets\js\data.json" />
     <Content Include="Areas\WorkFlow\Assets\css\bootstrap.css" />
     <Content Include="Areas\WorkFlow\Assets\css\flow.css" />
     <Content Include="Areas\WorkFlow\Assets\js\design.js" />
