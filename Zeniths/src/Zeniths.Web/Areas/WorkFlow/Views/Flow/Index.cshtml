@@ -22,7 +22,7 @@
                     <button class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> 查询
                     </button>
-                    <a class="btn btn-success" id="btnCreate" data-url="@Url.Action("Create")">
+                    <a class="btn btn-success" id="btnCreate" data-url="@Url.Action("Design")">
                         <i class="fa fa-plus"></i> 新建
                     </a>
                     <a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
@@ -47,12 +47,33 @@
     <script>
         $(function () {
             var dialogSize = zeniths.util.getFullDialogSize();
+
+            function showDesignDialog(url) {
+                zeniths.util.dialog(url, dialogSize.width, dialogSize.height, {
+                    callback: function () {
+                        $('.datagrid').datagrid().reload();
+                    }
+                });
+            }
+
             zeniths.util.standardGridBind({
                 editWidth: 1200,
                 editHeight: 700,
                 viewWidth: dialogSize.width,
-                viewHeight: dialogSize.height
+                viewHeight: dialogSize.height,
+                loadCallback: function () {
+                    $('.btnRecordDesign').click(function () {
+                        var url = $(this).data('url');
+                        showDesignDialog(url);
+                    });
+                }
             });
+
+            $('#btnCreate').off().click(function () {
+                var url = $(this).data('url');
+                showDesignDialog(url);
+            });
+
         });
     </script>
 }

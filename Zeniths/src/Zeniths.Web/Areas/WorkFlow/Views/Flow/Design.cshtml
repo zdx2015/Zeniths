@@ -1,248 +1,55 @@
-﻿@{
-    Layout = "~/Views/Shared/_LayoutBase.cshtml";
-}
-@section style{
-    <style>
-        ::-webkit-scrollbar{width: 7px; height: 7px;}
-        ::-webkit-scrollbar-track{/*border-radius: 10px;*/ -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0);}
-        ::-webkit-scrollbar-track:hover{-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.4); background-color: rgba(0,0,0,0.01);}
-        ::-webkit-scrollbar-track:active{-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.4); background-color: rgba(0,0,0,0.05);}
-        ::-webkit-scrollbar-thumb{background-color: rgba(0,0,0,0.05); /*border-radius: 10px;*/ -webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1);}
-        ::-webkit-scrollbar-thumb{background-color: rgba(0,0,0,0.2); /*border-radius: 10px;*/ -webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1);}
-        ::-webkit-scrollbar-thumb:hover{background-color: rgba(0,0,0,0.4); -webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1);}
-        ::-webkit-scrollbar-thumb:active{background-color: rgba(0,0,0,0.4);}
-
-        *{font-size:9pt;}
-        body{margin:0px;padding:0px;font-family:微软雅黑,宋体,Arial,Helvetica,Verdana,sans-serif;color:#000000;}
-
-
-        /*按钮方案2*/
-        .nui-toolbar{-moz-user-select:   none;border-top:#ccc 1px solid; border-bottom:#ccc 1px solid;background:#F7F7F7; height:35px; padding-top:5px;}
-        .nui-toolbar-item{margin:7px; margin-top:0px; margin-right:0px; padding-left:13px; padding-right:13px; padding-top:5px; padding-bottom:6px; cursor:pointer;float:left;border:1px solid #999; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAcCAMAAACgTerKAAAAA3NCSVQICAjb4U/gAAAASFBMVEX+/v79/f38/Pz7+/v6+vr4+Pj39/f29vb19fX09PTz8/Px8fHw8PDv7+/u7u7t7e3s7Ozr6+vp6eno6Ojn5+fm5ubl5eX///8jGyilAAAAGHRSTlP//////////////////////////////wDNEy7qAAAACXBIWXMAAArwAAAK8AFCrDSYAAAAFnRFWHRDcmVhdGlvbiBUaW1lADA0LzEyLzEyiu5yJQAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNAay06AAAABNSURBVEiJ3c/XFYAgAMDAWFBUitj2H9Ut8sEtkBfoxiBgFDAJnMgsIAhYBKwCooBNwC7gEJAEZAFFQBVwCmgCLgG3wIk8Al4Bn6Cfkx/Rg3w59D7HjwAAAABJRU5ErkJggg==");}
-        .nui-toolbar-item img{vertical-align:middle; padding-bottom:2px;}
-        .nui-toolbar-item:hover{box-shadow:0 0 8px #ccc;}
-        .nui-btn-left{border-top-left-radius:0px; border-bottom-left-radius:0px; margin-left:0px;}
-        .nui-btn-right{border-right:none; border-top-right-radius:0px; border-bottom-right-radius:0px;}
-        .nui-btn-text{float:left;}
-        .nui-dropdownBtn-arr{margin-top:6px; padding-right:2px; padding-left:4px; float:right;}
-        .nui-toolbar-item i{position:absolute; width:7px; height:6px;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAGAgMAAAByYGzlAAAAA3NCSVQICAjb4U/gAAAACVBMVEX///////9/f3+5ROUVAAAAA3RSTlMA//9EUNYhAAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABd0RVh0Q3JlYXRpb24gVGltZQAyMDEzLjguMzF+eHXPAAAAGklEQVQImWNo4GBYoMGQsYRBagIDmwMDIwMAJJoDTmfqPxsAAAAASUVORK5CYII=");}
-        .nui-dropdownData{position:fixed; z-index:4000; text-align:left; border:1px solid #999; padding-top:5px; padding-bottom:5px; background:#fff; display:none;}
-        .nui-dropdownData-item{height:24px; line-height:24px;cursor:pointer;padding:0 15px;}
-        .nui-dropdownData-item:hover{background:#4A5B79; color:#fff;}
-    </style>
+﻿@section style{
     <link href="~/Areas/WorkFlow/Assets/css/flow.css" rel="stylesheet" />
+    <style>
+        .GooFlow_tool_btn {
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+    </style>
 }
 @section script{
-    <script src="~/Plugin/jquery/jquery.js"></script>
-    <script src="~/Plugin/zeniths.web/js/zeniths.util.js"></script>
     <script src="~/Areas/WorkFlow/Assets/js/flow.js"></script>
-    <script type="text/javascript">
-        var KeyValue = zeniths.util.GetUrlQuery('KeyValue'); //主键
-        $(document).ready(function () {
-            document.onselectstart = function () { return false; };
-            LoadGooFlow();
+    <script src="~/Areas/WorkFlow/Assets/js/design.js"></script>
+    <script>
+        $(function () {
+            flowDesign.init('@ViewBag.Id');
         });
-        //初始化设计流程器
-        var FlowPanel;
-
-        function LoadGooFlow() {
-
-            FlowPanel = $.createGooFlow($("#FlowPanel"), {
-                width: $(window).width() - 4, // - 40 - 2,
-                height: $(window).height() - 45, // - 100 - 45,
-                haveHead: true,
-                headBtns: ["undo", "redo"],
-                haveTool: true,
-                toolBtns: ["startround", "endround", "stepnode", "shuntnode", "confluencenode"],
-                haveGroup: true,
-                useOperStack: true
-            });
-            FlowPanel.setNodeRemarks({
-                cursor: "选择指针",
-                direct: "步骤连线",
-                startround: "开始节点",
-                endround: "结束节点",
-                stepnode: "普通节点",
-                shuntnode: "分流节点",
-                confluencenode: "合流节点",
-                group: "区域规划"
-            });
-            //获取流程
-
-            $.ajax({
-                url: '@Url.Action("GetTestData")',
-                type: "post",
-                dataType: "json",
-                async: false,
-                data: { FlowMainId: KeyValue },
-                success: function (data) {
-                    var FlowJson = JSON.parse(data.FlowJson);
-                    if (FlowJson) {
-                        FlowPanel.loadData(FlowJson);
-                        //var FlowNodePermissionJson = data.FlowNodePermissionJson;
-                        //var FlowNodeButtonJson = data.FlowNodeButtonJson;
-                        //var FlowNodeJson = data.FlowNodeJson;
-                        //$.each(FlowNodeJson, function (i) {
-                        //    var FlowNodeId = FlowNodeJson[i].FlowNodeId;
-                        //    var FlowNodeCode = FlowNodeJson[i].FlowNodeCode;
-                        //    //节点信息
-                        //    var RowJson = FlowNodeJson[i];
-
-                        //    //获取节点人员权限
-                        //    var role_Permission = [];
-                        //    var department_Permission = [];
-                        //    var post_Permission = [];
-                        //    var usergroup_Permission = [];
-                        //    var user_Permission = [];
-                        //    $.each(FlowNodePermissionJson, function (j) {
-                        //        if (FlowNodePermissionJson[j].FlowNodeId == FlowNodeId && FlowNodePermissionJson[j].ObjectType == '1') {
-                        //            role_Permission.push(FlowNodePermissionJson[j].ObjectId)
-                        //        }
-                        //        if (FlowNodePermissionJson[j].FlowNodeId == FlowNodeId && FlowNodePermissionJson[j].ObjectType == '2') {
-                        //            department_Permission.push(FlowNodePermissionJson[j].ObjectId)
-                        //        }
-                        //        if (FlowNodePermissionJson[j].FlowNodeId == FlowNodeId && FlowNodePermissionJson[j].ObjectType == '3') {
-                        //            post_Permission.push(FlowNodePermissionJson[j].ObjectId)
-                        //        }
-                        //        if (FlowNodePermissionJson[j].FlowNodeId == FlowNodeId && FlowNodePermissionJson[j].ObjectType == '4') {
-                        //            usergroup_Permission.push(FlowNodePermissionJson[j].ObjectId)
-                        //        }
-                        //        if (FlowNodePermissionJson[j].FlowNodeId == FlowNodeId && FlowNodePermissionJson[j].ObjectType == '5') {
-                        //            user_Permission.push(FlowNodePermissionJson[j].ObjectId)
-                        //        }
-                        //    });
-                        //    RowJson["role_Permission"] = String(role_Permission);
-                        //    RowJson["department_Permission"] = String(department_Permission);
-                        //    RowJson["post_Permission"] = String(post_Permission);
-                        //    RowJson["usergroup_Permission"] = String(usergroup_Permission);
-                        //    RowJson["user_Permission"] = String(user_Permission);
-
-                        //    //获取节点按钮权限
-                        //    var button_Permission = [];
-                        //    $.each(FlowNodeButtonJson, function (k) {
-                        //        if (FlowNodeButtonJson[k].FlowNodeId == FlowNodeId) {
-                        //            var rowdata = {
-                        //                ButtonId: FlowNodeButtonJson[k].ButtonId,
-                        //                IsBack: FlowNodeButtonJson[k].IsBack,
-                        //            }
-                        //            button_Permission.push(rowdata)
-                        //        }
-                        //    });
-                        //    RowJson["button_Permission"] = button_Permission;
-
-                        //    NodeInfoJson[FlowNodeCode] = RowJson;
-                        //});
-
-                        //var FlowLineJson = data.FlowLineJson;
-                        //$.each(FlowLineJson, function (i) {
-                        //    var FlowLineId = FlowLineJson[i].FlowLineId;
-                        //    var FlowLineCode = FlowLineJson[i].FlowLineCode;
-                        //    var RowJson = FlowLineJson[i];
-                        //    LineInfoJson[FlowLineCode] = RowJson;
-                        //});
-                    }
-                }
-            });
-
-
-            //保持流程
-            $("#save").click(function () {
-                //var IsCheckData = true;
-                //if (!IsCheckData) {
-                //    return false;
-                //}
-                //Loading(true, "正在提交数据...");
-                window.setTimeout(function () {
-                    var postData = {
-                        FlowMainId: KeyValue,
-                        FlowJson: JSON.stringify(FlowPanel.exportData()),
-                        NodeInfoJson: JSON.stringify(NodeInfoJson),
-                        LineInfoJson: JSON.stringify(LineInfoJson),
-                    }
-                    AjaxJson("/WorkflowModule/FlowDesign/SaveFlowLayout", postData, function (data) {
-                        tipDialog(data.Message, 3, data.Code);
-                        top.frames[tabiframeId()].windowload();
-                        //closeDialog();
-                    });
-                }, 200);
-            });
-        }
-
-        //节点设置
-        var NodeInfoJson = {};
-
-        function OpenNode(This) {
-            var _nodeData = This.$nodeData[$('.item_focus').attr('id')];
-            var NodeNo = $('.item_focus').attr('id');
-            var NodeName = _nodeData.name;
-            var url = "/WorkflowModule/FlowDesign/FlowNode?NodeNo=" + NodeNo + "&NodeName=" + escape(NodeName) + "&NodeType=" + _nodeData.type;
-
-            //alert(url);
-            zeniths.util.dialog('@Url.Action("NodeSetting")', 800, 690);
-
-            //openDialog(url, "FlowNode", "节点设置【" + NodeName + "】", 650, 330, function (iframe) {
-            //    top.frames[iframe].AcceptClick(function (data) {
-            //        NodeInfoJson[NodeNo] = data;
-            //        $(".item_focus table tr:eq(0) td:eq(1)").text(data.FlowStep);
-            //        This.setName(NodeNo, data.FlowStep, "node");
-            //    });
-            //});
-        };
-
-        //流转线设置
-        var LineInfoJson = {};
-
-        function OpenLine(id, This) {
-
-             zeniths.util.dialog('@Url.Action("LineSetting")', 800, 500);
-            return;
-            var NodeId = JSON.stringify(FlowPanel.exportData().lines[id].from).replace(/"/g, '');
-            if (NodeInfoJson[NodeId]) {
-                //var FrmType = NodeInfoJson[NodeId].FrmType;
-                //var BindTable = NodeInfoJson[NodeId].BindTable;
-                //var LineNo = id;
-                //var LineName = $("#" + id + " text").text();
-
-                //     var postData = {
-                //    LineName: $("#LineName").val(),
-                //    ConditionJson: ConditionJson,
-                //    ConditionValueJson: ConditionValueJson,
-                //    ConditionString: $("#ConditionString").val(),
-                //    ConditionType: ConditionType
-                //}
-
-                //var url = "/WorkflowModule/FlowDesign/FlowLineCondition?LineNo=" + LineNo + "&LineName=" + escape(LineName) + "&BindTable=" + escape(BindTable);
-                //alert(url);
-                //openDialog(url, "FlowLineCondition", "流转条件设置", 650, 350, function (iframe) {
-                //    top.frames[iframe].AcceptClick(function (data) {
-                //        LineInfoJson[LineNo] = data;
-                //        $("#" + LineNo + " text").text(data.LineName);
-                //        This.setName(LineNo, data.LineName, "line");
-                //    });
-                //});
-            } else {
-                var name = JSON.stringify(FlowPanel.exportData().nodes[NodeId].name.replace(/"/g, ''));
-                alert('请完善【' + name + '】节点信息', 4, 'warning');
-            }
-        }
     </script>
 }
 
-<div class="nui-toolbar leftline rightline" style="margin: 1px;">
-    <div class="nui-toolbar-item" onclick="Replace()">
-        <span class="nui-btn-text">刷新</span>
-    </div>
-    <div id="save" class="nui-toolbar-item">
-        <span class="nui-btn-text">保存</span>
-    </div>
-    <div class="nui-toolbar-item nui-btn-right" onclick="$('.GooFlow_head_btn').find('.ico_undo').trigger('click')">
-        <span class="nui-btn-text">撤销</span>
-    </div>
-    <div class="nui-toolbar-item nui-btn-left" onclick="$('.GooFlow_head_btn').find('.ico_redo').trigger('click')">
-        <span class="nui-btn-text">重做</span>
-    </div>
-    <div style="position: absolute; float: right; top: 5px; right: 5px;">
+<div class="container-edit-zeniths">
+    <div class="panel panel-default panel-zeniths">
+        <div class="panel-heading">
+            流程设计
+            <div class="pull-right">
+                <a class="btn btn-default btn-primary flowToolBtn" id="saveSetting">
+                    <i class="fa fa-save"></i> 保存
+                </a>
+                <a class="btn btn-default flowToolBtn" id="flowSetting">
+                    <i class="fa fa-cog"></i> 属性
+                </a>
+                <a class="btn btn-default flowToolBtn" id="flowUndo">
+                    <i class="fa fa-reply"></i> 撤销
+                </a>
+                <a class="btn btn-default flowToolBtn" id="flowRedo">
+                    <i class="fa fa-share"></i> 重做
+                </a>
+                <a class="btn btn-default flowToolBtn" id="flowReresh">
+                    <i class="fa fa-repeat"></i> 刷新
+                </a>
+                <a class="btn btn-default flowToolBtn" id="flowBack">
+                    <i class="fa fa-arrow-right"></i> 返回
+                </a>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div id="flowPanel"></div>
+        </div>
     </div>
 </div>
-<div id="FlowPanel" style="margin: 1px; margin-top: 0px;"></div>
-
+<input type="hidden" id="loadSettingUrl" value="@Html.Raw(Url.Action("LoadSetting"))" />
+<input type="hidden" id="saveSettingUrl" value="@Html.Raw(Url.Action("SaveSetting"))" />
+<input type="hidden" id="flowSettingUrl" value="@Html.Raw(Url.Action("FlowSetting"))" />
+<input type="hidden" id="stepSettingUrl" value="@Html.Raw(Url.Action("StepSetting"))" />
+<input type="hidden" id="lineSettingUrl" value="@Html.Raw(Url.Action("LineSetting"))" />

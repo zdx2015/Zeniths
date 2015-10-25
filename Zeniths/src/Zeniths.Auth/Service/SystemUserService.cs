@@ -5,6 +5,7 @@ using Zeniths.Auth.Entity;
 using Zeniths.Collections;
 using Zeniths.Data;
 using Zeniths.Data.Extensions;
+using Zeniths.Entity;
 using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.Utility;
@@ -223,6 +224,106 @@ namespace Zeniths.Auth.Service
         }
 
         /// <summary>
+        /// 获取用户姓名
+        /// </summary>
+        /// <param name="id">用户主键</param>
+        /// <returns>返回指定主键用户姓名</returns>
+        public string GetName(int id)
+        {
+            return repos.Get(id, p => p.Name)?.Name;
+        }
+
+        /// <summary>
+        /// 获取用户的部门领导主键
+        /// </summary>
+        /// <param name="userId">用户主键</param>
+        /// <returns>返回指定用户部门领导主键</returns>
+        public int GetDepartmentLeaderId(int userId)
+        {
+            return GetLeaderId(userId, "DepartmentLeaderId");
+        }
+
+        /// <summary>
+        /// 获取用户的部门领导对象
+        /// </summary>
+        /// <param name="userId">用户主键</param>
+        /// <returns>返回指定用户部门领导对象</returns>
+        public SystemUser GetDepartmentLeader(int userId)
+        {
+            return GetLeader(userId, "DepartmentLeaderId");
+        }
+
+        /// <summary>
+        /// 指定用户是否是部门领导
+        /// </summary>
+        /// <param name="userId">用户主键</param>
+        /// <returns>如果是部门领导返回true</returns>
+        public bool IsDepartmentLeader(int userId)
+        {
+            return IsLeader(userId, "DepartmentLeaderId");
+        }
+
+        /// <summary>
+        /// 获取用户的分管领导主键
+        /// </summary>
+        /// <param name="userId">用户主键</param>
+        /// <returns>返回指定用户分管领导主键</returns>
+        public int GetChargeLeaderId(int userId)
+        {
+            return GetLeaderId(userId, "ChargeLeaderId");
+        }
+
+        /// <summary>
+        /// 获取用户的分管领导对象
+        /// </summary>
+        /// <param name="userId">用户主键</param>
+        /// <returns>返回指定用户分管领导对象</returns>
+        public SystemUser GetChargeLeader(int userId)
+        {
+            return GetLeader(userId, "ChargeLeaderId");
+        }
+
+        /// <summary>
+        /// 指定用户是否是分管领导
+        /// </summary>
+        /// <param name="userId">用户主键</param>
+        /// <returns>如果是分管领导返回true</returns>
+        public bool IsChargeLeader(int userId)
+        {
+            return IsLeader(userId, "ChargeLeaderId");
+        }
+
+        /// <summary>
+        /// 获取用户的主管领导主键
+        /// </summary>
+        /// <param name="userId">用户主键</param>
+        /// <returns>返回指定用户主管领导主键</returns>
+        public int GetMainLeaderId(int userId)
+        {
+            return GetLeaderId(userId, "MainLeaderId");
+        }
+
+        /// <summary>
+        /// 获取用户的主管领导对象
+        /// </summary>
+        /// <param name="userId">用户主键</param>
+        /// <returns>返回指定用户主管领导对象</returns>
+        public SystemUser GetMainLeader(int userId)
+        {
+            return GetLeader(userId, "MainLeaderId");
+        }
+
+        /// <summary>
+        /// 指定用户是否是主管领导
+        /// </summary>
+        /// <param name="userId">用户主键</param>
+        /// <returns>如果是主管领导返回true</returns>
+        public bool IsMainLeader(int userId)
+        {
+            return IsLeader(userId, "MainLeaderId");
+        }
+
+        /// <summary>
         /// 根据账号获取用户对象
         /// </summary>
         /// <param name="account">账号</param>
@@ -268,10 +369,15 @@ namespace Zeniths.Auth.Service
         /// <summary>
         /// 获取启用的用户列表
         /// </summary>
+        /// <param name="departmentIds">部门主键数组(可选)</param>
         /// <returns>返回启用的用户列表</returns>
-        public List<SystemUser> GetEnabledList()
+        public List<SystemUser> GetEnabledList(int[] departmentIds = null)
         {
             var query = repos.NewQuery.Where(p => p.IsEnabled == true).OrderBy(p => p.SortIndex);
+            if (departmentIds != null && departmentIds.Length > 0)
+            {
+                query.Where(p => p.DepartmentId.In(departmentIds));
+            }
             return repos.Query(query).ToList();
         }
 
@@ -297,11 +403,54 @@ namespace Zeniths.Auth.Service
                 name = name.Trim();
                 query.Where(p => p.Account.Contains(name) || p.Name.Contains(name) || p.NameSpell.Contains(name));
             }
-            if (departmentIds.Length > 0)
+            if (departmentIds != null && departmentIds.Length > 0)
             {
                 query.Where(p => p.DepartmentId.In(departmentIds));
             }
             return repos.Page(query);
         }
+
+        #region Private
+
+        /// <summary>
+        /// 获取用户领导主键
+        /// </summary>
+        /// <param name="userId">用户主键</param>
+        /// <param name="leaderField">领导字段</param>
+        private int GetLeaderId(int userId, string leaderField)
+        {
+            var sql = $@"SELECT Id FROM SystemUser 
+                        WHERE Id = (SELECT {leaderField} FROM SystemDepartment 
+                            WHERE Id = (SELECT DepartmentId FROM SystemUser WHERE Id=@userId) AND IsEnabled=1)";
+            return repos.Database.ExecuteScalar<int>(sql, new[] { userId });
+        }
+
+        /// <summary>
+        /// 获取领导对象
+        /// </summary>
+        /// <param name="userId">用户主键</param>
+        /// <param name="leaderField">领导字段</param>
+        public SystemUser GetLeader(int userId, string leaderField)
+        {
+            var cols = EntityMetadata.ForType(typeof(SystemUser)).QueryColumns;
+            var sql = $@"SELECT {StringHelper.ConvertArrayToString(cols)} FROM SystemUser 
+                        WHERE Id = (SELECT {leaderField} FROM SystemDepartment 
+                            WHERE Id = (SELECT DepartmentId FROM SystemUser WHERE Id=@userId) AND IsEnabled=1)";
+            return repos.Database.Query<SystemUser>(sql, new[] { userId }).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// 判断用户是否是领导
+        /// </summary>
+        /// <param name="userId">用户主键</param>
+        /// <param name="leaderField">领导字段</param>
+        /// <returns></returns>
+        public bool IsLeader(int userId, string leaderField)
+        {
+            var sql = string.Format(repos.Database.Provider.GetExistsStatement(), "SystemDepartment", $"{leaderField}=@userId AND IsEnabled=1");
+            return repos.Database.ExecuteScalar<int>(sql, new[] { userId }) != 0;
+        }
+
+        #endregion
     }
 }

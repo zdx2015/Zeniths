@@ -4,7 +4,7 @@
 }
 
 <div class="container-edit-zeniths">
-    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form" enctype="multipart/form-data">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
                 <span class="prefix"> <strong>@Model.Id</strong></span>
@@ -16,7 +16,7 @@
                 <input type="hidden" name="@nameof(Model.CreateDateTime)" value="@Model.CreateDateTime" />
                 <table class="table table-form table-dialog-form">
                     <tr>
-                        <th class='w-100px'>
+                        <th class='w-120px'>
                             <label class="control-label">标题：</label>
                         </th>
                         <td>
@@ -41,6 +41,12 @@
                             <textarea class="editor-control form-control" name="@nameof(Model.Contents)" rows="24">@Model.Contents</textarea>
                         </td>
                     </tr>
+                    <tr>
+                        <th><label class="control-label">上传附件：</label></th>
+                        <td>
+                            <input id="fileInput" type="file" multiple="true" class="file-loading">
+                        </td>
+                    </tr>
                 </table>
             </div>
             <div class="panel-footer text-center">
@@ -60,10 +66,15 @@
 
 @section style{
     <link href="~/Plugin/jquery-tags-input/jquery.tagsinput.min.css" rel="stylesheet" />
+    <link href="~/Plugin/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
 }
 @section script{
     <script src="~/Plugin/jquery-tags-input/jquery.tagsinput.min.js"></script>
     <script src="~/Plugin/kindeditor/kindeditor-min.js"></script>
+    <script src="~/Plugin/bootstrap-fileinput/js/plugins/canvas-to-blob.min.js"></script>
+
+    <script src="~/Plugin/bootstrap-fileinput/js/fileinput.min.js"></script>
+    <script src="~/Plugin/bootstrap-fileinput/js/fileinput_locale_zh.js"></script>
     <script>
 
         $(function () {
@@ -88,6 +99,42 @@
                 beforeSubmit: function () {
                 }
             }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+            //初始化文件上传
+
+            // with plugin options
+            $("#fileInput").fileinput({
+                language: "zh",
+                showCaption: true,
+                showPreview: true,
+                showRemove: false,
+                showUpload: false,
+                showCancel: false,
+                showClose: false,
+                uploadUrl: '@Url.Action("UploadFile")',
+                uploadAsync: true,
+                previewFileIcon: '<i class="fa fa-file"></i>',
+                allowedPreviewTypes: ['image', 'text'], // allow only preview of image & text files
+                previewFileIconSettings: {
+                    'doc': '<i class="fa fa-file-word-o text-primary"></i>',
+                    'docx': '<i class="fa fa-file-word-o text-primary"></i>',
+                    'xls': '<i class="fa fa-file-excel-o text-success"></i>',
+                    'xlsx': '<i class="fa fa-file-excel-o text-success"></i>',
+                    'pptx': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+                    'jpg': '<i class="fa fa-file-photo-o text-warning"></i>',
+                    'pdf': '<i class="fa fa-file-pdf-o text-danger"></i>',
+                    'zip': '<i class="fa fa-file-archive-o text-muted"></i>',
+                    'ppt': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+                    'htm': '<i class="fa fa-file-code-o text-info"></i>',
+                    'txt': '<i class="fa fa-file-text-o text-info"></i>',
+                    'mov': '<i class="fa fa-file-movie-o text-warning"></i>',
+                    'mp3': '<i class="fa fa-file-audio-o text-warning"></i>'
+                },
+                uploadExtraData: {
+                    resName: "1000",
+                    resId: "abc"
+                }
+            });
 
         });
     </script>

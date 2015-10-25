@@ -50,7 +50,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             var dics = departmentService.GetEnabledList();
             var nodes = TreeHelper.Build(dics, p => p.ParentId == 0, (node, instace) =>
             {
-                node.IconCls = AuthHelper.GetDepartmentIconCls(instace);
+                node.IconCls = OrganizeHelper.GetDepartmentIconCls(instace);
             });
             return Json(nodes);
         }

@@ -48,6 +48,7 @@
     <Compile Include="Entity\SystemDictionaryDetails.cs" />
     <Compile Include="Entity\SystemDoc.cs" />
     <Compile Include="Entity\SystemException.cs" />
+    <Compile Include="Entity\SystemFile.cs" />
     <Compile Include="Entity\SystemLog.cs" />
     <Compile Include="Entity\SystemMenu.cs" />
     <Compile Include="Entity\SystemParam.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Service\SystemDictionaryService.cs" />
     <Compile Include="Service\SystemDocService.cs" />
     <Compile Include="Service\SystemExceptionService.cs" />
+    <Compile Include="Service\SystemFileService.cs" />
     <Compile Include="Service\SystemMenuService.cs" />
     <Compile Include="Service\SystemParamService.cs" />
     <Compile Include="Service\SystemRoleService.cs" />

@@ -130,8 +130,7 @@ namespace Zeniths.MvcUtility
             byte[] fileContents = ExcelHelper.Export(dt, meta);
             return File(fileContents, "application/ms-excel", $"{fileName}.xlsx");
         }
-
-
+        
         public int GetPageIndex()
         {
             return WebHelper.GetFormString("page").ToInt(1);

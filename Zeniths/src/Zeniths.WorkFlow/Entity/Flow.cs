@@ -11,7 +11,7 @@ namespace Zeniths.WorkFlow.Entity
     /// 流程
     /// </summary>
     [Table(Caption = "流程")]
-    [PrimaryKey("Id", true)]
+    [PrimaryKey("Id")]
     public class Flow
     {
         /// <summary>
@@ -43,6 +43,18 @@ namespace Zeniths.WorkFlow.Entity
         /// </summary>
         [Column(Caption = "是否启用")]
         public bool IsEnabled { get; set; }
+
+        /// <summary>
+        /// 是否启用调试
+        /// </summary>
+        [Column(Caption = "是否启用调试")]
+        public bool IsDebug { get; set; }
+
+        /// <summary>
+        /// 调试用户
+        /// </summary>
+        [Column(Caption = "调试用户")]
+        public string DebugUserIds { get; set; }
 
         /// <summary>
         /// 序号

@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.ComponentModel;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -433,8 +434,8 @@ namespace Zeniths.Helper
         /// <param name="selectedValue">选中的值</param>
         /// <param name="firstAlpha">生成首字母</param>
         /// <returns></returns>
-        public static string GetSelectOptions(IList list, string displayMember, string valueMember,
-            string selectedValue = null, bool firstAlpha = true)
+        public static string GetSelectOptions(IList list, string displayMember = "Name",
+            string valueMember = "Id", string selectedValue = null, bool firstAlpha = true)
         {
             var options = new StringBuilder();
             foreach (object item in list)
@@ -448,14 +449,41 @@ namespace Zeniths.Helper
             return options.ToString();
         }
 
+        public static string GetSelectGroupOptions(IList list, string displayMember = "Name",
+            string valueMember = "Id", string groupMember = "Category",
+            string selectedValue = null, bool firstAlpha = true)
+        {
+            var options = new StringBuilder();
+            var groupDic = new Dictionary<string, List<object>>();
+            foreach (object item in list)
+            {
+                string group = ObjectHelper.GetObjectValue(item, groupMember).ToStringOrEmpty();
+                if (string.IsNullOrEmpty(group))
+                {
+                    group = "默认";
+                }
+                if (!groupDic.Keys.Contains(group))
+                {
+                    groupDic.Add(group, new List<object>());
+                }
+                groupDic[group].Add(item);
+            }
+            foreach (var item in groupDic)
+            {
+                options.Append($"<optgroup label=\"{item.Key}\">{GetSelectOptions(item.Value, displayMember, valueMember, selectedValue, firstAlpha)}</optgroup>");
+            }
+
+            return options.ToString();
+        }
+
         /// <summary>
-        /// 获取Select控件option列表
+        /// 获取Select控件option列表(使用数组对象)
         /// </summary>
         /// <param name="array">数组</param>
         /// <param name="selectedValue">选中的值</param>
         /// <param name="firstAlpha">生成首字母</param>
         /// <returns></returns>
-        public static string GetSelectOptions(Array array, string selectedValue = null, bool firstAlpha = true)
+        public static string GetSelectOptionsByArray(Array array, string selectedValue = null, bool firstAlpha = true)
         {
             var options = new StringBuilder();
             foreach (object item in array)
