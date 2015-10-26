@@ -42,7 +42,7 @@ namespace Zeniths.Auth.Utility
         /// </summary>
         public static SystemUser CurrentUser
         {
-            get { return OrganizeHelper.GetLoginUser(); }
+            get { return OrganizeHelper.GetCurrentUser(); }
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Zeniths.Auth.Utility
         /// </summary>
         public static SystemDepartment CurrentDepartment
         {
-            get { return OrganizeHelper.GetLoginDepartment(); }
+            get { return OrganizeHelper.GetCurrentDepartment(); }
         }
 
         /// <summary>

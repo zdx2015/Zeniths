@@ -133,5 +133,32 @@ namespace Zeniths.Auth.Service
             }
             return repos.Page(query);
         }
+
+        /// <summary>
+        /// 查询所有有效的角色主键和名称列表(Key为Id,Value为名称)
+        /// </summary>
+        public List<KeyValuePair<int, string>> GetRoleIdNameList()
+        {
+            var query = repos.NewQuery
+                .Select(nameof(SystemRole.Id), nameof(SystemRole.Name))
+                .Where(p => p.IsEnabled == true)
+                .OrderBy(p => p.SortIndex);
+            var list = repos.Query(query).ToList();
+            return list.Select(item => new KeyValuePair<int, string>(item.Id, item.Name)).ToList();
+        }
+
+        /// <summary>
+        /// 查询所有有效的角色主键和名称字典
+        /// </summary>
+        public Dictionary<int, string> GetRoleIdNameDic()
+        {
+            var list = GetRoleIdNameList();
+            var dic = new Dictionary<int, string>();
+            foreach (var item in list)
+            {
+                dic[item.Key] = item.Value;
+            }
+            return dic;
+        }
     }
 }

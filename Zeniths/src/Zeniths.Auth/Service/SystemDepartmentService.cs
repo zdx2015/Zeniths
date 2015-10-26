@@ -239,5 +239,32 @@ namespace Zeniths.Auth.Service
             var sql = $"SELECT {StringHelper.ConvertArrayToString(cols)} FROM fnGetAllChildsDepartment(@departmentId) ORDER BY SortPath ASC";
             return repos.Database.Query<int>(sql, new object[] { departmentId }).ToArray();
         }
+
+        /// <summary>
+        /// 查询所有有效的部门主键和名称列表(Key为Id,Value为名称)
+        /// </summary>
+        public List<KeyValuePair<int, string>> GetDepartmentIdNameList()
+        {
+            var query = repos.NewQuery
+                .Select(nameof(SystemDepartment.Id), nameof(SystemDepartment.Name))
+                .Where(p => p.IsEnabled == true)
+                .OrderBy(p => p.SortPath);
+            var list = repos.Query(query).ToList();
+            return list.Select(item => new KeyValuePair<int, string>(item.Id, item.Name)).ToList();
+        }
+
+        /// <summary>
+        /// 查询所有有效的部门主键和名称字典
+        /// </summary>
+        public Dictionary<int, string> GetDepartmentIdNameDic()
+        {
+            var list = GetDepartmentIdNameList();
+            var dic = new Dictionary<int, string>();
+            foreach (var item in list)
+            {
+                dic[item.Key] = item.Value;
+            }
+            return dic;
+        }
     }
 }
