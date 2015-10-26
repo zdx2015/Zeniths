@@ -124,8 +124,8 @@ namespace Zeniths.WorkFlow.Service
         public PageList<FlowButton> GetPageList(int pageIndex, int pageSize, string orderName,
             string orderDir, string buttonName)
         {
-            orderName = orderName.IsEmpty() ? nameof(FlowButton.Id) : orderName;
-            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;
+            orderName = orderName.IsEmpty() ? nameof(FlowButton.SortIndex) : orderName;
+            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Asc) : orderDir;
             var query = repos.NewQuery.Take(pageSize).Page(pageIndex).
                 OrderBy(orderName, orderDir.IsAsc());
             if (buttonName.IsNotEmpty())

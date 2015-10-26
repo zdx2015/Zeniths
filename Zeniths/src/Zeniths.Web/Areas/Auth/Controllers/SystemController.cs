@@ -38,6 +38,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            OrganizeHelper.Logout();
             return RedirectToAction("Login");
         }
 
@@ -66,7 +67,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
 
         public ActionResult GetCurrentUser()
         {
-            return Json(OrganizeHelper.GetLoginUser());
+            return Json(OrganizeHelper.GetCurrentUser());
         }
 
         public ActionResult WebIcons()

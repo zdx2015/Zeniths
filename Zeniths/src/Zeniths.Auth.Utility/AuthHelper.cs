@@ -51,6 +51,5 @@ namespace Zeniths.Auth.Utility
             };
         }
 
-        
     }
 }

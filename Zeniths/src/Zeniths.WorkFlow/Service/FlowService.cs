@@ -94,7 +94,7 @@ namespace Zeniths.WorkFlow.Service
         }
 
         /// <summary>
-        /// 查询所有流程主键和名称字典
+        /// 查询所有发布的流程主键和名称字典
         /// </summary>
         public Dictionary<string, string> GetFlowDic()
         {
