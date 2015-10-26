@@ -1,0 +1,230 @@
+﻿@model OAWorkLogShare
+@{
+    var title = "编辑工作日志分享人";
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <table class="table table-form table-dialog-form">
+                
+                    <tr>
+                        <th class="w-100px">
+                            <label class="control-label">分享日志主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.WorkLogId)" value="@Model.WorkLogId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">分享人主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.ShareUserId)" value="@Model.ShareUserId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">分享人姓名：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.ShareUserName)" value="@Model.ShareUserName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">分享人部门主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.ShareDepartmentId)" value="@Model.ShareDepartmentId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">分享人部门名称：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.ShareDepartmentName)" value="@Model.ShareDepartmentName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">是否反馈：</label>
+                        </th>
+                        <td>
+                            <div class="checkbox-list">
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.IsFeedback)" value="true" type="checkbox" @Html.IsChecked(Model.IsFeedback) />
+                                    <span>启用</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">反馈信息：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.FeedbackInfomation)" value="@Model.FeedbackInfomation" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">反馈时间：</label>
+                        </th>
+                        <td>
+                                <input class="date-control form-control" name="@nameof(Model.FeedbackDateTime)" value="@Model.FeedbackDateTime" type="text" />
+                        </td>
+                    </tr>
+                                    
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section script{
+    <script>
+
+        $(function () {
+            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
+            $('.editform').dataform().initValidate({
+                rules: {
+                    WorkLogId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    ShareUserId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    ShareUserName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    ShareDepartmentId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    ShareDepartmentName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    IsFeedback: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    FeedbackInfomation: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    FeedbackDateTime: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    } 
+                },
+                messages: {
+                    WorkLogId: {
+                        required: '请填写分享日志主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    ShareUserId: {
+                        required: '请填写分享人主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    ShareUserName: {
+                        required: '请填写分享人姓名'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    ShareDepartmentId: {
+                        required: '请填写分享人部门主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    ShareDepartmentName: {
+                        required: '请填写分享人部门名称'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    IsFeedback: {
+                        required: '请填写是否反馈'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    FeedbackInfomation: {
+                        required: '请填写反馈信息'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    FeedbackDateTime: {
+                        required: '请填写反馈时间'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    } 
+                },
+                beforeSubmit: function () {
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+        });
+    </script>
+}
