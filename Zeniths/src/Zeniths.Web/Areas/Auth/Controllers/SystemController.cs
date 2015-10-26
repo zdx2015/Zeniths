@@ -66,7 +66,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
 
         public ActionResult GetCurrentUser()
         {
-            return Json(AuthHelper.GetLoginUser());
+            return Json(OrganizeHelper.GetLoginUser());
         }
 
         public ActionResult WebIcons()

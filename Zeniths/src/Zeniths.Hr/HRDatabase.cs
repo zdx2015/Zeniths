@@ -4,11 +4,11 @@
 using Zeniths.Configuration;
 using Zeniths.Data;
 
-namespace Zeniths.HR
+namespace Zeniths.Hr
 {
-    public class HRDatabase : Database
+    public class HrDatabase : Database
     {
-        public HRDatabase() : base("hr")
+        public HrDatabase() : base("hr")
         {
 
         }

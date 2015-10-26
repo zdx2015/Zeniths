@@ -421,7 +421,7 @@ zeniths.util.dialog = function (url, width, height, options) {
         skin: 'layui-layer-zdx', //加上边框
         scrollbar: false,
         moveOut: true,
-        shift: 3,//zeniths.util.isChrome ? -1 : 3,
+        shift: 1,//zeniths.util.isChrome ? -1 : 3,
         fix: true,
         closeBtn: 2,
         title: ' ',
@@ -442,6 +442,16 @@ zeniths.util.dialog = function (url, width, height, options) {
             top.window['dialog' + index] = options.callback;
         }
     }
+    return index;
+};
+
+/**
+ * 获取对话框窗口名称
+ * @param {Int} dialogIndex 
+ * @returns {} 
+ */
+zeniths.util.getDialogName = function (dialogIndex) {
+    return 'layui-layer-iframe' + dialogIndex;
 };
 
 /**
@@ -450,13 +460,23 @@ zeniths.util.dialog = function (url, width, height, options) {
  * @returns {} 
  */
 zeniths.util.callDialogCallback = function (win) {
-    var index = top.layer.getFrameIndex(win.name);
-    var callback = top.window['dialog' + index];
-    //console.log('callDialogCallback index=' + index + ',callback=' + callback);
+    var callback = zeniths.util.getDialogCallback(win);
     if (callback) {
         callback();
+        var index = window.top.layer.getFrameIndex(win.name);
         top.window['dialog' + index] = undefined;
     }
+};
+
+/**
+ * 获取对话框回调函数
+ * @param {Window} win Frame窗口对象
+ * @returns {} 
+ */
+zeniths.util.getDialogCallback = function (win) {
+    var index = top.layer.getFrameIndex(win.name);
+    var callback = top.window['dialog' + index];
+    return callback;
 };
 
 /**
@@ -523,11 +543,11 @@ zeniths.util.closeFrameDialog = function (win) {
 //};
 
 /**
- * 获取最大对话框大小
+ * 根据屏幕大小自动获取最大可以显示的对话框大小
  * @returns {Object} width和height属性 
  */
-zeniths.util.getFullDialogSize = function() {
-    return { width: top.$(window).width() - 40,height: top.$('body').height() - 100};
+zeniths.util.getFullDialogSize = function () {
+    return { width: top.$(window).width() - 40, height: top.$('body').height() - 100 };
 }
 
 /**
@@ -563,6 +583,81 @@ zeniths.util.getIpAddressValue = function ($ipControl) {
 };
 
 /**
+ * 自动设置表单控制值
+ * @param {数据对象} data 
+ * @returns {} 
+ */
+zeniths.util.setFormData = function (data) {
+    if (!data) return;
+    var setValue = function (name, val) {
+        //if (val != '') {
+        //console.log(name + '=' + val);
+        var $element = $("[name='" + name + "']");
+        var htmlType = $element.attr("type");
+
+        //if (htmlType == "text" || htmlType == "textarea" || htmlType == "hidden" || htmlType == "button") {
+        //    $("[name='" + name + "']").val(val);
+        //} else 
+        if ($element.hasClass('icheckbox-control')) {
+            zeniths.util.setiCheckControlValue($element, val);
+        }
+        else if ($element.hasClass('select2-control')) {
+            zeniths.util.setSelect2ControlValue($element, val);
+        }
+        else if ($element.hasClass('selectmember')) {
+            setTimeout(function () {
+                $element.data('id', val);
+                selectmember.getNames($element);
+            }, 400);
+        }
+
+        else if (htmlType == "radio") {
+            $("input[type=radio][name='" + name + "'][value='" + val + "']").attr("checked", true);
+        } else if (htmlType == "checkbox") {
+            var vals = val.split(",");
+            for (var i = 0; i < vals.length; i++) {
+                $("input[type=checkbox][name='" + name + "'][value='" + vals[i] + "']").attr("checked", true);
+            }
+        }
+        else {
+            $element.val(val);
+        }
+        //}
+    }
+
+    $.each(data, function (k, v) {
+        setValue(k, v);
+    });
+};
+
+/**
+ * 设置iCheck控件值
+ * @param {} $element 
+ * @param {Boolean} value 
+ * @returns {} 
+ */
+zeniths.util.setiCheckControlValue = function ($element, value) {
+    //console.log($element[0].name + 'check=' + value);
+    if (value == 'true' || value == '1') {
+        $element.iCheck('check');
+    } else {
+        $element.iCheck('uncheck');
+    }
+};
+
+/**
+ * 设置iCheck控件值
+ * @param {} $element 
+ * @param {} value 
+ * @returns {} 
+ */
+zeniths.util.setSelect2ControlValue = function ($element, value) {
+    $element.val(value).trigger("change");
+    //$element.select2("open");
+    //$element.select2("close");
+};
+
+/**
  * Post异步提交数据
  * @param {String} url 提交地址
  * @param {Object} data 提交数据
@@ -589,6 +684,7 @@ zeniths.util.post = function (url, data, callback, errorCallback) {
             if (errorCallback) {
                 errorCallback(result);
             } else {
+                zeniths.util.unmask();
                 var msg = result.responseJSON.message;
                 zeniths.util.alert(msg);
             }
@@ -677,8 +773,68 @@ zeniths.util.getFormData = function ($form) {
     $.each(formParams, function (i, v) {
         ps[v.name] = v.value;
     });
+    $form.find('.selectmember').each(function () {
+        var name = $(this).attr('name');
+        ps[name] = $(this).data('id');
+    });
+    $form.find('input[type=checkbox]').each(function () {
+        var name = $(this).attr('name');
+        var checked = $(this).prop('checked');
+        ps[name] = checked;
+    });
     return ps;
-}
+};
+
+/**
+ * 禁用表单
+ * @param {JQueryObject} $form 表单对象
+ * @returns {} 
+ */
+zeniths.util.disabledForm = function ($form) {
+    $form.find('input,textarea,select').attr("disabled", true);//.css('background-color','white');
+    zeniths.util.disabledSelectMember($form.find('.selectmember'));
+};
+
+/**
+ * 启用表单
+ * @param {JQueryObject} $form 表单对象
+ * @returns {} 
+ */
+zeniths.util.enabledForm = function ($form) {
+    $form.find('input,textarea,select').attr("disabled", false);
+    zeniths.util.enabledSelectMember($form.find('.selectmember'));
+};
+
+
+/**
+ * 禁用成员选择控件
+ * @param {JQueryObject} $element 控件对象
+ * @returns {} 
+ */
+zeniths.util.disabledSelectMember = function ($element) {
+    $element.parent().find('button').attr("disabled", true);
+};
+
+/**
+ * 启用成员选择控件
+ * @param {JQueryObject} $element 控件对象
+ * @returns {} 
+ */
+zeniths.util.enabledSelectMember = function ($element) {
+    $element.parent().find('button').attr("disabled", false);
+};
+
+
+/**
+ * 调试输出对象属性和值
+ * @param {Object} data 调试数据
+ * @returns {} 
+ */
+zeniths.util.debugObject = function (data) {
+    $.each(data, function (k, v) {
+        console.log(k + ' = ' + v);
+    });
+};
 
 /**
  * 获取Ajax服务器返回的错误信息
@@ -687,7 +843,7 @@ zeniths.util.getFormData = function ($form) {
  */
 zeniths.util.getAjaxErrorMessage = function (result) {
     return result.responseJSON.message;
-}
+};
 
 /**
  * 表单Ajax提交成功回调默认函数
@@ -702,7 +858,76 @@ zeniths.util.formAjaxSuccess = function (result) {
         zeniths.util.callDialogCallback(window);
         zeniths.util.closeFrameDialog(window);
     }
-}
+};
+
+/**
+ * 创建UUID通用唯一识别码 (Universally Unique Identifier)
+ */
+zeniths.util.createUUID = (function (uuidRegEx, uuidReplacer) {
+    return function () {
+        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(uuidRegEx, uuidReplacer).toLowerCase();
+    };
+})(/[xy]/g, function (c) {
+    var r = Math.random() * 16 | 0,
+        v = c == "x" ? r : (r & 3 | 8);
+    return v.toString(16);
+});
+
+
+
+/**
+ * 初始化字段帮助按钮
+ * @param {String} maxWidth 最大宽度
+ * @returns {} 
+ */
+zeniths.util.initFieldHelp = function (maxWidth) {
+
+    /* 模板
+    <span class="help-block">
+	
+	    <a class="field-help"
+	       data-placement="bottom"
+	       title=""
+	       data-content="">
+		    <i class="fa fa-lg fa-info-circle"></i>
+	    </a>
+    </span>
+
+    */
+
+    $('.field-help').popover({ trigger: 'manual', html: true, container: 'body' });
+
+    $(document.body).click(function (event) {
+        var $target = $(event.target);
+        //console.log($target);
+        if ($target.hasClass("popover-content") || $target.hasClass("popover-title")) {
+
+        } else if ($target.hasClass("fa")) {
+            $('.field-help').popover('hide');
+            if ($('#' + $target.parent().attr('aria-describedby')).length > 0) {
+                $target.parent().popover('hide');
+            } else {
+                setTimeout(function () {
+                    $target.parent().popover('show');
+                }, 200);
+            }
+        }
+            //else if ($target.hasClass("field-help")) {
+            //    $('.field-help').popover('hide');
+
+            //    if ($('#' + $target.parent().attr('aria-describedby')).length > 0) {
+            //        $targe.popover('hide');
+            //    } else {
+            //        setTimeout(function () {
+            //            $target.popover('show');
+            //        }, 200);
+            //    }
+            //}
+        else {
+            $('.field-help').popover('hide');
+        }
+    });
+};
 
 /**
  * 标准表格绑定
@@ -747,6 +972,10 @@ zeniths.util.standardGridBind = function (options) {
                     var url = $(this).data('url');
                     viewData(url);
                 });
+
+                if (options.loadCallback) {
+                    options.loadCallback();
+                }
             }
         });
     }

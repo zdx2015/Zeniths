@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Zeniths.Configuration;
 using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.WorkFlow.Entity;
@@ -16,14 +17,6 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
     public class FlowController : WorkFlowBaseController
     {
         private readonly FlowService service = new FlowService();
-
-
-        public ActionResult GetTestData()
-        {
-            var path =  Server.MapPath("~/Areas/WorkFlow/Assets/js/data.json");
-            var content = System.IO.File.ReadAllText(path);
-            return Content(content, "text/html", Encoding.UTF8);
-        }
 
         public ActionResult Index()
         {
@@ -40,29 +33,14 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
                 orderName, orderDir, name, category);
             return View(list);
         }
-
-        public ActionResult Create()
+        
+        public ActionResult Design(string id)
         {
-            return EditCore(new Flow());
-        }
-
-        public ActionResult Edit(string id)
-        {
-            var entity = service.Get(id);
-            return EditCore(entity);
-        }
-
-        private ActionResult EditCore(Flow entity)
-        {
-            return View("Edit", entity);
-        }
-
-        public ActionResult Design()
-        {
+            ViewBag.Id = id;
             return View();
         }
 
-        public ActionResult NodeSetting()
+        public ActionResult StepSetting()
         {
             return View();
         }
@@ -77,18 +55,31 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
             return View();
         }
 
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Save(Flow entity)
+        public ActionResult LoadSetting(string id)
         {
+            var entity = service.Get(id);
+            if (entity == null)
+            {
+                return Json(false, "无效的流程标识");
+            }
+            return Content(entity.Json);
+        }
+
+        public ActionResult SaveSetting()
+        {
+            string json = Request.Form["json"];
+            var workFlowDesign = JsonHelper.Deserialize<WorkFlowDesign>(json);
+            var entity = new Flow();
+            ObjectHelper.CopyProperty(workFlowDesign.Property, entity);
+            entity.Json = json;
+
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {
                 return Json(hasResult);
             }
 
-            var result = string.IsNullOrEmpty(entity.Id) ? service.Insert(entity) : service.Update(entity);
+            var result = service.Save(entity);
             return Json(result);
         }
 
@@ -101,6 +92,7 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
 
         public ActionResult Details(string id)
         {
+            ViewBag.Id = id;
             var entity = service.Get(id);
             return View(entity);
         }

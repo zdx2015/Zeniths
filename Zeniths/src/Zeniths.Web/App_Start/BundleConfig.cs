@@ -53,7 +53,8 @@ namespace Zeniths.Web
                "~/plugin/zeniths.web/js/string.format.js",
                "~/plugin/zeniths.web/js/zeniths.util.js",
                "~/plugin/zeniths.web/js/zeniths.dataform.js",
-               "~/plugin/zeniths.web/js/zeniths.datagrid.js"
+               "~/plugin/zeniths.web/js/zeniths.datagrid.js",
+               "~/plugin/zeniths.web/js/zeniths.selectmember.js"
                ));
 
             bundles.Add(new ScriptBundle("~/zeniths-tree-js").Include(
@@ -111,7 +112,7 @@ namespace Zeniths.Web
             #endregion
 
 
-            BundleTable.EnableOptimizations = true;
+            //BundleTable.EnableOptimizations = true;
         }
     }
 }

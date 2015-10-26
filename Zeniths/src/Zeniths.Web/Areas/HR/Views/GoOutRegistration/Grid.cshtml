@@ -1,0 +1,63 @@
+﻿@model PageList<GoOutRegistration>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-checkbox">
+                <label><input class="checkbox-check" type="checkbox"><span></span></label>
+            </th>
+            <th class="w-80px" data-order="@nameof(GoOutRegistration.Name)">姓名</th>
+            <th class="w-150px" data-order="@nameof(GoOutRegistration.GoOutReason)">外出事由</th>
+            <th class="w-80px text-center" data-order="@nameof(GoOutRegistration.GoOutTime)">外出时间</th>
+            <th class="w-80px text-center" data-order="@nameof(GoOutRegistration.BackTime)">预计返回时间</th>
+            <th class="w-80px text-center" data-order="@nameof(GoOutRegistration.RealBackTime)">实际返回时间</th>
+            <th class="w-80px text-center" data-order="@nameof(GoOutRegistration.ApplyTime)">申请日期</th>
+            <th class="w-150px" data-order="@nameof(GoOutRegistration.LeadershipOpinion)">主管领导意见</th>
+            <th class="w-150px" data-order="@nameof(GoOutRegistration.Remarks)">备注</th>           
+            <th class="w-130px text-center">操作</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
+                </td>
+                <td>@record.Name</td>               
+                <td>@record.GoOutReason</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.GoOutTime)</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.BackTime)</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.RealBackTime)</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasThird(record.ApplyTime)</td>
+                <td>
+                    <div class="text-split">
+                        @record.LeadershipOpinion
+                    </div>
+                </td>
+                <td>
+                    <div class="text-split">
+                        @record.Remarks
+                    </div>
+                </td>
+                <td>
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
+                        <i class="fa fa-eye"></i> 查看
+                    </a>
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                        <i class="fa fa-edit"></i> 编辑
+                    </a>
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)
+

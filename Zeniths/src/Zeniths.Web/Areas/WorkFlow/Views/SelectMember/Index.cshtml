@@ -1,0 +1,112 @@
+﻿@{
+    var title = "选择成员";
+    Layout = "~/Views/Shared/_LayoutTreeBase.cshtml";
+}
+
+<div class="container-edit-zeniths">
+    <form>
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                @title
+            </div>
+            <div class="panel-body" style="height:530px;overflow-y:auto">
+                <ul class="zenithsTree" data-url="@Url.Action("GetOrganize")"></ul>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <a class="btn btn-primary" onclick="accpetData();">
+                        <i class="fa fa-check"></i> 确定
+                    </a>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-arrow-right"></i> 取消
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section style{
+
+    <link href="~/Plugin/jquery-easyui/css/icon.css" rel="stylesheet" />
+}
+
+@section script{
+    <script>
+        var $tree = $('.zenithsTree');
+        function accpetData() {
+            var nodes = $tree.tree('getChecked');
+            var id = [];
+            var text = [];
+            $.each(nodes, function (i, v) {
+                id.push(v.id);
+                text.push(v.text);
+            });
+            var fn = zeniths.util.getDialogCallback(window);
+            fn({
+                accpetData: 1,
+                data: {
+                    id: id.join(),
+                    text: text.join()
+                }
+            });
+        }
+
+        function initTree() {
+            $tree.tree({
+                url: $tree.data('url'),
+                animate: false,
+                checkbox: true,
+                cascadeCheck: false,
+                onBeforeLoad: function () {
+                    zeniths.util.mask('正在加载组织机构...');
+                },
+                onLoadSuccess: function () {
+                    zeniths.util.unmask();
+                    zeniths.tree.expandRoot($tree);
+                    var fn = zeniths.util.getDialogCallback(window);
+                    var data = fn({
+                        initData: 1
+                    });
+                    if (data.id) {
+                        var ids = data.id.split(',');
+                        $.each(ids, function (i, v) {
+                            var node = $tree.tree('find', v);
+                            if (node) {
+                                $tree.tree('check', node.target);
+                                var parentNode = $tree.tree('getParent', node.target);
+                                if (parentNode) {
+                                    $tree.tree('expand', parentNode.target);
+                                }
+                            }
+                        });
+                    }
+                },
+                onLoadError: function (result) {
+                    zeniths.util.unmask();
+                    zeniths.util.showAlertDangerLoadFailure($(this), zeniths.util.getServerErrorMessage(result));
+                },
+                onCheck: function (node, checked) {
+                    if (checked) {
+                        $(node.target).find('.tree-title').addClass('tree-node-yellow');
+                    } else {
+                        $(node.target).find('.tree-title').removeClass('tree-node-yellow');
+                    }
+                },
+                onClick: function (node) {
+                    self.$tree.tree('toggle', node.target);
+                    //if (node.checked) {
+                    //    self.$tree.tree('uncheck', node.target);
+                    //} else {
+                    //    self.$tree.tree('check', node.target);
+                    //}
+                }
+            });
+        }
+
+        $(function () {
+            initTree();
+        });
+    </script>
+}

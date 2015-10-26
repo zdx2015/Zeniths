@@ -23,6 +23,10 @@
     content: '*';
 }
 
+.field-help {
+    cursor: pointer;
+}
+
 .panel-left-border {
     border-left-width: 1px;
 }
@@ -304,6 +308,15 @@ Buttons & Dropdown Buttons
         top: 5px;
         width: 8px;
     }
+
+/*
+    Plugin
+*/
+
+/* Select2 */
+.select2-container--bootstrap .select2-results__group {
+  font-size: 16px;
+}
 
 /* 
     EasyUI Tree
@@ -1558,6 +1571,44 @@ Custom tabs
 .daterange-style, .time-style {
     cursor: pointer;
     background-color: Window !important;
+}
+
+/* Buttons */
+
+/* ------------------------------- */
+
+.btn-outline {
+    color: inherit;
+    background-color: transparent;
+    transition: all .5s;
+}
+
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+
+.btn-success.btn-outline {
+    color: #5cb85c;
+}
+
+.btn-info.btn-outline {
+    color: #5bc0de;
+}
+
+.btn-warning.btn-outline {
+    color: #f0ad4e;
+}
+
+.btn-danger.btn-outline {
+    color: #d9534f;
+}
+
+.btn-primary.btn-outline:hover,
+.btn-success.btn-outline:hover,
+.btn-info.btn-outline:hover,
+.btn-warning.btn-outline:hover,
+.btn-danger.btn-outline:hover {
+    color: #fff;
 }
 
 

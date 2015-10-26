@@ -15,9 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.tpl", "7.tpl", "{E6E58216
 	ProjectSection(SolutionItems) = preProject
 		tpl\Builder.cst = tpl\Builder.cst
 		tpl\Controller.cst = tpl\Controller.cst
+		tpl\Details.cst = tpl\Details.cst
 		tpl\Edit.cst = tpl\Edit.cst
 		tpl\Entity.cst = tpl\Entity.cst
 		tpl\EntityView.cst = tpl\EntityView.cst
+		tpl\Grid.cst = tpl\Grid.cst
 		tpl\Index.cst = tpl\Index.cst
 		tpl\Service.cst = tpl\Service.cst
 	EndProjectSection
@@ -59,6 +61,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.client", "1.client", "{A77C243D-A010-4BE3-91F7-8141DC39CFD0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zeniths.WorkFlow.Utility", "src\Zeniths.WorkFlow.Utility\Zeniths.WorkFlow.Utility.csproj", "{140BA391-680A-4506-9BF9-9E1BDBF1D519}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9.test", "9.test", "{F0399B32-1204-4F39-925F-6F6CBE8001EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zeniths.Test", "src\Zeniths.Test\Zeniths.Test.csproj", "{78C549DD-C839-44BD-B4CE-845F01F8695B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -110,6 +116,10 @@ Global
 		{140BA391-680A-4506-9BF9-9E1BDBF1D519}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{140BA391-680A-4506-9BF9-9E1BDBF1D519}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{140BA391-680A-4506-9BF9-9E1BDBF1D519}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78C549DD-C839-44BD-B4CE-845F01F8695B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78C549DD-C839-44BD-B4CE-845F01F8695B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78C549DD-C839-44BD-B4CE-845F01F8695B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78C549DD-C839-44BD-B4CE-845F01F8695B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,5 +136,6 @@ Global
 		{78AB72FE-33C1-4B1F-A769-EFDB7AA08544} = {691678C3-3E16-47A8-8C07-8B1216DFA856}
 		{263DBFCF-A690-4E04-B02C-CC004E065400} = {6D16C8F9-3D0B-4AA6-81EE-0357996B25C9}
 		{140BA391-680A-4506-9BF9-9E1BDBF1D519} = {C78080EA-663A-438F-837C-998428ECC522}
+		{78C549DD-C839-44BD-B4CE-845F01F8695B} = {F0399B32-1204-4F39-925F-6F6CBE8001EF}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,574 @@
+﻿@section style{
+    <link href="~/Plugin/zeniths.web/css/form.layout.css" rel="stylesheet" />
+}
+<div class="container-edit-zeniths">
+
+    <div class="panel panel-default panel-zeniths">
+        <div class="panel-heading">
+            流程步骤设置
+        </div>
+        <div class="panel-body form" style="margin:10px">
+
+            <form class="form-horizontal">
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#tab_base" data-toggle="tab">
+                                基本
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tab_behavior" data-toggle="tab">
+                                策略
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tab_handler" data-toggle="tab">
+                                处理者
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tab_button" data-toggle="tab">
+                                按钮
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tab_event" data-toggle="tab">
+                                事件
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_base">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">步骤名称：</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="name" name="name" type="text">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">审签类型：</label>
+                                <div class="col-sm-9">
+                                    <select class="select2-control form-control" id="signatureType" name="signatureType">
+                                        <option value="0">无签批意见栏</option>
+                                        <option value="1">有签批意见栏(无须签章)</option>
+                                        <option value="2">有签批意见栏(须签章)</option>
+                                    </select>
+                                    <span class="help-block">
+                                        设置当前步骤审签类型。
+                                        <a class="field-help"
+                                           data-placement="bottom"
+                                           title="设置当前步骤审签类型"
+                                           data-content="
+                                           1.无签批意见栏：在表单底部没有签批意见栏，该步骤不需要签批意见即可发送。<br>
+                                           2.有签批意见栏（无须签章）：在表单底部有签批意见栏，但没有签章按钮，此步骤需要签意见，但不须要签章。<br>
+                                           3.有签批意见栏（须签章）：在表单底部有签批意见栏，但没有签章按钮，此步骤需要签意见并且还要签章。
+                                           ">
+                                            <i class="fa fa-lg fa-info-circle"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">超时提醒：</label>
+                                <div class="col-sm-9">
+                                    <div class="checkbox-list">
+                                        <label class="checkbox-inline">
+                                            <input class="icheckbox-control" id="expiredPrompt" name="expiredPrompt" value="true" type="checkbox" />
+                                            <span>提醒</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">警告工时：</label>
+                                        <div class="col-sm-7">
+                                            <div class="input-group">
+                                                <input class="form-control" id="warningHour" name="warningHour" type="text" disabled>
+                                                <span class="input-group-addon">小时</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">处理工时：</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input class="form-control" id="processHour" name="processHour" type="text" disabled>
+                                                <span class="input-group-addon">小时</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">表单：</label>
+                                <div class="col-sm-9">
+                                    <select class="select2-control form-control" id="formName" name="formName">
+                                        <option>&nbsp;</option>
+                                        @Html.FlowFormOptions()
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">说明：</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" id="note" name="note" rows="3"></textarea>
+                                    <span class="help-block">
+                                        步骤的说明，该说明同时显示在发送时的界面上
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane" id="tab_behavior">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">流转类型：</label>
+                                <div class="col-sm-9">
+                                    <select class="select2-control form-control" id="flowCategory" name="flowCategory">
+                                        <option value="0">系统控制</option>
+                                        <option value="1">单选一个分支流转</option>
+                                        <option value="2">多选几个分支流转</option>
+                                    </select>
+                                    <span class="help-block">
+                                        当前步骤后面有多个步骤时，此选项可以决定后续步骤的发送方式。
+                                        <a class="field-help"
+                                           data-placement="bottom"
+                                           title="设置当前步骤的流转类型"
+                                           data-content="
+                                            1.系统控制：由系统根据您在流程连线上设置的流转条件来判断该发送到哪一步。<br>
+                                            2.单选一个分支流转：后面有多个步骤时当前处理人员只能选择发送到后面的某一个步骤。<br>
+                                            3.多选几个分支流转：后面有多个步骤时当前处理人员可以多选发送到后面的某几个或全部步骤。">
+                                            <i class="fa fa-lg fa-info-circle"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">处理策略：</label>
+                                        <div class="col-sm-7">
+                                            <select class="select2-control form-control" id="processPolicy" name="processPolicy">
+                                                <option value="0">一人同意即可</option>
+                                                <option value="1">所有人必须同意</option>
+                                                <option value="2">独立处理</option>
+                                                <option value="3">依据比例</option>
+                                            </select>
+                                            <span class="help-block">
+                                                设置当前步骤的处理策略。
+                                                <a class="field-help"
+                                                   title="设置当前步骤的处理策略"
+                                                   data-html="true"
+                                                   data-placement="bottom"
+                                                   data-content="
+                                            1.一人同意即可：当前步骤有多人处理时，只要其中一个人处理了就发送到下一步，其他人就不须要再处理了。<br>
+                                            2.所有人必须同意：如果当前步骤有多个人处理时，所有人都要同意才能发送到下一步，如果其中一人退回，则所有人的待办任务都将退回。<br>
+                                            3.独立处理：每个人独立处理，如当前步骤有5人处理，则每个人发送了，下一步处理者都会收到一个待办任务。<br>
+                                            4.依据人数比例：按照下面的 策略百分比 来判断是否发送到下一步。如当有步骤有5人处理，策略设置为50，则只要有3人处理了则会发送到下一步。">
+                                                    <i class="fa fa-lg fa-info-circle" title="帮助文档"></i>
+                                                </a>
+
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">处理比例：</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="processPercentage" name="processPercentage" disabled>
+                                                <span class="input-group-addon">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">会签策略：</label>
+                                        <div class="col-sm-7">
+                                            <select class="select2-control form-control" id="countersignPolicy" name="countersignPolicy">
+                                                <option value="0">不会签</option>
+                                                <option value="1">一个步骤同意即可</option>
+                                                <option value="2">所有步骤同意</option>
+                                                <option value="3">依据比例</option>
+                                            </select>
+                                            <span class="help-block">
+                                                设置当前步骤的会签策略。
+                                                <a class="field-help"
+                                                   data-placement="bottom"
+                                                   title="设置当前步骤的会签策略"
+                                                   data-content="处理策略和会签策略的区别是：<br>
+                                               1.处理策略是以人为单位来判断；而会签策略是以步骤为单位来判断。<br>
+                                               2.处理策略针对的是当前步骤的所有处理人员；而会签策略针对的是到达当前步骤之前的所有步骤。">
+                                                    <i class="fa fa-lg fa-info-circle"></i>
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <label class="col-sm-4 control-label">会签比例：</label>
+                                        <div class="col-sm-8">
+                                            <div class="input-group">
+                                                <input class="form-control" id="countersignPercentage" name="countersignPercentage" type="text" disabled>
+                                                <span class="input-group-addon">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">退回策略：</label>
+                                <div class="col-sm-9">
+                                    <select class="select2-control form-control" id="backPolicy" name="backPolicy">
+                                        <option value="0">根据处理策略退回</option>
+                                        <option value="1">不能退回</option>
+                                    </select>
+                                    <span class="help-block">
+                                        设置当前步骤的退回策略。
+                                        <a class="field-help"
+                                           data-placement="bottom"
+                                           title="设置当前步骤的退回策略"
+                                           data-content="
+                                            1.根据处理策略退回：根据设置的处理策略来退回，如一人同意即可，则只要有一人退回，则该步骤的其他处理者也将退回。<br>
+                                            2.不能退回：即设置当前步骤不能退回。">
+                                            <i class="fa fa-lg fa-info-circle"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">退回类型：</label>
+                                <div class="col-sm-9">
+                                    <select class="select2-control form-control" id="backCategory" name="backCategory">
+                                        <option value="0">退回前一步</option>
+                                        <option value="1">退回第一步</option>
+                                        <option value="2">退回某一步</option>
+                                    </select>
+                                    <span class="help-block">
+                                        设置当前步骤的退回类型。
+                                        <a class="field-help"
+                                           data-placement="bottom"
+                                           title="设置当前步骤的退回类型"
+                                           data-content="
+                                            1.退回前一步：退回到当前步骤的前一步，即退回给发送者。<br>
+                                            2.退回某一步：设置退回到当前步骤的前面某一步。选择了此项，则需要在下面的退回步骤中选择要退回的步骤。<br>
+                                            3.退回第一步：即退回给流程发起者。">
+                                            <i class="fa fa-lg fa-info-circle"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">退回步骤：</label>
+                                <div class="col-sm-9">
+                                    <select class="select2-control form-control" id="backStep" name="backStep">
+                                        <option>&nbsp;</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane" id="tab_handler">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">选择策略：</label>
+                                <div class="col-sm-9">
+                                    <select class="select2-control form-control" id="handlerSelectPolicy" name="handlerSelectPolicy">
+                                        <option value="0">自动</option>
+                                        <option value="1">允许</option>
+                                        <option value="2">不允许</option>
+                                    </select>
+                                    <span class="help-block">
+                                        设置当前步骤在发送到下一步的时候选择步骤和人员策略。
+                                        <a class="field-help"
+                                           data-placement="bottom"
+                                           title="设置当前步骤发送时步骤和人员选项"
+                                           data-content="
+                                            1.自动：如果指定默认处理者，则不允许选择；否则允许选择。<br>
+                                            2.允许：允许当前步骤在发送到下一步的时候可以选择步骤和接收人员。<br>
+                                            3.不允许：只能发送给默认设置的处理者。">
+                                            <i class="fa fa-lg fa-info-circle"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">处理者类型：</label>
+                                <div class="col-sm-9">
+                                    <select class="select2-control form-control" id="handlerCategory" name="handlerCategory">
+                                        <option value="0">所有成员</option>
+                                        <option value="1">部门</option>
+                                        <option value="2">人员</option>
+                                        <option value="3">发起者</option>
+                                        <option value="4">发起者领导</option>
+                                        <option value="5">发起者分管领导</option>
+                                        <option value="6">前一步骤处理者</option>
+                                        <option value="7">前一步处理者领导</option>
+                                        <option value="8">前一步处理者分管领导</option>
+                                    </select>
+                                    <span class="help-block">
+                                        设定当前步骤的处理者类型。
+                                        <a class="field-help"
+                                           data-placement="bottom"
+                                           title="设定本步骤的处理者类型"
+                                           data-content="
+                                                1.所有成员：当前步骤处理者可以是组织机构中的任意类型，可以选择部门，岗位，人员，工作组。如果选择的是部门或岗位则发送到部门或岗位下的所有人。<br>
+                                                2.部门：设定当前步骤的处理者只能是部门，也就是上一步在发送时选择该步骤的接收人的时候只能选择部门。<br>
+                                                3.人员：设定当前步骤的处理者只能是人员，上一步在发送到该步骤时接收人处只能选择人员，不能选择部门岗位等类型。<br>
+                                                4.发起者：设定当前步骤的处理者为当前流程实例的发起人员。<br>
+                                                5.发起者领导：即当前步骤处理者为流程实例发起者的部门领导。<br>
+                                                6.发起者分管领导：当前步骤处理者为流程实例发起者的分管领导，比如张总分管信息部，如果发起者是信息部的人员则此步由张总审核。<br>
+                                                7.前一步骤处理者：当前步骤的处理者为前一步骤的处理人员。<br>
+                                                8.前一步处理者领导：当前步骤的前一步处理者的部门分层。<br>
+                                                9.前一步处理者分管领导：当前步骤的前一步处理者的分管领导。
+                                           ">
+                                            <i class="fa fa-lg fa-info-circle"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">选择范围：</label>
+                                <div class="col-sm-9">
+                                    <input class="selectmember form-control" id="handlerSelectRange" name="handlerSelectRange" type="text">
+                                    <span class="help-block">
+                                        限定流程处理人员在选择下一步接收人的选择范围
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">默认处理者：</label>
+                                <div class="col-sm-9">
+                                    <input class="selectmember form-control"
+                                           id="handlerDefault" name="handlerDefault" type="text">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane" id="tab_button">
+                            Nestable List 控件实现
+                        </div>
+                        <div class="tab-pane" id="tab_event">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">步骤标识：</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-static" id="id"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">保存数据事件：</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="eventSaveFromData" name="eventSaveFromData" type="text">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">提交前事件：</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="eventSubmitBefore" name="eventSubmitBefore" type="text">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">提交后事件：</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="eventSubmitAfter" name="eventSubmitAfter" type="text">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">退回前事件：</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="eventBackBefore" name="eventBackBefore" type="text">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">退回后事件：</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="eventBackAfter" name="eventBackAfter" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="panel-footer text-center">
+            <div class="buttons">
+                <a class="btn btn-primary" id="btnSave">
+                    <i class="fa fa-save"></i> 确定
+                </a>
+                &nbsp;
+                <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                    <i class="fa fa-sign-in"></i> 取消
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section script{
+    <script>
+        $(function () {
+
+            var windowId = zeniths.util.GetUrlQuery('windowId');
+            var stepId = zeniths.util.GetUrlQuery('stepId');
+            var parentWindow = top.frames[windowId];
+
+            $('form').dataform().initSelect2({
+                allowClear: false,
+                width: '100%'
+            }).initiCheck();
+
+            $('.tab-content>.tab-pane').height(430);
+
+            zeniths.util.initFieldHelp();
+
+            //控件事件
+            //超时提醒
+            $('#expiredPrompt').on('ifToggled', function (e) {
+                var checked = $(e.target).prop('checked');
+                $('#warningHour').prop("disabled", !checked);
+                $('#processHour').prop("disabled", !checked);
+            });
+
+            //处理者选择策略
+            $('#handlerSelectPolicy').on("change", function (e) {
+                var val = $(e.target).val();
+                if (val == 2) {
+                    $('#handlerSelectRange').prop("disabled", true);
+                } else {
+                    $('#handlerSelectRange').prop("disabled", false);
+                }
+            });
+
+            //处理策略
+            $('#processPolicy').on("change", function (e) {
+                var val = $(e.target).val();
+                if (val == 3) {
+                    $('#processPercentage').prop("disabled", false);
+                } else {
+                    $('#processPercentage').prop("disabled", true);
+                }
+            });
+
+            //会签策略
+            $('#countersignPolicy').on("change", function (e) {
+                var val = $(e.target).val();
+                if (val == 3) {
+                    $('#countersignPercentage').prop("disabled", false);
+                } else {
+                    $('#countersignPercentage').prop("disabled", true);
+                }
+            });
+
+            //退回策略
+            $('#backPolicy').on("change", function (e) {
+                var val = $(e.target).val();
+                if (val == 1) {
+                    $('#backCategory').prop("disabled", true);
+                    $('#backStep').prop("disabled", true);
+                } else {
+                    $('#backCategory').prop("disabled", false);
+                    $('#backStep').prop("disabled", $('#backCategory').val() != 2);
+                }
+            });
+
+            //退回类型
+            $('#backCategory').on("change", function (e) {
+                var val = $(e.target).val();
+                if (val == 2) {
+                    $('#backStep').prop("disabled", false);
+                } else {
+                    $('#backStep').prop("disabled", true);
+                }
+            });
+
+
+            function bindBackStep() {
+                var flowData = parentWindow.flowDesign.getFlow();
+                var $element = $('#backStep');
+                $.each(flowData.nodes, function (k, v) {
+                    if (k !== stepId) {
+                        $element.append("<option value='" + v.uid + "'>" + v.name + "</option>");
+                    }
+                });
+            }
+
+            function initForm() {
+                var data = parentWindow.flowDesign.getStep(stepId);
+                $('#id').text(data.uid);
+                bindBackStep();
+                zeniths.util.setFormData(data);
+            }
+
+            //验证表单
+            function validForm() {
+                if ($('#name').val() === '') {
+                    zeniths.util.msg('请输入步骤名称');
+                    return false;
+                }
+
+                //if ($('#formName').val() === '') {
+                //    zeniths.util.msg('请选择表单');
+                //    return false;
+                //}
+
+                return true;
+            }
+
+            function saveForm() {
+                if (!validForm()) return;
+                var formData = zeniths.util.getFormData($('form'));
+                //zeniths.util.debugObject(formData);
+                parentWindow.flowDesign.setStep(stepId, formData);
+                zeniths.util.closeFrameDialog(window);
+            }
+
+            initForm();
+
+            $('#btnSave').click(function () {
+                saveForm();
+            });
+
+            var read = zeniths.util.GetUrlQuery('read');
+            if (read == 1) {
+                $('#btnSave').remove();
+                zeniths.util.disabledForm($('form'));
+            }
+        });
+    </script>
+}
+

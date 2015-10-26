@@ -2,55 +2,33 @@
 @{
     var title = "查看流程";
 }
-
+@section style{
+    <link href="~/Areas/WorkFlow/Assets/css/flow.css" rel="stylesheet" />
+}
+@section script{
+    <script src="~/Areas/WorkFlow/Assets/js/flow.js"></script>
+    <script src="~/Areas/WorkFlow/Assets/js/design.js"></script>
+    <script>
+        $(function () {
+            flowDesign.init('@ViewBag.Id');
+        });
+    </script>
+}
 <div class="container-edit-zeniths">
     <div class="panel panel-default panel-zeniths">
         <div class="panel-heading">
-            <span class="prefix"> <strong>@Model.Id</strong></span>
             @title
+            <div class="pull-right">
+                <a class="btn btn-default flowToolBtn" id="flowSetting">
+                    <i class="fa fa-cog"></i> 属性
+                </a>
+                <a class="btn btn-default flowToolBtn" id="flowReresh">
+                    <i class="fa fa-repeat"></i> 刷新
+                </a>
+            </div>
         </div>
         <div class="panel-body">
-            <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
-            <table class="table table-form table-dialog-form">
-                <tr>
-                    <th class='w-100px'>
-                        <label class="control-label">名称：</label>
-                    </th>
-                    <td>
-                        <p class="form-control-static">@Model.Name</p>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label class="control-label">分类：</label>
-                    </th>
-                    <td>
-                        <p class="form-control-static">@Model.Category</p>
-                    </td>
-                </tr>
-                 
-                <tr>
-                    <th><label class="control-label">状态：</label></th>
-                    <td>
-                        <p class="form-control-static">@Html.BoolLabel(Model.IsEnabled)</p>
-                    </td>
-                </tr>
-
-                <tr>
-                    <th>
-                        <label class="control-label">序号：</label>
-                    </th>
-                    <td>
-                        <p class="form-control-static">@Model.SortIndex</p>
-                    </td>
-                </tr>
-                <tr>
-                    <th><label class="control-label">备注：</label></th>
-                    <td>
-                        <p class="form-control-static">@Model.Note</p>
-                    </td>
-                </tr>
-            </table>
+            <div id="flowPanel"></div>
         </div>
         <div class="panel-footer text-center">
             <div class="buttons">
@@ -61,3 +39,7 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="loadSettingUrl" value="@Html.Raw(Url.Action("LoadSetting"))" />
+<input type="hidden" id="flowSettingUrl" value="@Html.Raw(Url.Action("FlowSetting", new { read=1 }))" />
+<input type="hidden" id="stepSettingUrl" value="@Html.Raw(Url.Action("StepSetting", new { read=1 }))" />
+<input type="hidden" id="lineSettingUrl" value="@Html.Raw(Url.Action("LineSetting", new { read=1 }))" />

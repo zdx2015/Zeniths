@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Zeniths.Collections;
+using Zeniths.Entity;
 using Zeniths.Extensions;
 using Zeniths.Utility;
 using Zeniths.WorkFlow.Entity;
@@ -27,28 +28,19 @@ namespace Zeniths.WorkFlow.Service
         /// 添加流程
         /// </summary>
         /// <param name="entity">流程实体</param>
-        public BoolMessage Insert(Flow entity)
+        public BoolMessage Save(Flow entity)
         {
             try
             {
-                repos.Insert(entity);
-                return BoolMessage.True;
-            }
-            catch (Exception e)
-            {
-                return new BoolMessage(false, e.Message);
-            }
-        }
-
-        /// <summary>
-        /// 更新流程
-        /// </summary>
-        /// <param name="entity">流程实体</param>
-        public BoolMessage Update(Flow entity)
-        {
-            try
-            {
-                repos.Update(entity);
+                var has = repos.Exists(p => p.Id == entity.Id);
+                if (has)
+                {
+                    repos.Update(entity);
+                }
+                else
+                {
+                    repos.Insert(entity);
+                }
                 return BoolMessage.True;
             }
             catch (Exception e)
@@ -92,12 +84,44 @@ namespace Zeniths.WorkFlow.Service
         }
 
         /// <summary>
+        /// 获取流程Json
+        /// </summary>
+        /// <param name="id">流程主键</param>
+        /// <returns>流程Json</returns>
+        public string GetFlowJson(string id)
+        {
+            return repos.Get(id,p=>p.Json)?.Json;
+        }
+
+        /// <summary>
+        /// 查询所有流程主键和名称字典
+        /// </summary>
+        public Dictionary<string, string> GetFlowDic()
+        {
+            var query = repos.NewQuery
+                .Select(nameof(Flow.Id),nameof(Flow.Name))
+                .Where(p => p.IsEnabled == true)
+                .OrderBy(p => p.SortIndex);
+            var list = repos.Query(query).ToList();
+            var dic = new Dictionary<string, string>();
+            foreach (var item in list)
+            {
+                dic[item.Id] = item.Name;
+            }
+            return dic;
+        }
+
+        /// <summary>
         /// 获取启用的流程列表
         /// </summary>
         /// <returns>返回启用的流程列表</returns>
         public List<Flow> GetEnabledList()
         {
-            var query = repos.NewQuery.Where(p => p.IsEnabled == true).OrderBy(p => p.SortIndex);
+            var cols = EntityMetadata.ForType(typeof(Flow)).QueryColumns.Except(new[] { "Json" }).ToArray();
+            var query = repos.NewQuery
+                .Select(cols)
+                .Where(p => p.IsEnabled == true)
+                .OrderBy(p => p.SortIndex);
             return repos.Query(query).ToList();
         }
 
@@ -114,10 +138,14 @@ namespace Zeniths.WorkFlow.Service
         public PageList<Flow> GetPageList(int pageIndex, int pageSize, string orderName,
             string orderDir, string name, string category)
         {
+            var cols = EntityMetadata.ForType(typeof(Flow)).QueryColumns.Except(new[] { "Json" }).ToArray();
             orderName = orderName.IsEmpty() ? nameof(Flow.SortIndex) : orderName;
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;
-            var query = repos.NewQuery.Take(pageSize).Page(pageIndex).
-                OrderBy(orderName, orderDir.IsAsc());
+            var query = repos.NewQuery
+                .Select(cols)
+                .Take(pageSize)
+                .Page(pageIndex)
+                .OrderBy(orderName, orderDir.IsAsc());
             if (name.IsNotEmpty())
             {
                 name = name.Trim();

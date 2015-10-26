@@ -40,11 +40,12 @@
 {
     <script>
         $(function () {
+            var fullDialogSize = zeniths.util.getFullDialogSize();
             zeniths.util.standardGridBind({
                 editWidth: 1000,
                 editHeight: 760,
-                viewWidth: 1000,
-                viewHeight: 750
+                viewWidth: fullDialogSize.width,
+                viewHeight: fullDialogSize.height
             });
         });
     </script>

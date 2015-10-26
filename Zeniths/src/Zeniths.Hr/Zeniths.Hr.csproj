@@ -36,8 +36,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HRDatabase.cs" />
-    <Compile Include="HRRepository.cs" />
+    <Compile Include="HrDatabase.cs" />
+    <Compile Include="HrRepository.cs" />
+	<Compile Include="Entity\GoOutRegistration.cs" />
+	<Compile Include="Service\GoOutRegistrationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -49,10 +51,6 @@
       <Project>{7e12afba-bcdd-4de2-81e0-d4c7074d68aa}</Project>
       <Name>Zeniths.Utility</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entity\" />
-    <Folder Include="Service\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,7 +4,8 @@
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="SchemaExplorer" %>
 <%@ Map Name="CSharpAlias" Src="DbType-CSharp.csmap" Reverse="False"%>
-<%@ Property Name="NameSpace" Type="String" Category="参数" Description="命名空间" Default="ZDX" %>
+<%@ Property Name="NameSpace" Type="String" Category="参数" Description="命名空间" Default="Zeniths.Web" %>
+<%@ Property Name="Area" Type="String" Category="参数" Description="区域" Default="Hr" %>
 <%@ Property Name="Table" Type="SchemaExplorer.TableSchema" Category="参数" Description="表名" Optional="False" %>
 <%@ Property Name="IsDialog" Type="Boolean" Category="参数" Description="是否对话框模式" Default="True" Optional="True" %>
 <%
@@ -19,7 +20,7 @@ if(Table.HasPrimaryKey)
 }
 %>
 // ===============================================================================
-//  Copyright (c) 2015 正得信集团股份有限公司
+// 正得信股份 版权所有
 // ===============================================================================
 
 using System;
@@ -27,107 +28,131 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using XCI.Doc;
-using XCI.Web;
 using <%= NameSpace %>.Entity;
 using <%= NameSpace %>.Service;
-using ZDX.Entity;
-using ZDX.Extensions;
-using ZDX.Helper;
-using ZDX.Utility;
-using ZDX.WebUtility;
-using ZDX.WebUtility.Helper;
+using Zeniths.Entity;
+using Zeniths.Extensions;
+using Zeniths.Helper;
+using Zeniths.Utility;
+using <%= NameSpace %>.Utility;
 
-namespace <%= NameSpace %>.Controllers
+namespace Zeniths.Web.Areas.<%= Area %>.Controllers
 {
+    /// <summary>
+    /// 流程按钮控制器
+    /// </summary>
     [Authorize]
-    public class <%=TableName%>Controller : BaseController
+    public class <%= TableName %>Controller : <%= Area %>BaseController
     {
-        private readonly <%=TableName%>Service service = new <%=TableName%>Service();
-        private readonly RoadFlow.Platform.Dictionary dicService = new RoadFlow.Platform.Dictionary();
+        /// <summary>
+        /// 服务对象
+        /// </summary>
+        private readonly <%= TableName %>Service service = new <%= TableName %>Service();
 
-        public ActionResult Index(string key)
+        /// <summary>
+        /// 主视图
+        /// </summary>
+        /// <returns>视图模板</returns>
+        public ActionResult Index()
         {
-            //SetDropListOptions(categoryId, userCategoryId);
-            var list = service.GetPageList(key);
+            return View();
+        }
+
+        /// <summary>
+        /// 表格视图
+        /// </summary>
+        /// <param name="name">按钮名称</param>
+        /// <returns>视图模板</returns>
+        public ActionResult Grid(string name)
+        {
+            var pageIndex = GetPageIndex();
+            var pageSize = GetPageSize();
+            var orderName = GetOrderName();
+            var orderDir = GetOrderDir();
+            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name);
             return View(list);
         }
 
+        /// <summary>
+        /// 新增视图
+        /// </summary>
+        /// <returns>视图模板</returns>
         public ActionResult Create()
         {
-            return EditCore(new <%=TableName%>());
+            return EditCore(new <%= TableName %>());
         }
 
-        public ActionResult Edit(int id)
+        /// <summary>
+        /// 编辑视图
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>视图模板</returns>
+        public ActionResult Edit(string id)
         {
-            var entity = service.Get(id);
+            var entity = service.Get(id.ToInt());
             return EditCore(entity);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Save(<%=TableName%> entity)
-        {
-            var has = service.Exists(entity);
-            if (has)
-            {
-                ViewBag.ErrorMessage = "输入<%= TableRemark %>已经存在";
-                return EditCore(entity);
-            }
 
-            var isCreate = entity.<%= pkName %> == 0;
-            BoolMessage result = isCreate ? service.Insert(entity) : service.Update(entity);
-            <% if(!IsDialog) {%>
-            if (result.Success)
-            {
-                return RedirectToAction("Index", WebHelper.GetQueryRouteValuesNoId(RouteData.Values));
-            }
-            ViewBag.ErrorMessage = result.Message.ReplaceEnter();
-            return EditCore(entity);
-            <% } else {%>
-            if (result.Success)
-            {
-                ViewBag.SuccessMessage = "ok";
-            }
-            else
-            {
-                ViewBag.ErrorMessage = result.Message.ReplaceEnter();
-            }
-            return EditCore(entity);
-            <% } %>
+        /// <summary>
+        /// 查看视图
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>视图模板</returns>
+        public ActionResult Details(string id)
+        {
+            var entity = service.Get(id.ToInt());
+            return View(entity);
         }
 
-        private ActionResult EditCore(<%=TableName%> entity)
+        /// <summary>
+        /// 数据编辑视图
+        /// </summary>
+        /// <param name="entity">实体对象</param>
+        /// <returns>视图模板</returns>
+        private ActionResult EditCore(<%= TableName %> entity)
         {
-            //SetDropListOptions(entity.CategoryId, entity.UserCategoryId);
             return View("Edit", entity);
         }
 
+        /// <summary>
+        /// 保存数据
+        /// </summary>
+        /// <param name="entity">实体对象</param>
+        /// <returns>返回JsonMessage</returns>
         [HttpPost]
-        public ActionResult BatchDelete(string ids)
+        [ValidateAntiForgeryToken]
+        public ActionResult Save(<%= TableName %> entity)
         {
-            var result = service.Delete(StringHelper.ConvertToArrayInt(ids));
-            return JsonNet(new JsonMessage(result));
+            var hasResult = service.Exists(entity);
+            if (hasResult.Failure)
+            {
+                return Json(hasResult);
+            }
+
+            var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
+            return Json(result);
         }
 
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>返回JsonMessage</returns>
         [HttpPost]
         public ActionResult Delete(string id)
         {
-            var result = service.Delete(new[] { id.ToInt() });
-            return JsonNet(new JsonMessage(result));
+            var result = service.Delete(StringHelper.ConvertToArrayInt(id));
+            return Json(result);
         }
-
-        public FileContentResult Export()
+        
+        /// <summary>
+        /// 数据导出
+        /// </summary>
+        /// <returns>返回文件下载流</returns>
+        public ActionResult Export()
         {
-            var dt = service.GetTable();
-            byte[] fileContents = ExcelHelper.Export(dt, EntityMetadata.ForType(typeof(<%= TableName %>)));
-            return File(fileContents, "application/ms-excel", "<%= TableRemark %>导出.xls");
-        }
-
-        private void SetDropListOptions(int categoryId, int userCategoryId)
-        {
-            //ViewBag.CategoryOptions = dicService.GetOptionsByCode("ExamQuestionCategory", value: categoryId.ToString());
-            //ViewBag.UserCategoryOptions = dicService.GetOptionsByCode("UserCategory", value: userCategoryId.ToString());
+            return Export(service.GetList());
         }
     }
 }

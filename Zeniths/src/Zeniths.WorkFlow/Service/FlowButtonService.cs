@@ -19,16 +19,13 @@ namespace Zeniths.WorkFlow.Service
     /// </summary>
     public class FlowButtonService
     {
-        /// <summary>
-        /// 存储器
-        /// </summary>
         private readonly WorkFlowRepository<FlowButton> repos = new WorkFlowRepository<FlowButton>();
 
         /// <summary>
         /// 检测是否存在指定流程按钮
         /// </summary>
         /// <param name="entity">流程按钮实体</param>
-        /// <returns>存在返回true</returns>
+        /// <returns>如果存在指定记录返回BoolMessage.False</returns>
         public BoolMessage Exists(FlowButton entity)
         {
             var has = repos.Exists(p => p.Name == entity.Name && p.Id != entity.Id);
@@ -36,9 +33,10 @@ namespace Zeniths.WorkFlow.Service
         }
 
         /// <summary>
-        /// 添加流程按钮
+        /// 新增流程按钮
         /// </summary>
         /// <param name="entity">流程按钮实体</param>
+        /// <returns>执行成功返回BoolMessage.True</returns>
         public BoolMessage Insert(FlowButton entity)
         {
             try
@@ -73,6 +71,7 @@ namespace Zeniths.WorkFlow.Service
         /// 删除流程按钮
         /// </summary>
         /// <param name="ids">流程按钮主键数组</param>
+        /// <returns>执行成功返回BoolMessage.True</returns>
         public BoolMessage Delete(int[] ids)
         {
             try
@@ -97,7 +96,7 @@ namespace Zeniths.WorkFlow.Service
         /// 获取流程按钮对象
         /// </summary>
         /// <param name="id">流程表单主键</param>
-        /// <returns>流程表单对象</returns>
+        /// <returns>返回流程表单对象</returns>
         public FlowButton Get(int id)
         {
             return repos.Get(id);

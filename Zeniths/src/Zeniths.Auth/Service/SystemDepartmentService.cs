@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Zeniths.Auth.Entity;
 using Zeniths.Collections;
+using Zeniths.Entity;
 using Zeniths.Extensions;
+using Zeniths.Helper;
 using Zeniths.Utility;
 
 namespace Zeniths.Auth.Service
@@ -135,6 +137,17 @@ namespace Zeniths.Auth.Service
         }
 
         /// <summary>
+        /// 获取部门名称
+        /// </summary>
+        /// <param name="id">系统部门主键</param>
+        /// <returns>返回指定主键的部门名称</returns>
+        public string GetName(int id)
+        {
+            return repos.Get(id, p => p.Name)?.Name;
+        }
+
+
+        /// <summary>
         /// 获取系统部门列表
         /// </summary>
         /// <returns>系统部门列表</returns>
@@ -178,6 +191,53 @@ namespace Zeniths.Auth.Service
                 query.Where(p => p.Name.Contains(name));
             }
             return repos.Page(query);
+        }
+
+        /// <summary>
+        /// 获取指定部门主键的所有上级部门
+        /// </summary>
+        /// <param name="departmentId"></param>
+        /// <returns>返回指定部门主键的所有上级部门列表</returns>
+        public List<SystemDepartment> GetAllParents(int departmentId)
+        {
+            var cols = EntityMetadata.ForType(typeof(SystemDepartment)).QueryColumns;
+            var sql = $"SELECT {StringHelper.ConvertArrayToString(cols)} FROM fnGetAllParentsDepartment(@departmentId) ORDER BY SortPath ASC";
+            return repos.Database.Query<SystemDepartment>(sql, new object[] {departmentId}).ToList();
+        }
+
+        /// <summary>
+        /// 获取指定部门主键的所有上级部门主键数组
+        /// </summary>
+        /// <param name="departmentId"></param>
+        /// <returns>返回指定部门主键的所有上级部门主键数组</returns>
+        public int[] GetAllParentsIdArray(int departmentId)
+        {
+            var sql = $"SELECT Id FROM fnGetAllParentsDepartment(@departmentId) ORDER BY SortPath ASC";
+            return repos.Database.Query<int>(sql, new object[] { departmentId }).ToArray();
+        }
+
+        /// <summary>
+        /// 获取指定部门主键的所有下级部门
+        /// </summary>
+        /// <param name="departmentId"></param>
+        /// <returns>返回指定部门主键的所有下级部门列表</returns>
+        public List<SystemDepartment> GetAllChilds(int departmentId)
+        {
+            var cols = EntityMetadata.ForType(typeof(SystemDepartment)).QueryColumns;
+            var sql = $"SELECT {StringHelper.ConvertArrayToString(cols)} FROM fnGetAllChildsDepartment(@departmentId) ORDER BY SortPath ASC";
+            return repos.Database.Query<SystemDepartment>(sql, new object[] { departmentId }).ToList();
+        }
+
+        /// <summary>
+        /// 获取指定部门主键的所有下级部门主键数组
+        /// </summary>
+        /// <param name="departmentId"></param>
+        /// <returns>返回指定部门主键的所有下级部门主键数组</returns>
+        public int[] GetAllChildsIdArray(int departmentId)
+        {
+            var cols = EntityMetadata.ForType(typeof(SystemDepartment)).QueryColumns;
+            var sql = $"SELECT {StringHelper.ConvertArrayToString(cols)} FROM fnGetAllChildsDepartment(@departmentId) ORDER BY SortPath ASC";
+            return repos.Database.Query<int>(sql, new object[] { departmentId }).ToArray();
         }
     }
 }

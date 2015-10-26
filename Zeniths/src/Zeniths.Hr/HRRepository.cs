@@ -4,17 +4,17 @@
 
 using Zeniths.Data;
 
-namespace Zeniths.HR
+namespace Zeniths.Hr
 {
-    public class HRRepository<T> : Repository<T> where T : class,new()
+    public class HrRepository<T> : Repository<T> where T : class,new()
     {
         #region 构造函数
 
         /// <summary>
         /// 构造数据存储器
         /// </summary>
-        public HRRepository()
-            : base(new HRDatabase())
+        public HrRepository()
+            : base(new HrDatabase())
         {
         }
 
@@ -22,7 +22,7 @@ namespace Zeniths.HR
         /// 构造数据存储器
         /// </summary>
         /// <param name="database">数据库对象</param>
-        public HRRepository(Database database)
+        public HrRepository(Database database)
             : base(database)
         {
         }

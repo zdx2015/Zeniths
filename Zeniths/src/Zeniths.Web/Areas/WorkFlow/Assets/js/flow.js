@@ -29,6 +29,12 @@ function GooFlow(bgDiv, property) {
     this.$cursor = "default";//鼠标指针在工作区内的样式
     this.$editable = false;//工作区是否可编辑
     this.$deletedItem = {};//在流程图的编辑操作中被删除掉的元素ID集合,元素ID为KEY,元素类型(node,line.area)为VALUE
+
+    //线设置函数
+    this.lineSetting = property.lineSetting;
+    //步骤设置函数
+    this.stepSetting = property.stepSetting;
+
     var headHeight = 0;
     var tmp = "";
     if (property.haveHead) {
@@ -125,7 +131,7 @@ function GooFlow(bgDiv, property) {
             X = ev.x - t.left + this.parentNode.scrollLeft - 1;
             Y = ev.y - t.top + this.parentNode.scrollTop - 1;
 
-            var name = "新建节点" + e.data.inthis.$max;
+            var name = "新建步骤" + e.data.inthis.$max;
             var type = e.data.inthis.$nowType;
             if (type == 'startround') {
                 name = "开始";
@@ -143,7 +149,7 @@ function GooFlow(bgDiv, property) {
                 }
             })
             if (executeadd) {
-                e.data.inthis.addNode(e.data.inthis.$id + "_node_" + e.data.inthis.$max, { name: name, left: X, top: Y, type: e.data.inthis.$nowType, css: '', img: '', });
+                e.data.inthis.addNode(e.data.inthis.$id + "_node_" + e.data.inthis.$max, { uid: zeniths.util.createUUID(), name: name, left: X, top: Y, type: e.data.inthis.$nowType /*, css: '', img: '',*/ });
                 e.data.inthis.$max++;
             }
         });
@@ -387,6 +393,7 @@ GooFlow.prototype = {
         return m;
     },
     initDraw: function (id, width, height) {
+        var self = this;
         var elem;
         if (GooFlow.prototype.useSVG != "") {
             this.$draw = document.createElementNS("http://www.w3.org/2000/svg", "svg");//可创建带有指定命名空间的元素节点
@@ -416,7 +423,8 @@ GooFlow.prototype = {
             });
             $(this.$draw).delegate(tmpClk, "dblclick", { inthis: this }, function (e) {
                 var This = e.data.inthis;
-                OpenLine(this.id, This);
+
+                self.lineSetting(this.id, This);
                 //var oldTxt, x, y, from, to;
                 //var This = e.data.inthis;
                 //if (GooFlow.prototype.useSVG != "") {
@@ -673,6 +681,7 @@ GooFlow.prototype = {
         }
     },
     initWorkForNode: function () {
+        var self = this;
         //绑定点击事件
         this.$workArea.delegate(".GooFlow_item", "click", { inthis: this }, function (e) {
             e.data.inthis.focusItem(this.id, true);
@@ -778,7 +787,7 @@ GooFlow.prototype = {
             var This = e.data.inthis;
             var type = $('.item_focus').hasClass('item_startround');
             if (type) {
-                OpenNode(This);
+                self.stepSetting(This);
             }
             //var oldTxt = this.innerHTML;
             //var This = e.data.inthis;
@@ -799,7 +808,7 @@ GooFlow.prototype = {
         //节点双击事件
         this.$workArea.delegate(".ico + td", "dblclick", { inthis: this }, function (e) {
             var This = e.data.inthis;
-            OpenNode(This);
+            self.stepSetting(This);
             //var oldTxt = this.innerHTML;
             //var This = e.data.inthis;
             //var id = $(this).parents(".GooFlow_item").attr("id");
