@@ -1,0 +1,53 @@
+﻿@model PageList<OAWorkLogShare>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-checkbox">
+                <label><input class="checkbox-check" type="checkbox"><span></span></label>
+            </th>            
+            <th class="w-100px" data-order="@nameof(OAWorkLogShare.WorkLogId)">分享日志主键</th>
+            <th class="w-100px" data-order="@nameof(OAWorkLogShare.ShareUserId)">分享人主键</th>
+            <th class="w-100px" data-order="@nameof(OAWorkLogShare.ShareUserName)">分享人姓名</th>
+            <th class="w-100px" data-order="@nameof(OAWorkLogShare.ShareDepartmentId)">分享人部门主键</th>
+            <th class="w-100px" data-order="@nameof(OAWorkLogShare.ShareDepartmentName)">分享人部门名称</th>
+            <th class="w-100px" data-order="@nameof(OAWorkLogShare.IsFeedback)">是否反馈</th>
+            <th class="w-100px" data-order="@nameof(OAWorkLogShare.FeedbackInfomation)">反馈信息</th>
+            <th class="w-100px" data-order="@nameof(OAWorkLogShare.FeedbackDateTime)">反馈时间</th>
+            <th class="w-120px text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
+                </td>
+                <td>@record.WorkLogId</td>
+                <td>@record.ShareUserId</td>
+                <td>@record.ShareUserName</td>
+                <td>@record.ShareDepartmentId</td>
+                <td>@record.ShareDepartmentName</td>
+                <td class="text-center">@Html.BoolLabel(record.IsFeedback)</td>
+                <td>@record.FeedbackInfomation</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.FeedbackDateTime)</td>
+                <td>
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
+                        <i class="fa fa-eye"></i> 查看
+                    </a>
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                        <i class="fa fa-edit"></i> 编辑
+                    </a>
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)
