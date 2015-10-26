@@ -135,7 +135,13 @@ namespace Zeniths.WorkFlow.Entity
         public string Opinion { get; set; }
 
         /// <summary>
-        /// 状态 0待处理1打开2完成3退回4他人已处理5他人已退回
+        /// 审核状态
+        /// </summary>
+        [Column(Caption = "审核状态")]
+        public bool? IsAudit { get; set; }
+
+        /// <summary>
+        /// 状态0待处理1打开2完成3退回4他人已处理5他人已退回
         /// </summary>
         [Column(Caption = "状态0待处理1打开2完成3退回4他人已处理5他人已退回")]
         public int Status { get; set; }
