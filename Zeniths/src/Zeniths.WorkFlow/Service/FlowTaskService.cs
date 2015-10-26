@@ -5,6 +5,7 @@ using System.Linq;
 using Zeniths.WorkFlow.Entity;
 using Zeniths.Collections;
 using Zeniths.Data;
+using Zeniths.Data.Extensions;
 using Zeniths.Entity;
 using Zeniths.Extensions;
 using Zeniths.Helper;
@@ -125,8 +126,8 @@ namespace Zeniths.WorkFlow.Service
         /// <summary>
         /// 更新读取时间
         /// </summary>
-        /// <param name="taskId"></param>
-        /// <param name="readDateTime"></param>
+        /// <param name="taskId">任务主键</param>
+        /// <param name="readDateTime">读取时间</param>
         public BoolMessage UpdateReadDateTime(string taskId, DateTime readDateTime)
         {
             try
@@ -134,6 +135,25 @@ namespace Zeniths.WorkFlow.Service
                 var sql = "UPDATE FlowTask SET ReadDateTime=@ReadDateTime,Status=1 " +
                           "WHERE Id=@Id AND ReadDateTime IS NULL";
                 repos.Database.Execute(sql, new object[] { readDateTime, taskId });
+                return BoolMessage.True;
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// 更新任务标题
+        /// </summary>
+        /// <param name="taskId">任务主键</param>
+        /// <param name="taskTitle">任务标题</param>
+        /// <returns></returns>
+        public BoolMessage UpdateTaskTitle(string taskId, string taskTitle)
+        {
+            try
+            {
+                repos.Update(new FlowTask {Title = taskTitle}, p => p.Id == taskId, p => p.Title);
                 return BoolMessage.True;
             }
             catch (Exception e)
@@ -362,66 +382,118 @@ namespace Zeniths.WorkFlow.Service
         }
 
 
-        ///// <summary>
-        ///// 查询待办任务
-        ///// </summary>
-        ///// <param name="userID"></param>
-        ///// <param name="pager"></param>
-        ///// <param name="query"></param>
-        ///// <param name="title"></param>
-        ///// <param name="flowid"></param>
-        ///// <param name="date1"></param>
-        ///// <param name="date2"></param>
-        ///// <param name="type">0待办 1已完成</param>
-        ///// <returns></returns>
-        //public List<RoadFlow.Data.Model.WorkFlowTask> GetTasks(Guid userID, out string pager, string query = "", string title = "", string flowid = "", string sender = "", string date1 = "", string date2 = "", int type = 0)
-        //{
-        //    List<SqlParameter> parList = new List<SqlParameter>();
-        //    StringBuilder sql = new StringBuilder("SELECT *,ROW_NUMBER() OVER(ORDER BY " + (type == 0 ? "ReceiveTime DESC" : "CompletedTime1 DESC") + ") AS PagerAutoRowNumber FROM WorkFlowTask WHERE ReceiveID=@ReceiveID");
-        //    sql.Append(type == 0 ? " AND Status IN(0,1)" : " AND Status IN(2,3)");
-        //    parList.Add(new SqlParameter("@ReceiveID", SqlDbType.UniqueIdentifier) { Value = userID });
-        //    if (!title.IsNullOrEmpty())
-        //    {
-        //        sql.Append(" AND CHARINDEX(@Title,Title)>0");
-        //        parList.Add(new SqlParameter("@Title", SqlDbType.NVarChar, 2000) { Value = title });
-        //    }
-        //    if (flowid.IsGuid())
-        //    {
-        //        sql.Append(" AND FlowID=@FlowID");
-        //        parList.Add(new SqlParameter("@FlowID", SqlDbType.UniqueIdentifier) { Value = flowid.ToGuid() });
-        //    }
-        //    else if (!flowid.IsNullOrEmpty() && flowid.IndexOf(',') >= 0)
-        //    {
-        //        sql.Append(" AND FlowID IN(" + RoadFlow.Utility.Tools.GetSqlInString(flowid) + ")");
-        //    }
-        //    if (sender.IsGuid())
-        //    {
-        //        sql.Append(" AND SenderID=@SenderID");
-        //        parList.Add(new SqlParameter("@SenderID", SqlDbType.UniqueIdentifier) { Value = sender.ToGuid() });
-        //    }
-        //    if (date1.IsDateTime())
-        //    {
-        //        sql.Append(" AND ReceiveTime>=@ReceiveTime");
-        //        parList.Add(new SqlParameter("@ReceiveTime", SqlDbType.DateTime) { Value = date1.ToDateTime().Date });
-        //    }
-        //    if (date2.IsDateTime())
-        //    {
-        //        sql.Append(" AND ReceiveTime<=@ReceiveTime1");
-        //        parList.Add(new SqlParameter("@ReceiveTime1", SqlDbType.DateTime) { Value = date2.ToDateTime().AddDays(1).Date });
-        //    }
+        /// <summary>
+        /// 获取流程任务分页列表
+        /// </summary>
+        /// <param name="pageIndex">页面索引</param>
+        /// <param name="pageSize">分页大小</param>
+        /// <param name="orderName">排序列名</param>
+        /// <param name="orderDir">排序方式</param>
+        /// <param name="receiveId">接收人主键</param>
+        /// <param name="senderId">发送人主键</param>
+        /// <param name="flowId">流程主键</param>
+        /// <param name="title">任务标题</param>
+        /// <param name="startDate">开始日期</param>
+        /// <param name="endDate">结束日期</param>
+        /// <param name="type">查询类型:0:待办 1:已办</param>
+        /// <returns>返回流程任务分页列表</returns>
+        public PageList<FlowTask> GetTaskPageList(int pageIndex, int pageSize, string orderName,string orderDir, 
+            string receiveId,string senderId,string flowId, string title ,string startDate,string endDate, int type = 0)
+        {
+            orderName = orderName.IsEmpty() ? (type == 0 ? nameof(FlowTask.SenderDateTime) : nameof(FlowTask.ActualFinishDateTime)) : orderName;
+            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;
+            var query = repos.NewQuery.Take(pageSize).Page(pageIndex).
+                OrderBy(orderName, orderDir.IsAsc())
+                .Where(p=>p.ReceiveId== receiveId);
+            if (type == 0)
+            {
+                query.Where(p => p.Status.In(0, 1));
+            }
+            else
+            {
+                query.Where(p => p.Status.In(2, 3));
+            }
 
-        //    long count;
-        //    int size = RoadFlow.Utility.Tools.GetPageSize();
-        //    int number = RoadFlow.Utility.Tools.GetPageNumber();
-        //    string sql1 = dbHelper.GetPaerSql(sql.ToString(), size, number, out count, parList.ToArray());
-        //    pager = RoadFlow.Utility.Tools.GetPagerHtml(count, size, number, query);
+            if (senderId.IsNotEmpty())
+            {
+                query.Where(p => p.SenderId== senderId);
+            }
+            if (flowId.IsNotEmpty())
+            {
+                query.Where(p => p.FlowId == flowId);
+            }
+            if (title.IsNotEmpty())
+            {
+                query.Where(p => p.Title.Contains(title));
+            }
+            if (startDate.IsNotEmpty())
+            {
+                var _startDate = startDate.ToDateTime().Date;
+                query.Where(p => p.SenderDateTime>= _startDate);
+            }
+            if (endDate.IsNotEmpty())
+            {
+                var _endDate = endDate.ToDateTime().AddDays(1).Date;
+                query.Where(p => p.SenderDateTime <= _endDate);
+            }
+
+            return repos.Page(query);
+        }
+
+        public List<FlowTask> GetTasks(Guid userID, string query = "", 
+            string title = "", string flowid = "", string sender = "", string date1 = "", 
+            string date2 = "", int type = 0)
+        {
+            return new List<FlowTask>();
+
+            //List<SqlParameter> parList = new List<SqlParameter>();
+            //StringBuilder sql = new StringBuilder("SELECT *,ROW_NUMBER() OVER(ORDER BY " +
+            //(type == 0 ? "ReceiveTime DESC" : "CompletedTime1 DESC") + ") AS PagerAutoRowNumber 
+            //FROM WorkFlowTask WHERE ReceiveID=@ReceiveID");
+            //sql.Append(type == 0 ? " AND Status IN(0,1)" : " AND Status IN(2,3)");
+            //parList.Add(new SqlParameter("@ReceiveID", SqlDbType.UniqueIdentifier) { Value = userID });
+            //if (!title.IsNullOrEmpty())
+            //{
+            //    sql.Append(" AND CHARINDEX(@Title,Title)>0");
+            //    parList.Add(new SqlParameter("@Title", SqlDbType.NVarChar, 2000) { Value = title });
+            //}
+            //if (flowid.IsGuid())
+            //{
+            //    sql.Append(" AND FlowID=@FlowID");
+            //    parList.Add(new SqlParameter("@FlowID", SqlDbType.UniqueIdentifier) { Value = flowid.ToGuid() });
+            //}
+            //else if (!flowid.IsNullOrEmpty() && flowid.IndexOf(',') >= 0)
+            //{
+            //    sql.Append(" AND FlowID IN(" + RoadFlow.Utility.Tools.GetSqlInString(flowid) + ")");
+            //}
+            //if (sender.IsGuid())
+            //{
+            //    sql.Append(" AND SenderID=@SenderID");
+            //    parList.Add(new SqlParameter("@SenderID", SqlDbType.UniqueIdentifier) { Value = sender.ToGuid() });
+            //}
+            //if (date1.IsDateTime())
+            //{
+            //    sql.Append(" AND ReceiveTime>=@ReceiveTime");
+            //    parList.Add(new SqlParameter("@ReceiveTime", SqlDbType.DateTime) { Value = date1.ToDateTime().Date });
+            //}
+            //if (date2.IsDateTime())
+            //{
+            //    sql.Append(" AND ReceiveTime<=@ReceiveTime1");
+            //    parList.Add(new SqlParameter("@ReceiveTime1", SqlDbType.DateTime) { Value = date2.ToDateTime().AddDays(1).Date });
+            //}
+
+            //long count;
+            //int size = RoadFlow.Utility.Tools.GetPageSize();
+            //int number = RoadFlow.Utility.Tools.GetPageNumber();
+            //string sql1 = dbHelper.GetPaerSql(sql.ToString(), size, number, out count, parList.ToArray());
+            //pager = RoadFlow.Utility.Tools.GetPagerHtml(count, size, number, query);
 
 
-        //    SqlDataReader dataReader = dbHelper.GetDataReader(sql1, parList.ToArray());
-        //    List<RoadFlow.Data.Model.WorkFlowTask> List = DataReaderToList(dataReader);
-        //    dataReader.Close();
-        //    return List;
-        //}
+            //SqlDataReader dataReader = dbHelper.GetDataReader(sql1, parList.ToArray());
+            //List<RoadFlow.Data.Model.WorkFlowTask> List = DataReaderToList(dataReader);
+            //dataReader.Close();
+            //return List;
+        }
 
         ///// <summary>
         ///// 得到流程实例列表

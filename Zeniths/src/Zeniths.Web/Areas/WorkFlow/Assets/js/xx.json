@@ -1,571 +1,190 @@
 ﻿{
-  "id": "f35d0b4a-b1f9-4fdc-b552-3720953b889f",
-  "name": "会签测试",
-  "type": "90d6ad24-28f5-49d3-ac3f-cb473fb64cc5",
-  "manager": "u_eb03262c-ab60-4bc6-a4c0-96e66a4229fe,u_23c3e9fc-6d8a-4ea0-925a-0a0671d61378",
-  "instanceManager": "u_eb03262c-ab60-4bc6-a4c0-96e66a4229fe,u_23c3e9fc-6d8a-4ea0-925a-0a0671d61378",
-  "removeCompleted": "0",
-  "debug": "0",
-  "debugUsers": "u_eb03262c-ab60-4bc6-a4c0-96e66a4229fe",
-  "note": "",
-  "databases": [
-    {
-      "link": "06075250-30dc-4d32-bf97-e922cb30fac8",
-      "linkName": "平台连接",
-      "table": "TempTest_News",
-      "primaryKey": "ID"
-    }
-  ],
-  "titleField": {
-    "link": "06075250-30dc-4d32-bf97-e922cb30fac8",
-    "table": "TempTest_News",
-    "field": "State"
+  "property": {
+    "id": "b9a31bf8-7f94-453d-814a-ba8a2caa2ca2",
+    "sortIndex": "2",
+    "name": "请假流程",
+    "category": "办公类",
+    "debugUserIds": "user_63,user_119",
+    "note": "请假流程",
+    "isEnabled": true,
+    "isDebug": true
   },
-  "steps": [
-    {
-      "id": "77a56a2d-4ff2-4b88-804c-da81dc96e88f",
-      "type": "normal",
-      "name": "发起申请",
-      "opinionDisplay": "1",
-      "expiredPrompt": "1",
-      "signatureType": "0",
-      "workTime": "",
-      "limitTime": "",
-      "otherTime": "",
-      "archives": "0",
-      "archivesParams": "",
-      "note": "",
-      "position": {
-        "x": 12,
-        "y": 126,
-        "width": 108,
-        "height": 50
+  "flow": {
+    "title": "newFlow_1",
+    "nodes": {
+      "flowPanel_node_1": {
+        "uid": "3a6da135-a85f-4f52-b991-00a0f851e1f1",
+        "name": "开始",
+        "left": 124,
+        "top": 230,
+        "type": "startround",
+        "width": 24,
+        "height": 24,
+        "alt": true
       },
-      "countersignature": 0,
-      "behavior": {
-        "flowType": "0",
-        "runSelect": "1",
-        "handlerType": "0",
-        "selectRange": "",
-        "handlerStep": "",
-        "valueField": "",
-        "defaultHandler": "",
-        "hanlderModel": "0",
-        "backModel": "1",
-        "backType": "0",
-        "backStep": "",
-        "percentage": "",
-        "countersignature": "0",
-        "countersignaturePercentage": ""
+      "flowPanel_node_2": {
+        "uid": "50212dae-7706-4074-b8f6-5947e4f96c55",
+        "name": "结束",
+        "left": 1355,
+        "top": 270,
+        "type": "endround",
+        "width": 24,
+        "height": 24,
+        "alt": true
       },
-      "forms": [
-        {
-          "id": "37283038-798f-4a5b-9175-f4e2dc69b0e4",
-          "name": "",
-          "type": "626480b3-eaa9-4705-acbb-82901db4fda4",
-          "srot": 0
-        }
-      ],
-      "buttons": [
-        {
-          "id": "3b271f67-0433-4082-ad1a-8df1b967b879",
-          "sort": 0
-        },
-        {
-          "id": "8982b97c-adba-4a3a-afd9-9a3ef6ff12d8",
-          "sort": 1
-        }
-      ],
-      "fieldStatus": [
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.ID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title1",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.UserID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Type",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Contents",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.State",
-          "status": "0",
-          "check": "0"
-        }
-      ],
-      "event": {
-        "submitBefore": "",
-        "submitAfter": "",
-        "backBefore": "",
-        "backAfter": ""
+      "flowPanel_node_12": {
+        "uid": "fb4d7ff0-4306-4dac-b55a-67755dcc501d",
+        "name": "新建步骤12",
+        "left": 256,
+        "top": 223,
+        "type": "stepnode",
+        "width": 150,
+        "height": 70,
+        "alt": true
+      },
+      "flowPanel_node_13": {
+        "uid": "1d5543a8-ca33-46fc-8f6a-68eac96edcc2",
+        "name": "新建步骤13",
+        "left": 516,
+        "top": 104,
+        "type": "stepnode",
+        "width": 150,
+        "height": 70,
+        "alt": true
+      },
+      "flowPanel_node_14": {
+        "uid": "53e34a22-b3d4-450e-a33a-6b7f14a95df5",
+        "name": "新建步骤14",
+        "left": 521,
+        "top": 246,
+        "type": "stepnode",
+        "width": 150,
+        "height": 70,
+        "alt": true
+      },
+      "flowPanel_node_15": {
+        "uid": "b57d32db-05ba-4a06-982d-f27ad94ba5c5",
+        "name": "新建步骤15",
+        "left": 518,
+        "top": 407,
+        "type": "stepnode",
+        "width": 150,
+        "height": 70,
+        "alt": true
+      },
+      "flowPanel_node_16": {
+        "uid": "de5f161d-69c3-41f2-80d9-7f000a60dafc",
+        "name": "新建步骤16",
+        "left": 818,
+        "top": 265,
+        "type": "stepnode",
+        "width": 150,
+        "height": 70,
+        "alt": true
+      },
+      "flowPanel_node_17": {
+        "uid": "544c47e8-cfb1-49c7-b50c-578ec751cf30",
+        "name": "新建步骤17",
+        "left": 1075,
+        "top": 185,
+        "type": "stepnode",
+        "width": 150,
+        "height": 70,
+        "alt": true
+      },
+      "flowPanel_node_18": {
+        "uid": "4f76085b-eb47-4d43-94e4-b09528b35e7c",
+        "name": "新建步骤18",
+        "left": 1101,
+        "top": 405,
+        "type": "stepnode",
+        "width": 150,
+        "height": 70,
+        "alt": true
       }
     },
-    {
-      "id": "24986fbb-a343-4701-818b-f3755b1700d4",
-      "type": "normal",
-      "name": "财务部审核",
-      "opinionDisplay": "1",
-      "expiredPrompt": "1",
-      "signatureType": "0",
-      "workTime": "",
-      "limitTime": "",
-      "otherTime": "",
-      "archives": "0",
-      "archivesParams": "",
-      "note": "",
-      "position": {
-        "x": 228,
-        "y": 45,
-        "width": 108,
-        "height": 50
+    "lines": {
+      "flowPanel_line_19": {
+        "type": "sl",
+        "from": "flowPanel_node_1",
+        "to": "flowPanel_node_12",
+        "name": "",
+        "alt": true
       },
-      "countersignature": 0,
-      "behavior": {
-        "flowType": "0",
-        "runSelect": "1",
-        "handlerType": "0",
-        "selectRange": "3975624c-148f-4838-88c9-12af85d2e05e",
-        "handlerStep": "",
-        "valueField": "",
-        "defaultHandler": "u_c2d3012a-c816-4149-ac04-9da0b60e3867",
-        "hanlderModel": "0",
-        "backModel": "1",
-        "backType": "0",
-        "backStep": "",
-        "percentage": "",
-        "countersignature": "0",
-        "countersignaturePercentage": ""
+      "flowPanel_line_20": {
+        "type": "sl",
+        "from": "flowPanel_node_12",
+        "to": "flowPanel_node_13",
+        "name": "",
+        "alt": true
       },
-      "forms": [
-        {
-          "id": "37283038-798f-4a5b-9175-f4e2dc69b0e4",
-          "name": "",
-          "type": "626480b3-eaa9-4705-acbb-82901db4fda4",
-          "srot": 0
-        }
-      ],
-      "buttons": [
-        {
-          "id": "86b7fa6c-891f-4565-9309-81672d3ba80a",
-          "sort": 0
-        },
-        {
-          "id": "8982b97c-adba-4a3a-afd9-9a3ef6ff12d8",
-          "sort": 1
-        }
-      ],
-      "fieldStatus": [
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.ID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title1",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.UserID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Type",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Contents",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.State",
-          "status": "0",
-          "check": "0"
-        }
-      ],
-      "event": {
-        "submitBefore": "",
-        "submitAfter": "",
-        "backBefore": "",
-        "backAfter": ""
+      "flowPanel_line_21": {
+        "type": "sl",
+        "from": "flowPanel_node_12",
+        "to": "flowPanel_node_14",
+        "name": "",
+        "alt": true
+      },
+      "flowPanel_line_22": {
+        "type": "sl",
+        "from": "flowPanel_node_12",
+        "to": "flowPanel_node_15",
+        "name": "",
+        "alt": true
+      },
+      "flowPanel_line_23": {
+        "type": "sl",
+        "from": "flowPanel_node_13",
+        "to": "flowPanel_node_16",
+        "name": "",
+        "alt": true
+      },
+      "flowPanel_line_24": {
+        "type": "sl",
+        "from": "flowPanel_node_14",
+        "to": "flowPanel_node_16",
+        "name": "",
+        "alt": true
+      },
+      "flowPanel_line_25": {
+        "type": "sl",
+        "from": "flowPanel_node_15",
+        "to": "flowPanel_node_16",
+        "name": "",
+        "alt": true
+      },
+      "flowPanel_line_26": {
+        "type": "sl",
+        "from": "flowPanel_node_16",
+        "to": "flowPanel_node_17",
+        "name": "",
+        "alt": true
+      },
+      "flowPanel_line_27": {
+        "type": "sl",
+        "from": "flowPanel_node_16",
+        "to": "flowPanel_node_18",
+        "name": "",
+        "alt": true
+      },
+      "flowPanel_line_28": {
+        "type": "sl",
+        "from": "flowPanel_node_18",
+        "to": "flowPanel_node_2",
+        "name": "",
+        "alt": true
+      },
+      "flowPanel_line_29": {
+        "type": "sl",
+        "from": "flowPanel_node_17",
+        "to": "flowPanel_node_18",
+        "name": "",
+        "alt": true
       }
     },
-    {
-      "id": "6ed3e265-f90f-4d2d-9813-1d00b0408dd7",
-      "type": "normal",
-      "name": "研发部审核",
-      "opinionDisplay": "1",
-      "expiredPrompt": "1",
-      "signatureType": "0",
-      "workTime": "",
-      "limitTime": "",
-      "otherTime": "",
-      "archives": "0",
-      "archivesParams": "",
-      "note": "",
-      "position": {
-        "x": 230,
-        "y": 126,
-        "width": 108,
-        "height": 50
-      },
-      "countersignature": 0,
-      "behavior": {
-        "flowType": "0",
-        "runSelect": "1",
-        "handlerType": "0",
-        "selectRange": "96f75a51-779b-491a-9773-cb5f90cef11e",
-        "handlerStep": "",
-        "valueField": "",
-        "defaultHandler": "u_eb03262c-ab60-4bc6-a4c0-96e66a4229fe",
-        "hanlderModel": "1",
-        "backModel": "1",
-        "backType": "0",
-        "backStep": "",
-        "percentage": "",
-        "countersignature": "0",
-        "countersignaturePercentage": ""
-      },
-      "forms": [
-        {
-          "id": "37283038-798f-4a5b-9175-f4e2dc69b0e4",
-          "name": "",
-          "type": "626480b3-eaa9-4705-acbb-82901db4fda4",
-          "srot": 0
-        }
-      ],
-      "buttons": [
-        {
-          "id": "86b7fa6c-891f-4565-9309-81672d3ba80a",
-          "sort": 0
-        },
-        {
-          "id": "8982b97c-adba-4a3a-afd9-9a3ef6ff12d8",
-          "sort": 1
-        }
-      ],
-      "fieldStatus": [
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.ID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title1",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.UserID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Type",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Contents",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.State",
-          "status": "0",
-          "check": "0"
-        }
-      ],
-      "event": {
-        "submitBefore": "",
-        "submitAfter": "",
-        "backBefore": "",
-        "backAfter": ""
-      }
-    },
-    {
-      "id": "1a29f7fb-b8e2-4fbc-96e6-e5f0065dcd11",
-      "type": "normal",
-      "name": "市场部审核",
-      "opinionDisplay": "1",
-      "expiredPrompt": "1",
-      "signatureType": "0",
-      "workTime": "",
-      "limitTime": "",
-      "otherTime": "",
-      "archives": "0",
-      "archivesParams": "",
-      "note": "",
-      "position": {
-        "x": 231,
-        "y": 217,
-        "width": 108,
-        "height": 50
-      },
-      "countersignature": 0,
-      "behavior": {
-        "flowType": "0",
-        "runSelect": "1",
-        "handlerType": "0",
-        "selectRange": "4f4865de-fda0-417b-9465-d7648309b772",
-        "handlerStep": "",
-        "valueField": "",
-        "defaultHandler": "u_0362149c-af22-491f-baef-37bffcc1fd5c",
-        "hanlderModel": "0",
-        "backModel": "1",
-        "backType": "0",
-        "backStep": "",
-        "percentage": "",
-        "countersignature": "0",
-        "countersignaturePercentage": ""
-      },
-      "forms": [
-        {
-          "id": "37283038-798f-4a5b-9175-f4e2dc69b0e4",
-          "name": "",
-          "type": "626480b3-eaa9-4705-acbb-82901db4fda4",
-          "srot": 0
-        }
-      ],
-      "buttons": [
-        {
-          "id": "86b7fa6c-891f-4565-9309-81672d3ba80a",
-          "sort": 0
-        },
-        {
-          "id": "8982b97c-adba-4a3a-afd9-9a3ef6ff12d8",
-          "sort": 1
-        }
-      ],
-      "fieldStatus": [
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.ID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title1",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.UserID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Type",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Contents",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.State",
-          "status": "0",
-          "check": "0"
-        }
-      ],
-      "event": {
-        "submitBefore": "",
-        "submitAfter": "",
-        "backBefore": "",
-        "backAfter": ""
-      }
-    },
-    {
-      "id": "7f865ae5-7e63-4797-97dd-eac5be6ab807",
-      "type": "normal",
-      "name": "总经理批准",
-      "opinionDisplay": "1",
-      "expiredPrompt": "1",
-      "signatureType": "0",
-      "workTime": "",
-      "limitTime": "",
-      "otherTime": "",
-      "archives": "0",
-      "archivesParams": "",
-      "note": "",
-      "position": {
-        "x": 482,
-        "y": 126,
-        "width": 108,
-        "height": 50
-      },
-      "countersignature": 0,
-      "behavior": {
-        "flowType": "0",
-        "runSelect": "1",
-        "handlerType": "0",
-        "selectRange": "82682cf5-50e1-4901-911b-1a935b5ddb6c",
-        "handlerStep": "",
-        "valueField": "",
-        "defaultHandler": "u_8086d01f-7ae3-402e-b543-d34f1059f79a",
-        "hanlderModel": "0",
-        "backModel": "1",
-        "backType": "0",
-        "backStep": "",
-        "percentage": "",
-        "countersignature": "1",
-        "countersignaturePercentage": ""
-      },
-      "forms": [
-        {
-          "id": "37283038-798f-4a5b-9175-f4e2dc69b0e4",
-          "name": "",
-          "type": "626480b3-eaa9-4705-acbb-82901db4fda4",
-          "srot": 0
-        }
-      ],
-      "buttons": [
-        {
-          "id": "b8a7af17-7ad5-4699-b679-d421691dd737",
-          "sort": 0
-        },
-        {
-          "id": "86b7fa6c-891f-4565-9309-81672d3ba80a",
-          "sort": 1
-        },
-        {
-          "id": "954effa8-03b8-461a-aaa8-8727d090dcb9",
-          "sort": 2
-        }
-      ],
-      "fieldStatus": [
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.ID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title1",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.UserID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Type",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Contents",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.State",
-          "status": "0",
-          "check": "0"
-        }
-      ],
-      "event": {
-        "submitBefore": "",
-        "submitAfter": "",
-        "backBefore": "",
-        "backAfter": ""
-      }
-    }
-  ],
-  "lines": [
-    {
-      "id": "c0456161-b50f-4d32-bb2c-c8ee1ef70d5a",
-      "from": "77a56a2d-4ff2-4b88-804c-da81dc96e88f",
-      "to": "24986fbb-a343-4701-818b-f3755b1700d4",
-      "customMethod": "",
-      "sql": "",
-      "noaccordMsg": ""
-    },
-    {
-      "id": "a5079b90-ff07-4e0f-91b5-a00664a337d1",
-      "from": "77a56a2d-4ff2-4b88-804c-da81dc96e88f",
-      "to": "6ed3e265-f90f-4d2d-9813-1d00b0408dd7",
-      "customMethod": "",
-      "sql": "",
-      "noaccordMsg": ""
-    },
-    {
-      "id": "a90135e4-5680-4864-8b7e-37a2a0255600",
-      "from": "77a56a2d-4ff2-4b88-804c-da81dc96e88f",
-      "to": "1a29f7fb-b8e2-4fbc-96e6-e5f0065dcd11",
-      "customMethod": "",
-      "sql": "",
-      "noaccordMsg": ""
-    },
-    {
-      "id": "423786c5-e5b3-404b-a67e-93d6c9a4c052",
-      "from": "24986fbb-a343-4701-818b-f3755b1700d4",
-      "to": "7f865ae5-7e63-4797-97dd-eac5be6ab807",
-      "customMethod": "",
-      "sql": "",
-      "noaccordMsg": ""
-    },
-    {
-      "id": "b554d41b-0009-473d-a626-5a27661484d6",
-      "from": "6ed3e265-f90f-4d2d-9813-1d00b0408dd7",
-      "to": "7f865ae5-7e63-4797-97dd-eac5be6ab807",
-      "customMethod": "",
-      "sql": "",
-      "noaccordMsg": ""
-    },
-    {
-      "id": "9edecaed-7d6c-4af7-b90d-2599035796fe",
-      "from": "1a29f7fb-b8e2-4fbc-96e6-e5f0065dcd11",
-
-      "to": "7f865ae5-7e63-4797-97dd-eac5be6ab807",
-      "customMethod": "",
-      "sql": "",
-      "noaccordMsg": ""
-    }
-  ]
+    "areas": { },
+    "initNum": 30
+  },
+  "step": { },
+  "line": { }
 }

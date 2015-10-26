@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -73,9 +74,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Execute.cs" />
+    <Compile Include="FlowTaskReceiveIdComparer.cs" />
+    <Compile Include="DefaultStepEvent.cs" />
+    <Compile Include="DefaultLineEvent.cs" />
+    <Compile Include="ExecuteData.cs" />
+    <Compile Include="ExecuteParam.cs" />
+    <Compile Include="FlowEventArgs.cs" />
+    <Compile Include="FlowLineEventArgs.cs" />
+    <Compile Include="ILineEvent.cs" />
+    <Compile Include="IStepEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Result.cs" />
+    <Compile Include="ExecuteResult.cs" />
     <Compile Include="WorkFlowBaseController.cs" />
     <Compile Include="HtmlExtensions.cs" />
     <Compile Include="WorkFlowDesign.cs" />
