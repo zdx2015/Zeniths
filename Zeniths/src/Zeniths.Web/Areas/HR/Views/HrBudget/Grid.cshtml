@@ -1,0 +1,79 @@
+﻿@model PageList<HrBudget>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-checkbox">
+                <label><input class="checkbox-check" type="checkbox"><span></span></label>
+            </th>            
+            <th class="w-100px" data-order="@nameof(HrBudget.Title)">任务标题</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.BudgetMonth)">预算月份</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.BudgetDepartmentId)">预算部门主键</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.BudgetDepartmentName)">预算部门名称</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.FlowId)">流程主键</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.FlowName)">流程名称</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.FlowInstanceId)">流程实例主键</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.StepId)">当前步骤主键</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.StepName)">当前步骤名称</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.GeneralManagerId)">总经理主键</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.GeneralManagerName)">总经理名称</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.GeneralManagerStatus)">总经理审批状态</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.GeneralManagerNote)">总经理审批意见</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.GeneralManagerDate)">总经理审批时间</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.Status)">处理状态</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.IsFinish)">流程是否完成</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.CreateUserId)">创建用户主键</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.CreateUserName)">创建用户姓名</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.CreateDepartmentid)">创建用户部门主键</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.CreateDepartmentName)">创建用户部门名称</th>
+            <th class="w-100px" data-order="@nameof(HrBudget.CreateDateTime)">创建时间</th>
+            <th class="w-120px text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
+                </td>
+                <td>@record.Title</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.BudgetMonth)</td>
+                <td>@record.BudgetDepartmentId</td>
+                <td>@record.BudgetDepartmentName</td>
+                <td>@record.FlowId</td>
+                <td>@record.FlowName</td>
+                <td>@record.FlowInstanceId</td>
+                <td>@record.StepId</td>
+                <td>@record.StepName</td>
+                <td>@record.GeneralManagerId</td>
+                <td>@record.GeneralManagerName</td>
+                <td class="text-center">@Html.BoolLabel(record.GeneralManagerStatus)</td>
+                <td>@record.GeneralManagerNote</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.GeneralManagerDate)</td>
+                <td>@record.Status</td>
+                <td>@record.IsFinish</td>
+                <td>@record.CreateUserId</td>
+                <td>@record.CreateUserName</td>
+                <td>@record.CreateDepartmentid</td>
+                <td>@record.CreateDepartmentName</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.CreateDateTime)</td>
+                <td>
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
+                        <i class="fa fa-eye"></i> 查看
+                    </a>
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                        <i class="fa fa-edit"></i> 编辑
+                    </a>
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)

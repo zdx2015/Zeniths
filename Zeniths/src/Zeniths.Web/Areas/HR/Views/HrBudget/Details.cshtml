@@ -1,0 +1,198 @@
+﻿@model HrBudget
+@{
+    var title = "查看部门预算";
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <table class="table table-form table-dialog-form">
+                
+                    <tr>
+                        <th class="w-100px">
+                            <label class="control-label">任务标题：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.Title</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">预算月份：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.BudgetMonth)</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">预算部门主键：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.BudgetDepartmentId</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">预算部门名称：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.BudgetDepartmentName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">流程主键：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.FlowId</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">流程名称：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.FlowName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">流程实例主键：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.FlowInstanceId</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">当前步骤主键：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.StepId</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">当前步骤名称：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.StepName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">总经理主键：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.GeneralManagerId</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">总经理名称：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.GeneralManagerName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">总经理审批状态：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Html.BoolLabel(Model.GeneralManagerStatus)</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">总经理审批意见：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.GeneralManagerNote</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">总经理审批时间：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.GeneralManagerDate)</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">处理状态：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.Status</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">流程是否完成：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.IsFinish</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">创建用户主键：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.CreateUserId</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">创建用户姓名：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.CreateUserName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">创建用户部门主键：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.CreateDepartmentid</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">创建用户部门名称：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.CreateDepartmentName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">创建时间：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.CreateDateTime)</p>
+                        </td>
+                    </tr>
+                                    
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+            <div class="buttons">
+                <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                    <i class="fa fa-sign-in"></i> 关闭
+                </a>
+            </div>
+        </div>
+        </div>
+    </form>
+</div>

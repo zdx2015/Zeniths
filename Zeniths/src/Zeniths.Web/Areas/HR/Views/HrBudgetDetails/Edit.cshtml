@@ -1,0 +1,185 @@
+﻿@model HrBudgetDetails
+@{
+    var title = "编辑预算明细信息";
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <table class="table table-form table-dialog-form">
+                
+                    <tr>
+                        <th class="w-100px">
+                            <label class="control-label">预算主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.BudgetId)" value="@Model.BudgetId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">预算类别主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.BudgetCategoryId)" value="@Model.BudgetCategoryId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">预算类别名称：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.BudgetCategoryName)" value="@Model.BudgetCategoryName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">项目名称：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.BudgetItemName)" value="@Model.BudgetItemName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">预算金额：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.BudgetMoney)" value="@Model.BudgetMoney" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">备注：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Note)" value="@Model.Note" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                                    
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section script{
+    <script>
+
+        $(function () {
+            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
+            $('.editform').dataform().initValidate({
+                rules: {
+                    BudgetId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    BudgetCategoryId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    BudgetCategoryName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    BudgetItemName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    BudgetMoney: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    Note: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    } 
+                },
+                messages: {
+                    BudgetId: {
+                        required: '请填写预算主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    BudgetCategoryId: {
+                        required: '请填写预算类别主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    BudgetCategoryName: {
+                        required: '请填写预算类别名称'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    BudgetItemName: {
+                        required: '请填写项目名称'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    BudgetMoney: {
+                        required: '请填写预算金额'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    Note: {
+                        required: '请填写备注'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    } 
+                },
+                beforeSubmit: function () {
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+        });
+    </script>
+}
