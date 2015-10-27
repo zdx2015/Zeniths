@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Zeniths.Data.Extensions;
 using Zeniths.Hr.Entity;
 using Zeniths.Collections;
 using Zeniths.Data;
@@ -23,6 +24,7 @@ namespace Zeniths.Hr.Service
         /// 日常费用报销存储器
         /// </summary>
         private readonly Repository<DailyReimburse> repos = new Repository<DailyReimburse>();
+        private readonly Repository<DailyReimburseDetails> detailRepos = new Repository<DailyReimburseDetails>();
 
         /// <summary>
         /// 检测是否存在指定日常费用报销
@@ -40,13 +42,48 @@ namespace Zeniths.Hr.Service
         /// 新增日常费用报销
         /// </summary>
         /// <param name="entity">日常费用报销实体</param>
+        /// <param name="detailList">报销明细实体list</param>
         /// <returns>执行成功返回BoolMessage.True</returns>
-        public BoolMessage Insert(DailyReimburse entity)
+        public BoolMessage Insert(DailyReimburse entity,List<DailyReimburseDetails> detailList)
         {
             try
             {
-                repos.Insert(entity);
-                return BoolMessage.True;
+                var recordId =repos.Insert(entity).ToInt();
+                bool result = false;
+                int[] ids = new int[detailList.Count];
+                if (recordId>0)
+                {
+                    int count = 0;
+                   
+                    foreach(var item in detailList)
+                    {
+                        item.ReimburseId = recordId;
+                        int detailId = detailRepos.Insert(item).ToInt();
+
+                        if (detailId > 0)
+                        {
+                            ids[count] = detailId;
+                            count = count + 1;
+                        }
+                    }
+                   
+                    
+                    if(count==detailList.Count)
+                    {
+                        result = true;
+                    }
+                }
+
+                //根据成功Insert明细表的数量和页面传入list数量比较，相等则返回成功。否则 删除已插入的数据并返回失败
+                if (result)
+                {
+                    return BoolMessage.True;
+                }else
+                {
+                    repos.Delete(recordId);
+                    detailRepos.Delete(ids);
+                    return BoolMessage.False;
+                }
             }
             catch (Exception e)
             {
@@ -55,22 +92,202 @@ namespace Zeniths.Hr.Service
         }
 
         /// <summary>
-        /// 更新日常费用报销
+        /// 提交发送前 更新日常费用报销
         /// </summary>
-        /// <param name="entity">日常费用报销实体</param>
+        /// <param name="entity">日常费用报销实体</param>        
         /// <returns>执行成功返回BoolMessage.True</returns>
         public BoolMessage Update(DailyReimburse entity)
         {
             try
             {
-                repos.Update(entity);
-                return BoolMessage.True;
+                DailyReimburse oldEntity = Get(entity.Id);//取出修改的数据              
+
+                var count = repos.Update(entity);               
+                if(count>0)
+                {                   
+                    return BoolMessage.True;
+                }else
+                {
+                    repos.Update(oldEntity);                  
+                    return BoolMessage.False;
+                }
+                
             }
             catch (Exception e)
             {
                 return new BoolMessage(false, e.Message);
             }
         }
+
+
+        /// <summary>
+        /// 提交发送后 更新日常费用报销数据
+        /// </summary>
+        /// <param name="entity">日常费用报销实体</param>
+        /// <param name="actionFlag">提交数据的当前步骤标识--1:部门负责人，2：会计审核，3：财务负责人审核，4：总经理签字，5：董事长签字，6：出纳付款，7：(预算外)部门负责人，8：(预算外)总经理出示意见</param>
+        /// <returns></returns>
+        public BoolMessage Update(DailyReimburse entity,int actionFlag)
+        {
+            DailyReimburse oldEntity = Get(entity.Id);//取出修改前的数据
+            switch (actionFlag)
+            {
+                case 1:
+                    try
+                    {
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.DepartmentManagerId, p => p.DepartmentManagerIsAudit, p => p.DepartmentManagerOpinion, p => p.DepartmentManagerSign, p => p.DepartmentManagerSignDate);
+                        if (count > 0)
+                        {
+                            return BoolMessage.True;
+                        }
+                        else
+                        {
+                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.DepartmentManagerId, p => p.DepartmentManagerIsAudit, p => p.DepartmentManagerOpinion, p => p.DepartmentManagerSign, p => p.DepartmentManagerSignDate);
+                            return BoolMessage.False;
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        return new BoolMessage(false, e.Message);
+                    }
+                    
+                case 2:
+                    try
+                    {
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.AccountantId, p => p.AccountantIsAudit, p => p.AccountantOpinion, p => p.AccountantSign, p => p.AccountantSignDate);
+                        if (count > 0)
+                        {
+                            return BoolMessage.True;
+                        }
+                        else
+                        {
+                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.AccountantId, p => p.AccountantIsAudit, p => p.AccountantOpinion, p => p.AccountantSign, p => p.AccountantSignDate);
+                            return BoolMessage.False;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return new BoolMessage(false, e.Message);
+                    }
+                 
+                case 3:
+                    try
+                    {
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.FinancialManagerId, p => p.FinancialManagerIsAudit, p => p.FinancialManagerOpinion, p => p.FinancialManagerSign, p => p.FinancialManagerSignDate);
+                        if (count > 0)
+                        {
+                            return BoolMessage.True;
+                        }
+                        else
+                        {
+                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.FinancialManagerId, p => p.FinancialManagerIsAudit, p => p.FinancialManagerOpinion, p => p.FinancialManagerSign, p => p.FinancialManagerSignDate);
+                            return BoolMessage.False;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return new BoolMessage(false, e.Message);
+                    }
+                  
+                case 4:
+                    try
+                    {
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.GeneralManagerId, p => p.GeneralManagerIsAudit, p => p.GeneralManagerOpinion, p => p.GeneralManagerSign, p => p.GeneralManagerSignDate);
+                        if (count > 0)
+                        {
+                            return BoolMessage.True;
+                        }
+                        else
+                        {
+                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.GeneralManagerId, p => p.GeneralManagerIsAudit, p => p.GeneralManagerOpinion, p => p.GeneralManagerSign, p => p.GeneralManagerSignDate);
+                            return BoolMessage.False;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return new BoolMessage(false, e.Message);
+                    }
+                   
+                case 5:
+                    try
+                    {
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.ChairmanId, p => p.ChairmanIsAudit, p => p.ChairmanOpinion, p => p.ChairmanSign, p => p.ChairmanSignDate);
+                        if (count > 0)
+                        {
+                            return BoolMessage.True;
+                        }
+                        else
+                        {
+                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.ChairmanId, p => p.ChairmanIsAudit, p => p.ChairmanOpinion, p => p.ChairmanSign, p => p.ChairmanSignDate);
+                            return BoolMessage.False;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return new BoolMessage(false, e.Message);
+                    }
+                   
+                case 6:
+                    try
+                    {
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.CashierId, p => p.CashierName, p => p.CashierUpdateDateTime);
+                        if (count > 0)
+                        {
+                            return BoolMessage.True;
+                        }
+                        else
+                        {
+                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.CashierId, p => p.CashierName, p => p.CashierUpdateDateTime);
+                            return BoolMessage.False;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return new BoolMessage(false, e.Message);
+                    }
+                  
+                case 7:
+                    try
+                    {
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.AddDepartmentManagerId, p => p.AddDepartmentManagerIsAudit, p => p.AddDepartmentManagerOpinion, p => p.AddDepartmentManagerSign, p => p.AddDepartmentManagerSignDate);
+                        if (count > 0)
+                        {
+                            return BoolMessage.True;
+                        }
+                        else
+                        {
+                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.AddDepartmentManagerId, p => p.AddDepartmentManagerIsAudit, p => p.AddDepartmentManagerOpinion, p => p.AddDepartmentManagerSign, p => p.AddDepartmentManagerSignDate);
+                            return BoolMessage.False;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return new BoolMessage(false, e.Message);
+                    }
+                   
+                case 8:
+                    try
+                    {
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.AddGeneralManagerId, p => p.AddGeneralManagerIsAudit, p => p.AddGeneralManagerOpinion, p => p.AddGeneralManagerSign, p => p.AddGeneralManagerSignDate);
+                        if (count > 0)
+                        {
+                            return BoolMessage.True;
+                        }
+                        else
+                        {
+                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.AddGeneralManagerId, p => p.AddGeneralManagerIsAudit, p => p.AddGeneralManagerOpinion, p => p.AddGeneralManagerSign, p => p.AddGeneralManagerSignDate);
+                            return BoolMessage.False;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return new BoolMessage(false, e.Message);
+                    }
+                  
+            }
+
+            return BoolMessage.False;
+        }
+
 
         /// <summary>
         /// 删除日常费用报销
@@ -84,10 +301,13 @@ namespace Zeniths.Hr.Service
                 if (ids.Length==1)
                 {
                     repos.Delete(ids[0]);
+                    detailRepos.Delete(p => p.ReimburseId == ids[0]);
+
                 }
                 else
                 {
                     repos.Delete(ids);
+                    detailRepos.Delete(p => p.ReimburseId.In(ids));
                 }
                 return BoolMessage.True;
             }

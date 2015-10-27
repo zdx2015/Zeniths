@@ -55,7 +55,7 @@ namespace Zeniths.Hr.Service
         }
 
         /// <summary>
-        /// 更新日常费用报销明细
+        /// 提交发送前 更新日常费用报销明细
         /// </summary>
         /// <param name="entity">日常费用报销明细实体</param>
         /// <returns>执行成功返回BoolMessage.True</returns>
@@ -63,8 +63,17 @@ namespace Zeniths.Hr.Service
         {
             try
             {
-                repos.Update(entity);
-                return BoolMessage.True;
+                DailyReimburseDetails oldEntity = Get(entity.Id);
+                int count = repos.Update(entity);
+                if (count > 0)
+                {
+                    return BoolMessage.True;
+                }
+                else
+                {
+                    repos.Update(oldEntity);
+                    return BoolMessage.False;
+                }
             }
             catch (Exception e)
             {
