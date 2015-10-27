@@ -199,6 +199,10 @@
     <Content Include="Areas\HR\Views\OAWorkLogShare\Edit.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Grid.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Index.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Details.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
     <None Include="Plugin\_references.js" />
@@ -585,6 +589,7 @@
     <Compile Include="Areas\Auth\Controllers\SystemParamController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemRoleController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
+    <Compile Include="Areas\HR\Controllers\GoOutRegistrationController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogShareController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />

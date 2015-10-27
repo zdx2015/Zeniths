@@ -5,7 +5,9 @@ using System.Linq;
 using Zeniths.WorkFlow.Entity;
 using Zeniths.Collections;
 using Zeniths.Data;
+using Zeniths.Entity;
 using Zeniths.Extensions;
+using Zeniths.Helper;
 using Zeniths.Utility;
 
 namespace Zeniths.WorkFlow.Service
@@ -84,11 +86,11 @@ namespace Zeniths.WorkFlow.Service
         /// <summary>
         /// 获取流程任务对象
         /// </summary>
-        /// <param name="id">流程任务主键</param>
+        /// <param name="taskId">流程任务主键</param>
         /// <returns>返回流程任务对象</returns>
-        public FlowTask Get(int id)
+        public FlowTask Get(string taskId)
         {
-            return repos.Get(id);
+            return repos.Get(taskId);
         }
 
         /// <summary>
@@ -155,7 +157,7 @@ namespace Zeniths.WorkFlow.Service
         }
 
         /// <summary>
-        /// 获取流程指定步骤的处理者Id集合
+        /// 获取流程实例指定步骤的处理者Id集合
         /// </summary>
         /// <param name="flowId">流程Id</param>
         /// <param name="stepId">步骤Id</param>
@@ -168,193 +170,150 @@ namespace Zeniths.WorkFlow.Service
             return repos.Database.Query<string>(sql, new object[] { flowId, stepId, flowInstanceId }).ToList();
         }
 
-        ///// <summary>
-        ///// 得到一个流程实例前一步骤的处理者
-        ///// </summary>
-        ///// <param name="flowID"></param>
-        ///// <param name="groupID"></param>
-        ///// <returns></returns>
-        //public List<Guid> GetPrevSnderID(Guid flowID, Guid stepID, Guid groupID)
-        //{
-        //    string sql = "SELECT ReceiveID FROM WorkFlowTask WHERE ID=(SELECT PrevID FROM WorkFlowTask WHERE FlowID=@FlowID AND StepID=@StepID AND GroupID=@GroupID)";
-        //    SqlParameter[] parameters = new SqlParameter[]{
-        //        new SqlParameter("@FlowID", SqlDbType.UniqueIdentifier){ Value = flowID },
-        //        new SqlParameter("@StepID", SqlDbType.UniqueIdentifier){ Value = stepID },
-        //        new SqlParameter("@GroupID", SqlDbType.UniqueIdentifier){ Value = groupID }
-        //    };
-        //    DataTable dt = dbHelper.GetDataTable(sql, parameters);
-        //    List<Guid> senderList = new List<Guid>();
-        //    foreach (DataRow dr in dt.Rows)
-        //    {
-        //        Guid senderID;
-        //        if (Guid.TryParse(dr[0].ToString(), out senderID))
-        //        {
-        //            senderList.Add(senderID);
-        //        }
-        //    }
-        //    return senderList;
-        //}
+        /// <summary>
+        /// 获取流程实例前一步骤的处理者主键集合
+        /// </summary>
+        /// <param name="flowId">流程主键</param>
+        /// <param name="stepId">步骤主键</param>
+        /// <param name="flowInstanceId">流程实例Id</param>
+        /// <returns></returns>
+        public List<string> GetPrevSenderIdList(string flowId, string stepId, string flowInstanceId)
+        {
+            string sql = "SELECT ReceiveId FROM FlowTask WHERE Id = " +
+                         "(SELECT PrevId FROM FlowTask WHERE FlowId=@FlowId AND StepId=@StepId AND FlowInstanceId=@FlowInstanceId)";
+            return repos.Database.Query<string>(sql, new object[] { flowId, stepId, flowInstanceId }).ToList();
+        }
 
-        ///// <summary>
-        ///// 完成一个任务
-        ///// </summary>
-        ///// <param name="taskID"></param>
-        ///// <param name="comment"></param>
-        ///// <param name="isSign"></param>
-        ///// <returns></returns>
-        //public int Completed(Guid taskID, string comment = "", bool isSign = false, int status = 2, string note = "")
-        //{
-        //    string sql = "UPDATE WorkFlowTask SET Comment=@Comment,CompletedTime1=@CompletedTime1,IsSign=@IsSign,Status=@Status" + (note.IsNullOrEmpty() ? "" : ",Note=@Note") + " WHERE ID=@ID";
-        //    SqlParameter[] parameters = new SqlParameter[]{
-        //        comment.IsNullOrEmpty() ? new SqlParameter("@Comment", SqlDbType.VarChar){ Value = DBNull.Value } : new SqlParameter("@Comment", SqlDbType.VarChar){ Value = comment },
-        //        new SqlParameter("@CompletedTime1", SqlDbType.DateTime){ Value = RoadFlow.Utility.DateTimeNew.Now },
-        //        new SqlParameter("@IsSign", SqlDbType.Int){ Value = isSign?1:0 },
-        //        new SqlParameter("@Status", SqlDbType.Int){ Value = status },
-        //        note.IsNullOrEmpty()?new SqlParameter("@Note", SqlDbType.NVarChar){ Value = DBNull.Value }:new SqlParameter("@Note", SqlDbType.NVarChar){ Value = note },
-        //        new SqlParameter("@ID", SqlDbType.UniqueIdentifier){ Value = taskID }
-        //    };
-        //    return dbHelper.Execute(sql, parameters);
-        //}
+        /// <summary>
+        /// 完成指定任务
+        /// </summary>
+        /// <param name="taskId">任务主键</param>
+        /// <param name="opinion">意见</param>
+        /// <param name="isAudit">是否审核通过</param>
+        /// <param name="status">状态 0待处理1打开2完成3退回4他人已处理5他人已退回</param>
+        /// <param name="note">备注</param>
+        /// <returns></returns>
+        public BoolMessage Completed(string taskId, string opinion = null, bool? isAudit = null, int status = 2, string note = null)
+        {
+            try
+            {
+                string sql = "UPDATE FlowTask SET Opinion=@Opinion,ActualFinishDateTime" +
+                             "=@ActualFinishDateTime,IsAudit=@IsAudit,Status=@Status,Note=@Note WHERE Id=@Id";
+                repos.Database.Execute(sql, new object[] { opinion, DateTime.Now, isAudit, status, note, taskId });
+                return BoolMessage.True;
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
 
-        ///// <summary>
-        ///// 更新一个任务后后续任务状态
-        ///// </summary>
-        ///// <param name="taskID"></param>
-        ///// <param name="comment"></param>
-        ///// <param name="isSign"></param>
-        ///// <returns></returns>
-        //public int UpdateNextTaskStatus(Guid taskID, int status)
-        //{
-        //    string sql = "UPDATE WorkFlowTask SET Status=@Status WHERE PrevID=@PrevID";
-        //    SqlParameter[] parameters = new SqlParameter[]{
-        //        new SqlParameter("@Status", SqlDbType.Int){ Value = status },
-        //        new SqlParameter("@PrevID", SqlDbType.UniqueIdentifier){ Value = taskID }
-        //    };
-        //    return dbHelper.Execute(sql, parameters);
-        //}
+        /// <summary>
+        /// 更新一个任务后续任务状态
+        /// </summary>
+        /// <param name="taskId">任务主键</param>
+        /// <param name="status">状态 0待处理1打开2完成3退回4他人已处理5他人已退回</param>
+        /// <returns></returns>
+        public BoolMessage UpdateNextTaskStatus(string taskId, int status)
+        {
+            try
+            {
+                string sql = "UPDATE FlowTask SET Status=@Status WHERE PrevID=@PrevId";
+                repos.Database.Execute(sql, new object[] { status, taskId });
+                return BoolMessage.True;
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
 
+        /// <summary>
+        /// 获取流程实例指定步骤的任务
+        /// </summary>
+        /// <param name="flowId">流程主键</param>
+        /// <param name="stepId">步骤主键</param>
+        /// <param name="flowInstanceId">流程实例Id</param>
+        /// <returns></returns>
+        public List<FlowTask> GetTaskList(string flowId, string stepId, string flowInstanceId)
+        {
+            return repos.Query(p => p.FlowId == flowId && p.StepId == stepId
+            && p.FlowInstanceId == flowInstanceId).ToList();
+        }
 
-        ///// <summary>
-        ///// 得到一个流程实例一个步骤的任务
-        ///// </summary>
-        ///// <param name="flowID"></param>
-        ///// <param name="groupID"></param>
-        ///// <returns></returns>
-        //public List<Model.WorkFlowTask> GetTaskList(Guid flowID, Guid stepID, Guid groupID)
-        //{
-        //    string sql = "SELECT * FROM WorkFlowTask WHERE FlowID=@FlowID AND StepID=@StepID AND GroupID=@GroupID";
-        //    SqlParameter[] parameters = new SqlParameter[]{
-        //        new SqlParameter("@FlowID", SqlDbType.UniqueIdentifier){ Value = flowID },
-        //        new SqlParameter("@StepID", SqlDbType.UniqueIdentifier){ Value = stepID },
-        //        new SqlParameter("@GroupID", SqlDbType.UniqueIdentifier){ Value = groupID }
-        //    };
-        //    SqlDataReader dataReader = dbHelper.GetDataReader(sql, parameters);
-        //    List<RoadFlow.Data.Model.WorkFlowTask> List = DataReaderToList(dataReader);
-        //    dataReader.Close();
-        //    return List;
-        //}
+        /// <summary>
+        /// 得到一个实例的任务
+        /// </summary>
+        /// <param name="flowId">流程主键</param>
+        /// <param name="flowInstanceId">流程实例主键</param>
+        /// <returns></returns>
+        public List<FlowTask> GetTaskList(string flowId, string flowInstanceId)
+        {
+            return repos.Query(p => p.FlowId == flowId && p.FlowInstanceId == flowInstanceId).ToList();
+        }
 
-        ///// <summary>
-        ///// 得到一个流程实例一个步骤一个人员的任务
-        ///// </summary>
-        ///// <param name="flowID"></param>
-        ///// <param name="stepID"></param>
-        ///// <param name="groupID"></param>
-        ///// <param name="userID"></param>
-        ///// <returns></returns>
-        //public List<Model.WorkFlowTask> GetUserTaskList(Guid flowID, Guid stepID, Guid groupID, Guid userID)
-        //{
-        //    string sql = "SELECT * FROM WorkFlowTask WHERE FlowID=@FlowID AND StepID=@StepID AND GroupID=@GroupID AND ReceiveID=@ReceiveID";
-        //    SqlParameter[] parameters = new SqlParameter[]{
-        //        new SqlParameter("@FlowID", SqlDbType.UniqueIdentifier){ Value = flowID },
-        //        new SqlParameter("@StepID", SqlDbType.UniqueIdentifier){ Value = stepID },
-        //        new SqlParameter("@GroupID", SqlDbType.UniqueIdentifier){ Value = groupID },
-        //        new SqlParameter("@ReceiveID", SqlDbType.UniqueIdentifier){ Value = userID }
-        //    };
-        //    SqlDataReader dataReader = dbHelper.GetDataReader(sql, parameters);
-        //    List<RoadFlow.Data.Model.WorkFlowTask> List = DataReaderToList(dataReader);
-        //    dataReader.Close();
-        //    return List;
-        //}
+        /// <summary>
+        /// 得到一个实例的任务
+        /// </summary>
+        /// <param name="flowInstanceId">流程实例主键</param>
+        /// <returns></returns>
+        public List<FlowTask> GetTaskListByInstanceId(string flowInstanceId)
+        {
+            return repos.Query(p => p.FlowInstanceId == flowInstanceId).ToList();
+        }
+
+        /// <summary>
+        /// 获取流程实例指定步骤指定人员的任务
+        /// </summary>
+        /// <param name="flowId">流程主键</param>
+        /// <param name="stepId">步骤主键</param>
+        /// <param name="flowInstanceId">流程实例Id</param>
+        /// <param name="userId">用户主键</param>
+        /// <returns></returns>
+        public List<FlowTask> GetUserTaskList(string flowId, string stepId, string flowInstanceId, string userId)
+        {
+            return repos.Query(p => p.FlowId == flowId && p.StepId == stepId
+            && p.FlowInstanceId == flowInstanceId && p.ReceiveId == userId).ToList();
+        }
 
 
-        ///// <summary>
-        ///// 得到一个实例的任务
-        ///// </summary>
-        ///// <param name="flowID"></param>
-        ///// <param name="groupID"></param>
-        ///// <returns></returns>
-        //public List<RoadFlow.Data.Model.WorkFlowTask> GetTaskList(Guid flowID, Guid groupID)
-        //{
-        //    string sql = string.Empty;
-        //    SqlParameter[] parameters;
-        //    if (flowID == null || flowID.IsEmptyGuid())
-        //    {
-        //        sql = "SELECT * FROM WorkFlowTask WHERE GroupID=@GroupID";
-        //        parameters = new SqlParameter[]{
-        //            new SqlParameter("@GroupID", SqlDbType.UniqueIdentifier){ Value = groupID }
-        //        };
-        //    }
-        //    else
-        //    {
-        //        sql = "SELECT * FROM WorkFlowTask WHERE FlowID=@FlowID AND GroupID=@GroupID";
-        //        parameters = new SqlParameter[]{
-        //            new SqlParameter("@FlowID", SqlDbType.UniqueIdentifier){ Value = flowID },
-        //            new SqlParameter("@GroupID", SqlDbType.UniqueIdentifier){ Value = groupID }
-        //        };
-        //    }
-        //    SqlDataReader dataReader = dbHelper.GetDataReader(sql, parameters);
-        //    List<RoadFlow.Data.Model.WorkFlowTask> List = DataReaderToList(dataReader);
-        //    dataReader.Close();
-        //    return List;
-        //}
+        /// <summary>
+        /// 获取和一个任务同级的任务
+        /// </summary>
+        /// <param name="taskId">任务主键</param>
+        /// <param name="isStepId">是否区分步骤Id，多步骤会签区分的是上一步骤Id</param>
+        /// <returns></returns>
+        public List<FlowTask> GetSiblingTaskList(string taskId, bool isStepId = true)
+        {
+            var task = Get(taskId);
+            if (task == null)
+            {
+                return new List<FlowTask>();
+            }
+            var cols = StringHelper.ConvertArrayToString(EntityMetadata.ForType(typeof(FlowTask)).QueryColumns);
+            string sql =
+                $"SELECT {cols} FROM FlowTask WHERE PrevId=@PrevId AND {(isStepId ? "StepId=@StepId" : "PrevStepId=@StepId")}";
 
-        ///// <summary>
-        ///// 得到和一个任务同级的任务
-        ///// </summary>
-        ///// <param name="taskID">任务ID</param>
-        ///// <param name="isStepID">是否区分步骤ID，多步骤会签区分的是上一步骤ID</param>
-        ///// <returns></returns>
-        //public List<RoadFlow.Data.Model.WorkFlowTask> GetTaskList(Guid taskID, bool isStepID = true)
-        //{
-        //    var task = Get(taskID);
-        //    if (task == null)
-        //    {
-        //        return new List<Model.WorkFlowTask>() { };
-        //    }
-        //    string sql = string.Format("SELECT * FROM WorkFlowTask WHERE PrevID=@PrevID AND {0}", isStepID ? "StepID=@StepID" : "PrevStepID=@StepID");
-        //    SqlParameter[] parameters1 = new SqlParameter[]{
-        //        new SqlParameter("@PrevID", SqlDbType.UniqueIdentifier){ Value = task.PrevID },
-        //        new SqlParameter("@StepID", SqlDbType.UniqueIdentifier){ Value = isStepID ? task.StepID : task.PrevStepID }
-        //    };
-        //    SqlDataReader dataReader = dbHelper.GetDataReader(sql, parameters1);
-        //    List<RoadFlow.Data.Model.WorkFlowTask> List = DataReaderToList(dataReader);
-        //    dataReader.Close();
-        //    return List;
-        //}
+            return repos.Database.Query<FlowTask>(sql,
+                new object[] { task.PrevId, isStepId ? task.StepId : task.PrevStepId }).ToList();
+        }
 
-        ///// <summary>
-        ///// 得到一个任务的前一任务
-        ///// </summary>
-        ///// <param name="flowID"></param>
-        ///// <param name="groupID"></param>
-        ///// <returns></returns>
-        //public List<Model.WorkFlowTask> GetPrevTaskList(Guid taskID)
-        //{
-        //    string sql = "SELECT * FROM WorkFlowTask WHERE ID=(SELECT PrevID FROM WorkFlowTask WHERE ID=@ID)";
-        //    SqlParameter[] parameters = new SqlParameter[]{
-        //        new SqlParameter("@ID", SqlDbType.UniqueIdentifier){ Value = taskID }
-        //    };
-        //    SqlDataReader dataReader = dbHelper.GetDataReader(sql, parameters);
-        //    List<RoadFlow.Data.Model.WorkFlowTask> List = DataReaderToList(dataReader);
-        //    dataReader.Close();
-        //    return List;
-        //}
+        /// <summary>
+        /// 获取指定任务的前一任务
+        /// </summary>
+        /// <param name="taskId">任务主键</param>
+        /// <returns></returns>
+        public List<FlowTask> GetPrevTaskList(string taskId)
+        {
+            var cols = StringHelper.ConvertArrayToString(EntityMetadata.ForType(typeof(FlowTask)).QueryColumns);
+            string sql = $"SELECT {cols} FROM FlowTask WHERE Id=(SELECT PrevId FROM FlowTask WHERE Id=@Id)";
+            return repos.Database.Query<FlowTask>(sql, new object[] { taskId }).ToList();
+        }
 
         /// <summary>
         /// 获取指定任务的后续任务
         /// </summary>
-        /// <param name="taskId">任务Id</param>
+        /// <param name="taskId">任务主键</param>
         /// <returns></returns>
         public List<FlowTask> GetNextTaskList(string taskId)
         {
@@ -562,52 +521,6 @@ namespace Zeniths.WorkFlow.Service
         //}
 
 
-        /*
-            /// <summary>
-            /// 获取启用的流程任务列表
-            /// </summary>
-            /// <returns>返回启用的流程任务列表</returns>
-            public List<FlowTask> GetEnabledList()
-            {
-                var query = repos.NewQuery.Where(p => p.IsEnabled == true).OrderBy(p => p.Id);
-                return repos.Query(query).ToList();
-            }
-
-            /// <summary>
-            /// 获取流程任务DataTable
-            /// </summary>
-            /// <returns>返回流程任务DataTable</returns>
-            public DataTable GetTable()
-            {
-                var query = repos.NewQuery.OrderBy(p => p.Id);
-                return repos.GetTable(query);
-            }
-
-
-            /// <summary>
-            /// 获取流程任务分页列表
-            /// </summary>
-            /// <param name="pageIndex">页面索引</param>
-            /// <param name="pageSize">分页大小</param>
-            /// <param name="orderName">排序列名</param>
-            /// <param name="orderDir">排序方式</param>
-            /// <param name="name">查询关键字</param>
-            /// <returns>返回流程任务分页列表</returns>
-            public PageList<FlowTask> GetPageList(int pageIndex, int pageSize, string orderName, string orderDir, string name)
-            {
-                orderName = orderName.IsEmpty() ? nameof(FlowTask.Id) : orderName;//默认使用主键排序
-                orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
-                var query = repos.NewQuery.Take(pageSize).Page(pageIndex).OrderBy(orderName, orderDir.IsAsc());
-
-                if (name.IsNotEmpty())
-                {
-                    name = name.Trim();
-                    query.Where(p => p.Name.Contains(name));
-                }
-
-                return repos.Page(query);
-            }
-           */
 
         #region 私有方法
 
