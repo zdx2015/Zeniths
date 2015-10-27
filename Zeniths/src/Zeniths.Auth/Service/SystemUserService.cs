@@ -224,6 +224,16 @@ namespace Zeniths.Auth.Service
         }
 
         /// <summary>
+        /// 获取简单用户对象(只包括用户Id,姓名,账号,部门Id,部门名称)
+        /// </summary>
+        /// <param name="id">用户主键</param>
+        /// <returns>用户对象</returns>
+        public SystemUser GetSimple(int id)
+        {
+            return repos.Get(id,p=>p.Id, p => p.Name, p => p.Account, p => p.DepartmentId, p => p.DepartmentName);
+        }
+
+        /// <summary>
         /// 获取用户姓名
         /// </summary>
         /// <param name="id">用户主键</param>

@@ -29,7 +29,7 @@ namespace Zeniths.WorkFlow.Utility
         /// </summary>
         /// <param name="execute">执行数据</param>
         /// <returns>返回执行结果</returns>
-        public ExecuteResult Start(ExecuteData execute)
+        public ExecuteResult Process(ExecuteData execute)
         {
             var eventArgs = new FlowEventArgs();
             eventArgs.FlowId = execute.FlowId;
@@ -40,22 +40,56 @@ namespace Zeniths.WorkFlow.Utility
             eventArgs.StepSetting = WorkFlowHelper.GetStepSetting(execute.FlowId, execute.StepId);
             eventArgs.QueryString = execute.QueryString;
             eventArgs.Form = execute.Form;
-
+            eventArgs.CurrentUser = execute.SenderUser;
+            eventArgs.ExecuteData = execute;
 
             var currentStepSetting = WorkFlowHelper.GetStepSetting(execute.FlowId, execute.StepId);
             IStepEvent stepEvent = ReflectionHelper.CreateInstance<IStepEvent>(currentStepSetting.ControlProvider);
+
+            //保存业务数据
+            #region 保存业务数据
+
+            if (stepEvent != null)
+            {
+                switch (execute.ExecuteType)
+                {
+                    case ExecuteType.Save:
+                    case ExecuteType.Submit:
+                    case ExecuteType.Completed:
+                        var saveResult = stepEvent.OnSaveData(eventArgs);
+                        if (saveResult.Success)
+                        {
+                            execute.BusinessId = eventArgs.BusinessId;
+                        }
+                        else
+                        {
+                            return new ExecuteResult(false, saveResult.Message);
+                        }
+                        break;
+                }
+            }
+
+            #endregion
 
             //步骤提交前事件
             if (stepEvent != null && (execute.ExecuteType == ExecuteType.Submit || execute.ExecuteType == ExecuteType.Completed))
             {
                 var eventResult = stepEvent.OnBeforeSubmit(eventArgs);
                 Debug.WriteLine($"执行步骤提交前事件：返回值：{eventResult.Success};{eventResult.Message}");
+                if (eventResult.Failure)
+                {
+                    return new ExecuteResult(false, eventResult.Message);
+                }
             }
             //步骤退回前事件
             if (stepEvent != null && execute.ExecuteType == ExecuteType.Back)
             {
                 var eventResult = stepEvent.OnBeforeBack(eventArgs);
                 Debug.WriteLine($"执行步骤退回前事件：返回值：{eventResult.Success};{eventResult.Message}");
+                if (eventResult.Failure)
+                {
+                    return new ExecuteResult(false, eventResult.Message);
+                }
             }
 
 
@@ -85,17 +119,28 @@ namespace Zeniths.WorkFlow.Utility
             //    RoadFlow.Platform.Log.Types.流程相关);
 
 
+            eventArgs.FlowInstanceId = execute.FlowInstanceId;
+            eventArgs.TaskId = execute.TaskId;
+
             //步骤提交后事件
             if (stepEvent != null && (execute.ExecuteType == ExecuteType.Submit || execute.ExecuteType == ExecuteType.Completed))
             {
                 var eventResult = stepEvent.OnAfterSubmit(eventArgs);
                 Debug.WriteLine($"执行步骤提交后事件：返回值：{eventResult.Success};{eventResult.Message}");
+                if (eventResult.Failure)
+                {
+                    return new ExecuteResult(false, eventResult.Message);
+                }
             }
             //步骤退回后事件
             if (stepEvent != null && execute.ExecuteType == ExecuteType.Back)
             {
                 var eventResult = stepEvent.OnAfterBack(eventArgs);
                 Debug.WriteLine($"执行步骤退回后事件：返回值：{eventResult.Success};{eventResult.Message}");
+                if (eventResult.Failure)
+                {
+                    return new ExecuteResult(false, eventResult.Message);
+                }
             }
 
             return new ExecuteResult(true);
@@ -159,42 +204,42 @@ namespace Zeniths.WorkFlow.Utility
         /// <summary>
         /// 获取流程执行数据
         /// </summary>
-        /// <param name="flowId"></param>
-        /// <param name="stepId"></param>
-        /// <param name="taskId"></param>
-        /// <param name="businessId"></param>
-        /// <param name="flowInstanceId"></param>
-        /// <param name="title"></param>
-        /// <param name="isAudit"></param>
-        /// <param name="opinion"></param>
         /// <param name="executeParam"></param>
         /// <param name="currentUser"></param>
         /// <param name="queryString"></param>
         /// <param name="form"></param>
         /// <returns></returns>
-        public ExecuteData GetExecuteData(string flowId, string stepId, string taskId,
-            string businessId, string flowInstanceId, string title, bool? isAudit,
-            string opinion, string executeParam, SystemUser currentUser,
+        public ExecuteData GetExecuteData(string executeParam, SystemUser currentUser,
             NameValueCollection queryString, NameValueCollection form)
         {
             if (string.IsNullOrEmpty(executeParam))
             {
                 throw new ArgumentException("流程执行参数不允许为空", nameof(executeParam));
             }
+            var executeParamObject = JsonHelper.Deserialize<ExecuteParam>(executeParam);
+            string flowId = executeParamObject.FlowId;
+            string opinion = executeParamObject.Opinion;
+            string stepId = executeParamObject.StepId;
+            string taskId = executeParamObject.TaskId;
+            string title = executeParamObject.Title;
+            string businessId = executeParamObject.BusinessId;
+            string flowInstanceId = executeParamObject.FlowInstanceId;
+            bool? isAudit = executeParamObject.IsAudit;
+
             var workFlowDesign = WorkFlowHelper.GetWorkFlowDesign(flowId);
             if (workFlowDesign == null)
             {
                 throw new ArgumentException("未找到流程设计对象,请确认流程是否已发布", nameof(flowId));
             }
 
-            var executeParamObject = JsonHelper.Deserialize<ExecuteParam>(executeParam);
             string opation = executeParamObject.Type.ToLower();
-
+            
             var execute = new ExecuteData();
             execute.Opinion = string.IsNullOrEmpty(opinion) ? string.Empty : opinion.Trim();
             execute.FlowId = flowId;
             execute.FlowInstanceId = flowInstanceId;
             execute.BusinessId = businessId;
+            execute.IsAudit = isAudit;
             execute.Note = string.Empty;
             execute.SenderUser = currentUser;
             execute.StepId = string.IsNullOrEmpty(stepId) ? WorkFlowHelper.GetFirstStepId(flowId) : stepId;
@@ -373,14 +418,14 @@ namespace Zeniths.WorkFlow.Utility
                                     }
                                 }
                             }
-                            taskService.Completed(currentTask.Id, executeModel.Opinion, executeModel.IsAudit,2);//完成自己的任务
+                            taskService.Completed(currentTask.Id, executeModel.Opinion, executeModel.IsAudit, 2);//完成自己的任务
                             break;
-                       #endregion
+                            #endregion
                     }
                 }
                 else //完成第一步
                 {
-                    taskService.Completed(currentTask.Id, executeModel.Opinion, executeModel.IsAudit,2);
+                    taskService.Completed(currentTask.Id, executeModel.Opinion, executeModel.IsAudit, 2);
                 }
 
                 #endregion
@@ -418,7 +463,7 @@ namespace Zeniths.WorkFlow.Utility
                         {
                             continue;
                         }
-                        
+
                         //待发送的步骤信息
                         var nextStep = WorkFlowHelper.GetStepSetting(executeModel.FlowId, step.Key);
                         if (nextStep == null)
@@ -501,7 +546,7 @@ namespace Zeniths.WorkFlow.Utility
                         #endregion
 
                         if (isPassing) //可以创建后续步骤
-                        {  
+                        {
                             var task = CreateNextTask(executeModel, currentTask, user, step.Key);
                             taskService.Insert(task);
                             nextTasks.Add(task);
@@ -753,7 +798,7 @@ namespace Zeniths.WorkFlow.Utility
                 }
                 #endregion
 
-                
+
                 if (isBack)
                 {
                     foreach (var task in tasks.Distinct(new FlowTaskReceiveIdComparer()))
@@ -761,7 +806,7 @@ namespace Zeniths.WorkFlow.Utility
                         if (task != null)
                         {
                             FlowTask newTask = task;
-                              
+
                             newTask.Id = StringHelper.GetGuid();
                             newTask.PrevId = currentTask.Id;
                             newTask.Note = "退回任务";
@@ -787,6 +832,10 @@ namespace Zeniths.WorkFlow.Utility
                             newTask.ActualFinishDateTime = null;
                             taskService.Insert(newTask);
                             nextTasks.Add(newTask);
+
+
+                            executeModel.FlowInstanceId = newTask.FlowInstanceId;
+                            executeModel.TaskId = newTask.Id;
                         }
                     }
                 }
@@ -975,10 +1024,16 @@ namespace Zeniths.WorkFlow.Utility
                 task.PlanFinishDateTime = DateTime.Now.AddHours(processHour);
             }
             taskService.Insert(task);
+
+
+            executeModel.FlowInstanceId = task.FlowInstanceId;
+            executeModel.TaskId = task.Id;
+
+
             return task;
         }
 
-        private FlowTask CreateNextTask(ExecuteData executeModel,FlowTask currentTask,SystemUser user,string nextStepId)
+        private FlowTask CreateNextTask(ExecuteData executeModel, FlowTask currentTask, SystemUser user, string nextStepId)
         {
             FlowTask task = new FlowTask();
             task.Id = StringHelper.GetGuid();
@@ -1007,6 +1062,11 @@ namespace Zeniths.WorkFlow.Utility
                 task.PlanFinishDateTime = DateTime.Now.AddHours(processHour);
             }
             taskService.Insert(task);
+
+
+            executeModel.FlowInstanceId = task.FlowInstanceId;
+            executeModel.TaskId = task.Id;
+
             return task;
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using Zeniths.Auth.Entity;
 
 namespace Zeniths.WorkFlow.Utility
 {
@@ -33,6 +34,11 @@ namespace Zeniths.WorkFlow.Utility
         public string BusinessId { get; set; }
 
         /// <summary>
+        /// 当前操作用户
+        /// </summary>
+        public SystemUser CurrentUser { get; set; }
+
+        /// <summary>
         /// 当前步骤配置信息
         /// </summary>
         public FlowStepSetting StepSetting { get; set; }
@@ -46,5 +52,10 @@ namespace Zeniths.WorkFlow.Utility
         /// 表单Form数据
         /// </summary>
         public NameValueCollection Form { get; set; }
+
+        /// <summary>
+        /// 流程任务处理模型
+        /// </summary>
+        public ExecuteData ExecuteData { get; set; }
     }
 }

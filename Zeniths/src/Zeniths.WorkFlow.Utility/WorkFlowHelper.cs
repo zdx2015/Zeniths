@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
+using Zeniths.Auth.Service;
+using Zeniths.Auth.Utility;
 using Zeniths.Configuration;
 using Zeniths.Entity;
 using Zeniths.Extensions;
+using Zeniths.Helper;
 using Zeniths.Utility;
 using Zeniths.WorkFlow.Service;
 
@@ -82,6 +86,34 @@ namespace Zeniths.WorkFlow.Utility
             var design = GetWorkFlowDesign(flowId);
             var _stepId = GetStepId(flowId, stepId);
             return design.Step[_stepId];
+        }
+
+        /// <summary>
+        /// 获取连线设置
+        /// </summary>
+        /// <param name="flowId">流程主键</param>
+        /// <param name="fromStepId">开始步骤主键</param>
+        /// <param name="toStepId">结束步骤主键</param>
+        /// <returns></returns>
+        public static FlowLineSetting GetLineSetting(string flowId, string fromStepId, string toStepId)
+        {
+            var design = GetWorkFlowDesign(flowId);
+            var _fromStepId = GetStepId(flowId, fromStepId);
+            var _toStepId = GetStepId(flowId, toStepId);
+            var lineId = string.Empty;
+            foreach (var item in design.Flow.Lines)
+            {
+                if (item.Value.From.Equals(_fromStepId) && item.Value.To.Equals(_toStepId))
+                {
+                    lineId = item.Key;
+                    break;
+                }
+            }
+            if (design.Line.ContainsKey(lineId))
+            {
+                return design.Line[lineId];
+            }
+            return new FlowLineSetting();
         }
 
         /// <summary>
@@ -319,6 +351,117 @@ namespace Zeniths.WorkFlow.Utility
         }
 
         /// <summary>
+        /// 获取指定步骤的流程执行的后续步骤集合
+        /// </summary>
+        /// <param name="flowId">流程主键</param>
+        /// <param name="stepId">步骤主键</param>
+        /// <param name="queryString">表单QueryString数据</param>
+        /// <param name="form">表单Form数据</param>
+        /// <returns></returns>
+        public static List<FlowStepSetting> GetExecuteNextSteps(string flowId, string stepId,
+            NameValueCollection queryString, NameValueCollection form)
+        {
+            var currentStep = WorkFlowHelper.GetStepSetting(flowId, stepId);
+            var nextSteps = GetNextSteps(flowId, stepId);
+            if (currentStep.FlowCategory.ToInt() != 0 || nextSteps.Count == 0)
+            {
+                return new List<FlowStepSetting>();
+            }
+            var userService = new SystemUserService();
+            var taskService = new FlowTaskService();
+            var firstStepId = WorkFlowHelper.GetFirstStepId(flowId);
+            List<string> removeIds = new List<string>();
+            var eventArgs = new FlowLineEventArgs();
+            eventArgs.FlowId = flowId;
+            eventArgs.StepId = stepId;
+            eventArgs.FlowInstanceId = queryString["FlowInstanceId"];
+            eventArgs.TaskId = queryString["TaskId"];
+            eventArgs.BusinessId = queryString["BusinessId"];
+
+            eventArgs.QueryString = queryString;
+            eventArgs.Form = form;
+
+            foreach (var step in nextSteps)
+            {
+                var line = GetLineSetting(flowId, stepId, step.Uid);
+                eventArgs.LineSetting = line;
+                eventArgs.StepSetting = step;
+                ILineEvent lineEvent = ReflectionHelper.CreateInstance<ILineEvent>(line.ValidProvider);
+                if (lineEvent != null)
+                {
+                    var result = lineEvent.OnValid(eventArgs);
+                    if (result.Failure)
+                    {
+                        removeIds.Add(step.Uid);
+                    }
+                }
+
+                #region 组织机构关系判断
+                var senderId = OrganizeHelper.GetCurrentUser().Id;
+                if (line.OrganizeSenderchargeleader && !userService.IsChargeLeader(senderId))
+                {
+                    removeIds.Add(step.Uid);
+                }
+                if (!line.OrganizeSenderin.IsNullOrEmpty() && !OrganizeHelper.IsContainsUser(senderId, line.OrganizeSenderin))
+                {
+                    removeIds.Add(step.Uid);
+                }
+                if (line.OrganizeSenderleader && !userService.IsMainLeader(senderId))
+                {
+                    removeIds.Add(step.Uid);
+                }
+                if (!line.OrganizeSendernotin.IsNullOrEmpty() && OrganizeHelper.IsContainsUser(senderId, line.OrganizeSendernotin))
+                {
+                    removeIds.Add(step.Uid);
+                }
+                //发起者Id
+                int sponserID = currentStep.Uid == firstStepId ? //如果是第一步则发起者就是发送者
+                    senderId :
+                    taskService.GetFirstSenderId(eventArgs.FlowId, eventArgs.FlowInstanceId).ToInt();
+
+                if (line.OrganizeSponsorchargeleader && !userService.IsChargeLeader(sponserID))
+                {
+                    removeIds.Add(step.Uid);
+                }
+                if (!line.OrganizeSponsorin.IsNullOrEmpty() && !OrganizeHelper.IsContainsUser(sponserID, line.OrganizeSponsorin))
+                {
+                    removeIds.Add(step.Uid);
+                }
+                if (line.OrganizeSponsorleader && !userService.IsMainLeader(sponserID))
+                {
+                    removeIds.Add(step.Uid);
+                }
+                if (!line.OrganizeSponsornotin.IsNullOrEmpty() && OrganizeHelper.IsContainsUser(sponserID, line.OrganizeSponsornotin))
+                {
+                    removeIds.Add(step.Uid);
+                }
+                if (line.OrganizeNotsenderchargeleader && userService.IsChargeLeader(senderId))
+                {
+                    removeIds.Add(step.Uid);
+                }
+                if (line.OrganizeNotsenderleader && userService.IsMainLeader(senderId))
+                {
+                    removeIds.Add(step.Uid);
+                }
+                if (line.OrganizeNotsponsorchargeleader && userService.IsChargeLeader(sponserID))
+                {
+                    removeIds.Add(step.Uid);
+                }
+                if (line.OrganizeNotsponsorleader && userService.IsMainLeader(sponserID))
+                {
+                    removeIds.Add(step.Uid);
+                }
+                #endregion
+
+            }
+            foreach (string rid in removeIds)
+            {
+                nextSteps.RemoveAll(p => p.Uid == rid);
+            }
+            return nextSteps;
+        }
+
+        /// <summary>
         /// 获取任务状态名称
         /// </summary>
         /// <param name="status">任务状态</param>
@@ -404,13 +547,30 @@ namespace Zeniths.WorkFlow.Utility
                         {
                             if (!dict.Keys.Contains(task1.StepId) && task1.StepId != task.StepId)
                             {
-                                dict.Add(task1.StepId, GetStepName(task.FlowId,task.StepId));
+                                dict.Add(task1.StepId, GetStepName(task.FlowId, task.StepId));
                             }
                         }
                     }
                     break;
             }
             return dict;
+        }
+
+        /// <summary>
+        /// 设置对象的当前流程步骤信息
+        /// </summary>
+        /// <param name="entity">待修改的对象</param>
+        /// <param name="args">流程事件参数</param>
+        public static void SetCurrentFlowInfo(dynamic entity, FlowEventArgs args)
+        {
+            var type = entity?.GetType();
+
+            type?.GetProperty("Title")?.SetValue(entity, args.ExecuteData.Title);
+            type?.GetProperty("FlowId")?.SetValue(entity, args.FlowId);
+            type?.GetProperty("FlowName")?.SetValue(entity, GetFlowName(args.FlowId));
+            type?.GetProperty("FlowInstanceId")?.SetValue(entity, args.FlowInstanceId);
+            type?.GetProperty("StepId")?.SetValue(entity, args.StepId);
+            type?.GetProperty("StepName")?.SetValue(entity, args.StepSetting.Name);
         }
     }
 }

@@ -788,12 +788,13 @@ GooFlow.prototype = {
                 return;
             }
 
-            if (self.$nodeData[this.id]
-                && self.$nodeData[this.id].type == 'endround'
-                && self.getLineByToId(this.id)) {
-                alert('到达结束节点只能有一条连线');
-                return;
-            }
+            
+            //if (self.$nodeData[this.id]
+            //    && self.$nodeData[this.id].type == 'endround'
+            //    && self.getLineByToId(this.id)) {
+            //    alert('到达结束节点只能有一条连线');
+            //    return;
+            //}
 
             if (lineStart) {
                 This.addLine(This.$id + "_line_" + This.$max, { from: lineStart.id, to: this.id, name: "" });

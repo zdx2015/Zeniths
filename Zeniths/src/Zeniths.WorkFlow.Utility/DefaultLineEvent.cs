@@ -11,7 +11,7 @@ namespace Zeniths.WorkFlow.Utility
         /// </summary>
         /// <param name="args">事件参数</param>
         /// <returns>验证成功返回BoolMessage.True</returns>
-        public virtual BoolMessage OnValid(FlowEventArgs args)
+        public virtual BoolMessage OnValid(FlowLineEventArgs args)
         {
             return BoolMessage.False;
         }
