@@ -43,6 +43,8 @@
     <Compile Include="HrDatabase.cs" />
     <Compile Include="HrRepository.cs" />
     <Compile Include="Entity\GoOutRegistration.cs" />
+    <Compile Include="Service\DailyReimburseDetailsService.cs" />
+    <Compile Include="Service\DailyReimburseService.cs" />
     <Compile Include="Service\GoOutRegistrationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\OAWorkLogService.cs" />
