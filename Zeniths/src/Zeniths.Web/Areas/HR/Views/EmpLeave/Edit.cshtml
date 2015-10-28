@@ -1,0 +1,151 @@
+﻿@model EmpLeave
+@{
+    var title = "登记员工请假";
+}
+
+<div class="container-edit-zeniths" style="width: 60%;margin-top:50px;">
+    <form class="editform" action="@Url.Action("Execute","FlowRun",new { area = "WorkFlow" })" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <table class="table table-form table-dialog-form">
+
+                    <tr>
+                        <th class="w-200px">
+                            <label class="control-label">开始日期：</label>
+                        </th>
+                        <td>
+                            <input class="date-control form-control" name="@nameof(Model.StartDate)" value="@Model.StartDate" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">结束日期：</label>
+                        </th>
+                        <td>
+                            <input class="date-control form-control" name="@nameof(Model.EndDate)" value="@Model.EndDate" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">天数：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Days)" value="@Model.Days" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">类型：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Category)" value="@Model.Category" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">原因：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Reason)" value="@Model.Reason" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">任务名称：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Title)" value="@Model.Title" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section script{
+    <script>
+
+        $(function () {
+            var _workflow_execute_params = '@Html.Raw(Html.WorkflowExecuteParams())';
+            var _workflow_execute_params_obj = JSON.parse(_workflow_execute_params);
+            _workflow_execute_params_obj.type = 'save';
+
+            //$('.editform').dataform().initSelect2().initiCheck()
+            $('.editform').dataform().initDatePicker().initValidate({
+                rules: {
+                    StartDate: {
+                        required: true
+                    },
+                    EndDate: {
+                        required: true
+                    },
+                    Days: {
+                        required: true,
+                        digits: true
+                    },
+                    Category: {
+                        required: true
+                    },
+                    Title: {
+                        required: true
+                    }
+                },
+                messages: {
+                    StartDate: {
+                        required: '请填写开始日期'
+                    },
+                    EndDate: {
+                        required: '请填写结束日期'
+                    },
+                    Days: {
+                        required: '请填写天数',
+                        digits: '只能输入正整数'
+
+                    },
+                    Category: {
+                        required: '请填写类型'
+                    },
+                    Title: {
+                        required: '请填写任务名称'
+                    }
+                },
+                beforeSubmit: function () {
+                }
+            }).initAjax({
+                data: {
+                    _workflow_execute_params: JSON.stringify(_workflow_execute_params_obj)
+                },
+                success: zeniths.util.formAjaxSuccess
+            });
+
+        });
+    </script>
+}

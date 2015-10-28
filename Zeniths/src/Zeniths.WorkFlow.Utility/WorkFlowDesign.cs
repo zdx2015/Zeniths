@@ -160,7 +160,7 @@ namespace Zeniths.WorkFlow.Utility
         public int Top { get; set; }
 
         /// <summary>
-        /// 节点类型 (startround:开始;endround:endround;stepnode:普通节点;shuntnode:分流节点;confluencenode:合流节点)
+        /// 节点类型 (startround:开始;endround:结束节点;stepnode:普通节点;shuntnode:分流节点;confluencenode:合流节点)
         /// </summary>
         [JsonProperty("type")]
         public string Type { get; set; }
@@ -189,11 +189,11 @@ namespace Zeniths.WorkFlow.Utility
     /// </summary>
     public class FlowStepSetting
     {
-        /// <summary>
-        /// 步骤名称
-        /// </summary>
-        [JsonProperty("id")]
-        public string Id { get; set; }
+        ///// <summary>
+        ///// 步骤Id
+        ///// </summary>
+        //[JsonProperty("id")]
+        //public string Id { get; set; }
 
         /// <summary>
         /// 编程标识
@@ -357,35 +357,11 @@ namespace Zeniths.WorkFlow.Utility
         public string HandlerDefault { get; set; }
 
         /// <summary>
-        /// 保存数据事件
+        /// 控制实现类
         /// </summary>
-        [JsonProperty("eventSaveFromData")]
-        public string EventSaveFromData { get; set; }
-
-        /// <summary>
-        /// 提交前事件
-        /// </summary>
-        [JsonProperty("eventSubmitBefore")]
-        public string EventSubmitBefore { get; set; }
-
-        /// <summary>
-        /// 提交后事件
-        /// </summary>
-        [JsonProperty("eventSubmitAfter")]
-        public string EventSubmitAfter { get; set; }
-
-        /// <summary>
-        /// 退回前事件
-        /// </summary>
-        [JsonProperty("eventBackBefore")]
-        public string EventBackBefore { get; set; }
-
-        /// <summary>
-        /// 退回后事件
-        /// </summary>
-        [JsonProperty("eventBackAfter")]
-        public string EventBackAfter { get; set; }
-
+        [JsonProperty("controlProvider")]
+        public string ControlProvider { get; set; }
+         
         /// <summary>
         /// 是否启用超时提醒
         /// </summary>
@@ -447,10 +423,10 @@ namespace Zeniths.WorkFlow.Utility
         public string Name { get; set; }
 
         /// <summary>
-        /// 自定义方法
+        /// 验证实现类
         /// </summary>
-        [JsonProperty("method")]
-        public string Method { get; set; }
+        [JsonProperty("validProvider")]
+        public string ValidProvider { get; set; }
 
         /// <summary>
         /// 发送者属于

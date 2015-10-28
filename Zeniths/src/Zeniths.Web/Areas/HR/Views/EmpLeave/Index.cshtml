@@ -1,5 +1,5 @@
 ﻿@{
-    var title = "管理工作日志";
+    var title = "管理员工请假";
 }
 <div class="container-zeniths">
     <div class="panel panel-default panel-zeniths">
@@ -10,15 +10,15 @@
             <div class="search-panel-zeniths">
                 <form class="form-inline search-form">
                     <div class="form-group">
-                        <input class="w-300px form-control" name="Name" type="text" placeholder="请输入关键字查询">
+                        <input class="w-300px form-control" name="@nameof(EmpLeave.Title)" type="text" placeholder="请输入关键字查询">
                     </div>
                     &nbsp;
                     <button class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> 查询
                     </button>
-                    <a class="btn btn-success" id="btnCreate" data-url="@Url.Action("Create")">
+                    @*<a class="btn btn-success" id="btnCreate" data-url="@Url.Action("Create")">
                         <i class="fa fa-plus"></i> 新建
-                    </a>
+                    </a>*@
                     <a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
                         <i class="fa fa-trash-o"></i> 删除
                     </a>

@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Zeniths.Auth.Utility;
+using Zeniths.Configuration;
 using Zeniths.Helper;
 using Zeniths.WorkFlow.Service;
 
@@ -47,6 +48,24 @@ namespace Zeniths.WorkFlow.Utility
         public static MvcHtmlString FlowCategoryOptions(this HtmlHelper helper, string selected = null)
         {
             return MvcHtmlString.Create(AuthHelper.BuildDicOptions("FlowCategory", selected));
+        }
+
+        /// <summary>
+        /// 生成工作流参数
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <returns></returns>
+        public static MvcHtmlString WorkflowExecuteParams(this HtmlHelper helper)
+        {
+            ExecuteParam param = new ExecuteParam();
+
+            param.FlowId = WebHelper.GetQueryString("FlowId");
+            param.StepId = WebHelper.GetQueryString("StepId");
+            param.TaskId = WebHelper.GetQueryString("TaskId");
+            param.BusinessId = WebHelper.GetQueryString("BusinessId");
+            param.FlowInstanceId = WebHelper.GetQueryString("FlowInstanceId");
+
+            return MvcHtmlString.Create(JsonHelper.Serialize(param));
         }
     }
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Text;
 using Zeniths.Helper;
 
 namespace Zeniths.Extensions
@@ -19,7 +20,7 @@ namespace Zeniths.Extensions
         /// <param name="list">列表对象</param>
         /// <param name="filterPredicate">过滤的操作,如果为空则复制全部</param>
         /// <exception cref="System.ArgumentNullException">参数action 为null</exception>
-        public static List<TSource> Copy<TSource>(this IEnumerable<TSource> list, Func<TSource, bool> filterPredicate) where TSource : class,new()
+        public static List<TSource> Copy<TSource>(this IEnumerable<TSource> list, Func<TSource, bool> filterPredicate) where TSource : class, new()
         {
             List<TSource> newList = new List<TSource>();
             foreach (TSource item in list)
@@ -133,9 +134,23 @@ namespace Zeniths.Extensions
         /// </summary>
         /// <typeparam name="TSource">实体类型</typeparam>
         /// <param name="list">实体列表</param>
-        public static DataTable ToDataTable<TSource>(this List<TSource> list) where TSource : class,new()
+        public static DataTable ToDataTable<TSource>(this List<TSource> list) where TSource : class, new()
         {
             return DataTableHelper.ConvertToDataTable(list);
+        }
+
+        public static string ToSplitString(this IList<string> strList, string split = ",")
+        {
+            StringBuilder sb = new StringBuilder(strList.Count * 10);
+            for (int i = 0; i < strList.Count; i++)
+            {
+                sb.Append(strList[i]);
+                if (i < strList.Count - 1)
+                {
+                    sb.Append(split);
+                }
+            }
+            return sb.ToString();
         }
 
         #endregion

@@ -211,8 +211,15 @@
     <Content Include="Areas\HR\Views\DailyReimburseDetails\Edit.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburseDetails\Grid.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburseDetails\Index.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Details.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Index.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowRun\Send.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowRun\Back.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowRun\Error.cshtml" />
     <None Include="Plugin\_references.js" />
     <Content Include="Plugin\bootstrap-clockpicker\css\bootstrap-clockpicker.css" />
     <Content Include="Plugin\bootstrap-clockpicker\js\bootstrap-clockpicker.js" />
@@ -599,11 +606,13 @@
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
     <Compile Include="Areas\HR\Controllers\DailyReimburseController.cs" />
     <Compile Include="Areas\HR\Controllers\DailyReimburseDetailsController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmpLeaveController.cs" />
     <Compile Include="Areas\HR\Controllers\GoOutRegistrationController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogShareController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\FlowController.cs" />
+    <Compile Include="Areas\WorkFlow\Controllers\FlowRunController.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\SelectMemberController.cs" />
     <Compile Include="Areas\WorkFlow\WorkFlowAreaRegistration.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\FlowButtonController.cs" />
@@ -648,6 +657,7 @@
   <ItemGroup>
     <Folder Include="Areas\HR\Assets\css\" />
     <Folder Include="Areas\HR\Assets\js\" />
+    <Folder Include="Areas\HR\Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zeniths.Auth.Utility\Zeniths.Auth.Utility.csproj">
@@ -657,6 +667,10 @@
     <ProjectReference Include="..\Zeniths.Auth\Zeniths.Auth.csproj">
       <Project>{eb7b2a8a-484d-4279-861c-5560b1d76160}</Project>
       <Name>Zeniths.Auth</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zeniths.Hr.WorkFlow\Zeniths.Hr.WorkFlow.csproj">
+      <Project>{69d3e92a-ac3d-465b-a146-be54432f19e1}</Project>
+      <Name>Zeniths.Hr.WorkFlow</Name>
     </ProjectReference>
     <ProjectReference Include="..\Zeniths.Hr\Zeniths.Hr.csproj">
       <Project>{a151cfa0-a72e-499b-84e0-af5dc3d2d142}</Project>
