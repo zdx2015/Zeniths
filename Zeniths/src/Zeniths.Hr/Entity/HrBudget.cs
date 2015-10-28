@@ -11,6 +11,7 @@ namespace Zeniths.Hr.Entity
     /// 部门预算
     /// </summary>
     [Table(Caption = "部门预算")]
+    [PrimaryKey("Id", true)]
     public class HrBudget
     {
 		/// <summary>
@@ -103,10 +104,10 @@ namespace Zeniths.Hr.Entity
 		[Column(Caption = "总经理审批时间")]
         public DateTime? GeneralManagerDate { get; set; }
 
-		/// <summary>
-        /// 处理状态
+        /// <summary>
+        /// 处理状态 1 未提交 2 申请中 3 已审核 4 驳回中
         /// </summary>
-		[Column(Caption = "处理状态")]
+        [Column(Caption = "处理状态")]
         public int? Status { get; set; }
 
 		/// <summary>

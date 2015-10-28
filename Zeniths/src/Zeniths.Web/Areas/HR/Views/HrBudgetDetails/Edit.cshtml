@@ -15,7 +15,7 @@
                 <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
                 <table class="table table-form table-dialog-form">
                 
-                    <tr>
+                    @*<tr>
                         <th class="w-100px">
                             <label class="control-label">预算主键：</label>
                         </th>
@@ -34,29 +34,17 @@
                                 <input class="form-control" name="@nameof(Model.BudgetCategoryId)" value="@Model.BudgetCategoryId" type="text" />
                             </div>
                         </td>
-                    </tr>
+                    </tr>*@
                     <tr>
                         <th >
-                            <label class="control-label">预算类别名称：</label>
+                            <label class="control-label">项目类别：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
                                 <input class="form-control" name="@nameof(Model.BudgetCategoryName)" value="@Model.BudgetCategoryName" type="text" />
                             </div>
                         </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">项目名称：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.BudgetItemName)" value="@Model.BudgetItemName" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
+                        <th>
                             <label class="control-label">预算金额：</label>
                         </th>
                         <td>
@@ -67,9 +55,19 @@
                     </tr>
                     <tr>
                         <th >
+                            <label class="control-label">项目名称：</label>
+                        </th>
+                        <td colspan="3">
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.BudgetItemName)" value="@Model.BudgetItemName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
                             <label class="control-label">备注：</label>
                         </th>
-                        <td>
+                        <td colspan="3">
                             <div class="input-icon right">
                                 <input class="form-control" name="@nameof(Model.Note)" value="@Model.Note" type="text" />
                             </div>

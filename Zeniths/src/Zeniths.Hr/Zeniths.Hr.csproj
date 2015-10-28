@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Entity\HrBudget.cs" />
     <Compile Include="Entity\HrBudgetDetails.cs" />
+    <Compile Include="Entity\HrBudgetView.cs" />
     <Compile Include="HrDatabase.cs" />
     <Compile Include="HrRepository.cs" />
     <Compile Include="Entity\GoOutRegistration.cs" />

@@ -31,9 +31,9 @@ namespace Zeniths.Hr.Service
         /// <returns>如果存在指定记录返回BoolMessage.False</returns>
         public BoolMessage Exists(HrBudgetDetails entity)
         {
-            return BoolMessage.True;
-            //var has = repos.Exists(p => p.Name == entity.Name && p.Id != entity.Id);
-            //return has ? new BoolMessage(false, "输入名称已经存在") : BoolMessage.True;
+            //return BoolMessage.True;
+            var has = repos.Exists(p => p.BudgetItemName == entity.BudgetItemName && p.BudgetId != entity.BudgetId);
+            return has ? new BoolMessage(false, "输入项目名称已经存在") : BoolMessage.True;
         }
 
         /// <summary>
@@ -45,6 +45,11 @@ namespace Zeniths.Hr.Service
         {
             try
             {
+                BoolMessage exm = Exists(entity);
+                if (!exm.Success)
+                {
+                    return exm;
+                }
                 repos.Insert(entity);
                 return BoolMessage.True;
             }
@@ -116,7 +121,7 @@ namespace Zeniths.Hr.Service
             var query = repos.NewQuery.OrderBy(p => p.Id);
             return repos.Query(query).ToList();
         }
-        
+
         /*
         /// <summary>
         /// 获取启用的预算明细信息列表
@@ -138,7 +143,7 @@ namespace Zeniths.Hr.Service
             return repos.GetTable(query);
         }
         */
-        
+
         /// <summary>
         /// 获取预算明细信息分页列表
         /// </summary>
@@ -148,18 +153,12 @@ namespace Zeniths.Hr.Service
         /// <param name="orderDir">排序方式</param>
         /// <param name="name">查询关键字</param>
         /// <returns>返回预算明细信息分页列表</returns>
-        public PageList<HrBudgetDetails> GetPageList(int pageIndex, int pageSize, string orderName,string orderDir, string name)
+        public PageList<HrBudgetDetails> GetPageList(int pageIndex, int pageSize, string orderName, string orderDir, int BudgetId)
         {
             orderName = orderName.IsEmpty() ? nameof(HrBudgetDetails.Id) : orderName;//默认使用主键排序
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
             var query = repos.NewQuery.Take(pageSize).Page(pageIndex).OrderBy(orderName, orderDir.IsAsc());
-            /*
-            if (name.IsNotEmpty())
-            {
-                name = name.Trim();
-                query.Where(p => p.Name.Contains(name));
-            }
-            */
+            query.Where(p => p.BudgetId ==  BudgetId);
             return repos.Page(query);
         }
 

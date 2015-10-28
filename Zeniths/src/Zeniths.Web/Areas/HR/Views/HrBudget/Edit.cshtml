@@ -12,7 +12,7 @@
             </div>
             <div class="panel-body">
                 @Html.AntiForgeryToken()
-                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <input type="hidden" id="Id" name="@nameof(Model.Id)" value="@Model.Id" />
                 <table class="table table-form table-dialog-form">
                 
                     <tr>
@@ -24,207 +24,24 @@
                                 <input class="form-control" name="@nameof(Model.Title)" value="@Model.Title" type="text" />
                             </div>
                         </td>
-                    </tr>
-                    <tr>
                         <th >
                             <label class="control-label">预算月份：</label>
                         </th>
                         <td>
-                                <input class="date-control form-control" name="@nameof(Model.BudgetMonth)" value="@Model.BudgetMonth" type="text" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">预算部门主键：</label>
-                        </th>
-                        <td>
+                            @*<input class="date-control form-control" name="@nameof(Model.BudgetMonth)" value="@Model.BudgetMonth" type="text" />*@
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.BudgetDepartmentId)" value="@Model.BudgetDepartmentId" type="text" />
+                                <input class="datetime-control form-control" name="@nameof(Model.BudgetMonth)" value="@Model.BudgetMonth" type="text" autocomplete="off" />
                             </div>
                         </td>
+                        <th>
+                            <a class="btn btn-success" id="btnCreate" data-url="@Url.Action("../HrBudgetDetails/Create")">
+                                    <i class="fa fa-plus"></i> 添加
+                            </a>
+                        </th>           
                     </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">预算部门名称：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.BudgetDepartmentName)" value="@Model.BudgetDepartmentName" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">流程主键：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.FlowId)" value="@Model.FlowId" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">流程名称：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.FlowName)" value="@Model.FlowName" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">流程实例主键：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.FlowInstanceId)" value="@Model.FlowInstanceId" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">当前步骤主键：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.StepId)" value="@Model.StepId" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">当前步骤名称：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.StepName)" value="@Model.StepName" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">总经理主键：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.GeneralManagerId)" value="@Model.GeneralManagerId" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">总经理名称：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.GeneralManagerName)" value="@Model.GeneralManagerName" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">总经理审批状态：</label>
-                        </th>
-                        <td>
-                            <div class="checkbox-list">
-                                <label class="checkbox-inline">
-                                    <input class="icheckbox-control" name="@nameof(Model.GeneralManagerStatus)" value="true" type="checkbox" @Html.IsChecked(Model.GeneralManagerStatus) />
-                                    <span>启用</span>
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">总经理审批意见：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.GeneralManagerNote)" value="@Model.GeneralManagerNote" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">总经理审批时间：</label>
-                        </th>
-                        <td>
-                                <input class="date-control form-control" name="@nameof(Model.GeneralManagerDate)" value="@Model.GeneralManagerDate" type="text" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">处理状态：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Status)" value="@Model.Status" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">流程是否完成：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.IsFinish)" value="@Model.IsFinish" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">创建用户主键：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.CreateUserId)" value="@Model.CreateUserId" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">创建用户姓名：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.CreateUserName)" value="@Model.CreateUserName" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">创建用户部门主键：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.CreateDepartmentid)" value="@Model.CreateDepartmentid" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">创建用户部门名称：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.CreateDepartmentName)" value="@Model.CreateDepartmentName" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">创建时间：</label>
-                        </th>
-                        <td>
-                                <input class="date-control form-control" name="@nameof(Model.CreateDateTime)" value="@Model.CreateDateTime" type="text" />
-                        </td>
-                    </tr>
-                                    
                 </table>
-            </div>
+                <div class="datagrid" data-url="@Html.Raw(Url.Action("../HrBudgetDetails/Grid",new { BudgetId = Model.Id}))" data-query-form=".search-form">
+                </div>
             <div class="panel-footer text-center">
                 <div class="buttons">
                     <button class="btn btn-primary" type="submit">
@@ -239,14 +56,18 @@
         </div>
     </form>
 </div>
-
-
+@section style{
+    <link href="~/Plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
 @section script{
+<script src="~/Plugin/bootstrap-daterangepicker/js/moment.min.js"></script>
+<script src="~/Plugin/bootstrap-daterangepicker/js/zh-cn.js"></script>
+<script src="~/Plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
     <script>
 
         $(function () {
             //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
-            $('.editform').dataform().initValidate({
+            $('.editform').dataform().initDateTimePicker().initiCheck().initValidate({
                 rules: {
                     Title: {
                         required: true
@@ -259,121 +80,7 @@
                         /*,maxlength: 100
                           ,digits: true
                         */
-                    }, 
-                    BudgetDepartmentId: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    BudgetDepartmentName: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    FlowId: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    FlowName: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    FlowInstanceId: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    StepId: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    StepName: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    GeneralManagerId: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    GeneralManagerName: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    GeneralManagerStatus: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    GeneralManagerNote: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    GeneralManagerDate: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    Status: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    IsFinish: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    CreateUserId: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    CreateUserName: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    CreateDepartmentid: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    CreateDepartmentName: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    CreateDateTime: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    } 
+                    }
                 },
                 messages: {
                     Title: {
@@ -387,126 +94,28 @@
                         /*,maxlength: '长度不能超过100'
                           ,digits: '只能输入正整数'
                         */
-                    }, 
-                    BudgetDepartmentId: {
-                        required: '请填写预算部门主键'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    BudgetDepartmentName: {
-                        required: '请填写预算部门名称'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    FlowId: {
-                        required: '请填写流程主键'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    FlowName: {
-                        required: '请填写流程名称'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    FlowInstanceId: {
-                        required: '请填写流程实例主键'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    StepId: {
-                        required: '请填写当前步骤主键'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    StepName: {
-                        required: '请填写当前步骤名称'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    GeneralManagerId: {
-                        required: '请填写总经理主键'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    GeneralManagerName: {
-                        required: '请填写总经理名称'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    GeneralManagerStatus: {
-                        required: '请填写总经理审批状态'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    GeneralManagerNote: {
-                        required: '请填写总经理审批意见'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    GeneralManagerDate: {
-                        required: '请填写总经理审批时间'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    Status: {
-                        required: '请填写处理状态'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    IsFinish: {
-                        required: '请填写流程是否完成'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    CreateUserId: {
-                        required: '请填写创建用户主键'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    CreateUserName: {
-                        required: '请填写创建用户姓名'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    CreateDepartmentid: {
-                        required: '请填写创建用户部门主键'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    CreateDepartmentName: {
-                        required: '请填写创建用户部门名称'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    CreateDateTime: {
-                        required: '请填写创建时间'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    } 
+                    }
                 },
                 beforeSubmit: function () {
                 }
             }).initAjax({ success: zeniths.util.formAjaxSuccess });
+                zeniths.util.standardGridBind({
+                    editWidth: 700,
+                    editHeight: 400,
+                    viewWidth: 700,
+                    viewHeight: 400,
+                    loadCallback: function () {
+                        //返回确认事件
+                        $('#btnCreate').on('click', function () {
+                            zeniths.util.dialog($(this).data('url'), 700, 400, {
+                                callback: function () {
+                                    reloadData();
+                                }
+                            });
+                        });
+                    }
 
+                });
         });
     </script>
 }

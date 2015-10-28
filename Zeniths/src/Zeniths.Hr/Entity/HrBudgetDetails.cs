@@ -11,6 +11,7 @@ namespace Zeniths.Hr.Entity
     /// 预算明细信息
     /// </summary>
     [Table(Caption = "预算明细信息")]
+    [PrimaryKey("Id", true)]
     public class HrBudgetDetails
     {
 		/// <summary>

@@ -14,6 +14,7 @@ using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.Utility;
 using Zeniths.Hr.Utility;
+using Zeniths.Auth.Utility;
 
 namespace Zeniths.Web.Areas.Hr.Controllers
 {
@@ -46,9 +47,11 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
-            var orderName = GetOrderName();
+            var orderName = GetOrderName();            
             var orderDir = GetOrderDir();
-            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name);
+            orderName = orderName == "" ? "id" : orderName;
+            orderDir = orderDir == "" ? "asc" : orderDir;
+            var list = service.GetPageListView(1, "1", "2015", "", pageIndex, pageSize, orderName, orderDir);
             return View(list);
         }
 
@@ -103,6 +106,8 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save(HrBudget entity)
         {
+            entity.CreateDateTime = DateTime.Now;
+            var currentUser = OrganizeHelper
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {

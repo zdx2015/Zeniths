@@ -197,12 +197,12 @@
     <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\Details.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\Edit.cshtml" />
-    <Content Include="Areas\HR\Views\HrBudget\Grid.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\Index.cshtml" />
     <Content Include="Areas\HR\Views\HrBudgetDetails\Details.cshtml" />
     <Content Include="Areas\HR\Views\HrBudgetDetails\Edit.cshtml" />
     <Content Include="Areas\HR\Views\HrBudgetDetails\Grid.cshtml" />
     <Content Include="Areas\HR\Views\HrBudgetDetails\Index.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudget\Grid.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
     <None Include="Plugin\_references.js" />

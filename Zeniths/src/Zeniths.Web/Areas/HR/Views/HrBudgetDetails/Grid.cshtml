@@ -4,15 +4,10 @@
 }
 <table class="table table-zeniths table-striped table-bordered table-hover">
     <thead>
-        <tr>
-            <th class="w-checkbox">
-                <label><input class="checkbox-check" type="checkbox"><span></span></label>
-            </th>            
-            <th class="w-100px" data-order="@nameof(HrBudgetDetails.BudgetId)">预算主键</th>
-            <th class="w-100px" data-order="@nameof(HrBudgetDetails.BudgetCategoryId)">预算类别主键</th>
-            <th class="w-100px" data-order="@nameof(HrBudgetDetails.BudgetCategoryName)">预算类别名称</th>
-            <th class="w-100px" data-order="@nameof(HrBudgetDetails.BudgetItemName)">项目名称</th>
-            <th class="w-100px" data-order="@nameof(HrBudgetDetails.BudgetMoney)">预算金额</th>
+        <tr>        
+            <th class="w-100px" data-order="@nameof(HrBudgetDetails.BudgetItemName)">项目</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetDetails.BudgetCategoryName)">类别</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetDetails.BudgetMoney)">金额</th>
             <th class="w-100px" data-order="@nameof(HrBudgetDetails.Note)">备注</th>
             <th class="w-120px text-center">操作</th>
         </tr>
@@ -21,13 +16,10 @@
         @foreach (var record in Model)
         {
             <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
-                <td>
-                    <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
-                </td>
-                <td>@record.BudgetId</td>
-                <td>@record.BudgetCategoryId</td>
-                <td>@record.BudgetCategoryName</td>
+                @*<td>@record.BudgetId</td>*@
+                @*<td>@record.BudgetCategoryId</td>*@
                 <td>@record.BudgetItemName</td>
+                <td>@record.BudgetCategoryName</td>
                 <td>@record.BudgetMoney</td>
                 <td>@record.Note</td>
                 <td>

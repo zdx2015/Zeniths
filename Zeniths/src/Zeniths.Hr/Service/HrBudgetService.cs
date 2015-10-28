@@ -11,6 +11,7 @@ using Zeniths.Collections;
 using Zeniths.Data;
 using Zeniths.Extensions;
 using Zeniths.Utility;
+using Zeniths.Data.Utilities;
 
 namespace Zeniths.Hr.Service
 {
@@ -29,11 +30,12 @@ namespace Zeniths.Hr.Service
         /// </summary>
         /// <param name="entity">部门预算实体</param>
         /// <returns>如果存在指定记录返回BoolMessage.False</returns>
+        /// 判断部门名称 年月份
         public BoolMessage Exists(HrBudget entity)
         {
-            return BoolMessage.True;
-            //var has = repos.Exists(p => p.Name == entity.Name && p.Id != entity.Id);
-            //return has ? new BoolMessage(false, "输入名称已经存在") : BoolMessage.True;
+            //return BoolMessage.True;
+            var has = repos.Exists(p => p.BudgetDepartmentId == entity.BudgetDepartmentId);//&& p.BudgetMonth.ToShortDateString().ToString() != entity.BudgetMonth.ToShortDateString().ToString());
+            return has ? new BoolMessage(false, "部门该月预算已经存在") : BoolMessage.True;
         }
 
         /// <summary>
@@ -45,6 +47,11 @@ namespace Zeniths.Hr.Service
         {
             try
             {
+                BoolMessage exm = Exists(entity);
+                if (!exm.Success)
+                {
+                    return exm;
+                }
                 repos.Insert(entity);
                 return BoolMessage.True;
             }
@@ -127,7 +134,7 @@ namespace Zeniths.Hr.Service
             var query = repos.NewQuery.Where(p => p.IsEnabled == true).OrderBy(p => p.Id);
             return repos.Query(query).ToList();
         }
-        
+        */
         /// <summary>
         /// 获取部门预算DataTable
         /// </summary>
@@ -137,7 +144,7 @@ namespace Zeniths.Hr.Service
             var query = repos.NewQuery.OrderBy(p => p.Id);
             return repos.GetTable(query);
         }
-        */
+        
         
         /// <summary>
         /// 获取部门预算分页列表
@@ -162,10 +169,49 @@ namespace Zeniths.Hr.Service
             */
             return repos.Page(query);
         }
-
+        /// <summary>
+        /// 查询分页信息
+        /// </summary>
+        /// <param name="userid">当前用户id</param>
+        /// <param name="type">业务类型 1 部门负责人 2 经理审批 3 财务查看 </param>
+        /// <param name="year">业务申请年份</param>
+        /// <param name="status">单据类型</param>
+        /// <param name="pageIndex">页面索引</param>
+        /// <param name="pageSize">分页大小</param>
+        /// <param name="orderName">排序列名</param>
+        /// <param name="orderDir">排序方式</param>
+        /// <returns></returns>
+        public PageList<HrBudgetView> GetPageListView(int userid, string type, string year, string status, int pageIndex, int pageSize, string orderName, string orderDir)
+        {
+            //查询列表数据
+            IEnumerable<HrBudgetView> view = repos.Database.Query<HrBudgetView>("exec proc_GetHrBudgetPageList 'list','"+ userid.ToString()+ "','"+type+"','"+year+"','"+status+"',"+pageIndex.ToString()+","+pageSize.ToString()+",'"+orderName+"','"+orderDir+"'");
+            //查询数据条数
+            DataSet ds = repos.Database.ExecuteDataSet("exec proc_GetHrBudgetPageList 'count', '"+ userid.ToString()+ "', '"+type+"', '"+year+"', '"+status+"', "+pageIndex.ToString()+", "+pageSize.ToString()+", '"+orderName+"', '"+orderDir+"'");
+            PageList <HrBudgetView> page = new PageList<HrBudgetView>(pageIndex, pageSize, (int)ds.Tables[0].Rows[0][0], view);
+            return page;
+        }
         #region 私有方法
-
-
+        /// <summary>
+        /// 部门预算 总经理审批
+        /// </summary>
+        /// <param name="userId">总经理主键id</param>
+        /// <param name="userName">总经理姓名</param>
+        /// <param name="Note">审批意见</param>
+        /// <param name="Status">审批状态</param>
+        /// <returns></returns>
+        public BoolMessage GeneralManagerApproval(string id, string userId,string userName, string Note, string Status)
+        {
+            try
+            {
+                HrBudget model = new HrBudget();
+                repos.Update(model,id,new HrBudget{GeneralManagerId =userId.ToInt(), GeneralManagerName =userName,GeneralManagerNote=Note,GeneralManagerStatus=Status.ToBool()});
+                return BoolMessage.True;
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
         #endregion
     }
 }
