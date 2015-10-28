@@ -616,7 +616,6 @@
     <Compile Include="Areas\Auth\Controllers\SystemParamController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemRoleController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
-    <Compile Include="Areas\HR\Controllers\GoOutRegistrationController.cs" />
     <Compile Include="Areas\HR\Controllers\HrBudgetController.cs" />
     <Compile Include="Areas\HR\Controllers\HrBudgetDetailsController.cs" />
     <Compile Include="Areas\HR\Controllers\DailyReimburseController.cs" />
