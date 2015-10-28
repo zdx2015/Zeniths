@@ -35,7 +35,7 @@
                                 @*<input class="form-control" name="@nameof(Model.CategoryId)" value="@Model.CategoryId" type="text"/>*@
                                 <select class="select2-control w-200px form-control" name="@nameof(Model.CategoryId)" data-placeholder="请选择费用类别">
                                     <option></option>
-                                    @Html.ParamCategoryOptions()
+                                    @Html.DailyReimburseDetailCategoryOptions();
                                 </select>
                             </div>
 
