@@ -199,10 +199,6 @@
     <Content Include="Areas\HR\Views\OAWorkLogShare\Edit.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Grid.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Index.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Details.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\Details.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\Edit.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\Grid.cshtml" />
@@ -215,10 +211,6 @@
     <Content Include="Areas\HR\Views\EmpLeave\Edit.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\Grid.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\Index.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Details.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\Details.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\Edit.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\Index.cshtml" />
@@ -227,6 +219,10 @@
     <Content Include="Areas\HR\Views\HrBudgetDetails\Grid.cshtml" />
     <Content Include="Areas\HR\Views\HrBudgetDetails\Index.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Details.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowRun\Send.cshtml" />
