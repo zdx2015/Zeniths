@@ -1,0 +1,51 @@
+﻿@{
+    var title = "管理日常费用报销";
+}
+<div class="container-zeniths">
+    <div class="panel panel-default panel-zeniths">
+        <div class="panel-heading">
+            @title
+        </div>
+        <div class="panel-body">
+            <div class="search-panel-zeniths">
+                <form class="form-inline search-form">
+                    <div class="form-group">
+                        <input class="w-300px form-control" name="@nameof(DailyReimburse.CashierName)" type="text" placeholder="请输入关键字查询">
+                    </div>
+                    &nbsp;
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-search"></i> 查询
+                    </button>
+                    <a class="btn btn-success" id="btnCreate" data-url="@Url.Action("Create")">
+                        <i class="fa fa-plus"></i> 新建
+                    </a>
+                    <a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                    <a class="btn btn-default" id="btnRefresh">
+                        <i class="fa fa-repeat"></i> 刷新
+                    </a>
+                    <a class="btn btn-default" href="@Url.Action("Export")">
+                        <i class="fa fa-share-square-o"></i> 导出
+                    </a>
+                </form>
+            </div>
+            <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid"))" data-query-form=".search-form">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+        $(function () {
+            zeniths.util.standardGridBind({
+                editWidth: 900,
+                editHeight: 700,
+                viewWidth: 900,
+                viewHeight: 700
+            });
+        });
+    </script>
+}

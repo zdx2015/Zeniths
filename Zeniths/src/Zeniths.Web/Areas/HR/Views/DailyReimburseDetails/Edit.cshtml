@@ -1,0 +1,151 @@
+﻿@model DailyReimburseDetails
+@{
+    var title = "编辑日常费用报销明细";
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                @*<span class="prefix"> <strong>@Model.Id</strong></span>*@
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id"/>
+                <input type="hidden" name="@nameof(Model.CategoryName)" value="@Model.CategoryName" />
+                <table class="table table-form table-dialog-form">
+                   
+                    <tr>
+                        <th >
+                            <label class="control-label">项目名称：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.ItemName)" value="@Model.ItemName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">费用类别：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                @*<input class="form-control" name="@nameof(Model.CategoryId)" value="@Model.CategoryId" type="text"/>*@
+                                <select class="select2-control w-200px form-control" name="@nameof(Model.CategoryId)" data-placeholder="请选择费用类别">
+                                    <option></option>
+                                    @Html.DailyReimburseDetailCategoryOptions();
+                                </select>
+                            </div>
+
+                         
+                        </td>
+                    </tr>
+                   
+                    <tr>
+                        <th >
+                            <label class="control-label">费用金额：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Amount)" value="@Model.Amount" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                                    
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section script{
+    <script>
+
+        $(function () {
+            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
+            $('.editform').dataform().initValidate({
+                rules: {
+                    ReimburseId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    ItemName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    CategoryId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    CategoryName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    Amount: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    } 
+                },
+                messages: {
+                    ReimburseId: {
+                        required: '请填写报销主表主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    ItemName: {
+                        required: '请填写项目名称'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    CategoryId: {
+                        required: '请填写费用类别主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    CategoryName: {
+                        required: '请填写费用类别名称'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    Amount: {
+                        required: '请填写费用金额'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    } 
+                },
+                beforeSubmit: function () {
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+        });
+    </script>
+}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Web;
 using Zeniths.Auth.Entity;
@@ -97,6 +98,38 @@ namespace Zeniths.Auth.Utility
         }
 
         /// <summary>
+        /// 把用户主键数组转为组织机构字符串
+        /// </summary>
+        /// <param name="userIdList">用户主键数组</param>
+        /// <returns></returns>
+        public static string ConvertToUserIds(IList<string> userIdList)
+        {
+            StringBuilder sb = new StringBuilder(userIdList.Count * 43);
+            foreach (var li in userIdList)
+            {
+                sb.Append(AddUserPrefix(li.ToInt()));
+                sb.Append(",");
+            }
+            return sb.ToString().TrimEnd(',');
+        }
+
+        /// <summary>
+        /// 把部门主键数组转为组织机构字符串
+        /// </summary>
+        /// <param name="departmentIdList">部门主键数组</param>
+        /// <returns></returns>
+        public static string ConvertToDepartmentIds(IList<string> departmentIdList)
+        {
+            StringBuilder sb = new StringBuilder(departmentIdList.Count * 43);
+            foreach (var li in departmentIdList)
+            {
+                sb.Append(AddDepartmentPrefix(li.ToInt()));
+                sb.Append(",");
+            }
+            return sb.ToString().TrimEnd(',');
+        }
+
+        /// <summary>
         /// 用户是否过期
         /// </summary>
         /// <param name="entity">用户对象</param>
@@ -109,7 +142,7 @@ namespace Zeniths.Auth.Utility
         /// <summary>
         /// 获取当前登录用户对象
         /// </summary>
-        public static SystemUser GetLoginUser()
+        public static SystemUser GetCurrentUser()
         {
             var key = "_Zeniths.User";
             if (HttpContext.Current.Session[key] == null)
@@ -124,13 +157,13 @@ namespace Zeniths.Auth.Utility
         /// <summary>
         /// 获取当前登录用户部门对象
         /// </summary>
-        public static SystemDepartment GetLoginDepartment()
+        public static SystemDepartment GetCurrentDepartment()
         {
             var key = "_Zeniths.Department";
             if (HttpContext.Current.Session[key] == null)
             {
                 var deptService = new SystemDepartmentService();
-                var currentUser = GetLoginUser();
+                var currentUser = GetCurrentUser();
                 if (currentUser.DepartmentId == 0)
                 {
                     throw new ApplicationException($"请指定当前用户 {currentUser.Account} 的部门主键");
@@ -138,6 +171,59 @@ namespace Zeniths.Auth.Utility
                 HttpContext.Current.Session[key] = deptService.Get(currentUser.DepartmentId);
             }
             return HttpContext.Current.Session[key] as SystemDepartment;
+        }
+
+        /// <summary>
+        /// 设置创建对象的当前登录用户信息
+        /// </summary>
+        /// <param name="entity">待创建的对象</param>
+        public static void SetCurrentUserCreateInfo(dynamic entity)
+        {
+            var type = entity?.GetType();
+
+            var currentDate = DateTime.Now;
+            var currentUser = GetCurrentUser();
+            type?.GetProperty("CreateUserId")?.SetValue(entity, currentUser.Id);
+            type?.GetProperty("CreateUserName")?.SetValue(entity, currentUser.Name);
+            type?.GetProperty("CreateDateTime")?.SetValue(entity,currentDate);
+            type?.GetProperty("CreateDate")?.SetValue(entity, currentDate);
+            type?.GetProperty("CreateDepartmentId")?.SetValue(entity, currentUser.DepartmentId);
+            type?.GetProperty("CreateDepartmentName")?.SetValue(entity, currentUser.DepartmentName);
+        }
+
+        /// <summary>
+        /// 设置修改对象的当前登录用户信息
+        /// </summary>
+        /// <param name="entity">待修改的对象</param>
+        public static void SetCurrentUserModifyInfo(dynamic entity)
+        {
+            var type = entity?.GetType();
+
+            var currentDate = DateTime.Now;
+            var currentUser = GetCurrentUser();
+            type?.GetProperty("ModifyUserId")?.SetValue(entity, currentUser.Id);
+            type?.GetProperty("ModifyUserName")?.SetValue(entity, currentUser.Name);
+            type?.GetProperty("ModifyDateTime")?.SetValue(entity, currentDate);
+            type?.GetProperty("ModifyDate")?.SetValue(entity, currentDate);
+        }
+
+        /// <summary>
+        /// 设置对象的当前登录用户信息(包括创建用户信息和修改用户信息)
+        /// </summary>
+        /// <param name="entity">待修改的对象</param>
+        public static void SetCurrentUserInfo(dynamic entity)
+        {
+            SetCurrentUserCreateInfo(entity);
+            SetCurrentUserModifyInfo(entity);
+        }
+
+        /// <summary>
+        /// 注销
+        /// </summary>
+        public static void Logout()
+        {
+            HttpContext.Current.Session["_Zeniths.User"] = null;
+            HttpContext.Current.Session["_Zeniths.Department"] = null;
         }
 
 
@@ -174,7 +260,7 @@ namespace Zeniths.Auth.Utility
             {
                 if (IsUser(id))//人员
                 {
-                    userList.Add(userService.Get(ClearUserPrefix(id)));
+                    userList.Add(userService.GetSimple(ClearUserPrefix(id)));
                 }
                 else if (IsDepartment(id))//部门
                 {

@@ -156,5 +156,32 @@ namespace Zeniths.Auth.Service
                 .Where(p => p.IsEnabled == true);
             return repos.Query(query).ToList();
         }
+
+        /// <summary>
+        /// 查询所有有效的菜单主键和名称列表(Key为Id,Value为名称)
+        /// </summary>
+        public List<KeyValuePair<int, string>> GetMenuIdNameList()
+        {
+            var query = repos.NewQuery
+                .Select(nameof(SystemMenu.Id), nameof(SystemMenu.Name))
+                .Where(p => p.IsEnabled == true)
+                .OrderBy(p => p.SortPath);
+            var list = repos.Query(query).ToList();
+            return list.Select(item => new KeyValuePair<int, string>(item.Id, item.Name)).ToList();
+        }
+
+        /// <summary>
+        /// 查询所有有效的菜单主键和名称字典
+        /// </summary>
+        public Dictionary<int, string> GetMenuIdNameDic()
+        {
+            var list = GetMenuIdNameList();
+            var dic = new Dictionary<int, string>();
+            foreach (var item in list)
+            {
+                dic[item.Key] = item.Value;
+            }
+            return dic;
+        }
     }
 }

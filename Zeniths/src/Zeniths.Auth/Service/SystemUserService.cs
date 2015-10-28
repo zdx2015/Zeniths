@@ -224,6 +224,16 @@ namespace Zeniths.Auth.Service
         }
 
         /// <summary>
+        /// 获取简单用户对象(只包括用户Id,姓名,账号,部门Id,部门名称)
+        /// </summary>
+        /// <param name="id">用户主键</param>
+        /// <returns>用户对象</returns>
+        public SystemUser GetSimple(int id)
+        {
+            return repos.Get(id,p=>p.Id, p => p.Name, p => p.Account, p => p.DepartmentId, p => p.DepartmentName);
+        }
+
+        /// <summary>
         /// 获取用户姓名
         /// </summary>
         /// <param name="id">用户主键</param>
@@ -451,6 +461,32 @@ namespace Zeniths.Auth.Service
             return repos.Database.ExecuteScalar<int>(sql, new[] { userId }) != 0;
         }
 
+        /// <summary>
+        /// 查询所有有效的用户主键和名称列表(Key为Id,Value为名称)
+        /// </summary>
+        public List<KeyValuePair<int, string>> GetUserIdNameList()
+        {
+            var query = repos.NewQuery
+                .Select(nameof(SystemUser.Id), nameof(SystemUser.Name))
+                .Where(p => p.IsEnabled == true)
+                .OrderBy(p => p.SortIndex);
+            var list = repos.Query(query).ToList();
+            return list.Select(item => new KeyValuePair<int, string>(item.Id, item.Name)).ToList();
+        }
+
+        /// <summary>
+        /// 查询所有有效的用户主键和名称字典
+        /// </summary>
+        public Dictionary<int, string> GetUserIdNameDic()
+        {
+            var list = GetUserIdNameList();
+            var dic = new Dictionary<int, string>();
+            foreach (var item in list)
+            {
+                dic[item.Key] = item.Value;
+            }
+            return dic;
+        }
         #endregion
     }
 }

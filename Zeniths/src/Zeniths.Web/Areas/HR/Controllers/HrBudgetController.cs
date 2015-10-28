@@ -107,7 +107,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         public ActionResult Save(HrBudget entity)
         {
             entity.CreateDateTime = DateTime.Now;
-            var currentUser = OrganizeHelper
+            //var currentUser = OrganizeHelper
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {

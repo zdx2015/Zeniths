@@ -1,571 +1,305 @@
 ﻿{
-  "id": "f35d0b4a-b1f9-4fdc-b552-3720953b889f",
-  "name": "会签测试",
-  "type": "90d6ad24-28f5-49d3-ac3f-cb473fb64cc5",
-  "manager": "u_eb03262c-ab60-4bc6-a4c0-96e66a4229fe,u_23c3e9fc-6d8a-4ea0-925a-0a0671d61378",
-  "instanceManager": "u_eb03262c-ab60-4bc6-a4c0-96e66a4229fe,u_23c3e9fc-6d8a-4ea0-925a-0a0671d61378",
-  "removeCompleted": "0",
-  "debug": "0",
-  "debugUsers": "u_eb03262c-ab60-4bc6-a4c0-96e66a4229fe",
-  "note": "",
-  "databases": [
-    {
-      "link": "06075250-30dc-4d32-bf97-e922cb30fac8",
-      "linkName": "平台连接",
-      "table": "TempTest_News",
-      "primaryKey": "ID"
-    }
-  ],
-  "titleField": {
-    "link": "06075250-30dc-4d32-bf97-e922cb30fac8",
-    "table": "TempTest_News",
-    "field": "State"
+  "property": {
+    "id": "4dc50c3f-9dae-410d-abce-c2a618c6f282",
+    "sortIndex": "0",
+    "name": "出差管理",
+    "category": "办公类",
+    "note": "",
+    "isEnabled": false,
+    "isDebug": false
   },
-  "steps": [
-    {
-      "id": "77a56a2d-4ff2-4b88-804c-da81dc96e88f",
-      "type": "normal",
-      "name": "发起申请",
-      "opinionDisplay": "1",
-      "expiredPrompt": "1",
-      "signatureType": "0",
-      "workTime": "",
-      "limitTime": "",
-      "otherTime": "",
-      "archives": "0",
-      "archivesParams": "",
-      "note": "",
-      "position": {
-        "x": 12,
-        "y": 126,
-        "width": 108,
-        "height": 50
+  "flow": {
+    "title": "newFlow_1",
+    "nodes": {
+      "flowPanel_node_1": {
+        "uid": "78cf007f-1b46-494c-b2dc-cde862791dff",
+        "name": "开始",
+        "left": 203,
+        "top": 231,
+        "type": "startround",
+        "width": 24,
+        "height": 24,
+        "alt": true
       },
-      "countersignature": 0,
-      "behavior": {
-        "flowType": "0",
-        "runSelect": "1",
-        "handlerType": "0",
-        "selectRange": "",
-        "handlerStep": "",
-        "valueField": "",
-        "defaultHandler": "",
-        "hanlderModel": "0",
-        "backModel": "1",
-        "backType": "0",
-        "backStep": "",
-        "percentage": "",
-        "countersignature": "0",
-        "countersignaturePercentage": ""
+      "flowPanel_node_2": {
+        "uid": "5bcb4559-1db5-4b0e-99bc-44e0195be80f",
+        "name": "结束",
+        "left": 1180,
+        "top": 234,
+        "type": "endround",
+        "width": 24,
+        "height": 24,
+        "alt": true
       },
-      "forms": [
-        {
-          "id": "37283038-798f-4a5b-9175-f4e2dc69b0e4",
-          "name": "",
-          "type": "626480b3-eaa9-4705-acbb-82901db4fda4",
-          "srot": 0
-        }
-      ],
-      "buttons": [
-        {
-          "id": "3b271f67-0433-4082-ad1a-8df1b967b879",
-          "sort": 0
-        },
-        {
-          "id": "8982b97c-adba-4a3a-afd9-9a3ef6ff12d8",
-          "sort": 1
-        }
-      ],
-      "fieldStatus": [
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.ID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title1",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.UserID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Type",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Contents",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.State",
-          "status": "0",
-          "check": "0"
-        }
-      ],
-      "event": {
-        "submitBefore": "",
-        "submitAfter": "",
-        "backBefore": "",
-        "backAfter": ""
+      "flowPanel_node_3": {
+        "uid": "09ee20fc-7139-4042-9719-03f856de4ed8",
+        "name": "填写《出差审批表》",
+        "left": 325,
+        "top": 226,
+        "type": "shuntnode",
+        "width": 174,
+        "height": 69,
+        "alt": true
+      },
+      "flowPanel_node_4": {
+        "uid": "f4e3c925-ba03-40b4-9b78-0043c377579d",
+        "name": "部门负责人审批",
+        "left": 535,
+        "top": 112,
+        "type": "stepnode",
+        "width": 164,
+        "height": 72,
+        "alt": true
+      },
+      "flowPanel_node_5": {
+        "uid": "9d818e2c-3893-4295-8030-b6cf033caea5",
+        "name": "财务审核",
+        "left": 732,
+        "top": 220,
+        "type": "stepnode",
+        "width": 156,
+        "height": 76,
+        "alt": true
+      },
+      "flowPanel_node_11": {
+        "uid": "c553077c-ed53-4d8f-8bc8-cd09259a4a38",
+        "name": "总经理审核",
+        "left": 949,
+        "top": 219,
+        "type": "stepnode",
+        "width": 156,
+        "height": 76,
+        "alt": true
       }
     },
-    {
-      "id": "24986fbb-a343-4701-818b-f3755b1700d4",
-      "type": "normal",
-      "name": "财务部审核",
-      "opinionDisplay": "1",
-      "expiredPrompt": "1",
-      "signatureType": "0",
-      "workTime": "",
-      "limitTime": "",
-      "otherTime": "",
-      "archives": "0",
-      "archivesParams": "",
-      "note": "",
-      "position": {
-        "x": 228,
-        "y": 45,
-        "width": 108,
-        "height": 50
+    "lines": {
+      "flowPanel_line_6": {
+        "type": "tb",
+        "M": 256.75,
+        "from": "flowPanel_node_1",
+        "to": "flowPanel_node_3",
+        "name": ""
       },
-      "countersignature": 0,
-      "behavior": {
-        "flowType": "0",
-        "runSelect": "1",
-        "handlerType": "0",
-        "selectRange": "3975624c-148f-4838-88c9-12af85d2e05e",
-        "handlerStep": "",
-        "valueField": "",
-        "defaultHandler": "u_c2d3012a-c816-4149-ac04-9da0b60e3867",
-        "hanlderModel": "0",
-        "backModel": "1",
-        "backType": "0",
-        "backStep": "",
-        "percentage": "",
-        "countersignature": "0",
-        "countersignaturePercentage": ""
+      "flowPanel_line_7": {
+        "type": "sl",
+        "from": "flowPanel_node_3",
+        "to": "flowPanel_node_4",
+        "name": "基层员工"
       },
-      "forms": [
-        {
-          "id": "37283038-798f-4a5b-9175-f4e2dc69b0e4",
-          "name": "",
-          "type": "626480b3-eaa9-4705-acbb-82901db4fda4",
-          "srot": 0
-        }
-      ],
-      "buttons": [
-        {
-          "id": "86b7fa6c-891f-4565-9309-81672d3ba80a",
-          "sort": 0
-        },
-        {
-          "id": "8982b97c-adba-4a3a-afd9-9a3ef6ff12d8",
-          "sort": 1
-        }
-      ],
-      "fieldStatus": [
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.ID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title1",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.UserID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Type",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Contents",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.State",
-          "status": "0",
-          "check": "0"
-        }
-      ],
-      "event": {
-        "submitBefore": "",
-        "submitAfter": "",
-        "backBefore": "",
-        "backAfter": ""
+      "flowPanel_line_8": {
+        "type": "sl",
+        "from": "flowPanel_node_4",
+        "to": "flowPanel_node_5",
+        "name": "同意"
+      },
+      "flowPanel_line_9": {
+        "type": "sl",
+        "from": "flowPanel_node_3",
+        "to": "flowPanel_node_5",
+        "name": "中层"
+      },
+      "flowPanel_line_10": {
+        "type": "tb",
+        "M": 322.75,
+        "from": "flowPanel_node_5",
+        "to": "flowPanel_node_3",
+        "name": "不同意 驳回",
+        "alt": true
+      },
+      "flowPanel_line_12": {
+        "type": "sl",
+        "from": "flowPanel_node_5",
+        "to": "flowPanel_node_11",
+        "name": "同意"
+      },
+      "flowPanel_line_13": {
+        "type": "tb",
+        "M": 256,
+        "from": "flowPanel_node_11",
+        "to": "flowPanel_node_2",
+        "name": "同意"
+      },
+      "flowPanel_line_15": {
+        "type": "tb",
+        "M": 323.25,
+        "from": "flowPanel_node_11",
+        "to": "flowPanel_node_3",
+        "name": ""
       }
     },
-    {
-      "id": "6ed3e265-f90f-4d2d-9813-1d00b0408dd7",
-      "type": "normal",
-      "name": "研发部审核",
-      "opinionDisplay": "1",
-      "expiredPrompt": "1",
+    "areas": { },
+    "initNum": 16
+  },
+  "step": {
+    "flowPanel_node_3": {
+      "uid": "09ee20fc-7139-4042-9719-03f856de4ed8",
+      "name": "填写《出差审批表》",
       "signatureType": "0",
-      "workTime": "",
-      "limitTime": "",
-      "otherTime": "",
-      "archives": "0",
-      "archivesParams": "",
+      "formName": "",
       "note": "",
-      "position": {
-        "x": 230,
-        "y": 126,
-        "width": 108,
-        "height": 50
-      },
-      "countersignature": 0,
-      "behavior": {
-        "flowType": "0",
-        "runSelect": "1",
-        "handlerType": "0",
-        "selectRange": "96f75a51-779b-491a-9773-cb5f90cef11e",
-        "handlerStep": "",
-        "valueField": "",
-        "defaultHandler": "u_eb03262c-ab60-4bc6-a4c0-96e66a4229fe",
-        "hanlderModel": "1",
-        "backModel": "1",
-        "backType": "0",
-        "backStep": "",
-        "percentage": "",
-        "countersignature": "0",
-        "countersignaturePercentage": ""
-      },
-      "forms": [
-        {
-          "id": "37283038-798f-4a5b-9175-f4e2dc69b0e4",
-          "name": "",
-          "type": "626480b3-eaa9-4705-acbb-82901db4fda4",
-          "srot": 0
-        }
-      ],
-      "buttons": [
-        {
-          "id": "86b7fa6c-891f-4565-9309-81672d3ba80a",
-          "sort": 0
-        },
-        {
-          "id": "8982b97c-adba-4a3a-afd9-9a3ef6ff12d8",
-          "sort": 1
-        }
-      ],
-      "fieldStatus": [
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.ID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title1",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.UserID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Type",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Contents",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.State",
-          "status": "0",
-          "check": "0"
-        }
-      ],
-      "event": {
-        "submitBefore": "",
-        "submitAfter": "",
-        "backBefore": "",
-        "backAfter": ""
-      }
+      "flowCategory": "0",
+      "processPolicy": "0",
+      "countersignPolicy": "0",
+      "backPolicy": "1",
+      "backCategory": "0",
+      "backStep": "",
+      "handlerSelectPolicy": "0",
+      "handlerCategory": "0",
+      "eventSaveFromData": "",
+      "eventSubmitBefore": "",
+      "eventSubmitAfter": "",
+      "eventBackBefore": "",
+      "eventBackAfter": "",
+      "expiredPrompt": false
     },
-    {
-      "id": "1a29f7fb-b8e2-4fbc-96e6-e5f0065dcd11",
-      "type": "normal",
-      "name": "市场部审核",
-      "opinionDisplay": "1",
-      "expiredPrompt": "1",
-      "signatureType": "0",
-      "workTime": "",
-      "limitTime": "",
-      "otherTime": "",
-      "archives": "0",
-      "archivesParams": "",
+    "flowPanel_node_4": {
+      "uid": "f4e3c925-ba03-40b4-9b78-0043c377579d",
+      "name": "部门负责人审批",
+      "signatureType": "1",
+      "formName": "",
       "note": "",
-      "position": {
-        "x": 231,
-        "y": 217,
-        "width": 108,
-        "height": 50
-      },
-      "countersignature": 0,
-      "behavior": {
-        "flowType": "0",
-        "runSelect": "1",
-        "handlerType": "0",
-        "selectRange": "4f4865de-fda0-417b-9465-d7648309b772",
-        "handlerStep": "",
-        "valueField": "",
-        "defaultHandler": "u_0362149c-af22-491f-baef-37bffcc1fd5c",
-        "hanlderModel": "0",
-        "backModel": "1",
-        "backType": "0",
-        "backStep": "",
-        "percentage": "",
-        "countersignature": "0",
-        "countersignaturePercentage": ""
-      },
-      "forms": [
-        {
-          "id": "37283038-798f-4a5b-9175-f4e2dc69b0e4",
-          "name": "",
-          "type": "626480b3-eaa9-4705-acbb-82901db4fda4",
-          "srot": 0
-        }
-      ],
-      "buttons": [
-        {
-          "id": "86b7fa6c-891f-4565-9309-81672d3ba80a",
-          "sort": 0
-        },
-        {
-          "id": "8982b97c-adba-4a3a-afd9-9a3ef6ff12d8",
-          "sort": 1
-        }
-      ],
-      "fieldStatus": [
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.ID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title1",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.UserID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Type",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Contents",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.State",
-          "status": "0",
-          "check": "0"
-        }
-      ],
-      "event": {
-        "submitBefore": "",
-        "submitAfter": "",
-        "backBefore": "",
-        "backAfter": ""
-      }
+      "flowCategory": "0",
+      "processPolicy": "0",
+      "countersignPolicy": "0",
+      "backPolicy": "1",
+      "backCategory": "0",
+      "backStep": "",
+      "handlerSelectPolicy": "0",
+      "handlerCategory": "0",
+      "eventSaveFromData": "",
+      "eventSubmitBefore": "",
+      "eventSubmitAfter": "",
+      "eventBackBefore": "",
+      "eventBackAfter": "",
+      "expiredPrompt": false
     },
-    {
-      "id": "7f865ae5-7e63-4797-97dd-eac5be6ab807",
-      "type": "normal",
-      "name": "总经理批准",
-      "opinionDisplay": "1",
-      "expiredPrompt": "1",
-      "signatureType": "0",
-      "workTime": "",
-      "limitTime": "",
-      "otherTime": "",
-      "archives": "0",
-      "archivesParams": "",
+    "flowPanel_node_5": {
+      "uid": "9d818e2c-3893-4295-8030-b6cf033caea5",
+      "name": "财务审核",
+      "signatureType": "1",
+      "formName": "",
       "note": "",
-      "position": {
-        "x": 482,
-        "y": 126,
-        "width": 108,
-        "height": 50
-      },
-      "countersignature": 0,
-      "behavior": {
-        "flowType": "0",
-        "runSelect": "1",
-        "handlerType": "0",
-        "selectRange": "82682cf5-50e1-4901-911b-1a935b5ddb6c",
-        "handlerStep": "",
-        "valueField": "",
-        "defaultHandler": "u_8086d01f-7ae3-402e-b543-d34f1059f79a",
-        "hanlderModel": "0",
-        "backModel": "1",
-        "backType": "0",
-        "backStep": "",
-        "percentage": "",
-        "countersignature": "1",
-        "countersignaturePercentage": ""
-      },
-      "forms": [
-        {
-          "id": "37283038-798f-4a5b-9175-f4e2dc69b0e4",
-          "name": "",
-          "type": "626480b3-eaa9-4705-acbb-82901db4fda4",
-          "srot": 0
-        }
-      ],
-      "buttons": [
-        {
-          "id": "b8a7af17-7ad5-4699-b679-d421691dd737",
-          "sort": 0
-        },
-        {
-          "id": "86b7fa6c-891f-4565-9309-81672d3ba80a",
-          "sort": 1
-        },
-        {
-          "id": "954effa8-03b8-461a-aaa8-8727d090dcb9",
-          "sort": 2
-        }
-      ],
-      "fieldStatus": [
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.ID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Title1",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.UserID",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Type",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.Contents",
-          "status": "0",
-          "check": "0"
-        },
-        {
-          "field": "06075250-30dc-4d32-bf97-e922cb30fac8.TempTest_News.State",
-          "status": "0",
-          "check": "0"
-        }
-      ],
-      "event": {
-        "submitBefore": "",
-        "submitAfter": "",
-        "backBefore": "",
-        "backAfter": ""
-      }
+      "flowCategory": "0",
+      "processPolicy": "0",
+      "countersignPolicy": "0",
+      "backPolicy": "0",
+      "backCategory": "1",
+      "backStep": "",
+      "handlerSelectPolicy": "0",
+      "handlerCategory": "0",
+      "eventSaveFromData": "",
+      "eventSubmitBefore": "",
+      "eventSubmitAfter": "",
+      "eventBackBefore": "",
+      "eventBackAfter": "",
+      "expiredPrompt": false
+    },
+    "flowPanel_node_11": {
+      "uid": "c553077c-ed53-4d8f-8bc8-cd09259a4a38",
+      "name": "总经理审核",
+      "signatureType": "1",
+      "formName": "",
+      "note": "",
+      "flowCategory": "0",
+      "processPolicy": "0",
+      "countersignPolicy": "0",
+      "backPolicy": "0",
+      "backCategory": "1",
+      "backStep": "",
+      "handlerSelectPolicy": "0",
+      "handlerCategory": "0",
+      "eventSaveFromData": "",
+      "eventSubmitBefore": "",
+      "eventSubmitAfter": "",
+      "eventBackBefore": "",
+      "eventBackAfter": "",
+      "expiredPrompt": false
     }
-  ],
-  "lines": [
-    {
-      "id": "c0456161-b50f-4d32-bb2c-c8ee1ef70d5a",
-      "from": "77a56a2d-4ff2-4b88-804c-da81dc96e88f",
-      "to": "24986fbb-a343-4701-818b-f3755b1700d4",
-      "customMethod": "",
-      "sql": "",
-      "noaccordMsg": ""
+  },
+  "line": {
+    "flowPanel_line_7": {
+      "name": "基层员工",
+      "method": "",
+      "organize_senderleader": false,
+      "organize_senderchargeleader": false,
+      "organize_sponsorleader": false,
+      "organize_sponsorchargeleader": false,
+      "organize_notsenderleader": false,
+      "organize_notsenderchargeleader": false,
+      "organize_notsponsorleader": false,
+      "organize_notsponsorchargeleader": false
     },
-    {
-      "id": "a5079b90-ff07-4e0f-91b5-a00664a337d1",
-      "from": "77a56a2d-4ff2-4b88-804c-da81dc96e88f",
-      "to": "6ed3e265-f90f-4d2d-9813-1d00b0408dd7",
-      "customMethod": "",
-      "sql": "",
-      "noaccordMsg": ""
+    "flowPanel_line_9": {
+      "name": "中层",
+      "method": "",
+      "organize_senderleader": false,
+      "organize_senderchargeleader": false,
+      "organize_sponsorleader": false,
+      "organize_sponsorchargeleader": false,
+      "organize_notsenderleader": false,
+      "organize_notsenderchargeleader": false,
+      "organize_notsponsorleader": false,
+      "organize_notsponsorchargeleader": false
     },
-    {
-      "id": "a90135e4-5680-4864-8b7e-37a2a0255600",
-      "from": "77a56a2d-4ff2-4b88-804c-da81dc96e88f",
-      "to": "1a29f7fb-b8e2-4fbc-96e6-e5f0065dcd11",
-      "customMethod": "",
-      "sql": "",
-      "noaccordMsg": ""
+    "flowPanel_line_8": {
+      "name": "同意",
+      "method": "",
+      "organize_senderleader": false,
+      "organize_senderchargeleader": false,
+      "organize_sponsorleader": false,
+      "organize_sponsorchargeleader": false,
+      "organize_notsenderleader": false,
+      "organize_notsenderchargeleader": false,
+      "organize_notsponsorleader": false,
+      "organize_notsponsorchargeleader": false
     },
-    {
-      "id": "423786c5-e5b3-404b-a67e-93d6c9a4c052",
-      "from": "24986fbb-a343-4701-818b-f3755b1700d4",
-      "to": "7f865ae5-7e63-4797-97dd-eac5be6ab807",
-      "customMethod": "",
-      "sql": "",
-      "noaccordMsg": ""
+    "flowPanel_line_10": {
+      "name": "不同意 驳回",
+      "method": "",
+      "organize_senderleader": false,
+      "organize_senderchargeleader": false,
+      "organize_sponsorleader": false,
+      "organize_sponsorchargeleader": false,
+      "organize_notsenderleader": false,
+      "organize_notsenderchargeleader": false,
+      "organize_notsponsorleader": false,
+      "organize_notsponsorchargeleader": false
     },
-    {
-      "id": "b554d41b-0009-473d-a626-5a27661484d6",
-      "from": "6ed3e265-f90f-4d2d-9813-1d00b0408dd7",
-      "to": "7f865ae5-7e63-4797-97dd-eac5be6ab807",
-      "customMethod": "",
-      "sql": "",
-      "noaccordMsg": ""
+    "flowPanel_line_12": {
+      "name": "同意",
+      "method": "",
+      "organize_senderleader": false,
+      "organize_senderchargeleader": false,
+      "organize_sponsorleader": false,
+      "organize_sponsorchargeleader": false,
+      "organize_notsenderleader": false,
+      "organize_notsenderchargeleader": false,
+      "organize_notsponsorleader": false,
+      "organize_notsponsorchargeleader": false
     },
-    {
-      "id": "9edecaed-7d6c-4af7-b90d-2599035796fe",
-      "from": "1a29f7fb-b8e2-4fbc-96e6-e5f0065dcd11",
-
-      "to": "7f865ae5-7e63-4797-97dd-eac5be6ab807",
-      "customMethod": "",
-      "sql": "",
-      "noaccordMsg": ""
+    "flowPanel_line_13": {
+      "name": "同意",
+      "method": "",
+      "organize_senderleader": false,
+      "organize_senderchargeleader": false,
+      "organize_sponsorleader": false,
+      "organize_sponsorchargeleader": false,
+      "organize_notsenderleader": false,
+      "organize_notsenderchargeleader": false,
+      "organize_notsponsorleader": false,
+      "organize_notsponsorchargeleader": false
+    },
+    "flowPanel_line_15": {
+      "name": "",
+      "method": "",
+      "organize_senderleader": false,
+      "organize_senderchargeleader": false,
+      "organize_sponsorleader": false,
+      "organize_sponsorchargeleader": false,
+      "organize_notsenderleader": false,
+      "organize_notsenderchargeleader": false,
+      "organize_notsponsorleader": false,
+      "organize_notsponsorchargeleader": false
     }
-  ]
+  }
 }
