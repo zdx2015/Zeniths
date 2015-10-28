@@ -215,6 +215,8 @@
     <Content Include="Areas\HR\Views\EmpLeave\Edit.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\Grid.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\Index.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\DetailGrid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\ViewGrid.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowRun\Send.cshtml" />

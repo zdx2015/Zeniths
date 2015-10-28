@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using Zeniths.Hr.Entity;
@@ -68,7 +69,30 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Edit(string id)
         {
-            var entity = service.Get(id.ToInt());
+            DailyReimburseDetails entity = new DailyReimburseDetails(); //service.Get(id.ToInt());
+            var list = (List<DailyReimburseDetails>)Session["DailyReimburseDetails"];
+            if (list != null)
+            {
+                foreach (var item in list)
+                {
+                    if (id.ToInt() > 0)
+                    {
+                        if (item.Id == id.ToInt())
+                        {
+                            entity = item;
+                        }
+                    }
+                    //else
+                    //{
+                    //    if (item.TempSortNum == TempSortNum.ToInt())
+                    //    {
+                    //        entity = item;
+                    //    }
+
+                    //}
+                }
+            }
+
             return EditCore(entity);
         }
 
@@ -108,8 +132,74 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             {
                 return Json(hasResult);
             }
+            var result = BoolMessage.True;
+            try
+            {
+                List<DailyReimburseDetails> list = new List<DailyReimburseDetails>();
 
-            var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
+                if (Session["DailyReimburseDetails"] == null)
+                {
+                    Session["DailyReimburseDetails"] = list;
+                }
+                else
+                {
+                    list = (List<DailyReimburseDetails>)Session["DailyReimburseDetails"];
+                }
+                if (entity.Id == 0)
+                {
+                    //if (entity.TempSortNum == 0)
+                    //{
+                        //entity.TempSortNum = list.Count + 1;
+                    if (list.Count > 0)
+                    {
+                        entity.Id = list[list.Count - 1].Id + 1;
+                    }
+                    else
+                    {
+                        entity.Id = 1;
+                    }
+                    list.Add(entity);
+                        Session["DailyReimburseDetails"] = list;
+                    //}
+                    //else
+                    //{
+                    //    foreach (var item in list)
+                    //    {
+                    //        if (item.TempSortNum == entity.TempSortNum)
+                    //        {
+                    //            item.CategoryId = entity.CategoryId;
+                    //            item.CategoryName = entity.CategoryName;
+                    //            item.ItemName = entity.ItemName;
+                    //            item.Amount = entity.Amount;
+                    //        }
+                    //    }
+                    //    Session["DailyReimburseDetails"] = list;
+                    //}
+                }
+                else
+                {
+                    foreach (var item in list)
+                    {
+                        if (item.Id == entity.Id)
+                        {
+                            item.CategoryId = entity.CategoryId;
+                            item.CategoryName = entity.CategoryName;
+                            item.ItemName = entity.ItemName;
+                            item.Amount = entity.Amount;
+                        }
+                    }
+                    Session["DailyReimburseDetails"] = list;
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                result = new BoolMessage(false,e.Message);
+            }
+            
+
+           // entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
             return Json(result);
         }
 
@@ -117,11 +207,37 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// 删除数据
         /// </summary>
         /// <param name="id">主键</param>
+        /// <param name="TempSortNum">临时虚拟序号</param>
         /// <returns>返回JsonMessage</returns>
         [HttpPost]
         public ActionResult Delete(string id)
         {
-            var result = service.Delete(StringHelper.ConvertToArrayInt(id));
+            var result = BoolMessage.True;
+            try
+            {
+                var list = (List<DailyReimburseDetails>)Session["DailyReimburseDetails"];
+
+                var ids = StringHelper.ConvertToArrayInt(id);
+                for (int i = 0; i < ids.Length; i++)
+                {
+                    foreach (var item in list)
+                    {
+                        if (item.Id == ids[i])
+                        {
+                            list.Remove(item);
+                            break;
+                        }
+                    }
+                }
+                Session["DailyReimburseDetails"] = list;
+            }
+            catch (Exception e)
+            {
+
+                result= new BoolMessage(false,e.Message);
+            }
+            
+            
             return Json(result);
         }
         

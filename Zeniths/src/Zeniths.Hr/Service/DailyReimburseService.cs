@@ -25,6 +25,7 @@ namespace Zeniths.Hr.Service
         /// </summary>
         private readonly Repository<DailyReimburse> repos = new Repository<DailyReimburse>();
         private readonly Repository<DailyReimburseDetails> detailRepos = new Repository<DailyReimburseDetails>();
+      
 
         /// <summary>
         /// 检测是否存在指定日常费用报销
@@ -94,23 +95,54 @@ namespace Zeniths.Hr.Service
         /// <summary>
         /// 提交发送前 更新日常费用报销
         /// </summary>
-        /// <param name="entity">日常费用报销实体</param>        
+        /// <param name="entity">日常费用报销实体</param>  
+        /// <param name="detailList">报销明细实体list</param>      
         /// <returns>执行成功返回BoolMessage.True</returns>
-        public BoolMessage Update(DailyReimburse entity)
+        public BoolMessage Update(DailyReimburse entity, List<DailyReimburseDetails> detailList)
         {
             try
             {
-                DailyReimburse oldEntity = Get(entity.Id);//取出修改的数据              
-
+                DailyReimburse oldEntity = Get(entity.Id);//取出修改的数据     
+                List<DailyReimburseDetails> oldDetailList = new List<DailyReimburseDetails>();
+                foreach (var item in detailList)
+                {
+                    var temEntity = detailRepos.Get(item.Id);
+                    oldDetailList.Add(temEntity);
+                }
+                bool result = false;
                 var count = repos.Update(entity);               
                 if(count>0)
-                {                   
-                    return BoolMessage.True;
-                }else
                 {
-                    repos.Update(oldEntity);                  
+                    int delCount = 0;
+                    foreach (var item in detailList)
+                    {
+                       var temCount =  detailRepos.Update(item);
+                        if (temCount > 0)
+                        {
+                            delCount = delCount + 1;
+                        }
+                    }
+                    if (delCount == detailList.Count)
+                    {
+                        result = true;
+                    }
+                }
+
+                if (result)
+                {
+                    return BoolMessage.True;
+                }
+                else
+                {
+                    repos.Update(oldEntity);
+                    foreach (var item in oldDetailList)
+                    {
+                        detailRepos.Update(item);
+                    }
+
                     return BoolMessage.False;
                 }
+               
                 
             }
             catch (Exception e)
@@ -301,7 +333,8 @@ namespace Zeniths.Hr.Service
                 if (ids.Length==1)
                 {
                     repos.Delete(ids[0]);
-                    detailRepos.Delete(p => p.ReimburseId == ids[0]);
+                    int m = ids[0];
+                    detailRepos.Delete(p => p.ReimburseId == m);
 
                 }
                 else
@@ -325,6 +358,22 @@ namespace Zeniths.Hr.Service
         public DailyReimburse Get(int id)
         {
             return repos.Get(id);
+        }
+
+        /// <summary>
+        /// 获取费用报销单顺序号(主体部分)
+        /// </summary>
+        /// <returns></returns>
+        public string GetYearAndMonthString()
+        {
+            var temDate = DateTime.Now;
+            var sYear = temDate.Year.ToString().Substring(2, 2);
+            var sMonth = temDate.Month.ToString();
+            if (sMonth.Length == 1)
+            {
+                sMonth = sMonth.PadLeft(1, '0');
+            }
+            return sYear + sMonth;
         }
                 
         /// <summary>

@@ -12,8 +12,9 @@
             </div>
             <div class="panel-body">
                 @Html.AntiForgeryToken()
-                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id"/>
-                <input type="hidden" name="@nameof(Model.CategoryName)" value="@Model.CategoryName" />
+                <input type="hidden" name="@nameof(Model.Id)" id="@nameof(Model.Id)" value="@Model.Id"/>
+                <input type="hidden" name="@nameof(Model.CategoryName)" id="CategoryName" value="@Model.CategoryName"/>
+                <input type="hidden" name="@nameof(Model.TempSortNum)" id="TempSortNum" value="@Model.TempSortNum" />
                 <table class="table table-form table-dialog-form">
                    
                     <tr>
@@ -31,11 +32,10 @@
                             <label class="control-label">费用类别：</label>
                         </th>
                         <td>
-                            <div class="input-icon right">
-                                @*<input class="form-control" name="@nameof(Model.CategoryId)" value="@Model.CategoryId" type="text"/>*@
-                                <select class="select2-control w-200px form-control" name="@nameof(Model.CategoryId)" data-placeholder="请选择费用类别">
+                            <div >
+                                <select class="select2-control w-200px form-control" name="@nameof(Model.CategoryId)" id="CategoryId" data-placeholder="请选择费用类别">
                                     <option></option>
-                                    @Html.DailyReimburseDetailCategoryOptions();
+                                    @Html.DailyReimburseDetailCategoryOptions(Model.CategoryId.ToString());
                                 </select>
                             </div>
 
@@ -79,12 +79,7 @@
             //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
             $('.editform').dataform().initValidate({
                 rules: {
-                    ReimburseId: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
+                  
                     ItemName: {
                         required: true
                         /*,maxlength: 100
@@ -92,12 +87,6 @@
                         */
                     }, 
                     CategoryId: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    CategoryName: {
                         required: true
                         /*,maxlength: 100
                           ,digits: true
@@ -111,12 +100,6 @@
                     } 
                 },
                 messages: {
-                    ReimburseId: {
-                        required: '请填写报销主表主键'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
                     ItemName: {
                         required: '请填写项目名称'
                         /*,maxlength: '长度不能超过100'
@@ -124,13 +107,7 @@
                         */
                     }, 
                     CategoryId: {
-                        required: '请填写费用类别主键'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    CategoryName: {
-                        required: '请填写费用类别名称'
+                        required: '请填写费用类别'
                         /*,maxlength: '长度不能超过100'
                           ,digits: '只能输入正整数'
                         */
@@ -143,6 +120,8 @@
                     } 
                 },
                 beforeSubmit: function () {
+                    var cName = $('#CategoryId option:selected').text();
+                    $('#CategoryName').val(cName);
                 }
             }).initAjax({ success: zeniths.util.formAjaxSuccess });
 

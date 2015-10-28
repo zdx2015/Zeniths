@@ -7,9 +7,7 @@
         <tr>
             <th class="w-checkbox">
                 <label><input class="checkbox-check" type="checkbox"><span></span></label>
-            </th>            
-           
-          
+            </th>          
             <th class="w-100px" data-order="@nameof(DailyReimburse.ReimburseDepartmentName)">报销部门名称</th>
            
             <th class="w-100px" data-order="@nameof(DailyReimburse.ApplicantName)">经办人姓名</th>
@@ -40,8 +38,6 @@
                 <td>@record.RefundMoney</td>
                 <td>@record.AfterBackMoney</td>
                 <td>@record.Note</td>
-                <td>@record.AddDepartmentManagerId</td>
-                <td>@record.AddDepartmentManagerSign</td>
                 <td>
                     <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
                         <i class="fa fa-eye"></i> 查看

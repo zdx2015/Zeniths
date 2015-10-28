@@ -11,7 +11,7 @@ namespace Zeniths.Hr.Entity
     /// 日常费用报销明细
     /// </summary>
     [Table(Caption = "日常费用报销明细")]
-    [PrimaryKey("Id")]
+    [PrimaryKey("Id",true)]
     public class DailyReimburseDetails
     {
 		/// <summary>
@@ -49,6 +49,12 @@ namespace Zeniths.Hr.Entity
         /// </summary>
 		[Column(Caption = "费用金额")]
         public decimal Amount { get; set; }
+
+        /// <summary>
+        /// 临时虚拟序号
+        /// </summary>
+        [Ignore]
+        public int TempSortNum { get; set; }
 
         /// <summary>
         /// 复制对象
