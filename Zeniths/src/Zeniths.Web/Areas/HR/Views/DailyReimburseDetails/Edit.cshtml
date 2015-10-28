@@ -7,24 +7,15 @@
     <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
-                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @*<span class="prefix"> <strong>@Model.Id</strong></span>*@
                 @title
             </div>
             <div class="panel-body">
                 @Html.AntiForgeryToken()
-                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id"/>
+                <input type="hidden" name="@nameof(Model.CategoryName)" value="@Model.CategoryName" />
                 <table class="table table-form table-dialog-form">
-                
-                    <tr>
-                        <th class="w-100px">
-                            <label class="control-label">报销主表主键：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.ReimburseId)" value="@Model.ReimburseId" type="text" />
-                            </div>
-                        </td>
-                    </tr>
+                   
                     <tr>
                         <th >
                             <label class="control-label">项目名称：</label>
@@ -37,24 +28,21 @@
                     </tr>
                     <tr>
                         <th >
-                            <label class="control-label">费用类别主键：</label>
+                            <label class="control-label">费用类别：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.CategoryId)" value="@Model.CategoryId" type="text" />
+                                @*<input class="form-control" name="@nameof(Model.CategoryId)" value="@Model.CategoryId" type="text"/>*@
+                                <select class="select2-control w-200px form-control" name="@nameof(Model.CategoryId)" data-placeholder="请选择费用类别">
+                                    <option></option>
+                                    @Html.DailyReimburseDetailCategoryOptions();
+                                </select>
                             </div>
+
+                         
                         </td>
                     </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">费用类别名称：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.CategoryName)" value="@Model.CategoryName" type="text" />
-                            </div>
-                        </td>
-                    </tr>
+                   
                     <tr>
                         <th >
                             <label class="control-label">费用金额：</label>
