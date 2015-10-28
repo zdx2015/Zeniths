@@ -1,0 +1,173 @@
+﻿@model PageList<DailyReimburse>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-checkbox">
+                <label><input class="checkbox-check" type="checkbox"><span></span></label>
+            </th>            
+            <th class="w-100px" data-order="@nameof(DailyReimburse.BudgetId)">预算主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ReimburseDepartmentId)">报销部门主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ReimburseDepartmentName)">报销部门名称</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ApplicantId)">经办人主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ApplicantName)">经办人姓名</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ApplyOpinion)">申请情况说明</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ApplicationDate)">填表日期</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ApplySortNumber)">报销单顺序号</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AttachmentCount)">附件张数</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ProjectSumMoney)">报销金额合计</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.BorrowMoney)">借款数</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.RefundMoney)">应退金额</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AfterBackMoney)">应补金额</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.Note)">备注</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AddDepartmentManagerId)">部门经理主键(预算外)</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AddDepartmentManagerSign)">部门经理姓名(预算外)</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AddDepartmentManagerIsAudit)">部门经理审批状态(预算外)</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AddDepartmentManagerOpinion)">部门经理意见(预算外)</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AddDepartmentManagerSignDate)">部门经理审批时间(预算外)</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.DepartmentManagerId)">部门经理主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.DepartmentManagerSign)">部门经理姓名</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.DepartmentManagerOpinion)">部门经理意见</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.DepartmentManagerIsAudit)">部门经理审批状态</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.DepartmentManagerSignDate)">部门经理审批时间</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.FinancialManagerId)">财务经理主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.FinancialManagerSign)">财务经理姓名</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.FinancialManagerOpinion)">财务经理意见</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.FinancialManagerIsAudit)">财务经理审批状态</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.FinancialManagerSignDate)">财务经理审批时间</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AccountantId)">会计主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AccountantSign)">会计姓名</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AccountantIsAudit)">会计审核状态</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AccountantOpinion)">会计审核意见</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AccountantSignDate)">会计审核时间</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AddGeneralManagerId)">总经理主键(预算外)</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AddGeneralManagerSign)">总经理姓名(预算外)</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AddGeneralManagerIsAudit)">总经理审批状态(预算外)</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AddGeneralManagerOpinion)">总经理审批意见(预算外)</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.AddGeneralManagerSignDate)">总经理审批时间(预算外)</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.GeneralManagerId)">总经理主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.GeneralManagerSign)">总经理姓名</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.GeneralManagerIsAudit)">总经理审批状态</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.GeneralManagerOpinion)">总经理审批意见</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.GeneralManagerSignDate)">总经理审批时间</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ChairmanId)">董事长主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ChairmanSign)">董事长姓名</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ChairmanIsAudit)">董事长审批状态</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ChairmanOpinion)">董事长审批意见</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ChairmanSignDate)">董事长审批时间</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.CashierId)">出纳主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.CashierName)">出纳姓名</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.CashierUpdateDateTime)">出纳付款时间</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.DrawMoney)">领款金额</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.DrawMoneyId)">领款人主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.DrawMoneyName)">领款人姓名</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.DrawMoneyDateTime)">领款时间</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.Title)">流程标题</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.FlowId)">工作流主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.FlowName)">工作流名称</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.FlowInstanceId)">流程实例主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.StepId)">步骤主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.StepName)">步骤名称</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.IsFinish)">流程是否完成</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.CreateUserId)">创建用户主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.CreateUserName)">创建用户姓名</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.CreateDateTime)">创建时间</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.CreateDepartmentId)">创建人部门主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.CreateDepartmentName)">创建人部门名称</th>
+            <th class="w-120px text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
+                </td>
+                <td>@record.BudgetId</td>
+                <td>@record.ReimburseDepartmentId</td>
+                <td>@record.ReimburseDepartmentName</td>
+                <td>@record.ApplicantId</td>
+                <td>@record.ApplicantName</td>
+                <td>@record.ApplyOpinion</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.ApplicationDate)</td>
+                <td>@record.ApplySortNumber</td>
+                <td>@record.AttachmentCount</td>
+                <td>@record.ProjectSumMoney</td>
+                <td>@record.BorrowMoney</td>
+                <td>@record.RefundMoney</td>
+                <td>@record.AfterBackMoney</td>
+                <td>@record.Note</td>
+                <td>@record.AddDepartmentManagerId</td>
+                <td>@record.AddDepartmentManagerSign</td>
+                <td class="text-center">@Html.BoolLabel(record.AddDepartmentManagerIsAudit)</td>
+                <td>@record.AddDepartmentManagerOpinion</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.AddDepartmentManagerSignDate)</td>
+                <td>@record.DepartmentManagerId</td>
+                <td>@record.DepartmentManagerSign</td>
+                <td>@record.DepartmentManagerOpinion</td>
+                <td class="text-center">@Html.BoolLabel(record.DepartmentManagerIsAudit)</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.DepartmentManagerSignDate)</td>
+                <td>@record.FinancialManagerId</td>
+                <td>@record.FinancialManagerSign</td>
+                <td>@record.FinancialManagerOpinion</td>
+                <td class="text-center">@Html.BoolLabel(record.FinancialManagerIsAudit)</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.FinancialManagerSignDate)</td>
+                <td>@record.AccountantId</td>
+                <td>@record.AccountantSign</td>
+                <td class="text-center">@Html.BoolLabel(record.AccountantIsAudit)</td>
+                <td>@record.AccountantOpinion</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.AccountantSignDate)</td>
+                <td>@record.AddGeneralManagerId</td>
+                <td>@record.AddGeneralManagerSign</td>
+                <td class="text-center">@Html.BoolLabel(record.AddGeneralManagerIsAudit)</td>
+                <td>@record.AddGeneralManagerOpinion</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.AddGeneralManagerSignDate)</td>
+                <td>@record.GeneralManagerId</td>
+                <td>@record.GeneralManagerSign</td>
+                <td class="text-center">@Html.BoolLabel(record.GeneralManagerIsAudit)</td>
+                <td>@record.GeneralManagerOpinion</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.GeneralManagerSignDate)</td>
+                <td>@record.ChairmanId</td>
+                <td>@record.ChairmanSign</td>
+                <td class="text-center">@Html.BoolLabel(record.ChairmanIsAudit)</td>
+                <td>@record.ChairmanOpinion</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.ChairmanSignDate)</td>
+                <td>@record.CashierId</td>
+                <td>@record.CashierName</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.CashierUpdateDateTime)</td>
+                <td>@record.DrawMoney</td>
+                <td>@record.DrawMoneyId</td>
+                <td>@record.DrawMoneyName</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.DrawMoneyDateTime)</td>
+                <td>@record.Title</td>
+                <td>@record.FlowId</td>
+                <td>@record.FlowName</td>
+                <td>@record.FlowInstanceId</td>
+                <td>@record.StepId</td>
+                <td>@record.StepName</td>
+                <td class="text-center">@Html.BoolLabel(record.IsFinish)</td>
+                <td>@record.CreateUserId</td>
+                <td>@record.CreateUserName</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.CreateDateTime)</td>
+                <td>@record.CreateDepartmentId</td>
+                <td>@record.CreateDepartmentName</td>
+                <td>
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
+                        <i class="fa fa-eye"></i> 查看
+                    </a>
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                        <i class="fa fa-edit"></i> 编辑
+                    </a>
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)

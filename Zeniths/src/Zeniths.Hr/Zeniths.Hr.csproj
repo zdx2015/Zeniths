@@ -36,12 +36,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\DailyReimburse.cs" />
+    <Compile Include="Entity\DailyReimburseDetails.cs" />
     <Compile Include="Entity\EmpLeave.cs" />
     <Compile Include="Entity\OAWorkLog.cs" />
     <Compile Include="Entity\OAWorkLogShare.cs" />
     <Compile Include="HrDatabase.cs" />
     <Compile Include="HrRepository.cs" />
     <Compile Include="Entity\GoOutRegistration.cs" />
+    <Compile Include="Service\DailyReimburseDetailsService.cs" />
+    <Compile Include="Service\DailyReimburseService.cs" />
     <Compile Include="Service\EmpLeaveService.cs" />
     <Compile Include="Service\GoOutRegistrationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

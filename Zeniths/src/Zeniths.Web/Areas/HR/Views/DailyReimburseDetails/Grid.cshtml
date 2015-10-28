@@ -1,0 +1,47 @@
+﻿@model PageList<DailyReimburseDetails>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-checkbox">
+                <label><input class="checkbox-check" type="checkbox"><span></span></label>
+            </th>            
+            <th class="w-100px" data-order="@nameof(DailyReimburseDetails.ReimburseId)">报销主表主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburseDetails.ItemName)">项目名称</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburseDetails.CategoryId)">费用类别主键</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburseDetails.CategoryName)">费用类别名称</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburseDetails.Amount)">费用金额</th>
+            <th class="w-120px text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
+                </td>
+                <td>@record.ReimburseId</td>
+                <td>@record.ItemName</td>
+                <td>@record.CategoryId</td>
+                <td>@record.CategoryName</td>
+                <td>@record.Amount</td>
+                <td>
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
+                        <i class="fa fa-eye"></i> 查看
+                    </a>
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                        <i class="fa fa-edit"></i> 编辑
+                    </a>
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)

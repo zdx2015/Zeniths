@@ -203,6 +203,14 @@
     <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
     <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
     <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\Details.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\Index.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburseDetails\Details.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburseDetails\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburseDetails\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburseDetails\Index.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\Details.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\Edit.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\Grid.cshtml" />
@@ -596,6 +604,8 @@
     <Compile Include="Areas\Auth\Controllers\SystemParamController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemRoleController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
+    <Compile Include="Areas\HR\Controllers\DailyReimburseController.cs" />
+    <Compile Include="Areas\HR\Controllers\DailyReimburseDetailsController.cs" />
     <Compile Include="Areas\HR\Controllers\EmpLeaveController.cs" />
     <Compile Include="Areas\HR\Controllers\GoOutRegistrationController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogController.cs" />
