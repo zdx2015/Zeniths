@@ -42,6 +42,15 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         }
 
         /// <summary>
+        /// 查看主视图
+        /// </summary>
+        /// <returns>视图模板</returns>
+        public ActionResult AllIndex()
+        {
+            return View();
+        }
+
+        /// <summary>
         /// 表格视图
         /// </summary>
         /// <param name="name">按钮名称</param>
@@ -55,6 +64,21 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name);
             return View(list);
         }
+        /// <summary>
+        /// 表格视图
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public ActionResult AllGrid(string name)
+        {
+            var pageIndex = GetPageIndex();
+            var pageSize = GetPageSize();
+            var orderName = GetOrderName();
+            var orderDir = GetOrderDir();
+            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name);
+            return View(list);
+        }
+
         /// <summary>
         /// 明细表格视图
         /// </summary>
@@ -93,23 +117,34 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         }
 
         /// <summary>
+        /// 查看明细表格视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AllViewGrid()
+        {
+            var pageIndex = GetPageIndex();
+            var pageSize = GetPageSize();
+            var orderName = GetOrderName();
+            var orderDir = GetOrderDir();
+            var list = (List<DailyReimburseDetails>)Session["DailyReimburseDetails"];
+            if (list == null)
+            {
+                list = new List<DailyReimburseDetails>();
+            }
+            PageList<DailyReimburseDetails> pList = new PageList<DailyReimburseDetails>(pageIndex, pageSize, list.Count, list);
+            return View(pList);
+        }
+
+        /// <summary>
         /// 新增视图
         /// </summary>
         /// <returns>视图模板</returns>
         public ActionResult Create()
         {
-            ViewBag.Action = "Create";
+           
             var entity = new DailyReimburse();
-            //entity.ReimburseDepartmentId = CurrentUser.DepartmentId;
             entity.ReimburseDepartmentName = CurrentUser.DepartmentName;
-            //entity.ApplicantId = CurrentUser.Id;
             entity.ApplicantName = CurrentUser.Name;
-            entity.ApplicationDate = DateTime.Now.Date;
-            //entity.CreateUserId = CurrentUser.Id;
-            //entity.CreateUserName = CurrentUser.Name;
-            //entity.CreateDepartmentId = CurrentUser.DepartmentId;
-            //entity.CreateDepartmentName = CurrentUser.DepartmentName;
-            //entity.CreateDateTime = DateTime.Now;
             Session["DailyReimburseDetails"] = null;
             ViewBag.Title = "添加日常费用报销";
             return EditCore(entity);
@@ -122,7 +157,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Edit(string id)
         {
-            ViewBag.Action = "Edit";
+          
             var entity = service.Get(id.ToInt());
             var list = detailsService.GetList(id.ToInt());
             Session["DailyReimburseDetails"] = list;
@@ -138,11 +173,25 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Details(string id)
         {
-            ViewBag.Action = "View";
+           
             var entity = service.Get(id.ToInt());
             var list = detailsService.GetList(id.ToInt());
             Session["DailyReimburseDetails"] = list;
-            ViewBag.Title = "编辑日常费用报销";
+            ViewBag.Title = "查看日常费用报销";
+            return View(entity);
+        }
+
+        /// <summary>
+        /// 查看视图
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>视图模板</returns>
+        public ActionResult AllDetails(string id)
+        {
+            var entity = service.Get(id.ToInt());
+            var list = detailsService.GetList(id.ToInt());
+            Session["DailyReimburseDetails"] = list;
+            ViewBag.Title = "查看日常费用报销";
             return View(entity);
         }
 
@@ -208,7 +257,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
                 result = service.Update(entity, curlist);
             }
 
-            //var result = entity.Id == 0 ? service.Insert(entity, list) : service.Update(entity);
+           
             return Json(result);
         }
 
