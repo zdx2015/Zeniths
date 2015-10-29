@@ -199,10 +199,6 @@
     <Content Include="Areas\HR\Views\OAWorkLogShare\Edit.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Grid.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Index.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Details.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\Details.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\Edit.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\Grid.cshtml" />
@@ -215,6 +211,18 @@
     <Content Include="Areas\HR\Views\EmpLeave\Edit.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\Grid.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\Index.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudget\Details.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudget\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudget\Index.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudgetDetails\Details.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudgetDetails\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudgetDetails\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudgetDetails\Index.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudget\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Details.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\DetailGrid.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\ViewGrid.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
@@ -606,6 +614,8 @@
     <Compile Include="Areas\Auth\Controllers\SystemParamController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemRoleController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
+    <Compile Include="Areas\HR\Controllers\HrBudgetController.cs" />
+    <Compile Include="Areas\HR\Controllers\HrBudgetDetailsController.cs" />
     <Compile Include="Areas\HR\Controllers\DailyReimburseController.cs" />
     <Compile Include="Areas\HR\Controllers\DailyReimburseDetailsController.cs" />
     <Compile Include="Areas\HR\Controllers\EmpLeaveController.cs" />
@@ -659,7 +669,6 @@
   <ItemGroup>
     <Folder Include="Areas\HR\Assets\css\" />
     <Folder Include="Areas\HR\Assets\js\" />
-    <Folder Include="Areas\HR\Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zeniths.Auth.Utility\Zeniths.Auth.Utility.csproj">
