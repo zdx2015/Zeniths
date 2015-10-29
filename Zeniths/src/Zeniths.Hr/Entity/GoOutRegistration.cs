@@ -34,7 +34,7 @@ namespace Zeniths.Hr.Entity
         /// 员工姓名
         /// </summary>
         [Column(Caption = "员工姓名")]
-        public string Name { get; set; }
+        public string EmployeeName { get; set; }
 
         /// <summary>
         /// 外出事由
@@ -52,10 +52,10 @@ namespace Zeniths.Hr.Entity
         /// 预计返回时间
         /// </summary>
         [Column(Caption = "预计返回时间")]
-        public DateTime? BackTime { get; set; }
+        public DateTime? PlanBackTime { get; set; }
 
         /// <summary>
-        /// 预实际返回时间
+        /// 实际返回时间
         /// </summary>
         [Column(Caption = "实际返回时间")]
         public DateTime? RealBackTime { get; set; }
@@ -73,6 +73,12 @@ namespace Zeniths.Hr.Entity
         public DateTime? ApplyTime { get; set; }
 
         /// <summary>
+        /// 备注
+        /// </summary>
+        [Column(Caption = "备注")]
+        public string Note { get; set; }
+
+        /// <summary>
         /// 权限用户Id
         /// </summary>
         [Column(Caption = "权限用户Id")]
@@ -83,12 +89,6 @@ namespace Zeniths.Hr.Entity
         /// </summary>
         [Column(Caption = "权限部门Id")]
         public int AuthDepartmentId { get; set; }
-
-        /// <summary>
-        /// 备注
-        /// </summary>
-        [Column(Caption = "备注")]
-        public string Remarks { get; set; }
 
         /// <summary>
         /// 复制对象

@@ -1,6 +1,5 @@
-﻿@model GoOutRegistration
-@{
-    var title = " 外出登记按钮";
+﻿@{
+    var title = "外出登记查询";
 }
 <div class="container-zeniths">
     <div class="panel panel-default panel-zeniths">
@@ -11,24 +10,20 @@
             <div class="search-panel-zeniths">
                 <form class="form-inline search-form">
                     <div class="form-group">
-                        <input class="w-200px form-control" name="@nameof(GoOutRegistration.EmployeeName)" type="text" placeholder="请输入姓名关键字查询">
+                        姓名：<input class="w-200px form-control" name="@nameof(EmployeeGoOutRegistration.EmployeeName)" type="text" placeholder="请输入员工姓名查询">&nbsp;&nbsp;
+                        外出时间：<input class="date-control form-control" name="@nameof(EmployeeGoOutRegistration.GoOutDateTime)" type="text" />&nbsp;至
+                        <input class="date-control form-control" name="GoOutEndDateTime" type="text" />
                     </div>
                     &nbsp;
                     <button class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> 查询
-                    </button>
-                    <a class="btn btn-success" id="btnCreate" data-url="@Url.Action("Create")">
-                        <i class="fa fa-plus"></i> 新建
-                    </a>
-                    <a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
-                        <i class="fa fa-trash-o"></i> 删除
-                    </a>
-                    <a class="btn btn-default" id="btnRefresh">
+                    </button>                  
+                   @* <a class="btn btn-default" id="btnRefresh">
                         <i class="fa fa-repeat"></i> 刷新
                     </a>
                     <a class="btn btn-default" href="@Url.Action("Export")">
                         <i class="fa fa-share-square-o"></i> 导出
-                    </a>
+                    </a>*@
                 </form>
             </div>
             <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid"))" data-query-form=".search-form">
@@ -40,15 +35,13 @@
 @section script
 {
     <script>
-
         $(function () {
             zeniths.util.standardGridBind({
-                editWidth: 800,
+                editWidth: 900,
                 editHeight: 500,
-                viewWidth: 800,
-                viewHeight: 490
+                viewWidth: 900,
+                viewHeight: 850
             });
         });
-
     </script>
 }

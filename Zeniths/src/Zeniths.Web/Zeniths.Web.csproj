@@ -203,6 +203,25 @@
     <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
     <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
     <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\GoBack.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\DisplayCommon.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\Details.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\Index.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeNotClock\Details.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeNotClock\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeNotClock\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeNotClock\Index.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\GeneralManagerOpinion.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\GoBackInfo.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\IndexMyself.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\IndexDepartment.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\GridDepartment.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\GridMyself.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\GeneralManagerOpinionList.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\GridGeneralManagerOpinion.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\_ColumnCommon.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
     <None Include="Plugin\_references.js" />
@@ -589,6 +608,8 @@
     <Compile Include="Areas\Auth\Controllers\SystemParamController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemRoleController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeGoOutRegistrationController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeNotClockController.cs" />
     <Compile Include="Areas\HR\Controllers\GoOutRegistrationController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogShareController.cs" />
@@ -638,6 +659,7 @@
   <ItemGroup>
     <Folder Include="Areas\HR\Assets\css\" />
     <Folder Include="Areas\HR\Assets\js\" />
+    <Folder Include="Areas\HR\Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zeniths.Auth.Utility\Zeniths.Auth.Utility.csproj">

@@ -542,6 +542,21 @@ namespace Zeniths.Helper
         }
 
         /// <summary>
+        ///  获取格式化的日期字符串(默认格式 yyyy-MM-dd)
+        /// </summary>
+        /// <param name="datetime"></param>
+        /// <returns></returns>
+        public static string FormatDateHasThird(DateTime? datetime)
+        {
+            if (datetime.HasValue)
+            {
+                return FormatDate(datetime.Value, "yyyy-MM-dd");
+            }
+            return string.Empty;
+        }
+        
+
+        /// <summary>
         /// 获取格式化的日期字符串(默认格式 yyyy-MM-dd HH:mm)
         /// </summary>
         /// <param name="datetime">指定的日期</param>

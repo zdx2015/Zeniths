@@ -18,17 +18,16 @@ namespace Zeniths.Hr.Service
         private readonly HrRepository<GoOutRegistration> repos = new HrRepository<GoOutRegistration>();
 
 
-        /// <summary>
-        /// 检测是否存在指定外出登记
-        /// </summary>
-        /// <param name="entity">外出登记实体</param>
-        /// <returns>存在返回true</returns>
-        public BoolMessage Exists(GoOutRegistration entity)
-        {
-            var has = repos.Exists(p => p.Id == entity.Id);
-            //p => p.Name == entity.Name && p.Id != entity.Id
-            return has ? new BoolMessage(false, "输入外出登记已经存在") : BoolMessage.True;
-        }
+        ///// <summary>
+        ///// 检测是否存在指定外出登记
+        ///// </summary>
+        ///// <param name="entity">外出登记实体</param>
+        ///// <returns>存在返回true</returns>
+        //public BoolMessage Exists(GoOutRegistration entity)
+        //{
+        //    var has = repos.Exists(p => p.EmployeeId == entity.EmployeeId && p.Id != entity.Id);
+        //    return has ? new BoolMessage(false, "输入外出登记已经存在") : BoolMessage.True;
+        //}
 
         /// <summary>
         /// 添加外出登记
@@ -109,7 +108,25 @@ namespace Zeniths.Hr.Service
         }
 
         /// <summary>
-        /// 获取外出登记列表
+        /// 获取所有外出登记列表(分页)
+        /// </summary>
+        /// <param name="pageIndex">页面索引</param>
+        /// <param name="pageSize">分页大小</param>
+        /// <param name="orderName">排序列名</param>
+        /// <param name="orderDir">排序方式</param>
+        /// <returns></returns>
+        public PageList<GoOutRegistration> GetAllPageList(int pageIndex, int pageSize, string orderName,
+            string orderDir)
+        {
+            orderName = orderName.IsEmpty() ? nameof(GoOutRegistration.Id) : orderName;
+            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;
+            var query = repos.NewQuery.Take(pageSize).Page(pageIndex).
+                OrderBy(orderName, orderDir.IsAsc());
+            return repos.Page(query);
+        }
+
+        /// <summary>
+        /// 获取指定条件的外出登记列表(分页)
         /// </summary>
         /// <param name="pageIndex">页面索引</param>
         /// <param name="pageSize">分页大小</param>
@@ -127,7 +144,7 @@ namespace Zeniths.Hr.Service
             if (buttonName.IsNotEmpty())
             {
                 buttonName = buttonName.Trim();
-                query.Where(p => p.Name.Contains(buttonName));
+                query.Where(p => p.EmployeeName.Contains(buttonName));
             }
             return repos.Page(query);
         }

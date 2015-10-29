@@ -31,7 +31,7 @@ namespace Zeniths.Web.Areas.HR.Controllers
         {
             ViewBag.flag = 0;
             GoOutRegistration entity = new GoOutRegistration();
-            entity.Name = "zhangsan";  //获取当前登录用户姓名
+            entity.EmployeeName = "zhangsan";  //获取当前登录用户姓名
             return EditCore(entity, 0);  //new GoOutRegistration()
         }
 
@@ -51,11 +51,11 @@ namespace Zeniths.Web.Areas.HR.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save(GoOutRegistration entity)
         {
-            var hasResult = service.Exists(entity);
-            if (hasResult.Failure)
-            {
-                return Json(hasResult);
-            }
+            //var hasResult = service.Exists(entity);
+            //if (hasResult.Failure)
+            //{
+            //    return Json(hasResult);
+            //}
             if (entity.Id == 0)
             {
                 entity.ApplyTime = System.DateTime.Now;
@@ -72,6 +72,12 @@ namespace Zeniths.Web.Areas.HR.Controllers
         }
 
         public ActionResult Details(string id)
+        {
+            var entity = service.Get(id.ToInt());
+            return View(entity);
+        }
+
+        public ActionResult GoBack(string id)
         {
             var entity = service.Get(id.ToInt());
             return View(entity);
