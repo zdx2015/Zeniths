@@ -16,32 +16,32 @@
                 <input type="hidden" name="@nameof(Model.CategoryName)" id="CategoryName" value="@Model.CategoryName"/>
                 <input type="hidden" name="@nameof(Model.TempSortNum)" id="TempSortNum" value="@Model.TempSortNum" />
                 <table class="table table-form table-dialog-form">
-                   
+                    <tr>
+                        <th>
+                            <label class="control-label">费用类别：</label>
+                        </th>
+                        <td>
+                            <div>
+                                <select class="select2-control w-500px form-control" name="@nameof(Model.CategoryId)" id="CategoryId" data-placeholder="请选择费用类别" onchange="selectChange();">
+                                    <option></option>
+                                    @Html.DailyReimburseDetailCategoryOptions(Model.CategoryId.ToString());
+                                </select>
+                            </div>
+
+
+                        </td>
+                    </tr>
                     <tr>
                         <th >
                             <label class="control-label">项目名称：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.ItemName)" value="@Model.ItemName" type="text" />
+                                <input class="form-control" name="@nameof(Model.ItemName)" value="@Model.ItemName" id="ItemName" type="text" readonly/>
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">费用类别：</label>
-                        </th>
-                        <td>
-                            <div >
-                                <select class="select2-control w-200px form-control" name="@nameof(Model.CategoryId)" id="CategoryId" data-placeholder="请选择费用类别">
-                                    <option></option>
-                                    @Html.DailyReimburseDetailCategoryOptions(Model.CategoryId.ToString());
-                                </select>
-                            </div>
-
-                         
-                        </td>
-                    </tr>
+                   
                    
                     <tr>
                         <th >
@@ -76,8 +76,8 @@
     <script>
 
         $(function () {
-            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
-            $('.editform').dataform().initValidate({
+            //$('.editform').dataform().initiCheck().initDatePicker()
+            $('.editform').dataform().initSelect2().initValidate({
                 rules: {
                   
                     ItemName: {
@@ -94,9 +94,10 @@
                     }, 
                     Amount: {
                         required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
+                        /*,maxlength: 100*/
+                        ,number: true
+                        ,min:0
+                        
                     } 
                 },
                 messages: {
@@ -114,9 +115,9 @@
                     }, 
                     Amount: {
                         required: '请填写费用金额'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
+                        /*,maxlength: '长度不能超过100'*/
+                          ,number: '只能输入数字'
+                          ,min:'不能小于0'
                     } 
                 },
                 beforeSubmit: function () {
@@ -126,5 +127,10 @@
             }).initAjax({ success: zeniths.util.formAjaxSuccess });
 
         });
+
+        function selectChange() {
+            var selText = $('#CategoryId').find('option:selected').text();
+            $('#ItemName').val(selText);
+        };
     </script>
 }

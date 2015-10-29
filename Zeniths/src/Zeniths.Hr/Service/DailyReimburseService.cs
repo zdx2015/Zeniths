@@ -102,48 +102,23 @@ namespace Zeniths.Hr.Service
         {
             try
             {
-                DailyReimburse oldEntity = Get(entity.Id);//取出修改的数据     
-                List<DailyReimburseDetails> oldDetailList = new List<DailyReimburseDetails>();
-                foreach (var item in detailList)
+                var count = repos.Update(entity);
+
+                if (count > 0)
                 {
-                    var temEntity = detailRepos.Get(item.Id);
-                    oldDetailList.Add(temEntity);
-                }
-                bool result = false;
-                var count = repos.Update(entity);               
-                if(count>0)
-                {
-                    int delCount = 0;
+                    detailRepos.Delete(p => p.ReimburseId == entity.Id);
+
                     foreach (var item in detailList)
                     {
-                       var temCount =  detailRepos.Update(item);
-                        if (temCount > 0)
-                        {
-                            delCount = delCount + 1;
-                        }
+                        detailRepos.Insert(item);
                     }
-                    if (delCount == detailList.Count)
-                    {
-                        result = true;
-                    }
-                }
-
-                if (result)
-                {
                     return BoolMessage.True;
                 }
                 else
                 {
-                    repos.Update(oldEntity);
-                    foreach (var item in oldDetailList)
-                    {
-                        detailRepos.Update(item);
-                    }
-
+                   
                     return BoolMessage.False;
                 }
-               
-                
             }
             catch (Exception e)
             {
@@ -422,13 +397,13 @@ namespace Zeniths.Hr.Service
             orderName = orderName.IsEmpty() ? nameof(DailyReimburse.Id) : orderName;//默认使用主键排序
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
             var query = repos.NewQuery.Take(pageSize).Page(pageIndex).OrderBy(orderName, orderDir.IsAsc());
-            /*
+            
             if (name.IsNotEmpty())
             {
                 name = name.Trim();
-                query.Where(p => p.Name.Contains(name));
+                query.Where(p => p.ReimburseDepartmentName.Contains(name)||p.ApplyOpinion.Contains(name));
             }
-            */
+            
             return repos.Page(query);
         }
 

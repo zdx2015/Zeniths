@@ -23,19 +23,17 @@ namespace Zeniths.Hr.Utility
         //}
 
         /// <summary>
-        /// 获取费用类型下拉选项
+        /// 获取费用类型明细下拉选项
         /// </summary>
         /// <param name="helper"></param>
         /// <param name="selected">选中的值</param>
         /// <returns></returns>
-        public static MvcHtmlString DailyReimburseDetailCategoryOptions(this HtmlHelper helper, string selected = null)
+        public static MvcHtmlString DailyReimburseDetailCategoryOptions(this HtmlHelper helper,  string selected = null)
         {
-            return MvcHtmlString.Create(AuthHelper.BuildDicOptions("DailyReimburseCategory", selected));
+            
+            return MvcHtmlString.Create(AuthHelper.BuildDicListOptions("DailyReimburseCategory", selected));
         }
 
-
-
-     
 
     }
 }

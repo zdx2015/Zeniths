@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Zeniths.Auth.Entity;
 using Zeniths.Collections;
@@ -23,6 +24,8 @@ namespace Zeniths.Auth.Service
         /// 字典明细项存储器
         /// </summary>
         private readonly AuthRepository<SystemDictionaryDetails> detailsRepos = new AuthRepository<SystemDictionaryDetails>();
+
+        private readonly AuthRepository<SystemDictionaryDetailExtend>  detailExRepos = new AuthRepository<SystemDictionaryDetailExtend>();
 
         /// <summary>
         /// 检测是否存在指定系统数据字典
@@ -262,6 +265,28 @@ details.SortIndex ,details.Note FROM SystemDictionary dic JOIN SystemDictionaryD
 ON dic.Id = details.DictionaryId AND dic.Code=@code ORDER BY details.SortIndex";
             return detailsRepos.Database.Query<SystemDictionaryDetails>(sql, new { code = dicCode }).ToList();
         }
+
+
+        /// <summary>
+        /// 获取系统数据字典明细列表
+        /// </summary>
+        /// <param name="dicCode">字典编码</param>
+        /// <returns></returns>
+        public List<SystemDictionaryDetailExtend> GetEnabledDicListByDicCode(string dicCode)
+        {
+            var sql = @"
+                    SELECT a.Id,a.DictionaryId,a.Name,b.Name AS Category ,a.NameSpell,a.Value,a.IsEnabled,a.SortIndex,a.Note
+                    FROM dbo.SystemDictionaryDetails a JOIN (
+                    SELECT Id,Name FROM  dbo.SystemDictionary WHERE ParentId in (
+                    SELECT Id FROM dbo.SystemDictionary WHERE Code=@code )
+                    ) b
+                    ON a.DictionaryId = b.Id ";
+             
+            return detailExRepos.Database.Query<SystemDictionaryDetailExtend>(sql, new { code = dicCode }).ToList();
+        }
+
+
+
 
         /// <summary>
         /// 获取系统数据字典明细分页列表(包括禁用记录)

@@ -8,15 +8,12 @@
             <th class="w-checkbox">
                 <label><input class="checkbox-check" type="checkbox"><span></span></label>
             </th>          
-            <th class="w-100px" data-order="@nameof(DailyReimburse.ReimburseDepartmentName)">报销部门名称</th>
-           
-            <th class="w-100px" data-order="@nameof(DailyReimburse.ApplicantName)">经办人姓名</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ReimburseDepartmentName)">所属部门/项目</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ProjectSumMoney)">报销金额</th>
             <th class="w-100px" data-order="@nameof(DailyReimburse.ApplyOpinion)">申请情况说明</th>
-            <th class="w-100px" data-order="@nameof(DailyReimburse.ApplicationDate)">填表日期</th>
-            <th class="w-100px" data-order="@nameof(DailyReimburse.BorrowMoney)">借款数</th>
-            <th class="w-100px" data-order="@nameof(DailyReimburse.RefundMoney)">应退金额</th>
-            <th class="w-100px" data-order="@nameof(DailyReimburse.AfterBackMoney)">应补金额</th>
-            <th class="w-100px" data-order="@nameof(DailyReimburse.Note)">备注</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.StepName)">当前审批步骤</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.StepStatus)">当前审批状态</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.IsFinish)">审批流程状态</th>
           
             <th class="w-120px text-center">操作</th>
         </tr>
@@ -31,13 +28,26 @@
            
                 <td>@record.ReimburseDepartmentName</td>
           
-                <td>@record.ApplicantName</td>
+                <td>@record.ProjectSumMoney</td>
                 <td>@record.ApplyOpinion</td>
-                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.ApplicationDate)</td>
-                <td>@record.BorrowMoney</td>
-                <td>@record.RefundMoney</td>
-                <td>@record.AfterBackMoney</td>
-                <td>@record.Note</td>
+                <td>@record.StepName</td>
+                @if (record.StepStatus)
+                {
+                    <td>通过</td>
+                }
+                else
+                {
+                    <td>不通过</td>
+                }
+                @if (record.IsFinish)
+                {
+                    <td>完成</td>
+                }
+                else
+                {
+                    <td>未完成</td>
+                }
+                
                 <td>
                     <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
                         <i class="fa fa-eye"></i> 查看

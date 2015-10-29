@@ -36,6 +36,27 @@ namespace Zeniths.Auth.Utility
             return options.ToString();
         }
 
+
+        /// <summary>
+        /// 生成数据字典下拉选项
+        /// </summary>
+        /// <param name="dicCode">数据字典编码</param>
+        /// <param name="isCategoryGroup">是否分组</param>
+        /// <param name="selected">选中的值</param>
+        /// <returns></returns>
+        public static string BuildDicListOptions(string dicCode,string selected = null)
+        {
+            if (string.IsNullOrEmpty(dicCode))
+            {
+                throw new ArgumentNullException(nameof(dicCode), "数据字典编码不允许为空");
+            }
+            var service = new SystemDictionaryService();
+            var detailsList = service.GetEnabledDicListByDicCode(dicCode);
+            var options = WebHelper.GetSelectGroupOptions(detailsList,"Name","Id","Category",selected);
+            return options.ToString();
+        }
+
+
         /// <summary>
         /// 生成异常对象
         /// </summary>

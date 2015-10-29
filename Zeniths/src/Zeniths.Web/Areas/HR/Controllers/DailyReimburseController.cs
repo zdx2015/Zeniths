@@ -37,6 +37,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Index()
         {
+
             return View();
         }
 
@@ -170,8 +171,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
                 return Json(hasResult);
             }
             var result = new BoolMessage(false);
-            if (entity.Id == 0)
-            {
+            
                 entity.ReimburseDepartmentId = CurrentUser.DepartmentId;
                 entity.ReimburseDepartmentName = CurrentUser.DepartmentName;
                 entity.ApplicantId = CurrentUser.Id;
@@ -191,17 +191,21 @@ namespace Zeniths.Web.Areas.Hr.Controllers
                 entity.CreateDepartmentId = CurrentUser.DepartmentId;
                 entity.CreateDepartmentName = CurrentUser.DepartmentName;
                 entity.CreateDateTime = DateTime.Now;
-                var list = (List<DailyReimburseDetails>)Session["DailyReimburseDetails"];
-                foreach (var item in list)
+                entity.ProjectSumMoney = 0;
+                var curlist = (List<DailyReimburseDetails>)Session["DailyReimburseDetails"];
+                foreach (var item in curlist)
                 {
+                    item.ReimburseId = entity.Id;
                     entity.ProjectSumMoney = entity.ProjectSumMoney + item.Amount;
                 }
-                result = service.Insert(entity, list);
+            if (entity.Id == 0)
+            {
+                result = service.Insert(entity, curlist);
             }
             else
             {
-                var list = (List<DailyReimburseDetails>)Session["DailyReimburseDetails"];
-                result = service.Update(entity, list);
+               
+                result = service.Update(entity, curlist);
             }
 
             //var result = entity.Id == 0 ? service.Insert(entity, list) : service.Update(entity);

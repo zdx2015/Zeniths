@@ -5,12 +5,12 @@
 
 <div class="container-edit-zeniths">
     <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
-        <div class="panel panel-default panel-zeniths">
+        <div class="panel panel-default panel-zeniths" style="height: 685px">
             <div class="panel-heading">
                 <span class="prefix"> <strong>@Model.Id</strong></span>
                 @title
             </div>
-            <div class="panel-body">
+            <div class="panel-body" style="height: 580px">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id"/>
                 <input type="hidden" name="clickAction" id="clickAction" value="@ViewBag.Action" />
@@ -46,7 +46,7 @@
 
                 <div class="panel panel-default panel-zeniths">
                    
-                    <div class="panel-body">
+                    <div class="panel-body" style="height: 415px;overflow:auto">
                         <div class="datagrid" data-url="@Html.Raw(Url.Action("ViewGrid","DailyReimburse",new {area="HR"}))" id="detailGrid"></div>
                     </div>
 
