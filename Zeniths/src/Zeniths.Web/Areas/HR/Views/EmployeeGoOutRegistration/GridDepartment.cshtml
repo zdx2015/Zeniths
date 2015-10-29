@@ -1,0 +1,39 @@
+﻿@model PageList<EmployeeGoOutRegistration>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">  
+    @Html.Action("_ColumnCommon")
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
+                </td>
+                <td>@record.EmployeeName</td>
+                <td>@record.GoOutReason</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.GoOutDateTime)</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.PlanBackDateTime)</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.ApplyDateTime)</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.RealGoOutDateTime)</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.RealBackDateTime)</td>
+                <td class="text-center">@Html.BoolLabelIsAgree(record.GeneralManagerIsAudit)</td>
+                <td>@record.GeneralManagerOpinion</td>
+                <td>
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
+                        <i class="fa fa-eye"></i> 查看
+                    </a>
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                        <i class="fa fa-edit"></i> 编辑
+                    </a>
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)

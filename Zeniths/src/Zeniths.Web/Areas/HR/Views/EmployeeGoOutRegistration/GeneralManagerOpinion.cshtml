@@ -1,0 +1,144 @@
+﻿@model EmployeeGoOutRegistration
+@{
+    ViewBag.Title = "主管领导意见";
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("UpdateGeneralManagerOpinion")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @ViewBag.Title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <input type="hidden" name="@nameof(Model.GeneralManagerId)" value="@Model.GeneralManagerId" />
+                <table class="table table-form table-dialog-form">
+                    <tr>
+                        <th>
+                            <label class="control-label">员工姓名：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.EmployeeName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">外出事由：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.GoOutReason</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">预计外出时间：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.GoOutDateTime)</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">预计返回时间：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.PlanBackDateTime)</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">申请时间：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.ApplyDateTime)</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">备注：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.Note</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            <label class="control-label">主管领导是否同意：</label>&nbsp;&nbsp;
+                        </th>
+                        <td>
+                            <div class="input-icon right">                               
+                                <div class="radio-list">
+                                    <label class="radio-inline">
+                                        <input class="iradiobox-control" name="@nameof(Model.GeneralManagerIsAudit)" value="true" type="radio" >
+                                        <span class="radio-label-name">同意</span>
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input class="iradiobox-control" name="@nameof(Model.GeneralManagerIsAudit)" value="false" type="radio">
+                                        <span class="radio-label-name">不同意</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">主管领导审批意见：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <textarea class="form-control" name="@nameof(Model.GeneralManagerOpinion)" rows="3">@Model.GeneralManagerOpinion</textarea>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+ 
+
+@section script{
+    <script>
+
+        $(function () {
+            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
+            $('.editform').dataform().initDatePicker().initValidate({
+                rules: {
+                    GeneralManagerOpinion: {
+                        required: true
+                    },
+                    GeneralManagerIsAudit: {
+                        required: true
+                    }
+                },
+                messages: {
+                    GoOutReason: {
+                        required: '请填写审批意见'
+                         , maxlength: '审批意见长度不能超过1000'
+                    },
+                    GeneralManagerIsAudit: {
+                        required: '请选择是否同意'
+                    }
+                },
+                beforeSubmit: function () {                   
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+        });
+    </script>
+}
+

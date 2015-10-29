@@ -98,6 +98,38 @@ namespace Zeniths.Auth.Utility
         }
 
         /// <summary>
+        /// 把用户主键数组转为组织机构字符串
+        /// </summary>
+        /// <param name="userIdList">用户主键数组</param>
+        /// <returns></returns>
+        public static string ConvertToUserIds(IList<string> userIdList)
+        {
+            StringBuilder sb = new StringBuilder(userIdList.Count * 43);
+            foreach (var li in userIdList)
+            {
+                sb.Append(AddUserPrefix(li.ToInt()));
+                sb.Append(",");
+            }
+            return sb.ToString().TrimEnd(',');
+        }
+
+        /// <summary>
+        /// 把部门主键数组转为组织机构字符串
+        /// </summary>
+        /// <param name="departmentIdList">部门主键数组</param>
+        /// <returns></returns>
+        public static string ConvertToDepartmentIds(IList<string> departmentIdList)
+        {
+            StringBuilder sb = new StringBuilder(departmentIdList.Count * 43);
+            foreach (var li in departmentIdList)
+            {
+                sb.Append(AddDepartmentPrefix(li.ToInt()));
+                sb.Append(",");
+            }
+            return sb.ToString().TrimEnd(',');
+        }
+
+        /// <summary>
         /// 用户是否过期
         /// </summary>
         /// <param name="entity">用户对象</param>
@@ -176,6 +208,16 @@ namespace Zeniths.Auth.Utility
         }
 
         /// <summary>
+        /// 设置对象的当前登录用户信息(包括创建用户信息和修改用户信息)
+        /// </summary>
+        /// <param name="entity">待修改的对象</param>
+        public static void SetCurrentUserInfo(dynamic entity)
+        {
+            SetCurrentUserCreateInfo(entity);
+            SetCurrentUserModifyInfo(entity);
+        }
+
+        /// <summary>
         /// 注销
         /// </summary>
         public static void Logout()
@@ -218,7 +260,7 @@ namespace Zeniths.Auth.Utility
             {
                 if (IsUser(id))//人员
                 {
-                    userList.Add(userService.Get(ClearUserPrefix(id)));
+                    userList.Add(userService.GetSimple(ClearUserPrefix(id)));
                 }
                 else if (IsDepartment(id))//部门
                 {

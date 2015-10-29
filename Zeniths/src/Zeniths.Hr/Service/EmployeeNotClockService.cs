@@ -117,28 +117,6 @@ namespace Zeniths.Hr.Service
             return repos.Query(query).ToList();
         }
         
-        /*
-        /// <summary>
-        /// 获取启用的未打卡记录表列表
-        /// </summary>
-        /// <returns>返回启用的未打卡记录表列表</returns>
-        public List<EmployeeNotClock> GetEnabledList()
-        {
-            var query = repos.NewQuery.Where(p => p.IsEnabled == true).OrderBy(p => p.Id);
-            return repos.Query(query).ToList();
-        }
-        
-        /// <summary>
-        /// 获取未打卡记录表DataTable
-        /// </summary>
-        /// <returns>返回未打卡记录表DataTable</returns>
-        public DataTable GetTable()
-        {
-            var query = repos.NewQuery.OrderBy(p => p.Id);
-            return repos.GetTable(query);
-        }
-        */
-        
         /// <summary>
         /// 获取未打卡记录表分页列表
         /// </summary>

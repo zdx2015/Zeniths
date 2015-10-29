@@ -94,6 +94,17 @@ namespace Zeniths.WorkFlow.Service
         }
 
         /// <summary>
+        /// 获取流程表单Url
+        /// </summary>
+        /// <param name="id">流程表单主键</param>
+        /// <returns>流程表单Url</returns>
+        public string GetUrl(int id)
+        {
+            return repos.Get(id,p=>p.Url)?.Url;
+        }
+
+
+        /// <summary>
         /// 获取启用的表单列表
         /// </summary>
         /// <returns>返回启用的表单列表</returns>

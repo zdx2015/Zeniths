@@ -1,0 +1,78 @@
+﻿@model HrBudgetDetails
+@{
+    var title = "查看预算明细信息";
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <table class="table table-form table-dialog-form">
+                
+                    <tr>
+                        <th class="w-100px">
+                            <label class="control-label">预算主键：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.BudgetId</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">预算类别主键：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.BudgetCategoryId</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">预算类别名称：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.BudgetCategoryName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">项目名称：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.BudgetItemName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">预算金额：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.BudgetMoney</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">备注：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.Note</p>
+                        </td>
+                    </tr>
+                                    
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+            <div class="buttons">
+                <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                    <i class="fa fa-sign-in"></i> 关闭
+                </a>
+            </div>
+        </div>
+        </div>
+    </form>
+</div>

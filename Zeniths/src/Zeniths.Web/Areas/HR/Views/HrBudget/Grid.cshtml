@@ -1,0 +1,73 @@
+﻿@model PageList<HrBudgetView>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-checkbox">
+                <label><input class="checkbox-check" type="checkbox"><span></span></label>
+            </th>
+            <th class="w-130px" data-order="@nameof(HrBudgetView.BudgetDepartmentName)">预算部门</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.BudgetMonth)">申请月份</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.sumMoney)">合计金额</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.办公类)">办公类</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.车辆类)">车辆类</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.交通类)">交通类</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.培训类)">培训类</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.差旅类)">差旅类</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.招待类)">招待类</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.工程类)">工程类</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.业务宣传费)">业务类</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.资产类)">资产类</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.材料类)">材料类</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.会议费)">会议费</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.福利类)">福利类</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.工资薪金)">薪资</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetView.其他类)">其他类</th>
+            <th class="w-100px" >状态</th>
+            <th class="w-120px text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.BudgetId})">
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.BudgetId"><span></span></label>
+                </td>
+                <td>@record.BudgetDepartmentName</td>
+                <td>@record.BudgetMonth</td>
+                <td>@record.sumMoney</td>
+                <td>@record.办公类</td>
+                <td>@record.车辆类</td>
+                <td>@record.交通类</td>
+                <td>@record.培训类</td>
+                <td>@record.差旅类</td>
+                <td>@record.招待类</td>
+                <td>@record.工程类</td>
+                <td>@record.业务宣传费</td>
+                <td>@record.资产类</td>
+                <td>@record.材料类</td>
+                <td>@record.会议费</td>
+                <td>@record.福利类</td>
+                <td>@record.工资薪金</td>
+                <td>@record.其他类</td>
+                <td>@record.Status</td>
+                <td>
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.BudgetId})">
+                        <i class="fa fa-eye"></i> 查看
+                    </a>
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.BudgetId})">
+                        <i class="fa fa-edit"></i> 编辑
+                    </a>
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.BudgetId})">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)

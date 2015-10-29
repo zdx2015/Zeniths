@@ -1,0 +1,71 @@
+﻿@model PageList<EmpLeave>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-checkbox">
+                <label><input class="checkbox-check" type="checkbox"><span></span></label>
+            </th>            
+            <th class="w-100px" data-order="@nameof(EmpLeave.StartDate)">开始日期</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.EndDate)">结束日期</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.Days)">天数</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.Category)">类型</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.Reason)">原因</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.Title)">任务名称</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.FlowId)">流程主键</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.FlowName)">流程名称</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.FlowInstanceId)">流程实例主键</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.StepId)">步骤主键</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.StepName)">步骤名称</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.IsFinish)">流程是否完成</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.CreateUserId)">创建用户主键</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.CreateUserName)">创建用户姓名</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.CreateDepartmentId)">创建人部门主键</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.CreateDepartmentName)">创建人部门姓名</th>
+            <th class="w-100px" data-order="@nameof(EmpLeave.CreateDateTime)">创建时间</th>
+            <th class="w-120px text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
+                </td>
+                <td>@record.StartDate</td>
+                <td>@record.EndDate</td>
+                <td>@record.Days</td>
+                <td>@record.Category</td>
+                <td>@record.Reason</td>
+                <td>@record.Title</td>
+                <td>@record.FlowId</td>
+                <td>@record.FlowName</td>
+                <td>@record.FlowInstanceId</td>
+                <td>@record.StepId</td>
+                <td>@record.StepName</td>
+                <td class="text-center">@Html.BoolLabel(record.IsFinish)</td>
+                <td>@record.CreateUserId</td>
+                <td>@record.CreateUserName</td>
+                <td>@record.CreateDepartmentId</td>
+                <td>@record.CreateDepartmentName</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.CreateDateTime)</td>
+                <td>
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
+                        <i class="fa fa-eye"></i> 查看
+                    </a>
+                    @*<a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                        <i class="fa fa-edit"></i> 编辑
+                    </a>*@
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)

@@ -1,6 +1,5 @@
-﻿@model GoOutRegistration
-@{
-    var title = " 外出登记按钮";
+﻿@{
+    var title = "管理日常费用报销";
 }
 <div class="container-zeniths">
     <div class="panel panel-default panel-zeniths">
@@ -11,7 +10,7 @@
             <div class="search-panel-zeniths">
                 <form class="form-inline search-form">
                     <div class="form-group">
-                        <input class="w-200px form-control" name="@nameof(GoOutRegistration.EmployeeName)" type="text" placeholder="请输入姓名关键字查询">
+                        <input class="w-300px form-control" name="@nameof(DailyReimburse.CashierName)" type="text" placeholder="请输入关键字查询">
                     </div>
                     &nbsp;
                     <button class="btn btn-primary" type="submit">
@@ -40,15 +39,13 @@
 @section script
 {
     <script>
-
         $(function () {
             zeniths.util.standardGridBind({
-                editWidth: 800,
-                editHeight: 500,
-                viewWidth: 800,
-                viewHeight: 490
+                editWidth: 900,
+                editHeight: 700,
+                viewWidth: 900,
+                viewHeight: 700
             });
         });
-
     </script>
 }

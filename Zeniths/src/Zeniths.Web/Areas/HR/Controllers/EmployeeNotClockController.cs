@@ -14,6 +14,7 @@ using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.Utility;
 using Zeniths.Hr.Utility;
+using Zeniths.Auth.Utility;
 
 namespace Zeniths.Web.Areas.Hr.Controllers
 {
@@ -103,12 +104,21 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save(EmployeeNotClock entity)
         {
-            var hasResult = service.Exists(entity);
-            if (hasResult.Failure)
-            {
-                return Json(hasResult);
-            }
+            //var hasResult = service.Exists(entity);
+            //if (hasResult.Failure)
+            //{
+            //    return Json(hasResult);
+            //}
 
+            if (entity.Id == 0)
+            {
+                var currentUser = OrganizeHelper.GetCurrentUser();
+                entity.CreateUserId = currentUser.Id;
+                entity.CreateUserName = currentUser.Name;
+                entity.CreateDepartmentId = currentUser.DepartmentId;
+                entity.CreateDepartmentName = currentUser.DepartmentName;
+                entity.CreateDateTime = DateTime.Now;
+            }
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
             return Json(result);
         }

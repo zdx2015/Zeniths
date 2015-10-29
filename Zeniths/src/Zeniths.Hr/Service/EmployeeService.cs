@@ -140,29 +140,7 @@ namespace Zeniths.Hr.Service
             var query = repos.NewQuery.OrderBy(p => p.Id);
             return repos.Query(query).ToList();
         }
-        
-        /*
-        /// <summary>
-        /// 获取启用的员工表列表
-        /// </summary>
-        /// <returns>返回启用的员工表列表</returns>
-        public List<Employee> GetEnabledList()
-        {
-            var query = repos.NewQuery.Where(p => p.IsEnabled == true).OrderBy(p => p.Id);
-            return repos.Query(query).ToList();
-        }
-        
-        /// <summary>
-        /// 获取员工表DataTable
-        /// </summary>
-        /// <returns>返回员工表DataTable</returns>
-        public DataTable GetTable()
-        {
-            var query = repos.NewQuery.OrderBy(p => p.Id);
-            return repos.GetTable(query);
-        }
-        */
-        
+               
         /// <summary>
         /// 获取员工表分页列表
         /// </summary>

@@ -150,7 +150,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var currentUser = OrganizeHelper.GetCurrentUser();
             var currentEmployee = employeeService.GetEmployeeByUser(currentUser.Id);    //根据当前登录用户的账号查找员工Id信息
             employeeEntity.EmployeeId = currentEmployee.Id;
-            employeeEntity.EmployeeName = currentUser.Name;
+            employeeEntity.EmployeeName = currentEmployee.Name;
             return EditCore(employeeEntity, 0);
         }
 
