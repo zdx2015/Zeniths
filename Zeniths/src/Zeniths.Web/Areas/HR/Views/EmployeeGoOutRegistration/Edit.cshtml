@@ -1,4 +1,4 @@
-﻿@model GoOutRegistration
+﻿@model EmployeeGoOutRegistration
 @{
     var title = "";
     if (ViewBag.flag == 0)
@@ -21,17 +21,43 @@
             <div class="panel-body">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <input type="hidden" name="@nameof(Model.EmployeeId)" value="@Model.EmployeeId" />
+                <input type="hidden" name="@nameof(Model.GeneralManagerId)" value="@Model.GeneralManagerId" />
                 <table class="table table-form table-dialog-form">
                     <tr>
-                        <th class='w-100px'><label class="control-label">姓名</label></th>
+                        <th class="w-200px" >
+                            <label class="control-label">姓名：</label>
+                        </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" placeholder="请输入姓名" />
+                                <input class="form-control" name="@nameof(Model.EmployeeName)" value="@Model.EmployeeName" type="text" readonly />
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th><label class="control-label">外出事由</label></th>
+                        <th>
+                            <label class="control-label">预计外出时间：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">                               
+                                <input class="datetime-control form-control" id="@nameof(Model.GoOutDateTime)" name="@nameof(Model.GoOutDateTime)" value="@DateTimeHelper.FormatDateHasMinute(Model.GoOutDateTime)" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">预计返回时间：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">                               
+                                <input class="datetime-control form-control" id="@nameof(Model.PlanBackDateTime)" name="@nameof(Model.PlanBackDateTime)" value="@DateTimeHelper.FormatDateHasMinute(Model.PlanBackDateTime)" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">外出事由：</label>
+                        </th>
                         <td>
                             <div class="input-icon right">
                                 <textarea class="form-control" name="@nameof(Model.GoOutReason)" rows="3">@Model.GoOutReason</textarea>
@@ -39,27 +65,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <th><label class="control-label">外出时间</label></th>
+                        <th>
+                            <label class="control-label">备注：</label>
+                        </th>
                         <td>
-                            <div class="input-icon right">
-                                <input class="datetime-control form-control" name="@nameof(Model.GoOutTime)" value="@Model.GoOutTime" type="text" autocomplete="off" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label class="control-label">预计返回时间</label></th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="datetime-control form-control" name="@nameof(Model.BackTime)" value="@Model.BackTime" type="text" autocomplete="off" />
-                            </div>
-                        </td>
-                    </tr>                  
-                    <tr>
-                        <th><label class="control-label">备注</label></th>
-                        <td>
-                            <div class="input-icon right">
-                                <textarea class="form-control" name="@nameof(Model.Remarks)" rows="3">@Model.Remarks</textarea>
-                            </div>
+                            <textarea class="form-control" name="@nameof(Model.Note)" rows="3">@Model.Note</textarea>
                         </td>
                     </tr>
                 </table>
@@ -88,31 +98,37 @@
 <script src="~/Plugin/bootstrap-daterangepicker/js/zh-cn.js"></script>
 <script src="~/Plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
     <script>
+
         $(function () {
-            $('.editform').dataform().initDateTimePicker().initiCheck().initValidate({
-                rules: {                  
-                    Name: {
-                        required: true,
-                        maxlength: 100
-                    },                    
-                    GoOutReason: {
-                        required: false,
-                        maxlength:1000
-                    },
-                    GoOutTime: {
+            
+            $('.editform').dataform().initDateTimePicker().initValidate({
+                rules: {
+                    EmployeeName: {
                         required: true
+                    },
+                    GoOutReason: {
+                        required: true
+                        , maxlength: 1000
+                    },
+                    GoOutDateTime: {
+                        required: true
+                    },
+                    PlanBackDateTime: {
+                        required: true,
+                        compareDate: "#GoOutDateTime"
                     }
                 },
                 messages: {
-                    Name: {
-                        required: '请填写姓名',
-                        maxlength: '姓名长度不能超过100'
-                    },
                     GoOutReason: {
-                        maxlength: '外出事由不能超过1000'
+                        required: '请填写外出事由'
+                         , maxlength: '外出事由长度不能超过1000'
                     },
-                    GoOutTime: {
+                    GoOutDateTime: {
                         required: '请选择外出时间'
+                    },
+                    PlanBackDateTime: {
+                        required: '请选择计划返回时间',
+                        compareDate: "预计返回时间必须大于预计外出时间"
                     }
                 },
                 beforeSubmit: function () {

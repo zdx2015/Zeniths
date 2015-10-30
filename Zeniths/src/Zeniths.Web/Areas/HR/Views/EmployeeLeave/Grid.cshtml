@@ -1,0 +1,75 @@
+﻿@model PageList<EmployeeLeave>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-checkbox">
+                <label><input class="checkbox-check" type="checkbox"><span></span></label>
+            </th>  
+            <th class="w-100px">姓名</th>
+            <th class="w-100px">部门</th>
+            <th class="w-100px">岗位</th>
+            <th class="w-100px" data-order="@nameof(EmployeeLeave.LeaveCategory)">请假类别</th>
+            <th class="w-100px" data-order="@nameof(EmployeeLeave.StartDatetime)">预计请假开始时间</th>
+            <th class="w-100px">预计请假结束时间</th>
+            <th class="w-100px">请假天数</th>
+            <th class="w-100px">请假事由</th>
+            <th class="w-100px">工作代理人</th>
+            <th class="w-100px">部门负责人</th>
+            <th class="w-100px">总经理</th>           
+            <th class="w-100px">实休天数</th>
+            <th class="w-100px">部门负责人销假签字</th>
+            <th class="w-100px">行政人力资源部签字</th>
+            <th class="w-120px text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details", new { id = record.Id })">
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
+                </td>
+                <td>@record.EmployeeName</td>
+                <td>@record.Deparment</td>
+                <td>@record.Post</td>
+                <td>@record.LeaveCategory</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.StartDatetime)</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.EndDatetime)</td>
+                <td>@record.Days</td>
+                <td>@record.Reason</td>
+                <td>@record.JobAgentSign</td>                
+                <td>@record.DepartmentManagerSign</td>                
+                <td>@record.GeneralManagerSign</td>               
+                <td>@record.ActualDays</td>               
+                <td>@record.DepartmentManagerCancelSign</td>               
+                <td>@record.HRManagerSign</td> 
+                <td>
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details", new { id = record.Id })">
+                        <i class="fa fa-eye"></i> 查看
+                    </a>
+                    @{ if (!record.JobAgentId.HasValue)
+                        {
+                            <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit", new { id = record.Id })">
+                                <i class="fa fa-edit"></i> 编辑
+                            </a>                           
+                            <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete", new { id = record.Id })">
+                                <i class="fa fa-trash-o"></i> 删除
+                            </a>
+                        }
+                        if (record.GeneralManagerIsAudit.HasValue && record.GeneralManagerIsAudit == true)
+                        {
+                            <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("CancelLeaveEdit", new { id = record.Id })">
+                                <i class="fa fa-edit"></i> 销假确认
+                            </a>
+                            }
+                        }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)
