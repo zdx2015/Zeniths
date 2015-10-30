@@ -3,7 +3,7 @@
     var title = Html.GetCurrentStepName();
     Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
 }
-<div class="container-edit-zeniths" style="width: 60%;margin-top:50px;">
+<div class="container-edit-zeniths">
     <form class="editform" action="@Html.GetFlowExecuteUrl()" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
@@ -40,7 +40,7 @@
                         zeniths.workflow.redirect(result.url);
                     } else {
                         //跳转到待办页面
-                        //window.location.href = '待办页面';
+                        window.location.href = '@Url.Action("PendingTasks","FlowTask",new { area ="WorkFlow"})';
                     }
                 }
             });

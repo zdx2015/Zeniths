@@ -190,19 +190,15 @@ zeniths.workflow = function () {
             return false;
         }
 
-        if (self.workflow_client_model.isNeedSignature &&
-            $.trim(self.workflow_execute_params.opinion).length == 0) {
-            self.workflow_execute_params.opinion =
-                self.$formElement.find('#workflow_opinion').val()
-                || self.$formElement.find('[name=workflow_opinion]').val();
-        }
-
+       self.workflow_execute_params.opinion = self.$formElement.find('[name=workflow_opinion]').val();
+       
         if (self.workflow_client_model.isNeedSignature &&
             self.workflow_execute_params.isSignature == false) {
             self.workflow_execute_params.isSignature =
                 self.$formElement.find('#workflow_signature').val()
                 || self.$formElement.find('[name=workflow_signature]').val();
         }
+
 
         if (self.workflow_client_model.isNeedOpinion
             && $.trim(self.workflow_execute_params.opinion).length == 0) {

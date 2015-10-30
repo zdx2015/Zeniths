@@ -93,7 +93,7 @@ namespace Zeniths.WorkFlow.Service
         {
             return repos.Get(taskId);
         }
-        
+
         /// <summary>
         /// 删除流程实例
         /// </summary>
@@ -143,7 +143,7 @@ namespace Zeniths.WorkFlow.Service
         {
             try
             {
-                repos.Update(new FlowTask {Title = taskTitle}, p => p.Id == taskId, p => p.Title);
+                repos.Update(new FlowTask { Title = taskTitle }, p => p.Id == taskId, p => p.Title);
                 return BoolMessage.True;
             }
             catch (Exception e)
@@ -389,26 +389,31 @@ namespace Zeniths.WorkFlow.Service
         /// <param name="endDate">结束日期</param>
         /// <param name="type">查询类型:0:待办 1:已办</param>
         /// <returns>返回流程任务分页列表</returns>
-        public PageList<FlowTask> GetTaskPageList(int pageIndex, int pageSize, string orderName,string orderDir, 
-            string receiveId,string senderId,string flowId, string title ,string startDate,string endDate, int type = 0)
+        public PageList<FlowTask> GetTaskPageList(int pageIndex, int pageSize, string orderName, string orderDir,
+            string receiveId, string senderId, string flowId, string title, string startDate, string endDate, int type = 0)
         {
             orderName = orderName.IsEmpty() ? (type == 0 ? nameof(FlowTask.SenderDateTime) : nameof(FlowTask.ActualFinishDateTime)) : orderName;
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;
             var query = repos.NewQuery.Take(pageSize).Page(pageIndex).
-                OrderBy(orderName, orderDir.IsAsc())
-                .Where(p=>p.ReceiveId== receiveId);
+                OrderBy(orderName, orderDir.IsAsc());
+
             if (type == 0)
             {
-                query.Where(p => p.Status==0 || p.Status==1 );
+                query.Where(p => p.Status == 0 || p.Status == 1);
             }
             else
             {
                 query.Where(p => p.Status == 2 || p.Status == 3);
             }
 
+            if (receiveId.IsNotEmpty())
+            {
+                query.Where(p => p.ReceiveId == receiveId);
+            }
+
             if (senderId.IsNotEmpty())
             {
-                query.Where(p => p.SenderId== senderId);
+                query.Where(p => p.SenderId == senderId);
             }
             if (flowId.IsNotEmpty())
             {
@@ -421,7 +426,7 @@ namespace Zeniths.WorkFlow.Service
             if (startDate.IsNotEmpty())
             {
                 var _startDate = startDate.ToDateTime().Date;
-                query.Where(p => p.SenderDateTime>= _startDate);
+                query.Where(p => p.SenderDateTime >= _startDate);
             }
             if (endDate.IsNotEmpty())
             {

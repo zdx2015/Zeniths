@@ -44,7 +44,13 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
         
         public ActionResult PendingTasksGrid(string flowId, string title)
         {
-            return TasksGrid(flowId, title, 0);
+            var pageIndex = GetPageIndex();
+            var pageSize = GetPageSize();
+            var orderName = GetOrderName();
+            var orderDir = GetOrderDir();
+            var list = service.GetTaskPageList(pageIndex, pageSize, orderName, orderDir,
+                CurrentUserId.ToString(), null, flowId, title, null, null, 0);
+            return View(list);
         }
 
         /// <summary>
@@ -58,18 +64,14 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
 
         public ActionResult HandledTasksGrid(string flowId,string title)
         {
-            return TasksGrid(flowId, title, 0);
-        }
-
-        private ActionResult TasksGrid(string flowId ,string title, int type)
-        {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
             var list = service.GetTaskPageList(pageIndex, pageSize, orderName, orderDir,
-                null,null, flowId, title, null,null, type);
+               CurrentUserId.ToString(), null, flowId, title, null, null, 1);
             return View(list);
         }
+        
     }
 }

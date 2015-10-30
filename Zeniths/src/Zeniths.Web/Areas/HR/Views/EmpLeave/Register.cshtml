@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
 }
 
-<div class="container-edit-zeniths" style="width: 60%;margin-top:50px;">
+<div class="container-edit-zeniths">
     <form class="editform" action="@Html.GetFlowExecuteUrl()" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
@@ -70,10 +70,10 @@
             </div>
             <div class="panel-footer text-center">
                 <div class="buttons">
-                    <a class="btn btn-outline btn-primary btnWorkFlowSave">
+                    @*<a class="btn btn-outline btn-primary btnWorkFlowSave">
                         <i class="fa fa-save"></i> 保存
                     </a>
-                    &nbsp;
+                    &nbsp;*@
                     <a class="btn btn-outline btn-danger btnWorkFlowSend">
                         <i class="fa fa-arrow-right"></i> 发送
                     </a>
@@ -89,26 +89,14 @@
 
             //流程回调
             var wfCallback = {
-                saveCallback: function (wf,result) {
-                    //保存完成后前往待办页面
-                    //window.location.href = '待办页面';
-                },
                 sendCallback: function (wf,result) {
                     //如果下一步骤的处理人是自己 则继续处理下一步骤
                     if (result.url) {
-                        $(top.document.body).mask('正在前往下一步骤,请稍等...');
                         window.location.href = result.url;
                     } else {
                         //跳转到待办页面
-                        //window.location.href = '待办页面';
+                        window.location.href = '@Url.Action("PendingTasks","FlowTask",new { area ="WorkFlow"})';
                     }
-                },
-                backCallback: function (wf,result) {
-
-                },
-                completedCallbackfunction(wf,result) {
-                    //流程结束后跳转的页面
-                    //window.location.href = '待办页面';
                 }
             };
 

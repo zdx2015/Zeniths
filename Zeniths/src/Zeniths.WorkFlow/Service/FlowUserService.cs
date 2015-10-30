@@ -22,7 +22,7 @@ namespace Zeniths.WorkFlow.Service
         /// <summary>
         /// 流程用户存储器
         /// </summary>
-        private readonly Repository<FlowUser> repos = new Repository<FlowUser>();
+        private readonly WorkFlowRepository<FlowUser> repos = new WorkFlowRepository<FlowUser>();
 
         /// <summary>
         /// 检测是否存在指定流程用户(每个用户每个流程实例1条数据)
