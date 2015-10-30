@@ -30,7 +30,8 @@
                         </td>
                     </tr>
                 </table>
-            </div>
+                <div class="datagrid" id="datagrid" data-url="@Html.Raw(Url.Action("../HrBudgetDetails/DetailsGrid",new { BudgetId = Model.Id}))">
+                </div>
             <div class="panel-footer text-center">
             <div class="buttons">
                 <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">

@@ -68,9 +68,9 @@
                                     <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit", new { id = record.BudgetId })">
                                         <i class="fa fa-edit"></i> 编辑
                                     </a>
-                                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete", new { id = record.BudgetId })">
+                                    @*<a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete", new { id = record.BudgetId })">
                                         <i class="fa fa-trash-o"></i> 删除
-                                    </a>
+                                    </a>*@
                                 }
                                 break;
                             case "申请中":
@@ -85,7 +85,7 @@
                                     <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.BudgetId})">
                                         <i class="fa fa-eye"></i> 查看
                                     </a>
-                                    <a class="btn btn-default btn-xs green-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.BudgetId})">
+                                    <a class="btn btn-default btn-xs green-stripe btnRecordView" data-url="@Url.Action("DetailsList",new {id = record.BudgetId})">
                                         <i class="fa fa-eye"></i> 审批
                                     </a>
                                 }

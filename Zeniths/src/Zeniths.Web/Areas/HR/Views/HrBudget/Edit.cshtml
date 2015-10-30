@@ -1,6 +1,8 @@
 ﻿@model HrBudget
 @{
-    var title = ViewData["Title"];
+    //var title = ViewData["Title"];
+    var title = Html.GetCurrentStepName();
+    //Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
 }
 
 <div class="container-edit-zeniths">
@@ -18,18 +20,9 @@
 
                     <tr>
                         <th class="w-100px">
-                            @*<label class="control-label">任务标题：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Title)" value="@Model.Title" type="text" />
-                            </div>
-                        </td>
-                        <th>*@
                             <label class="control-label">预算月份：</label>
                         </th>
                         <td class="w-200px">
-                            @*<input class="date-control form-control" name="@nameof(Model.BudgetMonth)" value="@Model.BudgetMonth" type="text" />*@
                             <div class="input-icon right">
                                 <input class="date-control form-control" id="BudgetMonth" name="@nameof(Model.BudgetMonth)" value="@Html.Write(Model.BudgetMonth==DateTime.MinValue,string.Empty,Model.BudgetMonth.Year.ToString()+"-"+Model.BudgetMonth.Month.ToString())" type="text" autocomplete="off" />
                             </div>
@@ -56,6 +49,9 @@
                         <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
                             <i class="fa fa-sign-in"></i> 关闭
                         </a>
+                        @*<a class="btn btn-outline btn-danger btnWorkFlowSend">
+                            <i class="fa fa-arrow-right"></i> 提交
+                        </a>*@
                     </div>
                 </div>
             </div>
@@ -116,24 +112,24 @@
                 }
 
             });
-
+            //添加表单
             $('.editform').dataform().initDatePicker({
-                format: "yyyy-mm",
-                minViewMode: 'months'
-            }).initValidate({
-                rules: {
-                    BudgetMonth: {
-                        required: true
+                    format: "yyyy-mm",
+                    minViewMode: 'months'
+                }).initValidate({
+                    rules: {
+                        BudgetMonth: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        BudgetMonth: {
+                            required: '请填写预算月份'
+                        }
+                    },
+                    beforeSubmit: function () {
                     }
-                },
-                messages: {
-                    BudgetMonth: {
-                        required: '请填写预算月份'
-                    }
-                },
-                beforeSubmit: function () {
-                }
-            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+                }).initAjax({ success: zeniths.util.formAjaxSuccess });
 
             zeniths.util.standardGridBind({
                 editWidth: 700,
