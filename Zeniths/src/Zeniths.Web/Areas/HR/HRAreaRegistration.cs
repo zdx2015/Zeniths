@@ -11,7 +11,7 @@ namespace Zeniths.Web.Areas.HR
                 return "HR";
             }
         }
-
+         
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
