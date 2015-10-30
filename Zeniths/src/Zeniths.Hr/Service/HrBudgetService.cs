@@ -34,8 +34,19 @@ namespace Zeniths.Hr.Service
         public BoolMessage Exists(HrBudget entity)
         {
             //return BoolMessage.True;
-            var has = repos.Exists(p => p.BudgetDepartmentId == entity.BudgetDepartmentId);//&& p.BudgetMonth.ToShortDateString().ToString() != entity.BudgetMonth.ToShortDateString().ToString());
-            return has ? new BoolMessage(false, "部门该月预算已经存在") : BoolMessage.True;
+            var has = repos.Exists(p => p.BudgetDepartmentId == entity.BudgetDepartmentId && p.BudgetMonth == entity.BudgetMonth && p.Id!=entity.Id);
+            return has ? new BoolMessage(false, entity.BudgetDepartmentName+" "+entity.BudgetMonth.ToString("yyyy年MM月")+" 预算申请已经提交！") : BoolMessage.True;
+        }
+
+        /// <summary>
+        /// 判斷是否有明細信息存在
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public BoolMessage ExistsCount(HrBudget entity)
+        {
+            int count= repos.Database.ExecuteDataTable("select count(1) from HrBudgetDetails where BudgetId='"+entity.Id+"'").Rows[0][0].ToInt();
+            return count == 0 ? new BoolMessage(false,"没有可保存的信息") : BoolMessage.True;
         }
 
         /// <summary>
@@ -47,13 +58,8 @@ namespace Zeniths.Hr.Service
         {
             try
             {
-                BoolMessage exm = Exists(entity);
-                if (!exm.Success)
-                {
-                    return exm;
-                }
-                repos.Insert(entity);
-                return BoolMessage.True;
+                string id = repos.Insert(entity).ToString();
+                return new BoolMessage(true, id);
             }
             catch (Exception e)
             {
@@ -73,7 +79,7 @@ namespace Zeniths.Hr.Service
                 repos.Update(entity);
                 return BoolMessage.True;
             }
-            catch (Exception e)
+            catch (Exception e) 
             {
                 return new BoolMessage(false, e.Message);
             }
@@ -172,7 +178,7 @@ namespace Zeniths.Hr.Service
         /// <summary>
         /// 查询分页信息
         /// </summary>
-        /// <param name="userid">当前用户id</param>
+        /// <param name="DepartmentId">当前用户部门主键</param>
         /// <param name="type">业务类型 1 部门负责人 2 经理审批 3 财务查看 </param>
         /// <param name="year">业务申请年份</param>
         /// <param name="status">单据类型</param>
@@ -181,12 +187,12 @@ namespace Zeniths.Hr.Service
         /// <param name="orderName">排序列名</param>
         /// <param name="orderDir">排序方式</param>
         /// <returns></returns>
-        public PageList<HrBudgetView> GetPageListView(int userid, string type, string year, string status, int pageIndex, int pageSize, string orderName, string orderDir)
+        public PageList<HrBudgetView> GetPageListView(int DepartmentId,string DepartmentName, string type, string year, string status, int pageIndex, int pageSize, string orderName, string orderDir)
         {
-            //查询列表数据
-            IEnumerable<HrBudgetView> view = repos.Database.Query<HrBudgetView>("exec proc_GetHrBudgetPageList 'list','"+ userid.ToString()+ "','"+type+"','"+year+"','"+status+"',"+pageIndex.ToString()+","+pageSize.ToString()+",'"+orderName+"','"+orderDir+"'");
+            //查询列表数据 
+            IEnumerable<HrBudgetView> view = repos.Database.Query<HrBudgetView>("exec proc_GetHrBudgetPageList 'list','"+ DepartmentId.ToString()+ "','" + DepartmentName + "','" + type+"','"+year+"','"+status+"',"+pageIndex.ToString()+","+pageSize.ToString()+",'"+orderName+"','"+orderDir+"'");
             //查询数据条数
-            DataSet ds = repos.Database.ExecuteDataSet("exec proc_GetHrBudgetPageList 'count', '"+ userid.ToString()+ "', '"+type+"', '"+year+"', '"+status+"', "+pageIndex.ToString()+", "+pageSize.ToString()+", '"+orderName+"', '"+orderDir+"'");
+            DataSet ds = repos.Database.ExecuteDataSet("exec proc_GetHrBudgetPageList 'count', '"+ DepartmentId.ToString()+ "','"+DepartmentName+"', '"+type+"', '"+year+"', '"+status+"', "+pageIndex.ToString()+", "+pageSize.ToString()+", '"+orderName+"', '"+orderDir+"'");
             PageList <HrBudgetView> page = new PageList<HrBudgetView>(pageIndex, pageSize, (int)ds.Tables[0].Rows[0][0], view);
             return page;
         }
@@ -212,6 +218,7 @@ namespace Zeniths.Hr.Service
                 return new BoolMessage(false, e.Message);
             }
         }
+
         #endregion
     }
 }

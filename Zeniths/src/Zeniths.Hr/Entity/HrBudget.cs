@@ -114,7 +114,7 @@ namespace Zeniths.Hr.Entity
         /// 流程是否完成
         /// </summary>
 		[Column(Caption = "流程是否完成")]
-        public string IsFinish { get; set; }
+        public bool IsFinish { get; set; }
 
 		/// <summary>
         /// 创建用户主键

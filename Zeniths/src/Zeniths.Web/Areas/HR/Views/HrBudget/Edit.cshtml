@@ -1,121 +1,143 @@
 ﻿@model HrBudget
 @{
-    var title = "编辑部门预算";
+    //var title = ViewData["Title"];
+    var title = Html.GetCurrentStepName();
+    //Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
 }
 
 <div class="container-edit-zeniths">
-    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+    <form class="editform" id="form1" action="@Url.Action("Save")" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
-                <span class="prefix"> <strong>@Model.Id</strong></span>
+                <span class="prefix"> <strong id="Mid">@Model.Id</strong></span>
                 @title
             </div>
             <div class="panel-body">
                 @Html.AntiForgeryToken()
                 <input type="hidden" id="Id" name="@nameof(Model.Id)" value="@Model.Id" />
+                <input type="hidden" id="Status" name="@nameof(Model.Status)" value="0" />
                 <table class="table table-form table-dialog-form">
-                
+
                     <tr>
                         <th class="w-100px">
-                            <label class="control-label">任务标题：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Title)" value="@Model.Title" type="text" />
-                            </div>
-                        </td>
-                        <th >
                             <label class="control-label">预算月份：</label>
                         </th>
-                        <td>
-                            @*<input class="date-control form-control" name="@nameof(Model.BudgetMonth)" value="@Model.BudgetMonth" type="text" />*@
+                        <td class="w-200px">
                             <div class="input-icon right">
-                                <input class="datetime-control form-control" name="@nameof(Model.BudgetMonth)" value="@Model.BudgetMonth" type="text" autocomplete="off" />
+                                <input class="date-control form-control" id="BudgetMonth" name="@nameof(Model.BudgetMonth)" value="@Html.Write(Model.BudgetMonth==DateTime.MinValue,string.Empty,Model.BudgetMonth.Year.ToString()+"-"+Model.BudgetMonth.Month.ToString())" type="text" autocomplete="off" />
                             </div>
                         </td>
                         <th>
-                            <a class="btn btn-success" id="btnCreate" data-url="@Url.Action("../HrBudgetDetails/Create")">
-                                    <i class="fa fa-plus"></i> 添加
+                            <a class="btn btn-success" id="btnDetailsCreate" data-url="@Url.Action("../HrBudgetDetails/Create")">
+                                <i class="fa fa-plus"></i> 添加
                             </a>
-                        </th>           
+                        </th>
                     </tr>
                 </table>
-                <div class="datagrid" data-url="@Html.Raw(Url.Action("../HrBudgetDetails/Grid",new { BudgetId = Model.Id}))" data-query-form=".search-form">
+                <div class="datagrid" id="datagrid" data-url="@Html.Raw(Url.Action("../HrBudgetDetails/Grid",new { BudgetId = Model.Id}))">
                 </div>
-            <div class="panel-footer text-center">
-                <div class="buttons">
-                    <button class="btn btn-primary" type="submit">
-                        <i class="fa fa-save"></i> 保存
-                    </button>
-                    &nbsp;
-                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
-                        <i class="fa fa-sign-in"></i> 关闭
-                    </a>
+                <div class="panel-footer text-center">
+                    <div class="buttons">
+                        <button class="btn btn-primary" name="Save" value="1" type="submit">
+                            <i class="fa fa-save"></i> 保存
+                        </button>
+                        &nbsp;
+                        <button class="btn btn-primary" name="Submit" value="2" type="submit">
+                            <i class="fa fa-save"></i> 提交
+                        </button>
+                        &nbsp;
+                        <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                            <i class="fa fa-sign-in"></i> 关闭
+                        </a>
+                        @*<a class="btn btn-outline btn-danger btnWorkFlowSend">
+                            <i class="fa fa-arrow-right"></i> 提交
+                        </a>*@
+                    </div>
                 </div>
             </div>
         </div>
     </form>
 </div>
-@section style{
-    <link href="~/Plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-}
 @section script{
-<script src="~/Plugin/bootstrap-daterangepicker/js/moment.min.js"></script>
-<script src="~/Plugin/bootstrap-daterangepicker/js/zh-cn.js"></script>
-<script src="~/Plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
     <script>
-
+        //function Save(id)
+        //{
+        //    $("#Status").val(id);
+        //    document.getElementById("form1").submit();
+        //}
         $(function () {
             //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
-            $('.editform').dataform().initDateTimePicker().initiCheck().initValidate({
-                rules: {
-                    Title: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    BudgetMonth: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
+            $('#btnDetailsCreate').on('click', function () {
+                var id = $('#Id').val();
+                if (id == 0) {
+                    if ($('#BudgetMonth').val().length == 0) {
+                        zeniths.util.alert("请先选择预算月份！");
+                        return;
                     }
-                },
-                messages: {
-                    Title: {
-                        required: '请填写任务标题'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    BudgetMonth: {
-                        required: '请填写预算月份'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }
-                },
-                beforeSubmit: function () {
-                }
-            }).initAjax({ success: zeniths.util.formAjaxSuccess });
-                zeniths.util.standardGridBind({
-                    editWidth: 700,
-                    editHeight: 400,
-                    viewWidth: 700,
-                    viewHeight: 400,
-                    loadCallback: function () {
-                        //返回确认事件
-                        $('#btnCreate').on('click', function () {
-                            zeniths.util.dialog($(this).data('url'), 700, 400, {
-                                callback: function () {
-                                    reloadData();
-                                }
-                            });
+                    //如果预算信息没有保存，则先保存信息
+                    $.ajax({
+                        cache: true,
+                        type: 'POST',
+                        url: 'BudgetSave',
+                        data: $('#form1').serialize(),// 你的formid
+                        async: false,
+                        error: function (request) {
+                        },
+                        success: function (data) {
+                            if (isNaN(data)) {
+                                zeniths.util.alert(data);
+                                return;
+                            } else {
+                                $('#Id').val(data);
+                                $('#Mid').html(data);
+                                id = data;
+                            }
+                        }
+                    });
+                    if (id == 0) {
+                        return;
+                    } else {
+                        zeniths.util.dialog($(this).data('url') + '?BudgetId=' + id, 700, 400, {
+                            callback: function () {
+                                $('#datagrid').datagrid().reload({ BudgetId: id });
+                            }
                         });
                     }
+                } else {
+                    zeniths.util.dialog($(this).data('url') + '?BudgetId=' + id, 700, 400, {
+                        callback: function () {
+                            $('#datagrid').datagrid().reload({ BudgetId: id });
+                        }
+                    });
+                }
 
-                });
+            });
+            //添加表单
+            $('.editform').dataform().initDatePicker({
+                    format: "yyyy-mm",
+                    minViewMode: 'months'
+                }).initValidate({
+                    rules: {
+                        BudgetMonth: {
+                            required: true
+                        }
+                    },
+                    messages: {
+                        BudgetMonth: {
+                            required: '请填写预算月份'
+                        }
+                    },
+                    beforeSubmit: function () {
+                    }
+                }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+            zeniths.util.standardGridBind({
+                editWidth: 700,
+                editHeight: 400,
+                viewWidth: 700,
+                viewHeight: 400
+            });
+
         });
     </script>
 }

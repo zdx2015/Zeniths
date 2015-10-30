@@ -38,16 +38,21 @@ namespace Zeniths.Hr.Entity
 		[Column(Caption = "预算类别名称")]
         public string BudgetCategoryName { get; set; }
 
-		/// <summary>
+        /// <summary>
         /// 项目名称
         /// </summary>
-		[Column(Caption = "项目名称")]
+        [Column(Caption = "项目名称")]
         public string BudgetItemName { get; set; }
-
-		/// <summary>
+        /// <summary>
+        /// 项目主键
+        /// </summary>
+        [Column(Caption = "项目主键")]
+        public int BudgetItemId { get; set; }
+        
+        /// <summary>
         /// 预算金额
         /// </summary>
-		[Column(Caption = "预算金额")]
+        [Column(Caption = "预算金额")]
         public decimal BudgetMoney { get; set; }
 
 		/// <summary>

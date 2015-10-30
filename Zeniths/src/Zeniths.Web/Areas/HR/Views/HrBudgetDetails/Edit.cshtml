@@ -1,6 +1,6 @@
 ﻿@model HrBudgetDetails
 @{
-    var title = "编辑预算明细信息";
+    var title = ViewData["Title"];
 }
 
 <div class="container-edit-zeniths">
@@ -13,6 +13,7 @@
             <div class="panel-body">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <input type="hidden" name="@nameof(Model.BudgetId)" value="@Model.BudgetId" />
                 <table class="table table-form table-dialog-form">
                 
                     @*<tr>
@@ -39,27 +40,35 @@
                         <th >
                             <label class="control-label">项目类别：</label>
                         </th>
-                        <td>
+                        <td colspan="3">
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.BudgetCategoryName)" value="@Model.BudgetCategoryName" type="text" />
+                                <select class="select2-control w-200px form-control" onchange="CategoryName()" id="BudgetCategoryId" name="@nameof(Model.BudgetCategoryId)"  data-placeholder="请选择预算类型">
+                                    <option></option>
+                                </select>
+                                <input type="hidden" id="BudgetCategoryName" name="BudgetCategoryName" value="" />
                             </div>
                         </td>
-                        <th>
-                            <label class="control-label">预算金额：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.BudgetMoney)" value="@Model.BudgetMoney" type="text" />
-                            </div>
-                        </td>
-                    </tr>
+                        </tr>
                     <tr>
-                        <th >
+                        <th>
                             <label class="control-label">项目名称：</label>
                         </th>
                         <td colspan="3">
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.BudgetItemName)" value="@Model.BudgetItemName" type="text" />
+                                <select class="select2-control w-200px form-control" onchange="CategoryItemName()" id="BudgetItemId" name="@nameof(Model.BudgetItemId)" data-placeholder="请选择预算项目">
+                                    <option></option>
+                                </select>
+                                <input type="hidden" id="BudgetItemName" name="BudgetItemName" value="" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">预算金额：</label>
+                        </th>
+                        <td colspan="3">
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.BudgetMoney)" value="@Model.BudgetMoney" type="text" />
                             </div>
                         </td>
                     </tr>
@@ -69,7 +78,8 @@
                         </th>
                         <td colspan="3">
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Note)" value="@Model.Note" type="text" />
+                                @*<input class="form-control" name="@nameof(Model.Note)" value="@Model.Note" type="text" />*@
+                                <textarea class="form-control" name="@nameof(Model.Note)">@Model.Note</textarea>
                             </div>
                         </td>
                     </tr>
@@ -97,87 +107,116 @@
 
         $(function () {
             //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
-            $('.editform').dataform().initValidate({
+            $('.editform').dataform().initSelect2().initValidate({
                 rules: {
-                    BudgetId: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    BudgetCategoryId: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
                     BudgetCategoryName: {
                         required: true
                         /*,maxlength: 100
                           ,digits: true
                         */
-                    }, 
+                    },
                     BudgetItemName: {
                         required: true
                         /*,maxlength: 100
                           ,digits: true
                         */
-                    }, 
+                    },
                     BudgetMoney: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    Note: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    } 
+                        required: true,
+                        number:true,
+                        maxlength: 7
+                    },
+                    Note:{
+                        maxlength:1000
+                    }
                 },
                 messages: {
-                    BudgetId: {
-                        required: '请填写预算主键'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
                     BudgetCategoryId: {
-                        required: '请填写预算类别主键'
+                        required: '请选择预算类别'
                         /*,maxlength: '长度不能超过100'
                           ,digits: '只能输入正整数'
                         */
-                    }, 
-                    BudgetCategoryName: {
-                        required: '请填写预算类别名称'
+                    },
+                    BudgetItemId: {
+                        required: '请选择预算项目'
                         /*,maxlength: '长度不能超过100'
                           ,digits: '只能输入正整数'
                         */
-                    }, 
-                    BudgetItemName: {
-                        required: '请填写项目名称'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
+                    },
                     BudgetMoney: {
                         required: '请填写预算金额'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    Note: {
-                        required: '请填写备注'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    } 
+                        ,maxlength: '预算金额不能超过一千万'
+                        ,number: '只能输入金额类型'
+                    },
+                    Note:{
+                        maxlength: '备注信息长度必须在一千字符内'
+                    }
                 },
                 beforeSubmit: function () {
                 }
             }).initAjax({ success: zeniths.util.formAjaxSuccess });
-
+            //加载类别
+            GetBudgetCategory("1", "0",@Model.BudgetCategoryId);
+            if (@Model.BudgetCategoryId!=0) {
+                GetBudgetCategory("2", @Model.BudgetCategoryId,@Model.BudgetItemId);
+            }
         });
+        //当预算类别更改后加载预算项目
+        function CategoryName()
+        {
+            var cName = $("#BudgetCategoryId").find("option:selected").text();
+            $('#BudgetCategoryName').val(cName.substr(2, cName.length));
+            GetBudgetCategory("2", $("#BudgetCategoryId").val());
+        }
+        function CategoryItemName()
+        {
+            var cName = $("#BudgetItemId").find("option:selected").text();
+            $('#BudgetItemName').val(cName.substr(2, cName.length));
+        }
+        //加载预算类别
+        function GetBudgetCategory(ParentId, Id,Selected)
+        {
+            var val="";
+            var txt="";
+            $.ajax({
+                cache: false,
+                type:'GET',
+                dataType: 'json',
+                url: '@Url.Action("GetBudgetCategory")',
+                data:{ParentId:ParentId,id:Id,Selected:Selected},
+                error: function (request) {
+                },
+                success: function (data) {
+                    var json = eval(data);
+                    var optionstring = '<option></option>';
+                    for (var item in json) {
+                        if (json[item].change=='1') {
+                            txt=json[item].txt;
+                            val=json[item].val;
+                            optionstring += '<option value=\"' + json[item].val + '\" selected=\"selected\" >' + json[item].txt + '</option>';
+                        }else{
+                            optionstring += '<option value=\"' + json[item].val + '\" >' + json[item].txt + '</option>';
+                        }
+                        
+                    }
+                    
+                    if (Id=="0") {
+                        if (Selected!="0")
+                        {
+                            $('#select2-BudgetCategoryId-container').html(txt);
+                            $('#BudgetCategoryName').val(txt.substr(2, txt.length));
+                        }
+                        $('#BudgetCategoryId').html(optionstring);
+                    } else {
+                        if (Selected!="0")
+                        {
+                            $('#select2-BudgetItemId-container').html(txt);
+                            $('#BudgetItemName').val(txt.substr(2, txt.length));
+                        }
+                        $('#BudgetItemId').html(optionstring);
+                    }
+                }
+            });
+        }
     </script>
 }

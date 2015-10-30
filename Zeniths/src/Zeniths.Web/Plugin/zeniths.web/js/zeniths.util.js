@@ -1008,7 +1008,11 @@ zeniths.util.standardGridBind = function (options) {
 
     initGrid();
 
-    $('.search-form').dataform().initSelect2().initDatePicker();
+    var $searchForm = $('.search-form');
+    if ($searchForm.length == 1){
+        $searchForm.dataform().initSelect2().initDatePicker();
+    }
+   
 
     //绑定刷新事件
     $('#btnRefresh').on('click', function () {
