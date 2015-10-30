@@ -9,3 +9,4 @@
 /// <reference path="~/plugin/zeniths.web/js/string.format.js" />
 /// <reference path="~/plugin/zeniths.web/js/zeniths.dataform.js" />
 /// <reference path="~/plugin/zeniths.web/js/zeniths.datagrid.js" />
+/// <reference path="~/plugin/zeniths.web/js/zeniths.workflow.js" />

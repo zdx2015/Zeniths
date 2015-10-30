@@ -1,0 +1,33 @@
+﻿@model List<FlowTask>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-100px" data-order="@nameof(FlowTask.StepName)">步骤名称</th>
+            <th class="w-100px" data-order="@nameof(FlowTask.SenderName)">发送人</th>
+            <th class="w-100px" data-order="@nameof(FlowTask.SenderDateTime)">发送时间</th>
+            <th class="w-100px" data-order="@nameof(FlowTask.ReceiveName)">接收人</th>
+            <th class="w-100px" data-order="@nameof(FlowTask.ReadDateTime)">接收时间</th>
+            <th class="w-100px" data-order="@nameof(FlowTask.ActualFinishDateTime)">实际完成时间</th>
+            <th class="w-100px" data-order="@nameof(FlowTask.Opinion)">意见</th>
+            <th class="w-100px" data-order="@nameof(FlowTask.Note)">备注</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr>
+                <td>@record.StepName</td>
+                <td>@record.SenderName</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.SenderDateTime)</td>
+                <td>@record.ReceiveName</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.ReadDateTime)</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.ActualFinishDateTime)</td>
+                <td>@record.Opinion</td>
+                <td>@record.Note</td>
+            </tr>
+        }
+    </tbody>
+</table>

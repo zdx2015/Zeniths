@@ -1,0 +1,49 @@
+﻿@model EmpLeaveModel
+@{
+    var title = Html.GetCurrentStepName();
+    Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
+}
+<div class="container-edit-zeniths" style="width: 60%;margin-top:50px;">
+    <form class="editform" action="@Html.GetFlowExecuteUrl()" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.Partial("_DetailsCommon", Model)
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <a class="btn btn-outline btn-danger btnWorkFlowBack">
+                        <i class="fa fa-arrow-left"></i> 驳回
+                    </a>
+                    &nbsp;
+                    <a class="btn btn-outline btn-success btnWorkFlowSend">
+                        审核通过
+                        <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section script{
+    <script>
+        $(function () {
+
+            $('.editform').dataform().initWorkFlow({
+                sendCallback: function (wf, result) {
+                    //如果下一步骤的处理人是自己 则继续处理下一步骤
+                    if (result.url) {
+                        zeniths.workflow.redirect(result.url);
+                    } else {
+                        //跳转到待办页面
+                        //window.location.href = '待办页面';
+                    }
+                }
+            });
+        });
+    </script>
+}

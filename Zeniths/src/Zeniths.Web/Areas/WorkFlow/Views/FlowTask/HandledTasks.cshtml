@@ -1,0 +1,40 @@
+﻿@{
+    var title = "已处理任务";
+}
+<div class="container-zeniths">
+    <div class="panel panel-default panel-zeniths">
+        <div class="panel-heading">
+            @title
+        </div>
+        <div class="panel-body">
+            <div class="search-panel-zeniths">
+                <form class="form-inline search-form">
+                    <div class="form-group">
+                        <input class="w-300px form-control" name="title" type="text" placeholder="请输入关键字查询">
+                    </div>
+                    &nbsp;
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-search"></i> 查询
+                    </button>
+                </form>
+            </div>
+            <div class="datagrid" data-url="@Html.Raw(Url.Action("PendingTasksGrid"))" 
+                 data-query-form=".search-form" data-query-params="{ flowId:'@Request.QueryString["flowId"]' }">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+        $(function () {
+            zeniths.util.standardGridBind({
+                editWidth: 900,
+                editHeight: 700,
+                viewWidth: 900,
+                viewHeight: 700
+            });
+        });
+    </script>
+}

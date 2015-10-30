@@ -46,6 +46,19 @@ namespace Zeniths.WorkFlow.Utility
             var currentStepSetting = WorkFlowHelper.GetStepSetting(execute.FlowId, execute.StepId);
             IStepEvent stepEvent = ReflectionHelper.CreateInstance<IStepEvent>(currentStepSetting.ControlProvider);
 
+
+            //步骤保存前事件
+            if (stepEvent != null && (execute.ExecuteType == ExecuteType.Save))
+            {
+                var eventResult = stepEvent.OnBeforeSave(eventArgs);
+                Debug.WriteLine($"执行步骤保存前事件：返回值：{eventResult.Success};{eventResult.Message}");
+                if (eventResult.Failure)
+                {
+                    return new ExecuteResult(false, eventResult.Message);
+                }
+            }
+
+
             //保存业务数据
             #region 保存业务数据
 
@@ -119,8 +132,20 @@ namespace Zeniths.WorkFlow.Utility
             //    RoadFlow.Platform.Log.Types.流程相关);
 
 
+            eventArgs.NextTasks = reslut.NextTasks;
             eventArgs.FlowInstanceId = execute.FlowInstanceId;
             eventArgs.TaskId = execute.TaskId;
+
+            //步骤保存后事件
+            if (stepEvent != null && (execute.ExecuteType == ExecuteType.Save))
+            {
+                var eventResult = stepEvent.OnAfterSave(eventArgs);
+                Debug.WriteLine($"执行步骤保存前事件：返回值：{eventResult.Success};{eventResult.Message}");
+                if (eventResult.Failure)
+                {
+                    return new ExecuteResult(false, eventResult.Message);
+                }
+            }
 
             //步骤提交后事件
             if (stepEvent != null && (execute.ExecuteType == ExecuteType.Submit || execute.ExecuteType == ExecuteType.Completed))
@@ -143,7 +168,7 @@ namespace Zeniths.WorkFlow.Utility
                 }
             }
 
-            return new ExecuteResult(true);
+            return reslut;
         }
 
         /// <summary>
@@ -233,7 +258,7 @@ namespace Zeniths.WorkFlow.Utility
             }
 
             string opation = executeParamObject.Type.ToLower();
-            
+
             var execute = new ExecuteData();
             execute.Opinion = string.IsNullOrEmpty(opinion) ? string.Empty : opinion.Trim();
             execute.FlowId = flowId;
@@ -446,6 +471,9 @@ namespace Zeniths.WorkFlow.Utility
                 //如果是完成,根本不需要创建后续步骤,所以在这里就结束了
                 if (executeModel.ExecuteType == ExecuteType.Completed || executeModel.Steps == null || executeModel.Steps.Count == 0)
                 {
+                    result.DebugMessage += "流程完成";
+                    result.Success = true;
+                    result.Message += "流程完成";
                     scope.Complete();
                     return;
                 }
@@ -548,7 +576,6 @@ namespace Zeniths.WorkFlow.Utility
                         if (isPassing) //可以创建后续步骤
                         {
                             var task = CreateNextTask(executeModel, currentTask, user, step.Key);
-                            taskService.Insert(task);
                             nextTasks.Add(task);
                         }
                     }
@@ -1023,12 +1050,28 @@ namespace Zeniths.WorkFlow.Utility
             {
                 task.PlanFinishDateTime = DateTime.Now.AddHours(processHour);
             }
-            taskService.Insert(task);
 
+            var taskAddResult = taskService.Insert(task);
+            if (taskAddResult.Failure)
+            {
+                throw new ApplicationException(taskAddResult.Message);
+            }
 
             executeModel.FlowInstanceId = task.FlowInstanceId;
             executeModel.TaskId = task.Id;
 
+
+            var flowUser = new FlowUser();
+            flowUser.FlowInstanceId = task.FlowInstanceId;
+            flowUser.FlowId = task.FlowId;
+            flowUser.BusinessId = task.BusinessId;
+            flowUser.UserId = task.SenderId;
+            flowUser.CreateDateTime = DateTime.Now;
+            var _result = new FlowUserService().Save(flowUser);
+            if (_result.Failure)
+            {
+                throw new ApplicationException("保存流程用户失败");
+            }
 
             return task;
         }
@@ -1061,11 +1104,29 @@ namespace Zeniths.WorkFlow.Utility
             {
                 task.PlanFinishDateTime = DateTime.Now.AddHours(processHour);
             }
-            taskService.Insert(task);
+            var taskAddResult = taskService.Insert(task);
+            if (taskAddResult.Failure)
+            {
+                throw new ApplicationException(taskAddResult.Message);
+            }
 
+            taskService.Insert(task);
 
             executeModel.FlowInstanceId = task.FlowInstanceId;
             executeModel.TaskId = task.Id;
+
+
+            var flowUser = new FlowUser();
+            flowUser.FlowInstanceId = task.FlowInstanceId;
+            flowUser.FlowId = task.FlowId;
+            flowUser.BusinessId = task.BusinessId;
+            flowUser.UserId = task.ReceiveId;
+            flowUser.CreateDateTime = DateTime.Now;
+            var _result = new FlowUserService().Save(flowUser);
+            if(_result.Failure)
+            {
+                throw new ApplicationException("保存流程用户失败");
+            }
 
             return task;
         }

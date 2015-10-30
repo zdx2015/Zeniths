@@ -1,13 +1,13 @@
-﻿@model EmpLeave
+﻿@model EmpLeaveModel
 @{
-    var title = "登记员工请假";
+    var title = Html.GetCurrentStepName();
+    Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
 }
 
 <div class="container-edit-zeniths" style="width: 60%;margin-top:50px;">
-    <form class="editform" action="@Url.Action("Execute","FlowRun",new { area = "WorkFlow" })" method="POST" role="form">
+    <form class="editform" action="@Html.GetFlowExecuteUrl()" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
-                <span class="prefix"> <strong>@Model.Id</strong></span>
                 @title
             </div>
             <div class="panel-body">
@@ -21,7 +21,9 @@
                             <label class="control-label">开始日期：</label>
                         </th>
                         <td>
-                            <input class="date-control form-control" name="@nameof(Model.StartDate)" value="@Model.StartDate" type="text" />
+                            <div class="input-icon right">
+                                <input class="date-control form-control" name="@nameof(Model.StartDate)" value="@Model.StartDate" type="text" />
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -29,7 +31,9 @@
                             <label class="control-label">结束日期：</label>
                         </th>
                         <td>
-                            <input class="date-control form-control" name="@nameof(Model.EndDate)" value="@Model.EndDate" type="text" />
+                            <div class="input-icon right">
+                                <input class="date-control form-control" name="@nameof(Model.EndDate)" value="@Model.EndDate" type="text" />
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -48,7 +52,7 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Category)" value="@Model.Category" type="text" />
+                                @Html.Raw(AuthHelper.BuildDicRadioBoxList("EmpLeaveCategory", nameof(Model.Category), Model.Category))
                             </div>
                         </td>
                     </tr>
@@ -62,26 +66,16 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            <label class="control-label">任务名称：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Title)" value="@Model.Title" type="text" />
-                            </div>
-                        </td>
-                    </tr>
                 </table>
             </div>
             <div class="panel-footer text-center">
                 <div class="buttons">
-                    <button class="btn btn-primary" type="submit">
+                    <a class="btn btn-outline btn-primary btnWorkFlowSave">
                         <i class="fa fa-save"></i> 保存
-                    </button>
+                    </a>
                     &nbsp;
-                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
-                        <i class="fa fa-sign-in"></i> 关闭
+                    <a class="btn btn-outline btn-danger btnWorkFlowSend">
+                        <i class="fa fa-arrow-right"></i> 发送
                     </a>
                 </div>
             </div>
@@ -89,17 +83,37 @@
     </form>
 </div>
 
-
 @section script{
     <script>
-
         $(function () {
-            var _workflow_execute_params = '@Html.Raw(Html.WorkflowExecuteParams())';
-            var _workflow_execute_params_obj = JSON.parse(_workflow_execute_params);
-            _workflow_execute_params_obj.type = 'save';
 
-            //$('.editform').dataform().initSelect2().initiCheck()
-            $('.editform').dataform().initDatePicker().initValidate({
+            //流程回调
+            var wfCallback = {
+                saveCallback: function (wf,result) {
+                    //保存完成后前往待办页面
+                    //window.location.href = '待办页面';
+                },
+                sendCallback: function (wf,result) {
+                    //如果下一步骤的处理人是自己 则继续处理下一步骤
+                    if (result.url) {
+                        $(top.document.body).mask('正在前往下一步骤,请稍等...');
+                        window.location.href = result.url;
+                    } else {
+                        //跳转到待办页面
+                        //window.location.href = '待办页面';
+                    }
+                },
+                backCallback: function (wf,result) {
+
+                },
+                completedCallbackfunction(wf,result) {
+                    //流程结束后跳转的页面
+                    //window.location.href = '待办页面';
+                }
+            };
+
+            //验证规则
+            var validRule = {
                 rules: {
                     StartDate: {
                         required: true
@@ -112,9 +126,6 @@
                         digits: true
                     },
                     Category: {
-                        required: true
-                    },
-                    Title: {
                         required: true
                     }
                 },
@@ -132,20 +143,14 @@
                     },
                     Category: {
                         required: '请填写类型'
-                    },
-                    Title: {
-                        required: '请填写任务名称'
                     }
                 },
                 beforeSubmit: function () {
                 }
-            }).initAjax({
-                data: {
-                    _workflow_execute_params: JSON.stringify(_workflow_execute_params_obj)
-                },
-                success: zeniths.util.formAjaxSuccess
-            });
+            };
 
+            $('.editform').dataform().initDatePicker().initiCheck()
+                .initWorkFlow(wfCallback).initValidate(validRule);
         });
     </script>
 }

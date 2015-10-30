@@ -204,7 +204,7 @@ zeniths.util.mask = function (msg) {
     if (!msg) {
         msg = '正在提交数据,请稍等...';
     }
-    $(document.body).mask(msg);
+    $(top.document.body).mask(msg);
 };
 
 /**
@@ -212,7 +212,7 @@ zeniths.util.mask = function (msg) {
  * @returns {} 
  */
 zeniths.util.unmask = function () {
-    $(document.body).unmask();
+    $(top.document.body).unmask();
 };
 
 /**
