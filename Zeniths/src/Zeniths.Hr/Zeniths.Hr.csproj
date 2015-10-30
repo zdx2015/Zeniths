@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\OAWorkLog.cs" />
+    <Compile Include="Entity\OAWorkLogExtend.cs" />
     <Compile Include="Entity\OAWorkLogShare.cs" />
     <Compile Include="HrDatabase.cs" />
     <Compile Include="HrRepository.cs" />
@@ -47,6 +48,10 @@
     <Compile Include="Service\OAWorkLogShareService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Zeniths.Auth\Zeniths.Auth.csproj">
+      <Project>{eb7b2a8a-484d-4279-861c-5560b1d76160}</Project>
+      <Name>Zeniths.Auth</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Zeniths.Data\Zeniths.Data.csproj">
       <Project>{e67f375d-ee64-4bdf-8458-a1c2b2a29472}</Project>
       <Name>Zeniths.Data</Name>

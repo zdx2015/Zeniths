@@ -45,6 +45,18 @@ namespace Zeniths.Hr.Entity
         public string OtheInstructions { get; set; }
 
 		/// <summary>
+        /// 是否分享
+        /// </summary>
+		[Column(Caption = "是否分享")]
+        public bool IsShare { get; set; }
+
+		/// <summary>
+        /// 分享人列表
+        /// </summary>
+		[Column(Caption = "分享人列表")]
+        public string ShareUsers { get; set; }
+
+		/// <summary>
         /// 创建用户主键
         /// </summary>
 		[Column(Caption = "创建用户主键")]

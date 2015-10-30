@@ -78,6 +78,10 @@
       <Project>{263DBFCF-A690-4E04-B02C-CC004E065400}</Project>
       <Name>Zeniths.Auth.Utility</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Zeniths.Auth\Zeniths.Auth.csproj">
+      <Project>{eb7b2a8a-484d-4279-861c-5560b1d76160}</Project>
+      <Name>Zeniths.Auth</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Zeniths.Hr\Zeniths.Hr.csproj">
       <Project>{a151cfa0-a72e-499b-84e0-af5dc3d2d142}</Project>
       <Name>Zeniths.Hr</Name>

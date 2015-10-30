@@ -199,6 +199,7 @@
     <Content Include="Areas\HR\Views\OAWorkLogShare\Edit.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Grid.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Index.cshtml" />
+    <Content Include="Areas\HR\Views\OAWorkLog\Share.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
     <None Include="Plugin\_references.js" />
@@ -587,7 +588,7 @@
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogShareController.cs" />
-    <Compile Include="Areas\HR\HRAreaRegistration.cs" />
+    <Compile Include="Areas\HR\Views\HRAreaRegistration.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\FlowController.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\SelectMemberController.cs" />
     <Compile Include="Areas\WorkFlow\WorkFlowAreaRegistration.cs" />
