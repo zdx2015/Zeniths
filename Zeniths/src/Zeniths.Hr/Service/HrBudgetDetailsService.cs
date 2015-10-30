@@ -11,6 +11,7 @@ using Zeniths.Collections;
 using Zeniths.Data;
 using Zeniths.Extensions;
 using Zeniths.Utility;
+using System.Text;
 
 namespace Zeniths.Hr.Service
 {
@@ -32,7 +33,7 @@ namespace Zeniths.Hr.Service
         public BoolMessage Exists(HrBudgetDetails entity)
         {
             //return BoolMessage.True;
-            var has = repos.Exists(p => p.BudgetItemName == entity.BudgetItemName && p.BudgetId != entity.BudgetId);
+            var has = repos.Exists(p => p.BudgetItemId == entity.BudgetItemId && p.BudgetId == entity.BudgetId && p.Id!=entity.Id);
             return has ? new BoolMessage(false, "输入项目名称已经存在") : BoolMessage.True;
         }
 
@@ -161,9 +162,42 @@ namespace Zeniths.Hr.Service
             query.Where(p => p.BudgetId ==  BudgetId);
             return repos.Page(query);
         }
-
         #region 私有方法
-
+        /// <summary>
+        /// 加载费用类别
+        /// </summary>
+        /// <param name="ParentId">分类类别 1 基类 2 子类</param>
+        /// <param name="id">类别主键</param>
+        /// <param name="Selected">选中id</param>
+        /// <returns></returns>
+        public string GetBudgetCategory(string ParentId,string id,string Selected)
+        {
+            DataTable dt = repos.Database.ExecuteDataTable("exec proc_GetBudgetCategory '"+ParentId+"','"+id+"','"+Selected+"'");
+            string json = DataTableJson(dt);
+            return json;
+        }
+        public static string DataTableJson(DataTable dt)
+        {
+            StringBuilder jsonBuilder = new StringBuilder();
+            jsonBuilder.Append("[");
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                jsonBuilder.Append("{");
+                for (int j = 0; j < dt.Columns.Count; j++)
+                {
+                    jsonBuilder.Append("\"");
+                    jsonBuilder.Append(dt.Columns[j].ColumnName);
+                    jsonBuilder.Append("\":\"");
+                    jsonBuilder.Append(dt.Rows[i][j].ToString());
+                    jsonBuilder.Append("\",");
+                }
+                jsonBuilder.Remove(jsonBuilder.Length - 1, 1);
+                jsonBuilder.Append("},");
+            }
+            jsonBuilder.Remove(jsonBuilder.Length - 1, 1);
+            jsonBuilder.Append("]");
+            return jsonBuilder.ToString();
+        }
 
         #endregion
     }

@@ -49,7 +49,10 @@ namespace Zeniths.WorkFlow.Utility
         {
             return MvcHtmlString.Create(AuthHelper.BuildDicOptions("FlowCategory", selected));
         }
-
+        public static MvcHtmlString BudgetCategoryOptions(this HtmlHelper helper, string selected = null)
+        {
+            return MvcHtmlString.Create(AuthHelper.BuildDicOptions("DailyReimburseCategory", selected));
+        }
         /// <summary>
         /// 生成工作流参数
         /// </summary>
