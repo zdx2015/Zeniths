@@ -189,7 +189,7 @@ namespace Zeniths.Hr.Service
         /// <returns></returns>
         public PageList<HrBudgetView> GetPageListView(int DepartmentId,string DepartmentName, string type, string year, string status, int pageIndex, int pageSize, string orderName, string orderDir)
         {
-            //查询列表数据
+            //查询列表数据 
             IEnumerable<HrBudgetView> view = repos.Database.Query<HrBudgetView>("exec proc_GetHrBudgetPageList 'list','"+ DepartmentId.ToString()+ "','" + DepartmentName + "','" + type+"','"+year+"','"+status+"',"+pageIndex.ToString()+","+pageSize.ToString()+",'"+orderName+"','"+orderDir+"'");
             //查询数据条数
             DataSet ds = repos.Database.ExecuteDataSet("exec proc_GetHrBudgetPageList 'count', '"+ DepartmentId.ToString()+ "','"+DepartmentName+"', '"+type+"', '"+year+"', '"+status+"', "+pageIndex.ToString()+", "+pageSize.ToString()+", '"+orderName+"', '"+orderDir+"'");

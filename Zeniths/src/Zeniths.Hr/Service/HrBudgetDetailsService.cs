@@ -32,7 +32,7 @@ namespace Zeniths.Hr.Service
         /// <returns>如果存在指定记录返回BoolMessage.False</returns>
         public BoolMessage Exists(HrBudgetDetails entity)
         {
-            //return BoolMessage.True;
+            //return BoolMessage.True; 
             var has = repos.Exists(p => p.BudgetItemId == entity.BudgetItemId && p.BudgetId == entity.BudgetId && p.Id!=entity.Id);
             return has ? new BoolMessage(false, "输入项目名称已经存在") : BoolMessage.True;
         }
