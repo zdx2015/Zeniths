@@ -101,7 +101,7 @@
                         required: true
                         /*,maxlength: 100*/
                         ,number: true
-                        ,min:0
+                        ,min:1
                         
                     } 
                 },
@@ -122,7 +122,7 @@
                         required: '请填写费用金额'
                         /*,maxlength: '长度不能超过100'*/
                           ,number: '只能输入数字'
-                          ,min:'不能小于0'
+                          ,min:'不能小于等于0'
                     } 
                 },
                 beforeSubmit: function () {
