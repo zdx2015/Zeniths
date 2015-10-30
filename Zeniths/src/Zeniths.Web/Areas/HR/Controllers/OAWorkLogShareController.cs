@@ -14,6 +14,7 @@ using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.Utility;
 using Zeniths.Hr.Utility;
+using Zeniths.Auth.Utility;
 
 namespace Zeniths.Web.Areas.Hr.Controllers
 {
@@ -42,13 +43,13 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="name">按钮名称</param>
         /// <returns>视图模板</returns>
-        public ActionResult Grid(string name)
+        public ActionResult Grid()
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name);
+            var list = service.GetMyShareList(pageIndex, pageSize, orderName, orderDir);
             return View(list);
         }
 
@@ -59,6 +60,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         public ActionResult Create()
         {
             return EditCore(new OAWorkLogShare());
+
         }
 
         /// <summary>

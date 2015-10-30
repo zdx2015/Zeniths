@@ -59,13 +59,13 @@ namespace Zeniths.Hr.Entity
 		/// <summary>
         /// 预计请假开始日期
         /// </summary>
-		[Column(Caption = "预计请假开始日期")]
+		[Column(Caption = "预计开始请假时间")]
         public DateTime StartDatetime { get; set; }
 
         /// <summary>
         /// 预计请假结束日期
         /// </summary>
-        [Column(Caption = "预计请假结束日期")]
+        [Column(Caption = "预计结束请假时间")]
         public DateTime EndDatetime { get; set; }
 
 		/// <summary>
@@ -314,10 +314,16 @@ namespace Zeniths.Hr.Entity
 		[Column(Caption = "流程是否完成")]
         public bool IsFinish { get; set; }
 
-		/// <summary>
+        /// <summary>
+        /// 状态
+        /// </summary>
+		[Column(Caption = "状态")]
+        public string Status { get; set; }
+
+        /// <summary>
         /// 创建用户主键
         /// </summary>
-		[Column(Caption = "创建用户主键")]
+        [Column(Caption = "创建用户主键")]
         public int CreateUserId { get; set; }
 
 		/// <summary>

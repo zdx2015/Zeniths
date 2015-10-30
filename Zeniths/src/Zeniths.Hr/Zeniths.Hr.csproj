@@ -44,6 +44,7 @@
     <Compile Include="Entity\EmployeeLeave.cs" />
     <Compile Include="Entity\EmployeeNotClock.cs" />
     <Compile Include="Entity\OAWorkLog.cs" />
+    <Compile Include="Entity\OAWorkLogExtend.cs" />
     <Compile Include="Entity\OAWorkLogShare.cs" />
     <Compile Include="Entity\HrBudget.cs" />
     <Compile Include="Entity\HrBudgetDetails.cs" />
