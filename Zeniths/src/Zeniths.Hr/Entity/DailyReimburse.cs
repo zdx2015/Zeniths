@@ -396,7 +396,7 @@ namespace Zeniths.Hr.Entity
         /// 步骤状态
         /// </summary>
         [Column(Caption = "步骤状态")]
-        public bool StepStatus { get; set; }
+        public bool? StepStatus { get; set; }
 
         /// <summary>
         /// 流程是否完成
