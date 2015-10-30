@@ -33,25 +33,30 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// 主视图
         /// </summary>
         /// <returns>视图模板</returns>
-        public ActionResult Index()
+        public ActionResult Index(string type)
         {
+            ViewData["type"] = type;
             return View();
         }
-
         /// <summary>
-        /// 表格视图
+        /// 查询预算明细
         /// </summary>
-        /// <param name="name">按钮名称</param>
-        /// <returns>视图模板</returns>
-        public ActionResult Grid(string name)
+        /// <param name="BudgetMonth">预算月份</param>
+        /// <param name="DepartmentName">预算部门</param>
+        /// <param name="status">预算状态</param>
+        /// <param name="type">业务类型 1 部门负责人 2 经理审批 3 财务查看 </param>
+        /// <returns></returns>
+        public ActionResult Grid(string BudgetMonth,string DepartmentName,string status,string type)
         {
+            ViewData["type"] = type;
+            var currentUser = OrganizeHelper.GetCurrentUser();
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
             var orderName = GetOrderName();            
             var orderDir = GetOrderDir();
             orderName = orderName == "" ? "id" : orderName;
             orderDir = orderDir == "" ? "asc" : orderDir;
-            var list = service.GetPageListView(1, "1", "2015", "", pageIndex, pageSize, orderName, orderDir);
+            var list = service.GetPageListView(currentUser.DepartmentId,DepartmentName,type,BudgetMonth,status, pageIndex, pageSize, orderName, orderDir);
             return View(list);
         }
 
@@ -61,6 +66,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Create()
         {
+            ViewData["Title"] = "新增部门预算";
             return EditCore(new HrBudget());
         }
 
@@ -71,6 +77,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Edit(string id)
         {
+            ViewData["Title"] = "编辑部门预算";
             var entity = service.Get(id.ToInt());
             return EditCore(entity);
         }
@@ -86,7 +93,11 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var entity = service.Get(id.ToInt());
             return View(entity);
         }
-
+        public ActionResult DetailsList(string id)
+        {
+            var entity = service.Get(id.ToInt());
+            return View(entity);
+        }
         /// <summary>
         /// 数据编辑视图
         /// </summary>
@@ -106,8 +117,26 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save(HrBudget entity)
         {
+            //判斷是否有明細信息
+            var resul = service.ExistsCount(entity);
+            if (!resul.Success)
+            {
+                return Json(resul);
+            }
+            if (Request.Form["Save"] != null)
+                entity.Status = 1;
+            else
+                entity.Status = 2;
+
             entity.CreateDateTime = DateTime.Now;
-            //var currentUser = OrganizeHelper
+            entity.IsFinish = false;
+            OrganizeHelper.SetCurrentUserCreateInfo(entity);
+            var currentUser = OrganizeHelper.GetCurrentUser();
+            entity.CreateDepartmentid = currentUser.DepartmentId;
+            entity.CreateDepartmentName = currentUser.DepartmentName;
+            entity.BudgetDepartmentId = entity.CreateDepartmentid;
+            entity.BudgetDepartmentName = entity.CreateDepartmentName;
+            entity.Title = entity.CreateDepartmentName + " " + entity.BudgetMonth.ToString("yyyy年MM月") + "预算申请";
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {
@@ -117,7 +146,33 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
             return Json(result);
         }
+        /// <summary>
+        /// 在添加明細信息時判斷是否添加了預算主體信息
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public string BudgetSave(HrBudget entity)
+        {
+            entity.CreateDateTime = DateTime.Now;
+            entity.IsFinish = false;
+            OrganizeHelper.SetCurrentUserCreateInfo(entity);
+            OrganizeHelper.SetCurrentUserCreateInfo(entity);
+            var currentUser = OrganizeHelper.GetCurrentUser();
+            entity.CreateDepartmentid = currentUser.DepartmentId;
+            entity.CreateDepartmentName = currentUser.DepartmentName;
+            entity.BudgetDepartmentId = entity.CreateDepartmentid;
+            entity.BudgetDepartmentName = entity.CreateDepartmentName;
+            entity.Status = 1;
+            entity.Title = entity.CreateDepartmentName + "提交" + entity.BudgetMonth.ToString("yyyy年MM月") + "预算申请";
+            var hasResult = service.Exists(entity);
+            if (hasResult.Failure)
+            {
+                return hasResult.Message;
+            }
 
+            var result = service.Insert(entity);
+            return result.Message;
+        }
         /// <summary>
         /// 删除数据
         /// </summary>
@@ -138,5 +193,6 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         {
             return Export(service.GetList());
         }
+
     }
 }

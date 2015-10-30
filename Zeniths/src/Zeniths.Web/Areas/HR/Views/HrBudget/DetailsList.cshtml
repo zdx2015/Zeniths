@@ -1,10 +1,11 @@
 ﻿@model HrBudget
 @{
-    var title = "查看部门预算";
+    var title = Html.GetCurrentStepName();
+    Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
 }
 
 <div class="container-edit-zeniths">
-    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+    <form class="editform" action="@Html.GetFlowExecuteUrl()" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
                 <span class="prefix"> <strong>@Model.Id</strong></span>
@@ -34,11 +35,32 @@
                 </div>
             <div class="panel-footer text-center">
             <div class="buttons">
-                <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                @*<a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
                     <i class="fa fa-sign-in"></i> 关闭
+                </a>*@
+                <a class="btn btn-outline btn-danger btnWorkFlowSend">
+                    <i class="fa fa-arrow-right"></i> 提交
                 </a>
             </div>
         </div>
         </div>
     </form>
 </div>
+@section script{
+    <script>
+    $(function () {
+        $('.editform').dataform().initWorkFlow(
+            {
+                sendCallback: function (wf, result) {
+                    //如果下一步骤的处理人是自己 则继续处理下一步骤
+                    if (result.url) {
+                        window.location.href = result.url;
+                    } else {
+                        zeniths.util.formAjaxSuccess(result);
+                    }
+                }
+            }
+            );
+    });
+</script>
+}
