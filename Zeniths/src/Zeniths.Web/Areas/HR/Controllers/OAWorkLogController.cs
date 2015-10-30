@@ -14,6 +14,7 @@ using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.Utility;
 using Zeniths.Hr.Utility;
+using Zeniths.Auth.Utility;
 
 namespace Zeniths.Web.Areas.Hr.Controllers
 {
@@ -42,14 +43,58 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="name">按钮名称</param>
         /// <returns>视图模板</returns>
-        public ActionResult Grid(string name)
+        public ActionResult Grid(DateTime? logDateFirst, DateTime? logDateLast)
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name);
+            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, logDateFirst, logDateLast);
             return View(list);
+        }
+
+        /// <summary>
+        /// 分享视图
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>视图模板</returns>
+        public ActionResult Share(string id)
+        {
+            //var pageIndex = GetPageIndex();
+            //var pageSize = GetPageSize();
+
+            //var list = service.GetUserList(pageIndex, pageSize);
+
+            //ViewBag.selectlist = "";
+            //for (int i = 0; i < list.Count; i++)
+            //{
+            //    ViewBag.selectlist += "<option value='" + i + "'>" + list[i].Account + ", " +
+            //        list[i].Name + ", " + list[i].DepartmentName + "</option>";
+            //}
+
+            var entity = service.Get(id.ToInt());
+            return View(entity);
+
+        }
+
+        /// <summary>
+        /// 保存用户数据
+        /// </summary>
+        /// <param name="shareUser">下拉框id</param>
+        /// <returns>返回所选择的用户</returns>
+        [HttpPost]
+        [ValidateInput(false)]
+        [ValidateAntiForgeryToken]
+        public ActionResult shareUser(OAWorkLog entity)
+        {
+            OAWorkLogShare shareUser = new OAWorkLogShare();
+
+            shareUser.WorkLogId = entity.Id;
+            var userIds = Request.Form["shareUser"];
+
+            var result = service.ShareWorkLog(entity.Id, userIds);
+            
+            return Json(result);
         }
 
         /// <summary>
@@ -58,7 +103,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Create()
         {
-            return EditCore(new OAWorkLog());
+            return EditCore(new OAWorkLog() {  LogDate=DateTime.Now.Date,});
         }
 
         /// <summary>
@@ -72,6 +117,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             return EditCore(entity);
         }
 
+      
 
         /// <summary>
         /// 查看视图
@@ -103,13 +149,8 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save(OAWorkLog entity)
         {
-            var hasResult = service.Exists(entity);
-            if (hasResult.Failure)
-            {
-                return Json(hasResult);
-            }
-
-            var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
+            OrganizeHelper.SetCurrentUserCreateInfo(entity);
+            var result = service.Save(entity);
             return Json(result);
         }
 
@@ -118,10 +159,9 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns>返回JsonMessage</returns>
-        [HttpPost]
         public ActionResult Delete(string id)
         {
-            var result = service.Delete(StringHelper.ConvertToArrayInt(id));
+            var result = service.Delete(id);
             return Json(result);
         }
         
@@ -133,5 +173,6 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         {
             return Export(service.GetList());
         }
+   
     }
 }

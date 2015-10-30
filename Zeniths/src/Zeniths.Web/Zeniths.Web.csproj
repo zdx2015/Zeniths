@@ -203,6 +203,7 @@
     <Content Include="Areas\HR\Views\OAWorkLogShare\Edit.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Grid.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Index.cshtml" />
+    <Content Include="Areas\HR\Views\OAWorkLog\Share.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\Details.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\Edit.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\Grid.cshtml" />

@@ -1,6 +1,6 @@
 ﻿@model OAWorkLogShare
 @{
-    var title = "查看工作日志分享人";
+    var title = "查看分享工作日志";
 }
 
 <div class="container-edit-zeniths">
@@ -25,26 +25,10 @@
                     </tr>
                     <tr>
                         <th >
-                            <label class="control-label">分享人主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.ShareUserId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
                             <label class="control-label">分享人姓名：</label>
                         </th>
                         <td>
                             <p class="form-control-static">@Model.ShareUserName</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">分享人部门主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.ShareDepartmentId</p>
                         </td>
                     </tr>
                     <tr>

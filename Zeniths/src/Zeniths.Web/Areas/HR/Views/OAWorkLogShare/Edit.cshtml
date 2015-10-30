@@ -1,6 +1,6 @@
 ﻿@model OAWorkLogShare
 @{
-    var title = "编辑工作日志分享人";
+    var title = "反馈工作日志意见";
 }
 
 <div class="container-edit-zeniths">
@@ -21,17 +21,8 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.WorkLogId)" value="@Model.WorkLogId" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">分享人主键：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.ShareUserId)" value="@Model.ShareUserId" type="text" />
+                                <input type="hidden" name="@nameof(Model.WorkLogId)" value="@Model.WorkLogId" />
+                                <span class="form-control-static" name="@nameof(Model.WorkLogId)">@Model.WorkLogId</span>
                             </div>
                         </td>
                     </tr>
@@ -41,17 +32,8 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.ShareUserName)" value="@Model.ShareUserName" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">分享人部门主键：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.ShareDepartmentId)" value="@Model.ShareDepartmentId" type="text" />
+                                <input type="hidden" name="@nameof(Model.ShareUserName)" value="@Model.ShareUserName" />
+                                <span class="form-control-static" name="@nameof(Model.ShareUserName)">@Model.ShareUserName</span>
                             </div>
                         </td>
                     </tr>
@@ -61,7 +43,8 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.ShareDepartmentName)" value="@Model.ShareDepartmentName" type="text" />
+                                <input type="hidden" name="@nameof(Model.ShareDepartmentName)" value="@Model.ShareDepartmentName" />
+                                <span class="form-control-static" name="@nameof(Model.ShareDepartmentName)">@Model.ShareDepartmentName</span>
                             </div>
                         </td>
                     </tr>
