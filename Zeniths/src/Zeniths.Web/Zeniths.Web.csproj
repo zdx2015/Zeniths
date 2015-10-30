@@ -250,19 +250,10 @@
     <Content Include="Areas\HR\Views\EmployeeLeave\DetailsBaseLeave.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeLeave\DetailsOpinionContent.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeLeave\DetailsWorkFlowChart.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Details.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
-    <Content Include="Areas\HR\Views\DailyReimburse\DetailGrid.cshtml" />
-    <Content Include="Areas\HR\Views\DailyReimburse\ViewGrid.cshtml" />
-    <Content Include="Areas\HR\Views\DailyReimburse\AllIndex.cshtml" />
-    <Content Include="Areas\HR\Views\DailyReimburse\AllGrid.cshtml" />
-    <Content Include="Areas\HR\Views\DailyReimburse\AllDetails.cshtml" />
-    <Content Include="Areas\HR\Views\DailyReimburse\AllViewGrid.cshtml" />
-    <Content Include="Areas\HR\Views\EmpLeave\Approve.cshtml" />
-    <Content Include="Areas\HR\Views\EmpLeave\Complete.cshtml" />
-    <Content Include="Areas\HR\Views\EmpLeave\_DetailsCommon.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\GridAll.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\GridWaitHandle.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\IndexAll.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\IndexWaitHandle.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowRun\Send.cshtml" />
@@ -718,7 +709,6 @@
   <ItemGroup>
     <Folder Include="Areas\HR\Assets\css\" />
     <Folder Include="Areas\HR\Assets\js\" />
-    <Folder Include="Areas\HR\Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zeniths.Auth.Utility\Zeniths.Auth.Utility.csproj">

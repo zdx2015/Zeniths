@@ -29,12 +29,30 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         private readonly EmployeeLeaveService service = new EmployeeLeaveService();
         private readonly EmployeeService employeeService = new EmployeeService();
+        
+        /// <summary>
+        /// 主视图(查询所有记录)
+        /// </summary>
+        /// <returns>视图模板</returns>
+        public ActionResult IndexAll()
+        {
+            return View();
+        }
 
         /// <summary>
-        /// 主视图
+        /// 主视图(编辑自己请休假信息)
         /// </summary>
         /// <returns>视图模板</returns>
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 待审视图
+        /// </summary>
+        /// <returns>视图模板</returns>
+        public ActionResult IndexWaitHandle()
         {
             return View();
         }
@@ -44,14 +62,44 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="name">按钮名称</param>
         /// <returns>视图模板</returns>
-        public ActionResult Grid(string employeeName)
+        public ActionResult GridAll(string employeeName,string deparment, string startDatetime, string startEndDatetime, string applyDateTime, string status)
+        {
+            var pageIndex = GetPageIndex();
+            var pageSize = GetPageSize();
+            var orderName = GetOrderName();
+            var orderDir = GetOrderDir();
+            var list = service.GetPageListAll(pageIndex, pageSize, orderName, orderDir, employeeName, deparment, startDatetime, startEndDatetime, applyDateTime, status);
+            return View(list);
+        }
+
+        /// <summary>
+        /// 表格视图
+        /// </summary>
+        /// <param name="name">按钮名称</param>
+        /// <returns>视图模板</returns>
+        public ActionResult Grid(string startDatetime, string startEndDatetime, string applyDateTime, string status)
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
             var currentUser = OrganizeHelper.GetCurrentUser();
-            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, currentUser.Id);
+            var list = service.GetPageListMyself(pageIndex, pageSize, orderName, orderDir, currentUser.Id, startDatetime, startEndDatetime, applyDateTime, status);
+            return View(list);
+        }
+
+        /// <summary>
+        /// 表格视图
+        /// </summary>
+        /// <param name="name">按钮名称</param>
+        /// <returns>视图模板</returns>
+        public ActionResult GridWaitHandle(string employeeName, string deparment, string startDatetime, string startEndDatetime, string applyDateTime)
+        {
+            var pageIndex = GetPageIndex();
+            var pageSize = GetPageSize();
+            var orderName = GetOrderName();
+            var orderDir = GetOrderDir();
+            var list = service.GetPageListWaitHandle(pageIndex, pageSize, orderName, orderDir, employeeName, deparment, startDatetime, startEndDatetime, applyDateTime);
             return View(list);
         }
 
@@ -196,6 +244,17 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <returns>视图模板</returns>
         public ActionResult CancelLeaveEdit(string id)
+        {
+            var entity = service.Get(id.ToInt());
+            return View(entity);
+        }
+
+
+        /// <summary>
+        /// 请休假中审批
+        /// </summary>
+        /// <returns>视图模板</returns>
+        public ActionResult ApproveOpinionEdit(string id)
         {
             var entity = service.Get(id.ToInt());
             return View(entity);
