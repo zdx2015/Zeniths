@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,6 +44,15 @@
     <Compile Include="EmpLeave\EmpLeaveDaysLine.cs" />
     <Compile Include="EmpLeave\EmpLeaveRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reimburse\DailyReimburseStep1.cs" />
+    <Compile Include="Reimburse\DailyReimburseStep2.cs" />
+    <Compile Include="Reimburse\DailyReimburseStep3.cs" />
+    <Compile Include="Reimburse\DailyReimburseStep4.cs" />
+    <Compile Include="Reimburse\DailyReimburseStep5.cs" />
+    <Compile Include="Reimburse\DailyReimburseStep6.cs" />
+    <Compile Include="Reimburse\DailyReimburseStep7.cs" />
+    <Compile Include="Reimburse\DailyReimburseStep8.cs" />
+    <Compile Include="Reimburse\DailyReimburseStep9.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zeniths.Auth.Utility\Zeniths.Auth.Utility.csproj">
