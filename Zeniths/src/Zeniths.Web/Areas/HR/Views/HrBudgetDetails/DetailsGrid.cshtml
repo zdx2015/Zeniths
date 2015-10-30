@@ -1,0 +1,27 @@
+﻿@model PageList<HrBudgetDetails>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>        
+            <th class="w-100px" data-order="@nameof(HrBudgetDetails.BudgetItemName)">项目</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetDetails.BudgetCategoryName)">类别</th>
+            <th class="w-100px" data-order="@nameof(HrBudgetDetails.BudgetMoney)">金额</th>
+            <th class="w-120px" data-order="@nameof(HrBudgetDetails.Note)">备注</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
+                <td>@record.BudgetItemName</td>
+                <td>@record.BudgetCategoryName</td>
+                <td>@record.BudgetMoney</td>
+                <td>@StringHelper.SubStringB(record.Note,12,"...")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)

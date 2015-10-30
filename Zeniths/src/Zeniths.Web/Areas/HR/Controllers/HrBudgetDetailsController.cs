@@ -51,7 +51,20 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, BudgetId);
             return View(list);
         }
-
+        /// <summary>
+        /// 预算项目视图
+        /// </summary>
+        /// <param name="BudgetId">部门预算主键</param>
+        /// <returns></returns>
+        public ActionResult DetailsGrid(int BudgetId)
+        {
+            var pageIndex = GetPageIndex();
+            var pageSize = GetPageSize();
+            var orderName = GetOrderName();
+            var orderDir = GetOrderDir();
+            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, BudgetId);
+            return View(list);
+        }
         /// <summary>
         /// 新增视图
         /// </summary>

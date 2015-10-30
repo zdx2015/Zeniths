@@ -35,10 +35,10 @@
                     <a class="btn btn-default" href="@Url.Action("Export")">
                         <i class="fa fa-share-square-o"></i> 导出
                     </a>
-                    <input type="hidden" id="type" name="type" value="1" />
+                    <input type="hidden" id="type" name="type" value="@ViewData["type"]" />
                 </form>
             </div>
-            <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid"))" data-query-form=".search-form">
+            <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid",new { type=ViewData["type"] }))" data-query-form=".search-form">
             </div>
         </div>
     </div>

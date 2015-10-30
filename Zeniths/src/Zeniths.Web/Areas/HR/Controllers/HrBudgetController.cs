@@ -33,8 +33,9 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// 主视图
         /// </summary>
         /// <returns>视图模板</returns>
-        public ActionResult Index()
+        public ActionResult Index(string type)
         {
+            ViewData["type"] = type;
             return View();
         }
         /// <summary>
@@ -47,6 +48,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns></returns>
         public ActionResult Grid(string BudgetMonth,string DepartmentName,string status,string type)
         {
+            ViewData["type"] = type;
             var currentUser = OrganizeHelper.GetCurrentUser();
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
@@ -64,6 +66,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Create()
         {
+            ViewData["Title"] = "新增部门预算";
             return EditCore(new HrBudget());
         }
 
@@ -74,6 +77,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Edit(string id)
         {
+            ViewData["Title"] = "编辑部门预算";
             var entity = service.Get(id.ToInt());
             return EditCore(entity);
         }
@@ -123,9 +127,12 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             entity.CreateDateTime = DateTime.Now;
             entity.IsFinish = false;
             OrganizeHelper.SetCurrentUserCreateInfo(entity);
+            var currentUser = OrganizeHelper.GetCurrentUser();
+            entity.CreateDepartmentid = currentUser.DepartmentId;
+            entity.CreateDepartmentName = currentUser.DepartmentName;
             entity.BudgetDepartmentId = entity.CreateDepartmentid;
             entity.BudgetDepartmentName = entity.CreateDepartmentName;
-            entity.Title = entity.CreateDepartmentName + "提交" + entity.BudgetMonth.ToString("yyyy年MM月") + "预算申请";
+            entity.Title = entity.CreateDepartmentName + " " + entity.BudgetMonth.ToString("yyyy年MM月") + "预算申请";
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {
@@ -145,6 +152,10 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             entity.CreateDateTime = DateTime.Now;
             entity.IsFinish = false;
             OrganizeHelper.SetCurrentUserCreateInfo(entity);
+            OrganizeHelper.SetCurrentUserCreateInfo(entity);
+            var currentUser = OrganizeHelper.GetCurrentUser();
+            entity.CreateDepartmentid = currentUser.DepartmentId;
+            entity.CreateDepartmentName = currentUser.DepartmentName;
             entity.BudgetDepartmentId = entity.CreateDepartmentid;
             entity.BudgetDepartmentName = entity.CreateDepartmentName;
             entity.Status = 1;

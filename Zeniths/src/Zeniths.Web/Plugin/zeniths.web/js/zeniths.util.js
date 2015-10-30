@@ -2,6 +2,13 @@
 zeniths.util = zeniths.util || {};
 zeniths.tree = zeniths.tree || {};
 
+
+jQuery.validator.methods.compareDate = function (value, element, param) {
+    var date1= new Date($(param).val().replace(/[-\.,]/g,"/"));        
+    var date2 = new Date(value.replace(/[-\.,]/g, "/"));
+    return date1 <= date2;
+};
+
 /**
  * 获取当前操作系统信息
  * @return {}
