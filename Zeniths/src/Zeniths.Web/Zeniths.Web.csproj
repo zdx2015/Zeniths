@@ -699,6 +699,7 @@
     <Content Include="Views\Shared\_LayoutBootstrapBase.cshtml" />
     <Content Include="Views\Shared\_LayoutTreeBase.cshtml" />
     <Content Include="Views\Shared\_LayoutWorkflow.cshtml" />
+    <None Include="Properties\PublishProfiles\xxx.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
