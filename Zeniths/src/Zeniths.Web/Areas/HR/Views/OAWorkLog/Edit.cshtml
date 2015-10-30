@@ -16,20 +16,13 @@
                 <table class="table table-form table-dialog-form">
                 
                     <tr>
-                        <th class="w-100px">
-                            <label class="control-label">日志日期：</label>
-                        </th>
-                        <td>
-                                <input class="date-control form-control" name="@nameof(Model.LogDate)" value="@Model.LogDate" type="text" />
-                        </td>
-                    </tr>
-                    <tr>
                         <th >
                             <label class="control-label">本日工作总结：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.WorkSummary)" value="@Model.WorkSummary" type="text" />
+                                <textarea class="editor-control form-control" name="@nameof(Model.WorkSummary)" rows="5">@Model.WorkSummary</textarea>
+    
                             </div>
                         </td>
                     </tr>
@@ -39,7 +32,7 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.TomorrowPlan)" value="@Model.TomorrowPlan" type="text" />
+                                <textarea class="editor-control form-control" name="@nameof(Model.TomorrowPlan)" rows="5">@Model.TomorrowPlan</textarea>
                             </div>
                         </td>
                     </tr>
@@ -49,56 +42,24 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.OtheInstructions)" value="@Model.OtheInstructions" type="text" />
+                                <textarea class="editor-control form-control" name="@nameof(Model.OtheInstructions)" rows="5">@Model.OtheInstructions</textarea>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <th >
-                            <label class="control-label">创建用户主键：</label>
+                        <th class="w-150px">
+                            <label class="control-label">日志日期：</label>
                         </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.CreateUserId)" value="@Model.CreateUserId" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">创建用户姓名：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.CreateUserName)" value="@Model.CreateUserName" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">创建时间：</label>
-                        </th>
-                        <td>
-                                <input class="date-control form-control" name="@nameof(Model.CreateDateTime)" value="@Model.CreateDateTime" type="text" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">创建人部门主键：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.CreateDepartmentId)" value="@Model.CreateDepartmentId" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">创建人部门名称：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.CreateDepartmentName)" value="@Model.CreateDepartmentName" type="text" />
-                            </div>
+                        <td> @if (Model.Id > 0)
+                        {
+                            <input type="hidden" name="@nameof(Model.LogDate)" value="@Model.LogDate" />
+                            <span class="form-control-static" name="@nameof(Model.LogDate)">@DateTimeHelper.FormatDate(Model.LogDate)</span>
+                        }
+                        else
+                        {
+                            <input class="date-control form-control" name="@nameof(Model.LogDate)" value="@DateTimeHelper.FormatDate(Model.LogDate)" type="text" />
+                        }
+                            
                         </td>
                     </tr>
                                     
@@ -121,11 +82,12 @@
 
 
 @section script{
+<script src="~/Plugin/kindeditor/kindeditor-min.js"></script>
     <script>
 
         $(function () {
-            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
-            $('.editform').dataform().initValidate({
+            //$('.editform').dataform().initSelect2().initiCheck()
+            $('.editform').dataform().initDatePicker().initKindEditor().initValidate({
                 rules: {
                     LogDate: {
                         required: true
@@ -146,41 +108,11 @@
                         */
                     }, 
                     OtheInstructions: {
-                        required: true
+                        required: false
                         /*,maxlength: 100
                           ,digits: true
                         */
-                    }, 
-                    CreateUserId: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    CreateUserName: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    CreateDateTime: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    CreateDepartmentId: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    CreateDepartmentName: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    } 
+                    }
                 },
                 messages: {
                     LogDate: {
@@ -200,43 +132,7 @@
                         /*,maxlength: '长度不能超过100'
                           ,digits: '只能输入正整数'
                         */
-                    }, 
-                    OtheInstructions: {
-                        required: '请填写其他说明'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    CreateUserId: {
-                        required: '请填写创建用户主键'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    CreateUserName: {
-                        required: '请填写创建用户姓名'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    CreateDateTime: {
-                        required: '请填写创建时间'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    CreateDepartmentId: {
-                        required: '请填写创建人部门主键'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    CreateDepartmentName: {
-                        required: '请填写创建人部门名称'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    } 
+                    }
                 },
                 beforeSubmit: function () {
                 }

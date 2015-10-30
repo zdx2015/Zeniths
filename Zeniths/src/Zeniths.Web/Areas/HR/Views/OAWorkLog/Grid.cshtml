@@ -8,15 +8,11 @@
             <th class="w-checkbox">
                 <label><input class="checkbox-check" type="checkbox"><span></span></label>
             </th>            
-            <th class="w-100px" data-order="@nameof(OAWorkLog.LogDate)">日志日期</th>
-            <th class="w-100px" data-order="@nameof(OAWorkLog.WorkSummary)">本日工作总结</th>
-            <th class="w-100px" data-order="@nameof(OAWorkLog.TomorrowPlan)">明日工作计划</th>
-            <th class="w-100px" data-order="@nameof(OAWorkLog.OtheInstructions)">其他说明</th>
-            <th class="w-100px" data-order="@nameof(OAWorkLog.CreateUserId)">创建用户主键</th>
-            <th class="w-100px" data-order="@nameof(OAWorkLog.CreateUserName)">创建用户姓名</th>
-            <th class="w-100px" data-order="@nameof(OAWorkLog.CreateDateTime)">创建时间</th>
-            <th class="w-100px" data-order="@nameof(OAWorkLog.CreateDepartmentId)">创建人部门主键</th>
-            <th class="w-100px" data-order="@nameof(OAWorkLog.CreateDepartmentName)">创建人部门名称</th>
+            <th class="w-100px text-center" data-order="@nameof(OAWorkLog.LogDate)">日志日期</th>
+            <th class="w-100px text-center" data-order="@nameof(OAWorkLog.WorkSummary)">本日工作总结</th>
+            <th class="w-100px text-center" data-order="@nameof(OAWorkLog.TomorrowPlan)">明日工作计划</th>
+            <th class="w-100px text-center" data-order="@nameof(OAWorkLog.OtheInstructions)">其他说明</th>
+            <th class="w-100px text-center" data-order="@nameof(OAWorkLog.CreateDateTime)">创建时间</th>
             <th class="w-120px text-center">操作</th>
         </tr>
     </thead>
@@ -27,21 +23,20 @@
                 <td>
                     <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
                 </td>
-                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.LogDate)</td>
+                <td class="text-center">@DateTimeHelper.FormatDate(record.LogDate)</td>
                 <td>@record.WorkSummary</td>
                 <td>@record.TomorrowPlan</td>
                 <td>@record.OtheInstructions</td>
-                <td>@record.CreateUserId</td>
-                <td>@record.CreateUserName</td>
                 <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.CreateDateTime)</td>
-                <td>@record.CreateDepartmentId</td>
-                <td>@record.CreateDepartmentName</td>
                 <td>
                     <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
                         <i class="fa fa-eye"></i> 查看
                     </a>
                     <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
                         <i class="fa fa-edit"></i> 编辑
+                    </a>
+                    <a class="btn btn-default btn-xs green-stripe btnRecordShare" data-url="@Url.Action("Share",new {id = record.Id})">
+                        <i class="fa fa-share"></i> 分享
                     </a>
                     <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
                         <i class="fa fa-trash-o"></i> 删除

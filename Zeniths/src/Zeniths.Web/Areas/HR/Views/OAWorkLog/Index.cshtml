@@ -1,5 +1,5 @@
 ﻿@{
-    var title = "管理工作日志";
+    var title = "我的工作日志";
 }
 <div class="container-zeniths">
     <div class="panel panel-default panel-zeniths">
@@ -10,7 +10,8 @@
             <div class="search-panel-zeniths">
                 <form class="form-inline search-form">
                     <div class="form-group">
-                        <input class="w-300px form-control" name="Name" type="text" placeholder="请输入关键字查询">
+                        按日志日期查询:<input class="date-control form-control" name="logDateFirst" type="text" />
+                        &nbsp;~&nbsp;&nbsp;<input class="date-control form-control" name="logDateLast"  type="text" />
                     </div>
                     &nbsp;
                     <button class="btn btn-primary" type="submit">
@@ -44,7 +45,17 @@
                 editWidth: 900,
                 editHeight: 700,
                 viewWidth: 900,
-                viewHeight: 700
+                viewHeight: 700,
+                loadCallback:function () {
+                    $(' .btnRecordShare').on('click', function () {
+                        var url = $(this).data('url');
+                        zeniths.util.dialog(url, 900, 700, {
+                            callback: function () {
+                                
+                            }
+                        });
+                    });
+                }
             });
         });
     </script>
