@@ -271,6 +271,9 @@
     <Content Include="Areas\HR\Views\DailyReimburse\ViewGrid.cshtml" />
     <Content Include="Areas\HR\Views\HrBudgetDetails\DetailsGrid.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\DetailsList.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Approve.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Complete.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\_DetailsCommon.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowRun\Send.cshtml" />
