@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
-using Zeniths.Auth.Service;
 using Zeniths.Helper;
+using Zeniths.Auth.Utility;
+using System.Web;
 
 namespace Zeniths.Hr.Utility
 {
@@ -22,17 +23,40 @@ namespace Zeniths.Hr.Utility
         //}
 
         /// <summary>
-        /// 获取用户下拉选项
+        /// 获取费用类型明细下拉选项
         /// </summary>
         /// <param name="helper"></param>
-        /// <param name="selected">选中的表单值</param>
+        /// <param name="selected">选中的值</param>
         /// <returns></returns>
-        public static MvcHtmlString ShareUserOptions(this HtmlHelper helper, string selected = null)
+        public static MvcHtmlString DailyReimburseDetailCategoryOptions(this HtmlHelper helper,  string selected = null)
         {
-            var service = new SystemUserService();
-            var formList = service.GetEnabledList();
-            var result = WebHelper.GetSelectOptions(formList, selectedValue: selected);
-            return MvcHtmlString.Create(result);
+            
+            return MvcHtmlString.Create(AuthHelper.BuildDicListOptions("DailyReimburseCategory", selected));
         }
+
+        /// <summary>
+        /// 获取费用类型下拉选项
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="selected">选中的值</param>
+        /// <returns></returns>
+        public static MvcHtmlString DailyReimburseDicCategoryOptions(this HtmlHelper helper, string selected = null)
+        {
+
+            return MvcHtmlString.Create(AuthHelper.BuildDicOptions("DailyReimburseCategory", selected));
+        }
+
+        /// <summary>
+        /// 获取请假类别选项
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="selected"></param>
+        /// <returns></returns>
+        public static MvcHtmlString LeaveCategoryOptitions(this HtmlHelper helper,string controlName, string selected=null)
+        {
+            return MvcHtmlString.Create(AuthHelper.BuildDicRadioBoxList("LeaveCategory", controlName, selected));
+        }
+
+
     }
 }

@@ -244,6 +244,18 @@ namespace Zeniths.MvcUtility
             return isChecked ? MvcHtmlString.Create("checked") : MvcHtmlString.Empty;
         }
 
+        public static MvcHtmlString IsCheckedAllowNull(this HtmlHelper helper, bool? isChecked)
+        {
+            if (!isChecked.HasValue)
+            {
+                return MvcHtmlString.Empty;
+            }
+            else
+            {
+                return IsChecked(helper, isChecked.Value);
+            }
+        }
+
         public static MvcHtmlString IsSelected(this HtmlHelper helper, bool isSelected)
         {
             return isSelected ? MvcHtmlString.Create("selected") : MvcHtmlString.Empty;
@@ -270,6 +282,15 @@ namespace Zeniths.MvcUtility
                 return MvcHtmlString.Create("<span class=\"label label-success\">"+ trueLable + "</span>");
             }
             return MvcHtmlString.Create("<span class=\"label label-danger\">"+ falseLable + "</span>");
+        }
+
+        public static MvcHtmlString BoolLabelIsAgree(this HtmlHelper helper, bool? result, string trueLable = "同意", string falseLable = "不同意")
+        {
+            if (!result.HasValue)
+            {
+                return MvcHtmlString.Create(string.Empty);
+            }
+            return BoolLabel(helper, result.Value, trueLable, falseLable);
         }
 
         public static MvcHtmlString TableRowStatusClass(this HtmlHelper helper, bool isEnabled)

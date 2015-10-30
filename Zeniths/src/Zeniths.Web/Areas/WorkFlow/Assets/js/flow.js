@@ -680,6 +680,7 @@ GooFlow.prototype = {
             if (this.$deletedItem[id]) delete this.$deletedItem[id];//在回退删除操作时,去掉该元素的删除记录
         }
     },
+
     initWorkForNode: function () {
         var self = this;
         //绑定点击事件
@@ -779,16 +780,38 @@ GooFlow.prototype = {
             var This = e.data.inthis;
             if (This.$nowType != "direct") return;
             var lineStart = This.$workArea.data("lineStart");
-            if (lineStart) This.addLine(This.$id + "_line_" + This.$max, { from: lineStart.id, to: this.id, name: "" });
+
+            if (lineStart && self.$nodeData[lineStart.id]
+                && self.$nodeData[lineStart.id].type == 'startround'
+                && self.getLineByFromId(lineStart.id)) {
+                alert('从开始节点只能有一条连线');
+                return;
+            }
+
+            
+            //if (self.$nodeData[this.id]
+            //    && self.$nodeData[this.id].type == 'endround'
+            //    && self.getLineByToId(this.id)) {
+            //    alert('到达结束节点只能有一条连线');
+            //    return;
+            //}
+
+            if (lineStart) {
+                This.addLine(This.$id + "_line_" + This.$max, { from: lineStart.id, to: this.id, name: "" });
+            }
             This.$max++;
         });
         //绑定双击编辑事件
         this.$workArea.delegate(".GooFlow_item > .span", "dblclick", { inthis: this }, function (e) {
+            /*
             var This = e.data.inthis;
             var type = $('.item_focus').hasClass('item_startround');
             if (type) {
                 self.stepSetting(This);
             }
+            */
+            //禁用开始和节点的节点设置功能
+
             //var oldTxt = this.innerHTML;
             //var This = e.data.inthis;
             //var id = this.parentNode.id;
@@ -882,6 +905,31 @@ GooFlow.prototype = {
             }
         });
     },
+
+    //根据起点获取线Id
+    getLineByFromId:function(fromId) {
+        var lineId;
+        $.each(this.$lineData, function(k,v) {
+            if (v.from == fromId) {
+                lineId = k;
+                return false;
+            }
+        });
+        return lineId;
+    },
+    //根据终点获取线Id
+    getLineByToId:function(toId) {
+        var lineId;
+        $.each(this.$lineData, function(k,v) {
+            if (v.to == toId) {
+                lineId = k;
+                return false;
+            }
+        });
+        return lineId;
+    },
+
+
     //获取结点/连线/分组区域的详细信息
     getItemInfo: function (id, type) {
         switch (type) {

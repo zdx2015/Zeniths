@@ -1,0 +1,23 @@
+﻿@model PageList<EmployeeGoOutRegistration>
+@{
+    Layout = null;
+}
+
+<thead>
+    <tr>
+        <th class="w-checkbox">
+            <label><input class="checkbox-check" type="checkbox"><span></span></label>
+        </th>
+        <th class="w-100px">姓名</th>
+        <th class="w-100px">外出事由</th>
+        <th class="w-100px" data-order="@nameof(EmployeeGoOutRegistration.GoOutDateTime)">预计外出时间</th>        
+        <th class="w-100px" data-order="@nameof(EmployeeGoOutRegistration.PlanBackDateTime)">预计返回时间</th>
+        <th class="w-100px" data-order="@nameof(EmployeeGoOutRegistration.ApplyDateTime)">申请时间</th>
+        <th class="w-100px" data-order="@nameof(EmployeeGoOutRegistration.RealGoOutDateTime)">实际外出时间</th>
+        <th class="w-100px" data-order="@nameof(EmployeeGoOutRegistration.RealBackDateTime)">实际返回时间</th>
+        <th class="w-100px" data-order="@nameof(EmployeeGoOutRegistration.GeneralManagerIsAudit)">主管领导是否同意</th>
+        <th class="w-100px">主管领导意见</th>
+        <th class="w-120px text-center">操作</th>
+    </tr>
+</thead>
+

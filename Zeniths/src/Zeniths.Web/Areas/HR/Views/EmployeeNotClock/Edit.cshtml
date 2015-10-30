@@ -1,0 +1,269 @@
+﻿@model EmployeeNotClock
+@{
+    var title = "编辑未打卡记录表";
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <table class="table table-form table-dialog-form">
+                
+                    <tr>
+                        <th class="w-100px">
+                            <label class="control-label">员工主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.EmployeeId)" value="@Model.EmployeeId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">员工姓名：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.EmployeeName)" value="@Model.EmployeeName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">未打卡日期：</label>
+                        </th>
+                        <td>
+                                <input class="date-control form-control" name="@nameof(Model.NotClockDate)" value="@Model.NotClockDate" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">未打卡班次1上午2下午：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.NotClockClasses)" value="@Model.NotClockClasses" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">事由：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Reason)" value="@Model.Reason" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">创建用户主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.CreateUserId)" value="@Model.CreateUserId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">创建用户姓名：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.CreateUserName)" value="@Model.CreateUserName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">创建人部门主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.CreateDepartmentId)" value="@Model.CreateDepartmentId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">创建人部门姓名：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.CreateDepartmentName)" value="@Model.CreateDepartmentName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">创建时间：</label>
+                        </th>
+                        <td>
+                                <input class="date-control form-control" name="@nameof(Model.CreateDateTime)" value="@Model.CreateDateTime" type="text" />
+                        </td>
+                    </tr>
+                                    
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section script{
+    <script>
+
+        $(function () {
+            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
+            $('.editform').dataform().initValidate({
+                rules: {
+                    EmployeeId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    EmployeeName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    NotClockDate: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    NotClockClasses: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    Reason: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    CreateUserId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    CreateUserName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    CreateDepartmentId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    CreateDepartmentName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }, 
+                    CreateDateTime: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    } 
+                },
+                messages: {
+                    EmployeeId: {
+                        required: '请填写员工主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    EmployeeName: {
+                        required: '请填写员工姓名'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    NotClockDate: {
+                        required: '请填写未打卡日期'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    NotClockClasses: {
+                        required: '请填写未打卡班次1上午2下午'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    Reason: {
+                        required: '请填写事由'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    CreateUserId: {
+                        required: '请填写创建用户主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    CreateUserName: {
+                        required: '请填写创建用户姓名'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    CreateDepartmentId: {
+                        required: '请填写创建人部门主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    CreateDepartmentName: {
+                        required: '请填写创建人部门姓名'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }, 
+                    CreateDateTime: {
+                        required: '请填写创建时间'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    } 
+                },
+                beforeSubmit: function () {
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+        });
+    </script>
+}

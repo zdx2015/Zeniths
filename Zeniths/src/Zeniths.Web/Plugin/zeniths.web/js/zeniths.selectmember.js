@@ -1,13 +1,18 @@
 ﻿var selectmember = function () {
 
     var self = this;
+    self.$parent
 
     /**
      * 初始化控件
      * @returns {} 
      */
     self.init = function () {
-        $('.selectmember').each(function () {
+        var $controls = $('.selectmember');
+        if (self.$parent) {
+            $controls = self.$parent.find('.selectmember');
+        }
+        $controls.each(function () {
             var tmpl = '<div class="input-group">' +
 	                        '<span class="input-group-btn">' +
 		                        '<button class="btn btn-default" type="button">' +
@@ -24,7 +29,7 @@
 
             //绑定按钮事件
             $btn.on('click', function () {
-                var dialogIndex = zeniths.util.dialog('/WorkFlow/SelectMember', 500, 650, {
+                var dialogIndex = zeniths.util.dialog('/WorkFlow/SelectMember', 500, 660, {
 
                     callback: function (data) {
 
@@ -58,6 +63,7 @@
         if (!text) { //没有指定文本值,则使用ajax获取
             var id = $element.data('id');
             if (id) {
+                $element.val('读取中...');
                 zeniths.util.post('/WorkFlow/SelectMember/GetNames', { ids: id }, function (result) {
                     $element.val(result);
                     $element.data('text', result);
@@ -73,7 +79,8 @@
          * 页面初始化
          * @returns {} 
          */
-        init: function () {
+        init: function ($parent) {
+            self.$parent = $parent;
             self.init();
         },
         getNames: function ($element) {

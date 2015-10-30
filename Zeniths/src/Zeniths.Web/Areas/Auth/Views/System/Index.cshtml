@@ -4,14 +4,20 @@
 }
 @section style
 {
-    @Styles.Render("~/easyui-tab-tree-css")
+    @Styles.Render("~/main-css")
     <link href="~/plugin/jquery-easyui/css/icon.css" rel="stylesheet" />
     <link href="~/Areas/Auth/assets/css/default.css" rel="stylesheet" />
+    <style>
+        .mask-message {
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+        } 
+    </style>
 }
 @section script
 {
-    @Scripts.Render("~/easyui-tab-tree-js")
-    <script src="~/Plugin/zeniths.web/js/date.format.js"></script>
+    @Scripts.Render("~/main-js")
     <script src="~/plugin/layer/layer.js"></script>
     <script>layer.config({ extend: 'extend/layer.ext.js' });</script>
     <script src="~/Areas/Auth/assets/js/default.js"></script>

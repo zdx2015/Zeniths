@@ -2,6 +2,13 @@
 zeniths.util = zeniths.util || {};
 zeniths.tree = zeniths.tree || {};
 
+
+jQuery.validator.methods.compareDate = function (value, element, param) {
+    var date1= new Date($(param).val().replace(/[-\.,]/g,"/"));        
+    var date2 = new Date(value.replace(/[-\.,]/g, "/"));
+    return date1 <= date2;
+};
+
 /**
  * 获取当前操作系统信息
  * @return {}
@@ -204,7 +211,7 @@ zeniths.util.mask = function (msg) {
     if (!msg) {
         msg = '正在提交数据,请稍等...';
     }
-    $(document.body).mask(msg);
+    $(top.document.body).mask(msg);
 };
 
 /**
@@ -212,7 +219,7 @@ zeniths.util.mask = function (msg) {
  * @returns {} 
  */
 zeniths.util.unmask = function () {
-    $(document.body).unmask();
+    $(top.document.body).unmask();
 };
 
 /**

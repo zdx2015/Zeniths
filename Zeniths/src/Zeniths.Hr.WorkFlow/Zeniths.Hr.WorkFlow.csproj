@@ -40,7 +40,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmpLeave\EmpLeaveDaysLine.cs" />
+    <Compile Include="EmpLeave\EmpLeaveRegister.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Zeniths.Auth.Utility\Zeniths.Auth.Utility.csproj">
+      <Project>{263dbfcf-a690-4e04-b02c-cc004e065400}</Project>
+      <Name>Zeniths.Auth.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zeniths.Auth\Zeniths.Auth.csproj">
+      <Project>{eb7b2a8a-484d-4279-861c-5560b1d76160}</Project>
+      <Name>Zeniths.Auth</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zeniths.Hr.Utility\Zeniths.Hr.Utility.csproj">
+      <Project>{78ab72fe-33c1-4b1f-a769-efdb7aa08544}</Project>
+      <Name>Zeniths.Hr.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zeniths.Hr\Zeniths.Hr.csproj">
+      <Project>{a151cfa0-a72e-499b-84e0-af5dc3d2d142}</Project>
+      <Name>Zeniths.Hr</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zeniths.Utility\Zeniths.Utility.csproj">
+      <Project>{7e12afba-bcdd-4de2-81e0-d4c7074d68aa}</Project>
+      <Name>Zeniths.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zeniths.WorkFlow.Utility\Zeniths.WorkFlow.Utility.csproj">
+      <Project>{140ba391-680a-4506-9bf9-9e1bdbf1d519}</Project>
+      <Name>Zeniths.WorkFlow.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zeniths.WorkFlow\Zeniths.WorkFlow.csproj">
+      <Project>{696a6fd8-904f-41f6-af24-8bf154ac9472}</Project>
+      <Name>Zeniths.WorkFlow</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

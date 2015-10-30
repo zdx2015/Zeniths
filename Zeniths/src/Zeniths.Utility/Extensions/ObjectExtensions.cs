@@ -2,6 +2,10 @@
 // Copyright (c) 2015 正得信集团股份有限公司
 // ===============================================================================
 using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Web;
 
 namespace Zeniths.Extensions
 {
@@ -262,5 +266,219 @@ namespace Zeniths.Extensions
             return orderDir.ToLower().Equals("desc");
         }
 
+        /// <summary>
+        /// 四舍五入
+        /// </summary>
+        /// <param name="dec"></param>
+        /// <param name="decimals">小数点位数,默认2</param>
+        /// <returns></returns>
+        public static decimal Round(this decimal dec, int decimals = 2)
+        {
+            return Math.Round(dec, decimals, MidpointRounding.AwayFromZero);
+        }
+
+        public static bool IsDecimal(this string str)
+        {
+            decimal test;
+            return decimal.TryParse(str, out test);
+        }
+       
+        public static bool IsDouble(this string str)
+        {
+            double test;
+            return double.TryParse(str, out test);
+        }
+       
+        public static bool IsInt(this string str)
+        {
+            int test;
+            return int.TryParse(str, out test);
+        }
+        
+        /// <summary>
+        /// 将数组转换为符号分隔的字符串
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <param name="split">分隔符</param>
+        /// <returns></returns>
+        public static string Join<T>(this T[] arr, string split = ",")
+        {
+            StringBuilder sb = new StringBuilder(arr.Length * 36);
+            for (int i = 0; i < arr.Length; i++)
+            {
+                sb.Append(arr[i].ToString());
+                if (i < arr.Length - 1)
+                {
+                    sb.Append(split);
+                }
+            }
+            return sb.ToString();
+        }
+        
+        public static bool IsLong(this string str)
+        {
+            long test;
+            return long.TryParse(str, out test);
+        }
+        
+        public static bool IsDateTime(this string str)
+        {
+            DateTime test;
+            return DateTime.TryParse(str, out test);
+        }
+        public static bool IsDateTime(this string str, out DateTime test)
+        {
+            return DateTime.TryParse(str, out test);
+        }
+
+        public static bool IsGuid(this string str)
+        {
+            Guid test;
+            return Guid.TryParse(str, out test);
+        }
+        
+        /// <summary>
+        /// 判断是否为Guid.Empty
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
+        public static bool IsEmptyGuid(this Guid guid)
+        {
+            return guid == Guid.Empty;
+        }
+
+        public static bool IsUrl(this string str)
+        {
+            if (str.IsNullOrEmpty())
+                return false;
+            string pattern = @"^(http|https|ftp|rtsp|mms):(\/\/|\\\\)[A-Za-z0-9%\-_@]+\.[A-Za-z0-9%\-_@]+[A-Za-z0-9\.\/=\?%\-&_~`@:\+!;]*$";
+            return Regex.IsMatch(str, pattern, RegexOptions.IgnoreCase);
+        }
+
+        public static bool IsEmail(this string str)
+        {
+            return Regex.IsMatch(str, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+        }
+
+        /// <summary>
+        /// 判断一个整型是否包含在指定的值内
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="ints"></param>
+        /// <returns></returns>
+        public static bool InArray(this int i, params int[] ints)
+        {
+            foreach (int k in ints)
+            {
+                if (i == k)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+       
+        public static Guid ToGuid(this string str)
+        {
+            Guid test;
+            if (Guid.TryParse(str, out test))
+            {
+                return test;
+            }
+            else
+            {
+                return Guid.Empty;
+            }
+        }
+        
+
+        public static bool IsNullOrEmpty(this string str)
+        {
+            return string.IsNullOrWhiteSpace(str);
+        }
+        
+        /// <summary>
+        /// 获取左边多少个字符
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="len"></param>
+        /// <returns></returns>
+        public static string Left(this string str, int len)
+        {
+            if (str == null || len < 1) { return ""; }
+            if (len < str.Length)
+            { return str.Substring(0, len); }
+            else
+            { return str; }
+        }
+
+        /// <summary>
+        /// 获取右边多少个字符
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="len"></param>
+        /// <returns></returns>
+        public static string Right(this string str, int len)
+        {
+            if (str == null || len < 1) { return ""; }
+            if (len < str.Length)
+            { return str.Substring(str.Length - len); }
+            else
+            { return str; }
+        }
+
+        /// <summary>
+        /// 得到实符串实际长度
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static int GetTextSize(this string str)
+        {
+            byte[] strArray = System.Text.Encoding.Default.GetBytes(str);
+            int res = strArray.Length;
+            return res;
+        }
+       
+
+        /// <summary>
+        /// HTML编码
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string HtmlEncode(this string str)
+        {
+            return HttpContext.Current.Server.HtmlEncode(str);
+        }
+
+        /// <summary>
+        /// URL编码
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string UrlEncode(this string str)
+        {
+            return str.IsNullOrEmpty() ? string.Empty : HttpContext.Current.Server.UrlEncode(str);
+        }
+
+        /// <summary>
+        /// URL解码
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string UrlDecode(this string str)
+        {
+            return str.IsNullOrEmpty() ? string.Empty : HttpContext.Current.Server.UrlDecode(str);
+        }
+        
+        /// <summary>
+        /// 将int类型转为GUID格式
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public static Guid ToGuid(this int i)
+        {
+            return i.ToString("00000000-0000-0000-0000-000000000000").ToGuid();
+        }
     }
 }

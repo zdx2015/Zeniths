@@ -1849,3 +1849,7 @@ Input icons
 .tree-node-append .tree-title {
   border: 1px dotted red !important;
 }
+
+.panel-footer {
+    border: 0;
+}

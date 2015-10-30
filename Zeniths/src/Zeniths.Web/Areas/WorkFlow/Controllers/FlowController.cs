@@ -80,6 +80,10 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
             }
 
             var result = service.Save(entity);
+            if (result.Success)
+            {
+                WorkFlowHelper.RefreshWorkFlowDesignCache(entity.Id);
+            }
             return Json(result);
         }
 

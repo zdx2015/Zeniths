@@ -1,0 +1,140 @@
+﻿@model EmployeeGoOutRegistration
+@{
+    var title = "";
+    if (ViewBag.flag == 0)
+    {
+        title = "新增外出登记";
+    }
+    else
+    {
+        title = "编辑外出登记";
+    }
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <input type="hidden" name="@nameof(Model.EmployeeId)" value="@Model.EmployeeId" />
+                <input type="hidden" name="@nameof(Model.GeneralManagerId)" value="@Model.GeneralManagerId" />
+                <table class="table table-form table-dialog-form">
+                    <tr>
+                        <th class="w-200px" >
+                            <label class="control-label">姓名：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.EmployeeName)" value="@Model.EmployeeName" type="text" readonly />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">预计外出时间：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">                               
+                                <input class="datetime-control form-control" id="@nameof(Model.GoOutDateTime)" name="@nameof(Model.GoOutDateTime)" value="@DateTimeHelper.FormatDateHasMinute(Model.GoOutDateTime)" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">预计返回时间：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">                               
+                                <input class="datetime-control form-control" id="@nameof(Model.PlanBackDateTime)" name="@nameof(Model.PlanBackDateTime)" value="@DateTimeHelper.FormatDateHasMinute(Model.PlanBackDateTime)" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">外出事由：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <textarea class="form-control" name="@nameof(Model.GoOutReason)" rows="3">@Model.GoOutReason</textarea>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">备注：</label>
+                        </th>
+                        <td>
+                            <textarea class="form-control" name="@nameof(Model.Note)" rows="3">@Model.Note</textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section style{
+    <link href="~/Plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
+
+@section script{
+<script src="~/Plugin/bootstrap-daterangepicker/js/moment.min.js"></script>
+<script src="~/Plugin/bootstrap-daterangepicker/js/zh-cn.js"></script>
+<script src="~/Plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script>
+
+        $(function () {
+            
+            $('.editform').dataform().initDateTimePicker().initValidate({
+                rules: {
+                    EmployeeName: {
+                        required: true
+                    },
+                    GoOutReason: {
+                        required: true
+                        , maxlength: 1000
+                    },
+                    GoOutDateTime: {
+                        required: true
+                    },
+                    PlanBackDateTime: {
+                        required: true,
+                        compareDate: "#GoOutDateTime"
+                    }
+                },
+                messages: {
+                    GoOutReason: {
+                        required: '请填写外出事由'
+                         , maxlength: '外出事由长度不能超过1000'
+                    },
+                    GoOutDateTime: {
+                        required: '请选择外出时间'
+                    },
+                    PlanBackDateTime: {
+                        required: '请选择计划返回时间',
+                        compareDate: "预计返回时间必须大于预计外出时间"
+                    }
+                },
+                beforeSubmit: function () {
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+        });
+
+    </script>
+}

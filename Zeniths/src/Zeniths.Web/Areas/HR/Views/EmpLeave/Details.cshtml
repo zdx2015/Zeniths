@@ -1,0 +1,137 @@
+﻿@model EmpLeave
+@{
+    var title = "查看员工请假";
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#tab_base" data-toggle="tab">
+                                基本信息
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tab_task" data-toggle="tab">
+                                流程信息
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tab_image" data-toggle="tab">
+                                流程图
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_base">
+
+                            <table class="table table-form table-dialog-form">
+                                <tr>
+                                    <th>
+                                        <label class="control-label">任务名称：</label>
+                                    </th>
+                                    <td colspan="3">
+                                        <p class="form-control-static">@Model.Title</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="w-120px">
+                                        <label class="control-label">开始日期：</label>
+                                    </th>
+                                    <td>
+                                        <p class="form-control-static">@Model.StartDate</p>
+                                    </td>
+
+                                    <th class="w-120px">
+                                        <label class="control-label">结束日期：</label>
+                                    </th>
+                                    <td>
+                                        <p class="form-control-static">@Model.EndDate</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label class="control-label">天数：</label>
+                                    </th>
+                                    <td>
+                                        <p class="form-control-static">@Model.Days</p>
+                                    </td>
+
+                                    <th>
+                                        <label class="control-label">类型：</label>
+                                    </th>
+                                    <td>
+                                        <p class="form-control-static">@Model.Category</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label class="control-label">原因：</label>
+                                    </th>
+                                    <td colspan="3">
+                                        <p class="form-control-static">@Model.Reason</p>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>
+                                        <label class="control-label">流程名称：</label>
+                                    </th>
+                                    <td>
+                                        <p class="form-control-static">@Model.FlowName</p>
+                                    </td>
+
+                                    <th>
+                                        <label class="control-label">步骤名称：</label>
+                                    </th>
+                                    <td>
+                                        <p class="form-control-static">@Model.StepName</p>
+                                    </td>
+                                <tr>
+                                    <th>
+                                        <label class="control-label">创建人：</label>
+                                    </th>
+                                    <td>
+                                        <p class="form-control-static">@Model.CreateUserName</p>
+                                    </td>
+                                    <th>
+                                        <label class="control-label">创建时间：</label>
+                                    </th>
+                                    <td>
+                                        <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.CreateDateTime)</p>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </div>
+                        <div class="tab-pane" id="tab_task">
+                            @Html.Action("InstanceTasks", "FlowTask", new { area = "WorkFlow", flowInstanceId = Model.FlowInstanceId })
+                        </div>
+                        <div class="tab-pane" id="tab_image">
+                            @Html.Action("TaskImage", "FlowTask", new { area = "WorkFlow", flowInstanceId = Model.FlowInstanceId })
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

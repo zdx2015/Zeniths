@@ -134,6 +134,10 @@
             setInterval(this.setCurrentTime, 1000);
         },
 
+        execute:function(callback) {
+            callback(window,document,$);
+        },
+
         /**
          * 初始化页面
          * @returns {} 

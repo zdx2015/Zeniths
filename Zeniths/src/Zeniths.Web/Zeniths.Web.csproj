@@ -151,6 +151,10 @@
     <Content Include="Plugin\bootstrap-fileinput\js\fileinput_locale_zh.js" />
     <Content Include="Plugin\bootstrap-fileinput\js\plugins\canvas-to-blob.js" />
     <Content Include="Plugin\bootstrap-fileinput\js\plugins\canvas-to-blob.min.js" />
+    <Content Include="Plugin\bootstrap-popover-x\css\bootstrap-popover-x.css" />
+    <Content Include="Plugin\bootstrap-popover-x\css\bootstrap-popover-x.min.css" />
+    <Content Include="Plugin\bootstrap-popover-x\js\bootstrap-popover-x.js" />
+    <Content Include="Plugin\bootstrap-popover-x\js\bootstrap-popover-x.min.js" />
     <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.date.extensions.js" />
     <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.extensions.js" />
     <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.js" />
@@ -200,8 +204,77 @@
     <Content Include="Areas\HR\Views\OAWorkLogShare\Grid.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Index.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLog\Share.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\Details.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\Index.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburseDetails\Details.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburseDetails\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburseDetails\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburseDetails\Index.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Details.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Register.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Storage.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudget\Details.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudget\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudget\Index.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudgetDetails\Details.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudgetDetails\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudgetDetails\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudgetDetails\Index.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudget\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\Details.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\Index.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeNotClock\Details.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeNotClock\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeNotClock\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeNotClock\Index.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\GeneralManagerOpinion.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\GoBackInfo.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\IndexMyself.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\IndexDepartment.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\GridDepartment.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\GridMyself.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\GeneralManagerOpinionList.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\GridGeneralManagerOpinion.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeGoOutRegistration\_ColumnCommon.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\Details.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\Index.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\ApproveOpinionEdit.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\CancelLeaveEdit.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\DetailsBaseLeave.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\DetailsOpinionContent.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\DetailsWorkFlowChart.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Details.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\DetailGrid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\ViewGrid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\AllIndex.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\AllGrid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\AllDetails.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\AllViewGrid.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Approve.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Complete.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\_DetailsCommon.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowRun\Send.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowRun\Back.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowRun\Error.cshtml" />
+    <Content Include="Plugin\zeniths.web\js\zeniths.workflow.js" />
+    <Content Include="Areas\WorkFlow\Views\FlowTask\InstanceTasks.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowTask\TaskImage.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowTask\PendingTasks.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowTask\HandledTasksGrid.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowTask\HandledTasks.cshtml" />
+    <Content Include="Areas\WorkFlow\Views\FlowTask\PendingTasksGrid.cshtml" />
     <None Include="Plugin\_references.js" />
     <Content Include="Plugin\bootstrap-clockpicker\css\bootstrap-clockpicker.css" />
     <Content Include="Plugin\bootstrap-clockpicker\js\bootstrap-clockpicker.js" />
@@ -497,7 +570,6 @@
     <Content Include="Plugin\kindeditor\themes\default\default.png" />
     <Content Include="Plugin\jquery-inputlimiter\jquery.inputlimiter.js" />
     <Content Include="Plugin\zeniths.web\js\zeniths.selectmember.js" />
-    <Content Include="Plugin\zeniths.web\js\workflow.js" />
     <Content Include="Plugin\zeniths.web\js\xci.js" />
     <Content Include="Plugin\jquery-easyui\css\icon.css" />
     <Content Include="Plugin\jquery-select2\css\select2.css" />
@@ -586,10 +658,21 @@
     <Compile Include="Areas\Auth\Controllers\SystemParamController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemRoleController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeLeaveController.cs" />
+    <Compile Include="Areas\HR\Controllers\HrBudgetController.cs" />
+    <Compile Include="Areas\HR\Controllers\HrBudgetDetailsController.cs" />
+    <Compile Include="Areas\HR\Controllers\DailyReimburseController.cs" />
+    <Compile Include="Areas\HR\Controllers\DailyReimburseDetailsController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmpLeaveController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeGoOutRegistrationController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeNotClockController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogShareController.cs" />
-    <Compile Include="Areas\HR\Views\HRAreaRegistration.cs" />
+    <Compile Include="Areas\HR\HRAreaRegistration.cs" />
+    <Compile Include="Areas\HR\Models\EmpLeaveModel.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\FlowController.cs" />
+    <Compile Include="Areas\WorkFlow\Controllers\FlowRunController.cs" />
+    <Compile Include="Areas\WorkFlow\Controllers\FlowTaskController.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\SelectMemberController.cs" />
     <Compile Include="Areas\WorkFlow\WorkFlowAreaRegistration.cs" />
     <Compile Include="Areas\WorkFlow\Controllers\FlowButtonController.cs" />
@@ -624,6 +707,7 @@
     <Content Include="Views\Shared\_LayoutBase.cshtml" />
     <Content Include="Views\Shared\_LayoutBootstrapBase.cshtml" />
     <Content Include="Views\Shared\_LayoutTreeBase.cshtml" />
+    <Content Include="Views\Shared\_LayoutWorkflow.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -634,6 +718,7 @@
   <ItemGroup>
     <Folder Include="Areas\HR\Assets\css\" />
     <Folder Include="Areas\HR\Assets\js\" />
+    <Folder Include="Areas\HR\Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zeniths.Auth.Utility\Zeniths.Auth.Utility.csproj">
@@ -643,6 +728,10 @@
     <ProjectReference Include="..\Zeniths.Auth\Zeniths.Auth.csproj">
       <Project>{eb7b2a8a-484d-4279-861c-5560b1d76160}</Project>
       <Name>Zeniths.Auth</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zeniths.Hr.WorkFlow\Zeniths.Hr.WorkFlow.csproj">
+      <Project>{69d3e92a-ac3d-465b-a146-be54432f19e1}</Project>
+      <Name>Zeniths.Hr.WorkFlow</Name>
     </ProjectReference>
     <ProjectReference Include="..\Zeniths.Hr\Zeniths.Hr.csproj">
       <Project>{a151cfa0-a72e-499b-84e0-af5dc3d2d142}</Project>

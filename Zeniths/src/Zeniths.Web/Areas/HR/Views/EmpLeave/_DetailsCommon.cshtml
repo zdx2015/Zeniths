@@ -1,0 +1,59 @@
+﻿@model EmpLeaveModel
+@{
+    Layout = null;
+    var currentStep = Html.GetCurrentStep();
+}
+
+@Html.AntiForgeryToken()
+<input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+<table class="table table-form table-dialog-form">
+
+    <tr>
+        <th class="w-200px">
+            <label class="control-label">开始日期：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.StartDate</p>
+        </td>
+        <th class="w-200px">
+            <label class="control-label">结束日期：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.EndDate</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label class="control-label">天数：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.Days</p>
+        </td>
+        <th>
+            <label class="control-label">类型：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.Category</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label class="control-label">原因：</label>
+        </th>
+        <td colspan="3">
+            <p class="form-control-static">@Model.Reason</p>
+        </td>
+    </tr>
+    @if (currentStep.SignatureType.ToInt() > 0)
+                    {
+                    <tr>
+                        <th>
+                            <label class="control-label">处理意见：</label>
+                        </th>
+                        <td colspan="3">
+                            <textarea class="form-control" name="workflow_opinion" rows="3"></textarea>
+                        </td>
+                    </tr>
+                    }
+</table>
+

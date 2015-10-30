@@ -3,6 +3,7 @@
 // ===============================================================================
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Reflection;
@@ -72,7 +73,7 @@ namespace Zeniths.Helper
                 {
                     return true;
                 }
-                if (value.ToString().Equals("true",StringComparison.CurrentCultureIgnoreCase))
+                if (value.ToString().Equals("true", StringComparison.CurrentCultureIgnoreCase))
                 {
                     return true;
                 }
@@ -190,7 +191,7 @@ namespace Zeniths.Helper
             if (string.IsNullOrEmpty(propertyName)) return;
             var propertyInfo = type.GetProperty(propertyName);
             if (propertyInfo == null) return;
-            propertyInfo.SetValue(null, ConvertObjectValue(propertyValue, propertyInfo.PropertyType),null);
+            propertyInfo.SetValue(null, ConvertObjectValue(propertyValue, propertyInfo.PropertyType), null);
             //FastInvokeHandler fastInvokerGet = ReflectionHelper.GetFastInvoker(propertyInfo.GetSetMethod());
             //fastInvokerGet.Invoke(null, ConvertObjectValue(propertyValue, propertyInfo.PropertyType));
             //PropertyDescriptorx descriptor = TypeDescriptor.GetProperties(item).Find(propertyName, true);
@@ -240,7 +241,7 @@ namespace Zeniths.Helper
             }
             var propertyInfo = item.GetType().GetProperty(propertyName);
             if (propertyInfo == null) return null;
-            return propertyInfo.GetValue(item,null);
+            return propertyInfo.GetValue(item, null);
             //FastInvokeHandler fastInvokerGet = ReflectionHelper.GetFastInvoker(propertyInfo.GetGetMethod());
             //return fastInvokerGet.Invoke(item);
             //PropertyDescriptorx descriptor = TypeDescriptor.GetProperties(item).Find(propertyName, true);
@@ -259,7 +260,7 @@ namespace Zeniths.Helper
             if (string.IsNullOrEmpty(propertyName)) return null;
             var propertyInfo = type.GetProperty(propertyName);
             if (propertyInfo == null) return null;
-            return propertyInfo.GetValue(null,null);
+            return propertyInfo.GetValue(null, null);
             //FastInvokeHandler fastInvokerGet = ReflectionHelper.GetFastInvoker(propertyInfo.GetGetMethod());
             //return fastInvokerGet.Invoke(null);
             //PropertyDescriptorx descriptor = TypeDescriptor.GetProperties(item).Find(propertyName, true);
@@ -345,6 +346,26 @@ namespace Zeniths.Helper
             foreach (string property in propertys)
             {
                 SetObjectProperty(instance, property, propertyValue);
+            }
+        }
+
+        /// <summary>
+        /// 设置对象属性
+        /// </summary>
+        /// <param name="instance">对象实例</param>
+        /// <param name="colls">值名对集合</param>
+        public static void SetObjectPropertys(object instance, NameValueCollection colls)
+        {
+            if (colls.Count <= 0)
+            {
+                return;
+            }
+            var pros = instance.GetType().GetProperties();
+            foreach (var pro in pros)
+            {
+                var name = pro.Name;
+                var value = colls[name];
+                pro.SetValue(instance, ConvertObjectValue(value, pro.PropertyType));
             }
         }
 

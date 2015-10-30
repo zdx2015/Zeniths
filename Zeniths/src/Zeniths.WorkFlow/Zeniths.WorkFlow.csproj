@@ -41,11 +41,13 @@
     <Compile Include="Entity\FlowButton.cs" />
     <Compile Include="Entity\FlowForm.cs" />
     <Compile Include="Entity\FlowTask.cs" />
+    <Compile Include="Entity\FlowUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\FlowButtonService.cs" />
     <Compile Include="Service\FlowFormService.cs" />
     <Compile Include="Service\FlowService.cs" />
     <Compile Include="Service\FlowTaskService.cs" />
+    <Compile Include="Service\FlowUserService.cs" />
     <Compile Include="WorkFlowDatabase.cs" />
     <Compile Include="WorkFlowRepository.cs" />
   </ItemGroup>

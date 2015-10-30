@@ -1,0 +1,61 @@
+﻿@model EmployeeLeave
+@{
+    var title = "请休假申请详情";
+}
+@section style{
+    <link href="~/Plugin/zeniths.web/css/form.layout.css" rel="stylesheet" />
+}
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+
+                <!--tab 代码 开始 -->
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#BaseLeaveInfo" data-toggle="tab">
+                                请休假基本信息
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#LeaveStepList" data-toggle="tab">
+                                处理意见
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#LeaveStepimg" data-toggle="tab">
+                                流程图
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="BaseLeaveInfo">
+                            @Html.Action("DetailsBaseLeave")
+                        </div>
+                        <div class="tab-pane" id="LeaveStepList">
+                            @Html.Action("DetailsOpinionContent")
+                        </div>
+                        <div class="tab-pane" id="LeaveStepimg">
+                            @Html.Action("DetailsWorkFlowChart")
+                        </div>
+                    </div>
+                </div>
+                <!-- tab 代码 结束 -->
+                <div class="panel-footer text-center">
+                    <div class="buttons">
+                        <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                            <i class="fa fa-sign-in"></i> 关闭
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
