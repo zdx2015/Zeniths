@@ -12,36 +12,41 @@
             </div>
             <div class="panel-body">
                 @Html.AntiForgeryToken()
-                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id"/>
-                <input type="hidden" name="@nameof(Model.CategoryName)" value="@Model.CategoryName" />
+                <input type="hidden" name="@nameof(Model.Id)" id="@nameof(Model.Id)" value="@Model.Id"/>
+                <input type="hidden" name="@nameof(Model.CategoryName)" id="CategoryName" value="@Model.CategoryName"/>
+                <input type="hidden" name="@nameof(Model.TempSortNum)" id="TempSortNum" value="@Model.TempSortNum"/>
+                <input type="hidden" name="@nameof(Model.ItemName)" id="ItemName" value="@Model.ItemName" />
                 <table class="table table-form table-dialog-form">
-                   
+                    <tr>
+                        <th>
+                            <label class="control-label">费用类别：</label>
+                        </th>
+                        <td>
+                            <div>
+                                <select class="select2-control w-500px form-control" name="@nameof(Model.CategoryId)" id="CategoryId" data-placeholder="请选择费用类别" >
+                                    <option></option>
+                                    @Html.DailyReimburseDicCategoryOptions(Model.CategoryId.ToString());
+                                </select>
+                            </div>
+
+
+                        </td>
+                    </tr>
                     <tr>
                         <th >
                             <label class="control-label">项目名称：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.ItemName)" value="@Model.ItemName" type="text" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">费用类别：</label>
-                        </th>
-                        <td>
-                            <div class="input-icon right">
-                                @*<input class="form-control" name="@nameof(Model.CategoryId)" value="@Model.CategoryId" type="text"/>*@
-                                <select class="select2-control w-200px form-control" name="@nameof(Model.CategoryId)" data-placeholder="请选择费用类别">
+                                @*<input class="form-control" name="@nameof(Model.ItemName)" value="@Model.ItemName" id="ItemName" type="text" readonly/>*@
+                                <select class="select2-control w-500px form-control" name="@nameof(Model.ItemId)" id="ItemId" data-placeholder="请选择项目名称" >
                                     <option></option>
-                                    @Html.DailyReimburseDetailCategoryOptions();
+                                    @Html.DailyReimburseDetailCategoryOptions(Model.ItemId.ToString());
                                 </select>
                             </div>
-
-                         
                         </td>
                     </tr>
+                   
                    
                     <tr>
                         <th >
@@ -76,16 +81,11 @@
     <script>
 
         $(function () {
-            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
-            $('.editform').dataform().initValidate({
+            //$('.editform').dataform().initiCheck().initDatePicker()
+            $('.editform').dataform().initSelect2().initValidate({
                 rules: {
-                    ReimburseId: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    ItemName: {
+                  
+                    ItemId: {
                         required: true
                         /*,maxlength: 100
                           ,digits: true
@@ -97,55 +97,51 @@
                           ,digits: true
                         */
                     }, 
-                    CategoryName: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
                     Amount: {
                         required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
+                        /*,maxlength: 100*/
+                        ,number: true
+                        ,min:0
+                        
                     } 
                 },
                 messages: {
-                    ReimburseId: {
-                        required: '请填写报销主表主键'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    ItemName: {
+                    ItemId: {
                         required: '请填写项目名称'
                         /*,maxlength: '长度不能超过100'
                           ,digits: '只能输入正整数'
                         */
                     }, 
                     CategoryId: {
-                        required: '请填写费用类别主键'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    CategoryName: {
-                        required: '请填写费用类别名称'
+                        required: '请填写费用类别'
                         /*,maxlength: '长度不能超过100'
                           ,digits: '只能输入正整数'
                         */
                     }, 
                     Amount: {
                         required: '请填写费用金额'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
+                        /*,maxlength: '长度不能超过100'*/
+                          ,number: '只能输入数字'
+                          ,min:'不能小于0'
                     } 
                 },
                 beforeSubmit: function () {
+                   
+                    var cName = $('#CategoryId option:selected').text();
+                    $('#CategoryName').val(cName);
+                  
+                    var iName = $('#ItemId option:selected').text();
+                 
+                    $('#ItemName').val(iName);
+                 
                 }
             }).initAjax({ success: zeniths.util.formAjaxSuccess });
 
         });
+
+        //function selectChange() {
+        //    var selText = $('#CategoryId').find('option:selected').text();
+        //    $('#ItemName').val(selText);
+        //};
     </script>
 }

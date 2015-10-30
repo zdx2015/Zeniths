@@ -14,6 +14,7 @@ using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.Utility;
 using Zeniths.Hr.Utility;
+using Zeniths.Web.Areas.HR.Models;
 
 namespace Zeniths.Web.Areas.Hr.Controllers
 {
@@ -32,7 +33,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// 主视图
         /// </summary>
         /// <returns>视图模板</returns>
-        public ActionResult Index()
+        public ActionResult Storage()
         {
             return View();
         }
@@ -53,22 +54,36 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         }
         
         /// <summary>
-        /// 编辑视图
+        /// 请假登记
         /// </summary>
         /// <param name="businessId">主键</param>
         /// <returns>视图模板</returns>
         public ActionResult Register(string businessId)
         {
-            EmpLeave entity = null;
-            if (businessId.IsEmpty())
+            EmpLeaveModel model = GetModel(businessId);
+            return View(model);
+        }
+
+        public ActionResult Approve(string businessId)
+        {
+            EmpLeaveModel model = GetModel(businessId);
+            return View(model);
+        }
+
+        public ActionResult Complete(string businessId)
+        {
+            EmpLeaveModel model = GetModel(businessId);
+            return View(model);
+        }
+
+        private EmpLeaveModel GetModel(string businessId)
+        {
+            EmpLeaveModel model = new EmpLeaveModel();
+            if (businessId.IsNotEmpty())
             {
-                entity = new EmpLeave();
+                ObjectHelper.CopyProperty(service.Get(businessId.ToInt()), model);
             }
-            else
-            {
-                entity = service.Get(businessId.ToInt());
-            }
-            return View("Edit", entity);
+            return model;
         }
 
         /// <summary>
@@ -78,7 +93,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>返回JsonMessage</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(EmpLeave entity)
+        public ActionResult Save(EmpLeaveModel entity)
         {
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)

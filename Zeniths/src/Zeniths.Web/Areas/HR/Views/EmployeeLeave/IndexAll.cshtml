@@ -1,0 +1,45 @@
+﻿@{
+    var title = "请休假查询";
+}
+<div class="container-zeniths">
+    <div class="panel panel-default panel-zeniths">
+        <div class="panel-heading">
+            @title
+        </div>
+        <div class="panel-body">
+            <div class="search-panel-zeniths">
+                <form class="form-inline search-form">
+                    <div class="form-group">
+                        姓名：<input class="form-control" name="@nameof(EmployeeLeave.EmployeeName)" type="text" placeholder="请输入员工姓名查询"/>&nbsp;
+                        部门：<input class="form-control" name="@nameof(EmployeeLeave.Deparment)" type="text" placeholder="请输入部门名称查询"/>&nbsp;
+                        请假日期：<input class="date-control form-control" name="@nameof(EmployeeLeave.StartDatetime)" type="text" />&nbsp;至
+                        <input class="date-control form-control" name="StartEndDatetime" type="text" />
+                        申请日期：<input class="date-control form-control" name="@nameof(EmployeeLeave.ApplyDateTime)" type="text" />
+                        状态：<select class="select2-control w-200px form-control" id="Status" name="@nameof(EmployeeLeave.Status)" data-placeholder="请选择状态">
+                            <option></option>
+                            @Html.EmployeeLeaveOptions()
+                        </select>
+                    </div>
+                    &nbsp;
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-search"></i> 查询
+                    </button>                   
+                </form>
+            </div>
+            <div class="datagrid" data-url="@Html.Raw(Url.Action("GridAll"))" data-query-form=".search-form">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+        $(function () {
+            zeniths.util.standardGridBind({
+                viewWidth: 1200,
+                viewHeight: 800
+            });
+        });
+    </script>
+}

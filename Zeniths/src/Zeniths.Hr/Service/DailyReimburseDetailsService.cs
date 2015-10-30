@@ -125,7 +125,17 @@ namespace Zeniths.Hr.Service
             var query = repos.NewQuery.OrderBy(p => p.Id);
             return repos.Query(query).ToList();
         }
-        
+        /// <summary>
+        /// 获取日常费用报销明细列表
+        /// </summary>
+        /// <returns>返回日常费用报销明细列表</returns>
+        public List<DailyReimburseDetails> GetList(int reimburseId)
+        {
+            var query = repos.NewQuery.Where(p => p.ReimburseId == reimburseId);
+            query.OrderBy(p => p.Id);
+            return repos.Query(query).ToList();
+        }
+
         /*
         /// <summary>
         /// 获取启用的日常费用报销明细列表
@@ -147,7 +157,7 @@ namespace Zeniths.Hr.Service
             return repos.GetTable(query);
         }
         */
-        
+
         /// <summary>
         /// 获取日常费用报销明细分页列表
         /// </summary>
@@ -171,6 +181,9 @@ namespace Zeniths.Hr.Service
             */
             return repos.Page(query);
         }
+
+
+       
 
         #region 私有方法
 

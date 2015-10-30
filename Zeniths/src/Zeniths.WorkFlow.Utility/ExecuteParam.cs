@@ -51,6 +51,12 @@ namespace Zeniths.WorkFlow.Utility
         public string Opinion { get; set; }
 
         /// <summary>
+        /// 是否已签章
+        /// </summary>
+        [JsonProperty("isSignature")]
+        public bool IsSignature { get; set; }
+
+        /// <summary>
         /// 是否审核通过
         /// </summary>
         [JsonProperty("isAudit")]

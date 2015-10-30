@@ -1,19 +1,20 @@
 ﻿@model DailyReimburse
 @{
-    var title = "编辑日常费用报销";
+    var title = ViewBag.Title;
     var detailTile = "添加费用明细";
 }
 
 <div class="container-edit-zeniths">
     <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
-        <div class="panel panel-default panel-zeniths">
+        <div class="panel panel-default panel-zeniths" style="height: 685px">
             <div class="panel-heading">
                 <span class="prefix"> <strong>@Model.Id</strong></span>
                 @title
             </div>
-            <div class="panel-body">
+            <div class="panel-body" style="height: 580px">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id"/>
+               
                 <table class="table table-form table-dialog-form">
 
                     <tr>
@@ -22,7 +23,7 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.ReimburseDepartmentName)" value="@Model.ReimburseDepartmentName" type="text"/>
+                                <input class="form-control" name="@nameof(Model.ReimburseDepartmentName)" value="@Model.ReimburseDepartmentName" type="text" readonly />
                             </div>
                         </td>
                     </tr>
@@ -33,7 +34,7 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.ApplicantName)" value="@Model.ApplicantName" type="text"/>
+                                <input class="form-control" name="@nameof(Model.ApplicantName)" value="@Model.ApplicantName" type="text" readonly/>
                             </div>
                         </td>
                     </tr>
@@ -43,7 +44,7 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.ApplyOpinion)" value="@Model.ApplyOpinion" type="text"/>
+                                <textarea class="form-control" name="@nameof(Model.ApplyOpinion)" value="@Model.ApplyOpinion" type="text">@Model.ApplyOpinion</textarea>
                             </div>
                         </td>
                     </tr>
@@ -53,17 +54,21 @@
                         @*<span class="prefix"> <strong>@Model.Id</strong></span>*@
                         @detailTile
                         <div class="pull-right">
-                            <a class="btn btn-xs btn-success" id="btnDetailCreate" data-url="@Url.Action("Create","DailyReimburseDetails",new {area="HR"})" onclick="newDetailWindow();">
+                            <a class="btn btn-xs btn-success" id="btnDetailCreate" data-url="@Url.Action("Create", "DailyReimburseDetails", new {area = "HR"})" onclick="newDetailWindow();">
                                 <i class="fa fa-plus"></i> 新建
                             </a>
-                            <a class="btn btn-xs btn-danger" id="btnDetailDelete" data-url="@Url.Action("Delete","DailyReimburseDetails",new {area="HR"})" onclick="deleteDetailData();">
+                            <a class="btn btn-xs btn-danger" id="btnDetailDelete" data-url="@Url.Action("Delete", "DailyReimburseDetails", new {area = "HR"})" onclick="deleteDetailData();">
                                 <i class="fa fa-trash-o"></i> 删除
                             </a>
                         </div>
                     </div>
-                    <div class="panel-body">
-                        <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid","DailyReimburseDetails",new {area="HR"}))" data-query-form=".search-form" id="detailGrid"></div>
-                    </div>
+                    
+                        <div class="panel-body" style="height: 341px;overflow:auto">
+
+                            <div class="datagrid" data-url="@Html.Raw(Url.Action("DetailGrid", "DailyReimburse", new {area = "HR"}))" id="detailGrid"></div>
+
+                        </div>
+                       
 
                     </div>
 
@@ -84,17 +89,34 @@
             </div>
     </form>
 </div>
-
+<div class="search-form"></div>
 
 @section script{
     <script>
+        
+        /*
+          验证表单数据
+        */
+        function beforSave() {
+            
+            var tCount = $('#detailGrid').find('tbody tr').length;
+           
+            if (tCount <= 0) {
+                zeniths.util.alert('请添加费用明细');
+                return false;
+            }
+
+            return true;
+        };
+       
         /*
           打开新建窗口
         */
         function newDetailWindow() {
-            zeniths.util.dialog($('#btnDetailCreate').data('url'), 900, 700, {
+            zeniths.util.dialog($('#btnDetailCreate').data('url'), 900, 420, {
                 callback: function() {
                     $('#detailGrid').datagrid().reload();
+
                 }
             });
         };
@@ -102,17 +124,35 @@
          删除选择数据
         */
         function deleteDetailData() {
-            var delUrl = $('#btnDetailDelete').data('url');
-            var delParam = $('#detailGrid').datagrid().getSelectedIds();
-            $.post(delUrl, { id: delParam }, function (data) {
-                if (data.success) {
-                    zeniths.util.alert('删除成功');
-                }
+
+            zeniths.util.deleteBatch($('#btnDetailDelete').data('url'), $('#detailGrid').datagrid().getSelectedIds(), function () {
+                $('#detailGrid').datagrid().reload();
             });
+
+            //var delUrl = $('#btnDetailDelete').data('url');
+            //var delParam = $('#detailGrid').datagrid().getSelectedIds();
+            //alert(delParam);
+            //if (delParam == null || delParam.length == 0) {
+            //    zeniths.util.alert('请选择要删除的数据');
+            //    return;
+            //}
+            //$.post(delUrl, { id: delParam }, function (data) {
+            //    if (data.success) {
+            //        zeniths.util.alert('删除成功');
+            //        $('#detailGrid').datagrid().reload();
+            //    }
+            //});
 
         };
 
-        $(function() {
+        $(function () {
+            zeniths.util.standardGridBind({
+                editWidth: 900,
+                editHeight: 360,
+                viewWidth: 900,
+                viewHeight: 360
+            });
+
             //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
             $('.editform').dataform().initValidate({
                 rules: {
@@ -156,7 +196,8 @@
                         */
                     }
                 },
-                beforeSubmit: function() {
+                beforeSubmit: function () {
+                    return beforSave();
                 }
             }).initAjax({ success: zeniths.util.formAjaxSuccess });
 

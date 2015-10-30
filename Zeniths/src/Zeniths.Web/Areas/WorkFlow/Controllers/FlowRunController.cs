@@ -112,8 +112,8 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
 
                 var currentUserIdString = CurrentUserId.ToString();
                 var url = string.Empty;
-                var nextTasks = result.NextTasks.Where(p => p.Status.InArray(0, 1) && p.ReceiveId == currentUserIdString);
-                var nextTask = nextTasks.FirstOrDefault();
+                var nextTasks = result.NextTasks?.Where(p => p.Status.InArray(0, 1) && p.ReceiveId == currentUserIdString);
+                var nextTask = nextTasks?.FirstOrDefault();
                 if (nextTask != null)
                 {
                     url = Url.Action("Process", new {taskId = nextTask.Id});
@@ -134,5 +134,6 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
                 return Json(new { success = false, message = result.Message, debugMessage = result.DebugMessage });
             }
         }
+
     }
 }

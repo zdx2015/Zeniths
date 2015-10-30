@@ -1,5 +1,5 @@
 ﻿@{
-    var title = "管理请休假申请";
+    var title = "请休假申请";
 }
 <div class="container-zeniths">
     <div class="panel panel-default panel-zeniths">
@@ -10,7 +10,13 @@
             <div class="search-panel-zeniths">
                 <form class="form-inline search-form">
                     <div class="form-group">
-                        <input class="w-200px form-control" name="@nameof(EmployeeLeave.EmployeeName)" type="text" placeholder="请输入关键字查询">
+                        请假日期：<input class="date-control form-control" name="@nameof(EmployeeLeave.StartDatetime)" type="text" />&nbsp;至
+                        <input class="date-control form-control" name="StartEndDatetime" type="text" />
+                        申请日期：<input class="date-control form-control" name="@nameof(EmployeeLeave.ApplyDateTime)" type="text" />
+                        状态：<select class="select2-control w-200px form-control"  id="Status" name="@nameof(EmployeeLeave.Status)" data-placeholder="请选择状态">
+                             <option></option>
+                               @Html.EmployeeLeaveOptions()
+                            </select>
                     </div>
                     &nbsp;
                     <button class="btn btn-primary" type="submit">
@@ -19,15 +25,6 @@
                     <a class="btn btn-success" id="btnCreate" data-url="@Url.Action("Create")">
                         <i class="fa fa-plus"></i> 新建
                     </a>
-                    <a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
-                        <i class="fa fa-trash-o"></i> 删除
-                    </a>
-                    @*<a class="btn btn-default" id="btnRefresh">
-                        <i class="fa fa-repeat"></i> 刷新
-                    </a>
-                    <a class="btn btn-default" href="@Url.Action("Export")">
-                        <i class="fa fa-share-square-o"></i> 导出
-                    </a>*@
                 </form>
             </div>
             <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid"))" data-query-form=".search-form">

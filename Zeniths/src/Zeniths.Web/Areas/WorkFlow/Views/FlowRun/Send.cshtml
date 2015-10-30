@@ -13,158 +13,174 @@
 }
 
 <div class="container-edit-zeniths">
-    <form>
-        <div class="panel panel-default panel-zeniths">
-            <div class="panel-heading">
-                @title
-            </div>
-            <div class="panel-body" style="height:530px;overflow-y:auto">
+
+    <div class="panel panel-default panel-zeniths" style="margin-bottom:5px;">
+        <div class="panel-heading">
+            @title
+        </div>
+        <div class="panel-body" style="margin:10px">
+            <form class="form-horizontal">
                 @if (nextSteps.Count == 0)
                 {
-                    <span>后续步骤条件均不符合,任务无法提交!</span>
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <strong><i class="fa-lg fa fa-warning"></i>任务无法提交，后续步骤条件均不符合!</strong>
+                    </div>
                 }
                 else
                 {
-                    <table cellpadding="0" cellspacing="1" border="0" width="95%" align="center" style="margin-top:6px;">
-                        @if (!currentStep.Note.IsNullOrEmpty())
+                    if (currentStep.Note.IsNotEmpty())
+                    {
+                        <div class="form-group">
+                            <div class="col-xs-8 col-xs-offset-1">
+                                <span style="font-weight: bold;font-size:16px;color:red">
+                                    @Html.Raw(currentStep.Note)
+                                </span>
+
+                            </div>
+                        </div>
+                    }
+
+                    foreach (var step in nextSteps)
+                    {
+                        string checked1 = i++ == 0 ? "checked=\"checked\"" : "";//默认选中第一个步骤
+                        string disabled = step.HandlerSelectPolicy.ToInt() == 2 ? "disabled=\"disabled\"" : string.Empty;//是否允许运行时选择人员
+                        string selectRang = step.HandlerSelectRange.IsNullOrEmpty() ? string.Empty : "rootid=\"" + step.HandlerSelectRange.Trim() + "\"";//选择范围
+                        string selectType = string.Empty;//选择类型
+                        var defaultMember = string.Empty;//默认处理人员
+
+                        //如果是调试模式并且当前登录人员包含在调试人员中 则默认为发起者
+
+                        if ((flowDesign.Property.IsDebug) && OrganizeHelper.IsContainsUser(currentUserId, flowDesign.Property.DebugUserIds))
                         {
-                            <tr>
-                                <td style="padding:2px 0 0 0; color:#cc0000;">@Html.Raw(currentStep.Note)</td>
-                            </tr>
+                            defaultMember = OrganizeHelper.AddUserPrefix(currentUserId);
+                        }
+                        else
+                        {
+                            #region 默认人员和选择类型
+
+                            // 0:所有成员
+                            // 1:部门
+                            // 2:人员
+                            // 3:发起者
+                            // 4:发起者领导
+                            // 5:发起者分管领导
+                            // 6:前一步骤处理者
+                            // 7:前一步处理者领导
+                            // 8:前一步处理者分管领导
+                            switch (step.HandlerCategory.ToInt())
+                            {
+                                case 0://所有成员
+                                    selectType = "unit='1' dept='1' station='1' workgroup='1' user='1'";
+                                    break;
+                                case 1://部门
+                                    selectType = "unit='0' dept='1' station='0' workgroup='0' user='0'";
+                                    break;
+                                case 2://人员
+                                    selectType = "unit='0' dept='0' station='1' workgroup='0' user='0'";
+                                    break;
+                                case 3://发起者
+                                    string userid = taskService.GetFirstSenderId(flowId, flowInstanceId);
+                                    if (userid.IsNotEmpty())
+                                    {
+                                        defaultMember = OrganizeHelper.AddUserPrefix(userid.ToInt());
+                                    }
+                                    if (defaultMember.IsNullOrEmpty() && currentStep.Uid == firstStepId)
+                                    {
+                                        defaultMember = OrganizeHelper.AddUserPrefix(currentUserId);
+                                    }
+                                    break;
+                                case 4://发起者主管
+                                    string firstSenderID = taskService.GetFirstSenderId(flowId, flowInstanceId);
+                                    if (firstSenderID.IsEmpty() && currentStep.Uid == firstStepId)//如果是第一步则发起者为当前人员
+                                    {
+                                        firstSenderID = currentUserId.ToString();
+                                    }
+                                    if (firstSenderID.IsNotEmpty())
+                                    {
+                                        defaultMember = OrganizeHelper.AddUserPrefix(OrganizeHelper.GetMainLeaderId(firstSenderID.ToInt()));
+                                    }
+                                    break;
+                                case 5://发起者分管领导
+                                    string firstSenderID1 = taskService.GetFirstSenderId(flowId, flowInstanceId);
+                                    if (firstSenderID1.IsEmpty() && currentStep.Uid == firstStepId)//如果是第一步则发起者为当前人员
+                                    {
+                                        firstSenderID1 = currentUserId.ToString();
+                                    }
+                                    if (firstSenderID1.IsNotEmpty())
+                                    {
+                                        defaultMember = OrganizeHelper.AddUserPrefix(OrganizeHelper.GetChargeLeaderId(firstSenderID1.ToInt()));
+                                    }
+                                    break;
+                                case 6://前一步骤处理者
+                                    defaultMember = OrganizeHelper.ConvertToUserIds(taskService.GetStepSenderIdList(flowId, currentStep.Uid, flowInstanceId));
+                                    if (defaultMember.IsNullOrEmpty() && currentStep.Uid == firstStepId)
+                                    {
+                                        defaultMember = OrganizeHelper.AddUserPrefix(currentUserId);
+                                    }
+                                    break;
+                                case 7://前一步骤处理者主管
+                                    defaultMember = OrganizeHelper.AddUserPrefix(OrganizeHelper.GetMainLeaderId(currentUserId));
+                                    break;
+                                case 8://前一步骤处理者分管领导
+                                    defaultMember = OrganizeHelper.AddUserPrefix(OrganizeHelper.GetChargeLeaderId(currentUserId));
+                                    break;
+                            }
+
+                            #endregion
                         }
 
-                        @foreach (var step in nextSteps)
+                        if (defaultMember.IsNullOrEmpty())
                         {
-                            string checked1 = i++ == 0 ? "checked=\"checked\"" : "";//默认选中第一个步骤
-                            string disabled = step.HandlerSelectPolicy.ToInt() == 2 ? "disabled=\"disabled\"" : string.Empty;//是否允许运行时选择人员
-                            string selectRang = step.HandlerSelectRange.IsNullOrEmpty() ? string.Empty : "rootid=\"" + step.HandlerSelectRange.Trim() + "\"";//选择范围
-                            string selectType = string.Empty;//选择类型
-                            var defaultMember = string.Empty;//默认处理人员
-
-                            //如果是调试模式并且当前登录人员包含在调试人员中 则默认为发起者
-
-                            if ((flowDesign.Property.IsDebug) && OrganizeHelper.IsContainsUser(currentUserId, flowDesign.Property.DebugUserIds))
-                            {
-                                defaultMember = OrganizeHelper.AddUserPrefix(currentUserId);
-                            }
-                            else
-                            {
-                                #region 默认人员和选择类型
-
-                                // 0:所有成员
-                                // 1:部门
-                                // 2:人员
-                                // 3:发起者
-                                // 4:发起者领导
-                                // 5:发起者分管领导
-                                // 6:前一步骤处理者
-                                // 7:前一步处理者领导
-                                // 8:前一步处理者分管领导
-                                switch (step.HandlerCategory.ToInt())
-                                {
-                                    case 0://所有成员
-                                        selectType = "unit='1' dept='1' station='1' workgroup='1' user='1'";
-                                        break;
-                                    case 1://部门
-                                        selectType = "unit='0' dept='1' station='0' workgroup='0' user='0'";
-                                        break;
-                                    case 2://人员
-                                        selectType = "unit='0' dept='0' station='1' workgroup='0' user='0'";
-                                        break;
-                                    case 3://发起者
-                                        string userid = taskService.GetFirstSenderId(flowId, flowInstanceId);
-                                        if (userid.IsNotEmpty())
-                                        {
-                                            defaultMember = OrganizeHelper.AddUserPrefix(userid.ToInt());
-                                        }
-                                        if (defaultMember.IsNullOrEmpty() && currentStep.Uid == firstStepId)
-                                        {
-                                            defaultMember = OrganizeHelper.AddUserPrefix(currentUserId);
-                                        }
-                                        break;
-                                    case 4://发起者主管
-                                        string firstSenderID = taskService.GetFirstSenderId(flowId, flowInstanceId);
-                                        if (firstSenderID.IsEmpty() && currentStep.Uid == firstStepId)//如果是第一步则发起者为当前人员
-                                        {
-                                            firstSenderID = currentUserId.ToString();
-                                        }
-                                        if (firstSenderID.IsNotEmpty())
-                                        {
-                                            defaultMember = OrganizeHelper.AddUserPrefix(OrganizeHelper.GetMainLeaderId(firstSenderID.ToInt()));
-                                        }
-                                        break;
-                                    case 5://发起者分管领导
-                                        string firstSenderID1 = taskService.GetFirstSenderId(flowId, flowInstanceId);
-                                        if (firstSenderID1.IsEmpty() && currentStep.Uid == firstStepId)//如果是第一步则发起者为当前人员
-                                        {
-                                            firstSenderID1 = currentUserId.ToString();
-                                        }
-                                        if (firstSenderID1.IsNotEmpty())
-                                        {
-                                            defaultMember = OrganizeHelper.AddUserPrefix(OrganizeHelper.GetChargeLeaderId(firstSenderID1.ToInt()));
-                                        }
-                                        break;
-                                    case 6://前一步骤处理者
-                                        defaultMember = OrganizeHelper.ConvertToUserIds(taskService.GetStepSenderIdList(flowId, currentStep.Uid, flowInstanceId));
-                                        if (defaultMember.IsNullOrEmpty() && currentStep.Uid == firstStepId)
-                                        {
-                                            defaultMember = OrganizeHelper.AddUserPrefix(currentUserId);
-                                        }
-                                        break;
-                                    case 7://前一步骤处理者主管
-                                        defaultMember = OrganizeHelper.AddUserPrefix(OrganizeHelper.GetMainLeaderId(currentUserId));
-                                        break;
-                                    case 8://前一步骤处理者分管领导
-                                        defaultMember = OrganizeHelper.AddUserPrefix(OrganizeHelper.GetChargeLeaderId(currentUserId));
-                                        break;
-                                }
-
-                                #endregion
-                            }
-
-                            if (defaultMember.IsNullOrEmpty())
-                            {
-                                defaultMember = step.HandlerDefault;
-                            }
-                            <tr>
-                                <td style="padding:9px 0 2px 0;">
-                                    <input type="hidden" name="nextstepid" value="@step.Uid" />
-                                    @if (currentStep.FlowCategory.ToInt() == 1) //单选
-                                    {
-                                        <input type="radio" @checked1 value="@step.Uid" name="step" id="step_@step.Uid" style="vertical-align:middle;" />
-                                    }
-                                    else if (currentStep.FlowCategory.ToInt() == 2) //多选
-                                    {
-                                        <input type="checkbox" @Html.Raw(checked1) value="@step.Uid" name="step" id="step_@step.Uid" style="vertical-align:middle;" />
-                                    }
-                                    else
-                                    {
-                                        <input type="checkbox" checked="checked" disabled="disabled" value="@step.Uid" name="step" id="step_@step.Uid" style="vertical-align:middle;" />
-                                    }
-                                    <label for="step_@step.Uid" style="vertical-align:middle;">@step.Name</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding:2px 0 4px 0;">
-                                    <input type="text" class="mymember" @Html.Raw(disabled) @Html.Raw(selectRang) @Html.Raw(selectType) value="@defaultMember" id="user_@step.Uid" name="user_@step.Uid" style="width:280px;" title="选择处理人员" /> <!--span style="color:#999;">//选择处理人员</span-->
-                                </td>
-                            </tr>
-                            <tr><td style="height:6px; border-bottom:1px dashed #e8e8e8;"></td></tr>
+                            defaultMember = step.HandlerDefault;
                         }
-                    </table>
+                        <div class="form-group">
+                            <div class="col-xs-8 col-xs-offset-1">
+                                <div class="checkbox-list">
+                                    <label class="checkbox-inline">
+
+                                        @if (currentStep.FlowCategory.ToInt() == 1) //单选
+                                        {
+                                            <input class="icheckbox-control" type="radio" @checked1 value="@step.Uid" name="step" id="step_@step.Uid" />
+                                        }
+                                        else if (currentStep.FlowCategory.ToInt() == 2) //多选
+                                        {
+                                            <input class="icheckbox-control" type="checkbox" @Html.Raw(checked1) value="@step.Uid" name="step" id="step_@step.Uid" />
+                                        }
+                                        else
+                                        {
+                                            <input class="icheckbox-control" type="checkbox" checked="checked" disabled="disabled" value="@step.Uid" name="step" id="step_@step.Uid" />
+                                        }
+                                        <span>@step.Name</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-xs-8 col-xs-offset-1">
+                                <input type="text" class="selectmember form-control" id="user_@step.Uid"
+                                       name="user_@step.Uid" data-id="@defaultMember" @Html.Raw(disabled) />
+                            </div>
+                        </div>
+
+                    }
                 }
-            </div>
+            </form>
+        </div>
+
+        @if (nextSteps.Count > 0)
+            {
             <div class="panel-footer text-center">
                 <div class="buttons">
-                    <a class="btn btn-primary">
+                    <a class="btn btn-primary" id="btnWorkFlowSendOK">
                         <i class="fa fa-check"></i> 确定
                     </a>
                     &nbsp;
-                    <a class="btn btn-default btnClose">
-                        <i class="fa fa-arrow-right"></i> 取消
+                    <a class="btn btn-default" id="btnWorkFlowSendCancel">
+                        <i class="fa fa-close"></i> 取消
                     </a>
                 </div>
             </div>
-        </div>
-    </form>
+        }
+    </div>
 </div>

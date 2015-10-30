@@ -30,17 +30,17 @@
                             <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
                                 <i class="fa fa-edit"></i> 编辑
                             </a>
+                            <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                                <i class="fa fa-trash-o"></i> 删除
+                            </a>
                         }
-                        if (record.GeneralManagerIsAudit.HasValue && record.GeneralManagerIsAudit == true&& (!record.RealGoOutDateTime.HasValue))
+                        if (record.GeneralManagerIsAudit.HasValue && record.GeneralManagerIsAudit == true && (!record.RealGoOutDateTime.HasValue))
                         {
                             <a class="btn btn-default btn-xs blue-stripe btnRecordConfirm" data-url="@Url.Action("GoBackInfo",new {id = record.Id})">
                                 <i class="fa fa-edit"></i> 确认返回时间
                             </a>
                         }
-                    }
-                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
-                        <i class="fa fa-trash-o"></i> 删除
-                    </a>
+                    }                    
                 </td>
             </tr>
         }

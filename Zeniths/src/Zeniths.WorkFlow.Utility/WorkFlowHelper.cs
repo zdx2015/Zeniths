@@ -363,9 +363,9 @@ namespace Zeniths.WorkFlow.Utility
         {
             var currentStep = WorkFlowHelper.GetStepSetting(flowId, stepId);
             var nextSteps = GetNextSteps(flowId, stepId);
-            if (currentStep.FlowCategory.ToInt() != 0 || nextSteps.Count == 0)
+            if (currentStep.FlowCategory.ToInt() != 0)
             {
-                return new List<FlowStepSetting>();
+                return nextSteps;
             }
             var userService = new SystemUserService();
             var taskService = new FlowTaskService();
@@ -572,5 +572,6 @@ namespace Zeniths.WorkFlow.Utility
             type?.GetProperty("StepId")?.SetValue(entity, args.StepId);
             type?.GetProperty("StepName")?.SetValue(entity, args.StepSetting.Name);
         }
+
     }
 }

@@ -13,7 +13,7 @@ namespace Zeniths.WorkFlow.Utility
         /// <returns>验证成功返回BoolMessage.True</returns>
         public virtual BoolMessage OnValid(FlowLineEventArgs args)
         {
-            return BoolMessage.False;
+            return BoolMessage.True;
         }
 
         #endregion
