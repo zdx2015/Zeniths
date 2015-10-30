@@ -25,6 +25,7 @@ namespace Zeniths.Hr.Service
         /// </summary>
         private readonly Repository<DailyReimburse> repos = new Repository<DailyReimburse>();
         private readonly Repository<DailyReimburseDetails> detailRepos = new Repository<DailyReimburseDetails>();
+      
 
         /// <summary>
         /// 检测是否存在指定日常费用报销
@@ -94,24 +95,30 @@ namespace Zeniths.Hr.Service
         /// <summary>
         /// 提交发送前 更新日常费用报销
         /// </summary>
-        /// <param name="entity">日常费用报销实体</param>        
+        /// <param name="entity">日常费用报销实体</param>  
+        /// <param name="detailList">报销明细实体list</param>      
         /// <returns>执行成功返回BoolMessage.True</returns>
-        public BoolMessage Update(DailyReimburse entity)
+        public BoolMessage Update(DailyReimburse entity, List<DailyReimburseDetails> detailList)
         {
             try
             {
-                DailyReimburse oldEntity = Get(entity.Id);//取出修改的数据              
+                var count = repos.Update(entity);
 
-                var count = repos.Update(entity);               
-                if(count>0)
-                {                   
-                    return BoolMessage.True;
-                }else
+                if (count > 0)
                 {
-                    repos.Update(oldEntity);                  
+                    detailRepos.Delete(p => p.ReimburseId == entity.Id);
+
+                    foreach (var item in detailList)
+                    {
+                        detailRepos.Insert(item);
+                    }
+                    return BoolMessage.True;
+                }
+                else
+                {
+                   
                     return BoolMessage.False;
                 }
-                
             }
             catch (Exception e)
             {
@@ -301,7 +308,8 @@ namespace Zeniths.Hr.Service
                 if (ids.Length==1)
                 {
                     repos.Delete(ids[0]);
-                    detailRepos.Delete(p => p.ReimburseId == ids[0]);
+                    int m = ids[0];
+                    detailRepos.Delete(p => p.ReimburseId == m);
 
                 }
                 else
@@ -325,6 +333,22 @@ namespace Zeniths.Hr.Service
         public DailyReimburse Get(int id)
         {
             return repos.Get(id);
+        }
+
+        /// <summary>
+        /// 获取费用报销单顺序号(主体部分)
+        /// </summary>
+        /// <returns></returns>
+        public string GetYearAndMonthString()
+        {
+            var temDate = DateTime.Now;
+            var sYear = temDate.Year.ToString().Substring(2, 2);
+            var sMonth = temDate.Month.ToString();
+            if (sMonth.Length == 1)
+            {
+                sMonth = sMonth.PadLeft(1, '0');
+            }
+            return sYear + sMonth;
         }
                 
         /// <summary>
@@ -373,13 +397,48 @@ namespace Zeniths.Hr.Service
             orderName = orderName.IsEmpty() ? nameof(DailyReimburse.Id) : orderName;//默认使用主键排序
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
             var query = repos.NewQuery.Take(pageSize).Page(pageIndex).OrderBy(orderName, orderDir.IsAsc());
-            /*
+            
             if (name.IsNotEmpty())
             {
                 name = name.Trim();
-                query.Where(p => p.Name.Contains(name));
+                query.Where(p => p.ReimburseDepartmentName.Contains(name)||p.ApplyOpinion.Contains(name));
             }
-            */
+            
+            return repos.Page(query);
+        }
+
+        /// <summary>
+        /// 获取日常费用报销分页列表
+        /// </summary>
+        /// <param name="pageIndex">页面索引</param>
+        /// <param name="pageSize">分页大小</param>
+        /// <param name="orderName">排序列名</param>
+        /// <param name="orderDir">排序方式</param>
+        /// <param name="name">查询关键字</param>
+        /// <returns>返回日常费用报销分页列表</returns>
+        public PageList<DailyReimburse> GetAllPageList(int pageIndex, int pageSize, string orderName, string orderDir, string name, string startDate, string endDate)
+        {
+            orderName = orderName.IsEmpty() ? nameof(DailyReimburse.Id) : orderName;//默认使用主键排序
+            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
+            var query = repos.NewQuery.Take(pageSize).Page(pageIndex).OrderBy(orderName, orderDir.IsAsc());
+
+            if (name.IsNotEmpty())
+            {
+                name = name.Trim();
+                query.Where(p => p.ReimburseDepartmentName.Contains(name) || p.ApplyOpinion.Contains(name)||p.ApplicantName.Contains(name));
+            }
+            if (startDate.IsNotEmpty())
+            {
+                var startDateDT = startDate.ToDateTime();
+                query.Where(p => p.ApplicationDate >= startDateDT);
+            }
+
+            if (endDate.IsNotEmpty())
+            {
+                var endDateDT = endDate.ToDateTime().AddDays(1);
+                query.Where(p => p.ApplicationDate <= endDateDT);
+            }
+
             return repos.Page(query);
         }
 

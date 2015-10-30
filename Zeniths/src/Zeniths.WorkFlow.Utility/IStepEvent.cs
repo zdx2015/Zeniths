@@ -15,6 +15,13 @@ namespace Zeniths.WorkFlow.Utility
         BoolMessage OnSaveData(FlowEventArgs args);
 
         /// <summary>
+        /// 流程保存之前
+        /// </summary>
+        /// <param name="args">事件参数</param>
+        /// <returns>执行成功返回BoolMessage.True</returns>
+        BoolMessage OnBeforeSave(FlowEventArgs args);
+
+        /// <summary>
         /// 流程提交之前
         /// </summary>
         /// <param name="args">事件参数</param>
@@ -27,6 +34,13 @@ namespace Zeniths.WorkFlow.Utility
         /// <param name="args">事件参数</param>
         /// <returns>执行成功返回BoolMessage.True</returns>
         BoolMessage OnBeforeBack(FlowEventArgs args);
+
+        /// <summary>
+        /// 流程保存之后
+        /// </summary>
+        /// <param name="args">事件参数</param>
+        /// <returns>执行成功返回BoolMessage.True</returns>
+        BoolMessage OnAfterSave(FlowEventArgs args);
 
         /// <summary>
         /// 流程提交之后

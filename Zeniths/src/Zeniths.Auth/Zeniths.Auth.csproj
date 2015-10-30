@@ -45,6 +45,7 @@
     <Compile Include="AuthRepository.cs" />
     <Compile Include="Entity\SystemDepartment.cs" />
     <Compile Include="Entity\SystemDictionary.cs" />
+    <Compile Include="Entity\SystemDictionaryDetailExtend.cs" />
     <Compile Include="Entity\SystemDictionaryDetails.cs" />
     <Compile Include="Entity\SystemDoc.cs" />
     <Compile Include="Entity\SystemException.cs" />

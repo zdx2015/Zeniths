@@ -226,7 +226,6 @@
         $('.icheckbox-control,.iradiobox-control').on('ifToggled', function (e) {
             self.$element.validate().element($(this));
         });
-
         return this;
     };
 
@@ -500,6 +499,20 @@
         }, options);
 
         $('.color-control').ColorPickerSliders(ops);
+
+        return this;
+    };
+
+    /**
+     * 初始化工作流表单绑定
+     * @param {Object} options 配置
+     * @returns {DataForm} 
+     */
+    DataForm.prototype.initWorkFlow = function (options) {
+        var self = this;
+        var ops = $.extend({}, options);
+
+        zeniths.workflow.initForm(self.$element,ops);
 
         return this;
     };

@@ -1,0 +1,23 @@
+﻿@using Zeniths.WorkFlow.Utility
+@{
+    Layout = "_Layout.cshtml";
+}
+@section style
+{
+    @RenderSection("style", required: false)
+}
+@section script
+{
+    <script src="~/Plugin/zeniths.web/js/zeniths.workflow.js"></script>
+    <script>
+        $(function () {
+            var _workflow_execute_params = '@Html.Raw(Html.WorkflowExecuteParams())';
+            var _workflow_execute_params_obj = JSON.parse(_workflow_execute_params);
+            var _workflow_client_model = '@Html.Raw(Html.WorkFlowClientModel())';
+            var _workflow_client_model_obj = JSON.parse(_workflow_client_model);
+            zeniths.workflow.init(_workflow_execute_params_obj,_workflow_client_model_obj);
+        });
+    </script>
+    @RenderSection("script", required: false)
+}
+@RenderBody()

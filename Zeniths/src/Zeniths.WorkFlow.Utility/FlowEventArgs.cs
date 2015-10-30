@@ -1,5 +1,7 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
 using Zeniths.Auth.Entity;
+using Zeniths.WorkFlow.Entity;
 
 namespace Zeniths.WorkFlow.Utility
 {
@@ -57,5 +59,10 @@ namespace Zeniths.WorkFlow.Utility
         /// 流程任务处理模型
         /// </summary>
         public ExecuteData ExecuteData { get; set; }
+
+        /// <summary>
+        /// 后续任务
+        /// </summary>
+        public IEnumerable<FlowTask> NextTasks { get; set; }
     }
 }

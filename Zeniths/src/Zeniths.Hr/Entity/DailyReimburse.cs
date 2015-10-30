@@ -392,10 +392,16 @@ namespace Zeniths.Hr.Entity
 		[Column(Caption = "步骤名称")]
         public string StepName { get; set; }
 
-		/// <summary>
+        /// <summary>
+        /// 步骤状态
+        /// </summary>
+        [Column(Caption = "步骤状态")]
+        public bool StepStatus { get; set; }
+
+        /// <summary>
         /// 流程是否完成
         /// </summary>
-		[Column(Caption = "流程是否完成")]
+        [Column(Caption = "流程是否完成")]
         public bool IsFinish { get; set; }
 
 		/// <summary>
