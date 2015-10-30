@@ -46,6 +46,17 @@ namespace Zeniths.Hr.Utility
             return MvcHtmlString.Create(AuthHelper.BuildDicOptions("DailyReimburseCategory", selected));
         }
 
+        /// <summary>
+        /// 获取请假类别选项
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="selected"></param>
+        /// <returns></returns>
+        public static MvcHtmlString LeaveCategoryOptitions(this HtmlHelper helper,string controlName, string selected=null)
+        {
+            return MvcHtmlString.Create(AuthHelper.BuildDicRadioBoxList("LeaveCategory", controlName, selected));
+        }
+
 
     }
 }

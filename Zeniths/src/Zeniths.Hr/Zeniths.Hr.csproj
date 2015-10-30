@@ -39,6 +39,10 @@
     <Compile Include="Entity\DailyReimburse.cs" />
     <Compile Include="Entity\DailyReimburseDetails.cs" />
     <Compile Include="Entity\EmpLeave.cs" />
+    <Compile Include="Entity\Employee.cs" />
+    <Compile Include="Entity\EmployeeGoOutRegistration.cs" />
+    <Compile Include="Entity\EmployeeLeave.cs" />
+    <Compile Include="Entity\EmployeeNotClock.cs" />
     <Compile Include="Entity\OAWorkLog.cs" />
     <Compile Include="Entity\OAWorkLogShare.cs" />
     <Compile Include="Entity\HrBudget.cs" />
@@ -46,11 +50,13 @@
     <Compile Include="Entity\HrBudgetView.cs" />
     <Compile Include="HrDatabase.cs" />
     <Compile Include="HrRepository.cs" />
-	<Compile Include="Entity\GoOutRegistration.cs" />
     <Compile Include="Service\DailyReimburseDetailsService.cs" />
     <Compile Include="Service\DailyReimburseService.cs" />
     <Compile Include="Service\EmpLeaveService.cs" />
-	<Compile Include="Service\GoOutRegistrationService.cs" />
+    <Compile Include="Service\EmployeeGoOutRegistrationService.cs" />
+    <Compile Include="Service\EmployeeLeaveService.cs" />
+    <Compile Include="Service\EmployeeNotClockService.cs" />
+    <Compile Include="Service\EmployeeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\HrBudgetDetailsService.cs" />
     <Compile Include="Service\HrBudgetService.cs" />
@@ -58,6 +64,14 @@
     <Compile Include="Service\OAWorkLogShareService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Zeniths.Auth.Utility\Zeniths.Auth.Utility.csproj">
+      <Project>{263dbfcf-a690-4e04-b02c-cc004e065400}</Project>
+      <Name>Zeniths.Auth.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Zeniths.Auth\Zeniths.Auth.csproj">
+      <Project>{eb7b2a8a-484d-4279-861c-5560b1d76160}</Project>
+      <Name>Zeniths.Auth</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Zeniths.Data\Zeniths.Data.csproj">
       <Project>{e67f375d-ee64-4bdf-8458-a1c2b2a29472}</Project>
       <Name>Zeniths.Data</Name>
