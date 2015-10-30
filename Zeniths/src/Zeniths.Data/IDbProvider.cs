@@ -3,6 +3,7 @@
 // ===============================================================================
 using System.Data;
 using System.Data.Common;
+using Zeniths.Data.Utilities;
 using Zeniths.Entity;
 
 namespace Zeniths.Data
@@ -44,6 +45,15 @@ namespace Zeniths.Data
         /// <param name="endIndex"></param>
         /// <returns>获取分页语句模板</returns>
         string GetPageStatement(string sql, string orderBy, int startIndex, int endIndex);
+
+        /// <summary>
+        /// Builds an SQL query suitable for performing page based queries to the database
+        /// </summary>
+        /// <param name="skip">The number of rows that should be skipped by the query</param>
+        /// <param name="take">The number of rows that should be retruend by the query</param>
+        /// <param name="parts">The original SQL query after being parsed into it's component parts</param>
+        /// <returns>The final SQL query that should be executed.</returns>
+        string BuildPageQuery(long skip, long take, PagingHelper.SQLParts parts);
 
         /// <summary>
         /// 数据类型转换

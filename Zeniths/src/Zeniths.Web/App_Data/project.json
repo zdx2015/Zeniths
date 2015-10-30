@@ -2,15 +2,15 @@
   "Database": [
     {
       "Name": "hr",
-      "ConnectionString": "server=192.168.5.5;uid=sa;pwd=1;database=Zeniths.HR"
+      "ConnectionString": "server=.;uid=sa;pwd=1;database=Zeniths.HR"
     },
     {
       "Name": "auth",
-      "ConnectionString": "server=192.168.5.5;uid=sa;pwd=1;database=Zeniths.Auth"
+      "ConnectionString": "server=.;uid=sa;pwd=1;database=Zeniths.Auth"
     },
     {
       "Name": "workflow",
-      "ConnectionString": "server=192.168.5.5;uid=sa;pwd=1;database=Zeniths.WorkFlow"
+      "ConnectionString": "server=.;uid=sa;pwd=1;database=Zeniths.WorkFlow"
     }
   ]
 }

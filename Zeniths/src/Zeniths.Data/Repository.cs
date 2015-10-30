@@ -23,7 +23,7 @@ namespace Zeniths.Data
     /// 数据存储器实现
     /// </summary>
     /// <typeparam name="T">实体类型</typeparam>
-    public class Repository<T> : IRepository<T> where T : class,new()
+    public class Repository<T> : IRepository<T> where T : class, new()
     {
         #region 字段
 
@@ -314,6 +314,19 @@ namespace Zeniths.Data
         }
 
         /// <summary>
+        /// 更新实体数据(指定排除的列)
+        /// </summary>
+        /// <typeparam name="T">实体类型</typeparam>
+        /// <param name="entity">实体对象</param>
+        /// <param name="excludeColumns">指定需要排除的列名数组</param>
+        /// <returns>返回受影响的行数</returns>
+        public int UpdateExclude(T entity, string[] excludeColumns)
+        {
+            var cols = Metadata.Columns.Select(p => p.Key);
+            return Update(entity, cols.Except(excludeColumns).ToArray());
+        }
+
+        /// <summary>
         /// 更新实体数据
         /// </summary>
         /// <typeparam name="T">实体类型</typeparam>
@@ -324,6 +337,20 @@ namespace Zeniths.Data
         {
             var cols = ExpressionHelper.GetPropertyNameArray(columns);
             return Update(entity, cols);
+        }
+
+        /// <summary>
+        /// 更新实体数据(指定排除的列)
+        /// </summary>
+        /// <typeparam name="T">实体类型</typeparam>
+        /// <param name="entity">实体对象</param>
+        /// <param name="excludeColumns">指定需要排除的列名数组</param>
+        /// <returns>返回受影响的行数</returns>
+        public int UpdateExclude(T entity, params Expression<Func<T, object>>[] excludeColumns)
+        {
+            var ecols = ExpressionHelper.GetPropertyNameArray(excludeColumns);
+            var cols = Metadata.Columns.Select(p => p.Key);
+            return Update(entity, cols.Except(ecols).ToArray());
         }
 
         /// <summary>
@@ -339,7 +366,21 @@ namespace Zeniths.Data
             var result = SqlExpressionCompiler.Compile(0, new[] { expression });
             return Update(entity, columns, result.SQL, result.Parameters);
         }
-        
+
+        /// <summary>
+        /// 更新实体数据(查询表达式)(指定排除的列)
+        /// </summary>
+        /// <typeparam name="T">实体类型</typeparam>
+        /// <param name="entity">实体对象</param>
+        /// <param name="expression">查询表达式</param>
+        /// <param name="excludeColumns">指定需要排除的列名数组</param>
+        /// <returns>返回受影响的行数</returns>
+        public int UpdateExclude(T entity, Expression<Func<T, bool>> expression, string[] excludeColumns)
+        {
+            var cols = Metadata.Columns.Select(p => p.Key);
+            return Update(entity, expression,cols.Except(excludeColumns).ToArray());
+        }
+
         /// <summary>
         /// 更新实体数据(查询表达式)
         /// </summary>
@@ -353,7 +394,22 @@ namespace Zeniths.Data
             var cols = ExpressionHelper.GetPropertyNameArray(columns);
             return Update(entity, expression, cols);
         }
-        
+
+        /// <summary>
+        /// 更新实体数据(查询表达式)(指定排除的列)
+        /// </summary>
+        /// <typeparam name="T">实体类型</typeparam>
+        /// <param name="entity">实体对象</param>
+        /// <param name="expression">查询表达式</param>
+        /// <param name="excludeColumns">指定需要排除的列名数组</param>
+        /// <returns>返回受影响的行数</returns>
+        public int UpdateExclude(T entity, Expression<Func<T, bool>> expression, params Expression<Func<T, object>>[] excludeColumns)
+        {
+            var ecols = ExpressionHelper.GetPropertyNameArray(excludeColumns);
+            var cols = Metadata.Columns.Select(p => p.Key);
+            return Update(entity, expression, cols.Except(ecols).ToArray());
+        }
+
         /// <summary>
         /// 批量更新(建议外部开启事务)
         /// </summary>
@@ -532,7 +588,7 @@ namespace Zeniths.Data
             var result = linq.ToResult();
             return Database.Query<T>(result.ToSQL(), result.Parameters);
         }
-        
+
         /// <summary>
         /// 查询数据(默认排序规则)
         /// </summary>
@@ -670,6 +726,25 @@ namespace Zeniths.Data
             var data = Database.Query<T>(sql, result.Parameters);
             int totalCount = Database.ExecuteScalar<int>(countSql.ToString(), result.Parameters);
             return new PageList<T>(result.PageIndex, result.Take.Value, totalCount, data);
+        }
+
+        /// <summary>
+        /// 查询分页数据
+        /// </summary>
+        /// <param name="pageIndex">页面索引从1开始</param>
+        /// <param name="pageSize">分页大小</param>
+        /// <param name="sql">完整的数据SQL</param>
+        /// <param name="args">参数对象</param>
+        /// <returns>返回分页列表</returns>
+        public PageList<T> Page(int pageIndex, int pageSize, string sql, object args = null)
+        {
+            PagingHelper.SQLParts part;
+            PagingHelper.SplitSQL(sql, out part);
+            var skip = (pageIndex - 1) * pageSize;
+            sql = Database.Provider.BuildPageQuery(skip, pageSize, part);
+            var data = Database.Query<T>(sql, args);
+            int totalCount = Database.ExecuteScalar<int>(part.sqlCount, args);
+            return new PageList<T>(pageIndex, pageSize, totalCount, data);
         }
 
         #endregion
