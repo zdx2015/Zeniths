@@ -79,7 +79,7 @@ namespace Zeniths.Hr.Service
                 repos.Update(entity);
                 return BoolMessage.True;
             }
-            catch (Exception e)
+            catch (Exception e) 
             {
                 return new BoolMessage(false, e.Message);
             }
