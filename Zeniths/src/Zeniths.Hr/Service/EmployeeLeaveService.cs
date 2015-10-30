@@ -11,6 +11,7 @@ using Zeniths.Collections;
 using Zeniths.Data;
 using Zeniths.Extensions;
 using Zeniths.Utility;
+using Zeniths.Data.Extensions;
 
 namespace Zeniths.Hr.Service
 {
@@ -235,21 +236,131 @@ namespace Zeniths.Hr.Service
         /// <param name="orderDir">排序方式</param>
         /// <param name="userId">当前登录用户Id</param>
         /// <returns>返回请休假申请分页列表</returns>
-        public PageList<EmployeeLeave> GetPageList(int pageIndex, int pageSize, string orderName,string orderDir, int userId)
+        public PageList<EmployeeLeave> GetPageListAll(int pageIndex, int pageSize, string orderName,string orderDir, string employeeName, string department, string startDatetime, string startEndDatetime, string applyDateTime, string status)
         {
             orderName = orderName.IsEmpty() ? nameof(EmployeeLeave.Id) : orderName;//默认使用主键排序
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
             var query = repos.NewQuery.Take(pageSize).Page(pageIndex).OrderBy(orderName, orderDir.IsAsc());
+            if (employeeName.IsNotEmpty())
+            {
+                query.Where(p => p.EmployeeName.Contains(employeeName));
+            }
+            if (department.IsNotEmpty())
+            {
+                query.Where(p => p.Deparment == department);
+            }
+            if (startDatetime.IsNotEmpty() && startEndDatetime.IsNotEmpty())
+            {
+                query.Where(p => p.StartDatetime.Between(startDatetime.ToDateTime(), startEndDatetime.ToDateTime().AddDays(1).AddSeconds(-1)));
+            }
+            else if (startDatetime.IsNotEmpty())
+            {
+                DateTime startDatetimetemp = startDatetime.ToDateTime();
+                query.Where(p => p.StartDatetime >= startDatetimetemp);
+            }
+            else if (startEndDatetime.IsNotEmpty())
+            {
+                DateTime startEndDatetimetemp = startEndDatetime.ToDateTime().AddDays(1);
+                query.Where(p => p.StartDatetime < startEndDatetimetemp);
+            }
+            if (applyDateTime.IsNotEmpty())
+            {
+                query.Where(p => p.ApplyDateTime.Between(applyDateTime.ToDateTime(), applyDateTime.ToDateTime().AddDays(1).AddSeconds(-1)));
+            }
+            if (status.IsNotEmpty())
+            {
+                query.Where(p => p.Status == status);
+            }
+            return repos.Page(query);
+        }
 
+        /// <summary>
+        /// 获取请休假申请分页列表
+        /// </summary>
+        /// <param name="pageIndex">页面索引</param>
+        /// <param name="pageSize">分页大小</param>
+        /// <param name="orderName">排序列名</param>
+        /// <param name="orderDir">排序方式</param>
+        /// <param name="userId">当前登录用户Id</param>
+        /// <returns>返回请休假申请分页列表</returns>
+        public PageList<EmployeeLeave> GetPageListMyself(int pageIndex, int pageSize, string orderName, string orderDir, int userId,string startDatetime,string startEndDatetime,string applyDateTime,string status)
+        { 
+            orderName = orderName.IsEmpty() ? nameof(EmployeeLeave.Id) : orderName;//默认使用主键排序
+            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
+            var query = repos.NewQuery.Take(pageSize).Page(pageIndex).OrderBy(orderName, orderDir.IsAsc());
             if (userId.IsNotEmpty())
             {
                 query.Where(p => p.CreateUserId == userId);
             }
-
+            if (startDatetime.IsNotEmpty() && startEndDatetime.IsNotEmpty())
+            {
+                query.Where(p => p.StartDatetime.Between(startDatetime.ToDateTime(), startEndDatetime.ToDateTime().AddDays(1).AddSeconds(-1)));
+            }
+            else if (startDatetime.IsNotEmpty())
+            {
+                DateTime startDatetimetemp = startDatetime.ToDateTime();
+                query.Where(p => p.StartDatetime >= startDatetimetemp);
+            }
+            else if (startEndDatetime.IsNotEmpty())
+            {
+                DateTime startEndDatetimetemp = startEndDatetime.ToDateTime().AddDays(1);
+                query.Where(p => p.StartDatetime < startEndDatetimetemp);
+            }
+            if (applyDateTime.IsNotEmpty())
+            {
+                query.Where(p => p.ApplyDateTime.Between(applyDateTime.ToDateTime(), applyDateTime.ToDateTime().AddDays(1).AddSeconds(-1)));
+            }
+            if (status.IsNotEmpty())
+            {
+                query.Where(p => p.Status == status);
+            }
             return repos.Page(query);
         }
 
-        
+        /// <summary>
+        /// 获取请休假申请分页列表
+        /// </summary>
+        /// <param name="pageIndex">页面索引</param>
+        /// <param name="pageSize">分页大小</param>
+        /// <param name="orderName">排序列名</param>
+        /// <param name="orderDir">排序方式</param>
+        /// <param name="userId">当前登录用户Id</param>
+        /// <returns>返回请休假申请分页列表</returns>
+        public PageList<EmployeeLeave> GetPageListWaitHandle(int pageIndex, int pageSize, string orderName, string orderDir, string employeeName, string department, string startDatetime, string startEndDatetime, string applyDateTime)
+        {
+            orderName = orderName.IsEmpty() ? nameof(EmployeeLeave.Id) : orderName;//默认使用主键排序
+            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
+            var query = repos.NewQuery.Take(pageSize).Page(pageIndex).OrderBy(orderName, orderDir.IsAsc());
+            if (employeeName.IsNotEmpty())
+            {
+                query.Where(p => p.EmployeeName.Contains(employeeName));
+            }
+            if (department.IsNotEmpty())
+            {
+                query.Where(p => p.Deparment == department);
+            }
+            if (startDatetime.IsNotEmpty() && startEndDatetime.IsNotEmpty())
+            {
+                query.Where(p => p.StartDatetime.Between(startDatetime.ToDateTime(), startEndDatetime.ToDateTime().AddDays(1).AddSeconds(-1)));
+            }
+            else if (startDatetime.IsNotEmpty())
+            {
+                DateTime startDatetimetemp = startDatetime.ToDateTime();
+                query.Where(p => p.StartDatetime >= startDatetimetemp);
+            }
+            else if (startEndDatetime.IsNotEmpty())
+            {
+                DateTime startEndDatetimetemp = startEndDatetime.ToDateTime().AddDays(1);
+                query.Where(p => p.StartDatetime < startEndDatetimetemp);
+            }
+            if (applyDateTime.IsNotEmpty())
+            {
+                query.Where(p => p.ApplyDateTime.Between(applyDateTime.ToDateTime(), applyDateTime.ToDateTime().AddDays(1).AddSeconds(-1)));
+            }
+            return repos.Page(query);
+        }
+
+
         #region 私有方法
 
 

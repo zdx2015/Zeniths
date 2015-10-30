@@ -51,6 +51,17 @@ namespace Zeniths.WorkFlow.Utility
         }
 
         /// <summary>
+        /// 获取请假流程分类下拉选项
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="selected">选中的流程分类值</param>
+        /// <returns></returns>
+        public static MvcHtmlString EmployeeLeaveOptions(this HtmlHelper helper, string selected = null)
+        {
+            return MvcHtmlString.Create(AuthHelper.BuildDicOptions("EmployeeLeaveCategory", selected));
+        }
+
+        /// <summary>
         /// 生成工作流参数
         /// </summary>
         /// <param name="helper"></param>
