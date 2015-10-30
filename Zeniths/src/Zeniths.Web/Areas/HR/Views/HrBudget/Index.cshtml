@@ -8,10 +8,16 @@
         </div>
         <div class="panel-body">
             <div class="search-panel-zeniths">
-                <form class="form-inline search-form">
+                <form class="form-inline search-form" id="form1">
                     <div class="form-group">
-                        年份<input class="w-300px form-control" name="year" type="text" placeholder="请选择年份">
-                        状态<input class="w-300px form-control" name="year" type="text" placeholder="请选择订单状态">
+                        <label class="control-label">预算月份：</label>@*<input class="w-300px form-control" name="year" type="text" placeholder="请选择年份">*@
+                        <input class="date-control form-control" id="BudgetMonth" name="BudgetMonth" placeholder="请选择预算月份" type="text" autocomplete="off" />
+                        <label class="control-label">预算部门：</label>
+                        <input class="w-180px form-control" id="DepartmentName" name="DepartmentName" type="text" placeholder="请选择预算部门">
+                        <label class="control-label">预算状态：</label>
+                        <select class="select2-control w-200px form-control"  id="status" name="status"  data-placeholder="请选择预算状态">
+                        <option></option>
+                        </select>
                     </div>
                     &nbsp;
                     <button class="btn btn-primary" type="submit">
@@ -29,6 +35,7 @@
                     <a class="btn btn-default" href="@Url.Action("Export")">
                         <i class="fa fa-share-square-o"></i> 导出
                     </a>
+                    <input type="hidden" id="type" name="type" value="1" />
                 </form>
             </div>
             <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid"))" data-query-form=".search-form">
@@ -41,6 +48,14 @@
 {
     <script>
         $(function () {
+            $('#form1').dataform().initDatePicker({
+                format: "yyyy-mm",
+                minViewMode: 'months'
+            }).initValidate({
+                beforeSubmit: function () {
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
             zeniths.util.standardGridBind({
                 editWidth: 900,
                 editHeight: 700,
