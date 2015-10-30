@@ -1,5 +1,5 @@
 ﻿@{
-    var title = "管理日常费用报销";
+    var title = "外出登记管理";
 }
 <div class="container-zeniths">
     <div class="panel panel-default panel-zeniths">
@@ -10,7 +10,8 @@
             <div class="search-panel-zeniths">
                 <form class="form-inline search-form">
                     <div class="form-group">
-                        <input class="w-300px form-control" name="name" type="text" placeholder="请输入关键字查询">
+                        外出时间：<input class="date-control form-control" name="@nameof(EmployeeGoOutRegistration.GoOutDateTime)" type="text" />&nbsp;至
+                        <input class="date-control form-control" name="GoOutEndDateTime" type="text" />
                     </div>
                     &nbsp;
                     <button class="btn btn-primary" type="submit">
@@ -22,15 +23,9 @@
                     <a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
                         <i class="fa fa-trash-o"></i> 删除
                     </a>
-                    <a class="btn btn-default" id="btnRefresh">
-                        <i class="fa fa-repeat"></i> 刷新
-                    </a>
-                    @*<a class="btn btn-default" href="@Url.Action("Export")">
-                        <i class="fa fa-share-square-o"></i> 导出
-                    </a>*@
                 </form>
             </div>
-            <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid"))" data-query-form=".search-form">
+            <div class="datagrid" data-url="@Html.Raw(Url.Action("GridMyself"))" data-query-form=".search-form">
             </div>
         </div>
     </div>
@@ -42,9 +37,19 @@
         $(function () {
             zeniths.util.standardGridBind({
                 editWidth: 900,
-                editHeight: 700,
+                editHeight: 500,
                 viewWidth: 900,
-                viewHeight: 700
+                viewHeight: 850,
+                loadCallback: function () {
+                    //返回确认事件
+                    $('.btnRecordConfirm').on('click', function () {
+                        zeniths.util.dialog($(this).data('url'), 900, 720, {
+                            callback: function () {
+                                $('.datagrid').datagrid().reload();
+                            }
+                        });
+                    });
+                }
             });
         });
     </script>

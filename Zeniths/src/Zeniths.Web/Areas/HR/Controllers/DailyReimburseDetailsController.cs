@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using Zeniths.Hr.Entity;
@@ -14,6 +15,7 @@ using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.Utility;
 using Zeniths.Hr.Utility;
+using Zeniths.Auth.Service;
 
 namespace Zeniths.Web.Areas.Hr.Controllers
 {
@@ -27,6 +29,14 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// 服务对象
         /// </summary>
         private readonly DailyReimburseDetailsService service = new DailyReimburseDetailsService();
+        private readonly SystemDictionaryService  dicSevice = new SystemDictionaryService();
+
+        private object SessionData
+        {
+            get { return Session["DailyReimburseDetails"]; }
+            set { Session["DailyReimburseDetails"] = value; }
+
+        }
 
         /// <summary>
         /// 主视图
@@ -68,7 +78,23 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Edit(string id)
         {
-            var entity = service.Get(id.ToInt());
+            DailyReimburseDetails entity = new DailyReimburseDetails(); //service.Get(id.ToInt());
+            var list = (List<DailyReimburseDetails>)SessionData;
+            if (list != null)
+            {
+                foreach (var item in list)
+                {
+                    if (id.ToInt() > 0)
+                    {
+                        if (item.Id == id.ToInt())
+                        {
+                            entity = item;
+                        }
+                    }
+                   
+                }
+            }
+
             return EditCore(entity);
         }
 
@@ -109,7 +135,62 @@ namespace Zeniths.Web.Areas.Hr.Controllers
                 return Json(hasResult);
             }
 
-            var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
+
+            var result = BoolMessage.True;
+            try
+            {
+                List<DailyReimburseDetails> list = new List<DailyReimburseDetails>();
+
+                if (SessionData == null)
+                {
+                    SessionData = list;
+                }
+                else
+                {
+                    list = (List<DailyReimburseDetails>)SessionData;
+                }
+                if (entity.Id == 0)
+                {
+                    var isCorrect = IsCorrectSelect("DailyReimburseCategory", entity.CategoryName, entity.ItemId);
+                    if (!isCorrect.Success)
+                    {
+                        return Json(isCorrect);
+                    }
+
+                    if (list.Count > 0)
+                    {
+                        entity.Id = list[list.Count - 1].Id + 1;
+                    }
+                    else
+                    {
+                        entity.Id = 1;
+                    }
+                    list.Add(entity);
+                    SessionData = list;
+                  
+                }
+                else
+                {
+                    foreach (var item in list)
+                    {
+                        if (item.Id == entity.Id)
+                        {
+                            item.CategoryId = entity.CategoryId;
+                            item.CategoryName = entity.CategoryName;
+                            item.ItemName = entity.ItemName;
+                            item.Amount = entity.Amount;
+                        }
+                    }
+                    SessionData = list;
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                result = new BoolMessage(false,e.Message);
+            }
+          
             return Json(result);
         }
 
@@ -121,7 +202,32 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         [HttpPost]
         public ActionResult Delete(string id)
         {
-            var result = service.Delete(StringHelper.ConvertToArrayInt(id));
+            var result = BoolMessage.True;
+            try
+            {
+                var list = (List<DailyReimburseDetails>)SessionData;
+
+                var ids = StringHelper.ConvertToArrayInt(id);
+                for (int i = 0; i < ids.Length; i++)
+                {
+                    foreach (var item in list)
+                    {
+                        if (item.Id == ids[i])
+                        {
+                            list.Remove(item);
+                            break;
+                        }
+                    }
+                }
+                SessionData = list;
+            }
+            catch (Exception e)
+            {
+
+                result= new BoolMessage(false,e.Message);
+            }
+            
+            
             return Json(result);
         }
         
@@ -132,6 +238,34 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         public ActionResult Export()
         {
             return Export(service.GetList());
+        }
+
+        /// <summary>
+        /// 判断所选的大类和项目名称是否匹配
+        /// </summary>
+        /// <param name="dicCode"></param>
+        /// <param name="dicName"></param>
+        /// <param name="dicDetaiId"></param>
+        /// <returns></returns>
+        private BoolMessage IsCorrectSelect(string dicCode, string dicName, int dicDetaiId)
+        {
+            if (!string.IsNullOrEmpty(dicName))
+            {
+                dicName = dicName.Substring(dicName.IndexOf(":") + 1);
+            }
+            var dicId = dicSevice.GetIDByCodeAndName(dicCode, dicName);
+            var dicDetailEntity = dicSevice.GetDetails(dicDetaiId);
+
+            if (dicId == dicDetailEntity.DictionaryId)
+            {
+                return  BoolMessage.True;
+            }
+            else
+            {
+                
+                return new BoolMessage(false,"项目名称 和所选 费用类别 不匹配");
+            }
+
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿@model OAWorkLog
+﻿@model EmployeeNotClock
 @{
-    var title = "查看工作日志";
+    var title = "查看未打卡记录表";
 }
 
 <div class="container-edit-zeniths">
@@ -13,37 +13,46 @@
             <div class="panel-body">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
-                <table class="table table-form table-dialog-form">                
+                <table class="table table-form table-dialog-form">
+                
                     <tr>
                         <th class="w-100px">
-                            <label class="control-label">日志日期：</label>
+                            <label class="control-label">员工主键：</label>
                         </th>
                         <td>
-                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.LogDate)</p>
+                            <p class="form-control-static">@Model.EmployeeId</p>
                         </td>
                     </tr>
                     <tr>
                         <th >
-                            <label class="control-label">本日工作总结：</label>
+                            <label class="control-label">员工姓名：</label>
                         </th>
                         <td>
-                            <p class="form-control-static">@Model.WorkSummary</p>
+                            <p class="form-control-static">@Model.EmployeeName</p>
                         </td>
                     </tr>
                     <tr>
                         <th >
-                            <label class="control-label">明日工作计划：</label>
+                            <label class="control-label">未打卡日期：</label>
                         </th>
                         <td>
-                            <p class="form-control-static">@Model.TomorrowPlan</p>
+                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.NotClockDate)</p>
                         </td>
                     </tr>
                     <tr>
                         <th >
-                            <label class="control-label">其他说明：</label>
+                            <label class="control-label">未打卡班次1上午2下午：</label>
                         </th>
                         <td>
-                            <p class="form-control-static">@Model.OtheInstructions</p>
+                            <p class="form-control-static">@Model.NotClockClasses</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">事由：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.Reason</p>
                         </td>
                     </tr>
                     <tr>
@@ -64,14 +73,6 @@
                     </tr>
                     <tr>
                         <th >
-                            <label class="control-label">创建时间：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.CreateDateTime)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
                             <label class="control-label">创建人部门主键：</label>
                         </th>
                         <td>
@@ -80,10 +81,18 @@
                     </tr>
                     <tr>
                         <th >
-                            <label class="control-label">创建人部门名称：</label>
+                            <label class="control-label">创建人部门姓名：</label>
                         </th>
                         <td>
                             <p class="form-control-static">@Model.CreateDepartmentName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">创建时间：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.CreateDateTime)</p>
                         </td>
                     </tr>
                                     

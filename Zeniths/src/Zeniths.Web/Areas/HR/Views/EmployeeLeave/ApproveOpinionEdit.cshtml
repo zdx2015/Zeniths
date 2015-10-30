@@ -1,0 +1,1195 @@
+﻿@model EmployeeLeave
+@{
+    var title = "编辑请休假申请";
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <table class="table table-form table-dialog-form">
+
+                    <tr>
+                        <th class="w-100px">
+                            <label class="control-label">员工主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.EmployeeId)" value="@Model.EmployeeId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">员工姓名：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.EmployeeName)" value="@Model.EmployeeName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">部门主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.DeparmentId)" value="@Model.DeparmentId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">部门名称：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Deparment)" value="@Model.Deparment" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">岗位：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Post)" value="@Model.Post" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">请假类别：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.LeaveCategory)" value="@Model.LeaveCategory" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">请假开始日期：</label>
+                        </th>
+                        <td>
+                            <input class="date-control form-control" name="@nameof(Model.StartDate)" value="@Model.StartDate" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">请假结束日期：</label>
+                        </th>
+                        <td>
+                            <input class="date-control form-control" name="@nameof(Model.EndDate)" value="@Model.EndDate" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">请假天数：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Days)" value="@Model.Days" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">请假事由：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Reason)" value="@Model.Reason" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">申请时间：</label>
+                        </th>
+                        <td>
+                            <input class="date-control form-control" name="@nameof(Model.ApplyDateTime)" value="@Model.ApplyDateTime" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">工作代理人主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.JobAgentId)" value="@Model.JobAgentId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">工作代理人是否同意：</label>
+                        </th>
+                        <td>
+                            <div class="checkbox-list">
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.JobAgentIsAudit)" value="true" type="checkbox" @Html.IsChecked(Model.JobAgentIsAudit) />
+                                    <span>启用</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">工作代理人意见：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.JobAgentOpinion)" value="@Model.JobAgentOpinion" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">工作代理人签字：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.JobAgentSign)" value="@Model.JobAgentSign" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">工作代理人签字日期：</label>
+                        </th>
+                        <td>
+                            <input class="date-control form-control" name="@nameof(Model.JobAgentSignDate)" value="@Model.JobAgentSignDate" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">部门负责人主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.DepartmentManagerId)" value="@Model.DepartmentManagerId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">部门负责人是否同意：</label>
+                        </th>
+                        <td>
+                            <div class="checkbox-list">
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.DepartmentManagerIsAudit)" value="true" type="checkbox" @Html.IsChecked(Model.DepartmentManagerIsAudit) />
+                                    <span>启用</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">部门负责人意见：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.DepartmentManagerOpinion)" value="@Model.DepartmentManagerOpinion" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">部门负责人签字：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.DepartmentManagerSign)" value="@Model.DepartmentManagerSign" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">部门负责人签字日期：</label>
+                        </th>
+                        <td>
+                            <input class="date-control form-control" name="@nameof(Model.DepartmentManagerSignDate)" value="@Model.DepartmentManagerSignDate" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">总经理主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.GeneralManagerId)" value="@Model.GeneralManagerId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">总经理是否同意：</label>
+                        </th>
+                        <td>
+                            <div class="checkbox-list">
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.GeneralManagerIsAudit)" value="true" type="checkbox" @Html.IsChecked(Model.GeneralManagerIsAudit) />
+                                    <span>启用</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">总经理意见：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.GeneralManagerOpinion)" value="@Model.GeneralManagerOpinion" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">总经理签字：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.GeneralManagerSign)" value="@Model.GeneralManagerSign" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">总经理签字日期：</label>
+                        </th>
+                        <td>
+                            <input class="date-control form-control" name="@nameof(Model.GeneralManagerSignDate)" value="@Model.GeneralManagerSignDate" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">销假时间：</label>
+                        </th>
+                        <td>
+                            <input class="date-control form-control" name="@nameof(Model.CancelLeaveDateTime)" value="@Model.CancelLeaveDateTime" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">实休天数：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.ActualDays)" value="@Model.ActualDays" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">销假人主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.CancelLeavePersonId)" value="@Model.CancelLeavePersonId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">销假人姓名：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.CancelLeavePersonName)" value="@Model.CancelLeavePersonName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">部门负责人(销假)主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.DepartmentManagerCancelId)" value="@Model.DepartmentManagerCancelId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">部门负责人(销假]是否同意：</label>
+                        </th>
+                        <td>
+                            <div class="checkbox-list">
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.DepartmentManagerCancelIsAudit)" value="true" type="checkbox" @Html.IsChecked(Model.DepartmentManagerCancelIsAudit) />
+                                    <span>启用</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">部门负责人(销假]意见：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.DepartmentManagerCancelOpinion)" value="@Model.DepartmentManagerCancelOpinion" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">部门负责人(销假]签字：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.DepartmentManagerCancelSign)" value="@Model.DepartmentManagerCancelSign" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">部门负责人(销假]签字日期：</label>
+                        </th>
+                        <td>
+                            <input class="date-control form-control" name="@nameof(Model.DepartmentManagerCancelSignDate)" value="@Model.DepartmentManagerCancelSignDate" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">行政人力资源部主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.HRManagerId)" value="@Model.HRManagerId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">行政人力资源部是否同意：</label>
+                        </th>
+                        <td>
+                            <div class="checkbox-list">
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.HRManagerIsAudit)" value="true" type="checkbox" @Html.IsChecked(Model.HRManagerIsAudit) />
+                                    <span>启用</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">行政人力资源部意见：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.HRManagerOpinion)" value="@Model.HRManagerOpinion" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">行政人力资源部签字：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.HRManagerSign)" value="@Model.HRManagerSign" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">行政人力资源部签字日期：</label>
+                        </th>
+                        <td>
+                            <input class="date-control form-control" name="@nameof(Model.HRManagerSignDate)" value="@Model.HRManagerSignDate" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">任务名称：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Title)" value="@Model.Title" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">流程主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.FlowId)" value="@Model.FlowId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">流程名称：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.FlowName)" value="@Model.FlowName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">流程实例主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.FlowInstanceId)" value="@Model.FlowInstanceId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">步骤主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.StepId)" value="@Model.StepId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">步骤名称：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.StepName)" value="@Model.StepName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">流程是否完成：</label>
+                        </th>
+                        <td>
+                            <div class="checkbox-list">
+                                <label class="checkbox-inline">
+                                    <input class="icheckbox-control" name="@nameof(Model.IsFinish)" value="true" type="checkbox" @Html.IsChecked(Model.IsFinish) />
+                                    <span>启用</span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">创建用户主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.CreateUserId)" value="@Model.CreateUserId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">创建用户姓名：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.CreateUserName)" value="@Model.CreateUserName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">创建人部门主键：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.CreateDepartmentId)" value="@Model.CreateDepartmentId" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">创建人部门姓名：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.CreateDepartmentName)" value="@Model.CreateDepartmentName" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">创建时间：</label>
+                        </th>
+                        <td>
+                            <input class="date-control form-control" name="@nameof(Model.CreateDateTime)" value="@Model.CreateDateTime" type="text" />
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section script{
+    <script>
+
+        $(function () {
+            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
+            $('.editform').dataform().initValidate({
+                rules: {
+                    EmployeeId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    EmployeeName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    DeparmentId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    Deparment: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    Post: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    LeaveCategory: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    StartDate: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    EndDate: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    Days: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    Reason: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    ApplyDateTime: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    JobAgentId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    JobAgentIsAudit: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    JobAgentOpinion: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    JobAgentSign: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    JobAgentSignDate: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    DepartmentManagerId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    DepartmentManagerIsAudit: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    DepartmentManagerOpinion: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    DepartmentManagerSign: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    DepartmentManagerSignDate: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    GeneralManagerId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    GeneralManagerIsAudit: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    GeneralManagerOpinion: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    GeneralManagerSign: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    GeneralManagerSignDate: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    CancelLeaveDateTime: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    ActualDays: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    CancelLeavePersonId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    CancelLeavePersonName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    DepartmentManagerCancelId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    DepartmentManagerCancelIsAudit: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    DepartmentManagerCancelOpinion: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    DepartmentManagerCancelSign: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    DepartmentManagerCancelSignDate: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    HRManagerId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    HRManagerIsAudit: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    HRManagerOpinion: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    HRManagerSign: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    HRManagerSignDate: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    Title: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    FlowId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    FlowName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    FlowInstanceId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    StepId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    StepName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    IsFinish: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    CreateUserId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    CreateUserName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    CreateDepartmentId: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    CreateDepartmentName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    CreateDateTime: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }
+                },
+                messages: {
+                    EmployeeId: {
+                        required: '请填写员工主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    EmployeeName: {
+                        required: '请填写员工姓名'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    DeparmentId: {
+                        required: '请填写部门主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    Deparment: {
+                        required: '请填写部门名称'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    Post: {
+                        required: '请填写岗位'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    LeaveCategory: {
+                        required: '请填写请假类别'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    StartDate: {
+                        required: '请填写请假开始日期'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    EndDate: {
+                        required: '请填写请假结束日期'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    Days: {
+                        required: '请填写请假天数'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    Reason: {
+                        required: '请填写请假事由'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    ApplyDateTime: {
+                        required: '请填写申请时间'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    JobAgentId: {
+                        required: '请填写工作代理人主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    JobAgentIsAudit: {
+                        required: '请填写工作代理人是否同意'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    JobAgentOpinion: {
+                        required: '请填写工作代理人意见'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    JobAgentSign: {
+                        required: '请填写工作代理人签字'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    JobAgentSignDate: {
+                        required: '请填写工作代理人签字日期'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    DepartmentManagerId: {
+                        required: '请填写部门负责人主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    DepartmentManagerIsAudit: {
+                        required: '请填写部门负责人是否同意'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    DepartmentManagerOpinion: {
+                        required: '请填写部门负责人意见'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    DepartmentManagerSign: {
+                        required: '请填写部门负责人签字'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    DepartmentManagerSignDate: {
+                        required: '请填写部门负责人签字日期'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    GeneralManagerId: {
+                        required: '请填写总经理主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    GeneralManagerIsAudit: {
+                        required: '请填写总经理是否同意'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    GeneralManagerOpinion: {
+                        required: '请填写总经理意见'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    GeneralManagerSign: {
+                        required: '请填写总经理签字'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    GeneralManagerSignDate: {
+                        required: '请填写总经理签字日期'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    CancelLeaveDateTime: {
+                        required: '请填写销假时间'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    ActualDays: {
+                        required: '请填写实休天数'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    CancelLeavePersonId: {
+                        required: '请填写销假人主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    CancelLeavePersonName: {
+                        required: '请填写销假人姓名'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    DepartmentManagerCancelId: {
+                        required: '请填写部门负责人(销假)主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    DepartmentManagerCancelIsAudit: {
+                        required: '请填写部门负责人(销假]是否同意'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    DepartmentManagerCancelOpinion: {
+                        required: '请填写部门负责人(销假]意见'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    DepartmentManagerCancelSign: {
+                        required: '请填写部门负责人(销假]签字'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    DepartmentManagerCancelSignDate: {
+                        required: '请填写部门负责人(销假]签字日期'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    HRManagerId: {
+                        required: '请填写行政人力资源部主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    HRManagerIsAudit: {
+                        required: '请填写行政人力资源部是否同意'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    HRManagerOpinion: {
+                        required: '请填写行政人力资源部意见'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    HRManagerSign: {
+                        required: '请填写行政人力资源部签字'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    HRManagerSignDate: {
+                        required: '请填写行政人力资源部签字日期'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    Title: {
+                        required: '请填写任务名称'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    FlowId: {
+                        required: '请填写流程主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    FlowName: {
+                        required: '请填写流程名称'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    FlowInstanceId: {
+                        required: '请填写流程实例主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    StepId: {
+                        required: '请填写步骤主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    StepName: {
+                        required: '请填写步骤名称'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    IsFinish: {
+                        required: '请填写流程是否完成'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    CreateUserId: {
+                        required: '请填写创建用户主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    CreateUserName: {
+                        required: '请填写创建用户姓名'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    CreateDepartmentId: {
+                        required: '请填写创建人部门主键'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    CreateDepartmentName: {
+                        required: '请填写创建人部门姓名'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    CreateDateTime: {
+                        required: '请填写创建时间'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }
+                },
+                beforeSubmit: function () {
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+        });
+    </script>
+}

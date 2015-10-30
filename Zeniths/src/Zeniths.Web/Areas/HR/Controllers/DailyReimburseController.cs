@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Zeniths.Collections;
 using Zeniths.Hr.Entity;
 using Zeniths.Hr.Service;
 using Zeniths.Entity;
@@ -27,12 +28,30 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// 服务对象
         /// </summary>
         private readonly DailyReimburseService service = new DailyReimburseService();
+        private readonly DailyReimburseDetailsService detailsService = new DailyReimburseDetailsService();
+
+        private object SessionData
+        {
+            get { return Session["DailyReimburseDetails"]; }
+            set { Session["DailyReimburseDetails"] = value; }
+
+        }
 
         /// <summary>
         /// 主视图
         /// </summary>
         /// <returns>视图模板</returns>
         public ActionResult Index()
+        {
+
+            return View();
+        }
+
+        /// <summary>
+        /// 查看主视图
+        /// </summary>
+        /// <returns>视图模板</returns>
+        public ActionResult AllIndex()
         {
             return View();
         }
@@ -51,6 +70,76 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name);
             return View(list);
         }
+        /// <summary>
+        /// 表格视图
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public ActionResult AllGrid(string name, string startDate, string endDate)
+        {
+            var pageIndex = GetPageIndex();
+            var pageSize = GetPageSize();
+            var orderName = GetOrderName();
+            var orderDir = GetOrderDir();
+            var list = service.GetAllPageList(pageIndex, pageSize, orderName, orderDir, name, startDate, endDate);
+            return View(list);
+        }
+
+        /// <summary>
+        /// 明细表格视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DetailGrid()
+        {
+            var pageIndex = GetPageIndex();
+            var pageSize = GetPageSize();
+            var orderName = GetOrderName();
+            var orderDir = GetOrderDir();
+            var list = (List<DailyReimburseDetails>)SessionData;
+            if(list == null)
+            {
+                list = new List<DailyReimburseDetails>();
+            }
+            PageList<DailyReimburseDetails> pList = new PageList<DailyReimburseDetails>(pageIndex, pageSize, list.Count,list);
+            return View(pList);
+        }
+        /// <summary>
+        /// 查看明细表格视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ViewGrid()
+        {
+            var pageIndex = GetPageIndex();
+            var pageSize = GetPageSize();
+            var orderName = GetOrderName();
+            var orderDir = GetOrderDir();
+            var list = (List<DailyReimburseDetails>)SessionData;
+            if (list == null)
+            {
+                list = new List<DailyReimburseDetails>();
+            }
+            PageList<DailyReimburseDetails> pList = new PageList<DailyReimburseDetails>(pageIndex, pageSize, list.Count, list);
+            return View(pList);
+        }
+
+        /// <summary>
+        /// 查看明细表格视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AllViewGrid()
+        {
+            var pageIndex = GetPageIndex();
+            var pageSize = GetPageSize();
+            var orderName = GetOrderName();
+            var orderDir = GetOrderDir();
+            var list = (List<DailyReimburseDetails>)SessionData;
+            if (list == null)
+            {
+                list = new List<DailyReimburseDetails>();
+            }
+            PageList<DailyReimburseDetails> pList = new PageList<DailyReimburseDetails>(pageIndex, pageSize, list.Count, list);
+            return View(pList);
+        }
 
         /// <summary>
         /// 新增视图
@@ -58,7 +147,13 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Create()
         {
-            return EditCore(new DailyReimburse());
+           
+            var entity = new DailyReimburse();
+            entity.ReimburseDepartmentName = CurrentUser.DepartmentName;
+            entity.ApplicantName = CurrentUser.Name;
+            SessionData = null;
+            ViewBag.Title = "添加日常费用报销";
+            return EditCore(entity);
         }
 
         /// <summary>
@@ -68,7 +163,11 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Edit(string id)
         {
+          
             var entity = service.Get(id.ToInt());
+            var list = detailsService.GetList(id.ToInt());
+            SessionData = list;
+            ViewBag.Title = "编辑日常费用报销";
             return EditCore(entity);
         }
 
@@ -80,7 +179,25 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Details(string id)
         {
+           
             var entity = service.Get(id.ToInt());
+            var list = detailsService.GetList(id.ToInt());
+            SessionData = list;
+            ViewBag.Title = "查看日常费用报销";
+            return View(entity);
+        }
+
+        /// <summary>
+        /// 查看视图
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>视图模板</returns>
+        public ActionResult AllDetails(string id)
+        {
+            var entity = service.Get(id.ToInt());
+            var list = detailsService.GetList(id.ToInt());
+            SessionData = list;
+            ViewBag.Title = "查看日常费用报销";
             return View(entity);
         }
 
@@ -108,8 +225,45 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             {
                 return Json(hasResult);
             }
+            var result = new BoolMessage(false);
+            
+                entity.ReimburseDepartmentId = CurrentUser.DepartmentId;
+                entity.ReimburseDepartmentName = CurrentUser.DepartmentName;
+                entity.ApplicantId = CurrentUser.Id;
+                entity.ApplicantName = CurrentUser.Name;
+                entity.ApplicationDate = DateTime.Now.Date;
+                entity.ApplySortNumber = service.GetYearAndMonthString() + "0000";
+                entity.Title = "填写报销单";
+                entity.IsFinish = false;
+                entity.FlowId = "";
+                entity.FlowInstanceId = "";
+                entity.FlowName = "";
+                entity.StepId = "";
+                entity.StepName = "";
+                entity.BudgetId = 0;
+                entity.CreateUserId = CurrentUser.Id;
+                entity.CreateUserName = CurrentUser.Name;
+                entity.CreateDepartmentId = CurrentUser.DepartmentId;
+                entity.CreateDepartmentName = CurrentUser.DepartmentName;
+                entity.CreateDateTime = DateTime.Now;
+                entity.ProjectSumMoney = 0;
+                var curlist = (List<DailyReimburseDetails>)SessionData;
+                foreach (var item in curlist)
+                {
+                    item.ReimburseId = entity.Id;
+                    entity.ProjectSumMoney = entity.ProjectSumMoney + item.Amount;
+                }
+            if (entity.Id == 0)
+            {
+                result = service.Insert(entity, curlist);
+            }
+            else
+            {
+               
+                result = service.Update(entity, curlist);
+            }
 
-            var result = entity.Id == 0 ? service.Insert(entity,null) : service.Update(entity);
+           
             return Json(result);
         }
 

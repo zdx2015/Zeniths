@@ -1,5 +1,5 @@
 ﻿@{
-    var title = "管理日常费用报销";
+    var title = "管理请休假申请";
 }
 <div class="container-zeniths">
     <div class="panel panel-default panel-zeniths">
@@ -10,7 +10,7 @@
             <div class="search-panel-zeniths">
                 <form class="form-inline search-form">
                     <div class="form-group">
-                        <input class="w-300px form-control" name="name" type="text" placeholder="请输入关键字查询">
+                        <input class="w-200px form-control" name="@nameof(EmployeeLeave.EmployeeName)" type="text" placeholder="请输入关键字查询">
                     </div>
                     &nbsp;
                     <button class="btn btn-primary" type="submit">
@@ -22,10 +22,10 @@
                     <a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
                         <i class="fa fa-trash-o"></i> 删除
                     </a>
-                    <a class="btn btn-default" id="btnRefresh">
+                    @*<a class="btn btn-default" id="btnRefresh">
                         <i class="fa fa-repeat"></i> 刷新
                     </a>
-                    @*<a class="btn btn-default" href="@Url.Action("Export")">
+                    <a class="btn btn-default" href="@Url.Action("Export")">
                         <i class="fa fa-share-square-o"></i> 导出
                     </a>*@
                 </form>
@@ -41,10 +41,10 @@
     <script>
         $(function () {
             zeniths.util.standardGridBind({
-                editWidth: 900,
-                editHeight: 700,
-                viewWidth: 900,
-                viewHeight: 700
+                editWidth: 950,
+                editHeight: 600,
+                viewWidth: 1200,
+                viewHeight: 800
             });
         });
     </script>

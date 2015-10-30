@@ -1,0 +1,173 @@
+﻿@model EmployeeGoOutRegistration
+@{
+    ViewBag.Title = "更新实际返回时间";
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("UpdateGoBackInfo")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"> <strong>@Model.Id</strong></span>
+                @ViewBag.Title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <table class="table table-form table-dialog-form">
+                    <tr>
+                        <th>
+                            <label class="control-label">姓名：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.EmployeeName</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">外出事由：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.GoOutReason</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">预计外出时间：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.GoOutDateTime)</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">预计返回时间：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.PlanBackDateTime)</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">申请时间：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.ApplyDateTime)</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">备注：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.Note</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">主管领导是否同意：</label>
+                        </th>
+                        <td>
+                            @if (Model.GeneralManagerIsAudit == null)
+                            {
+                                <p class="form-control-static"></p>
+                            }
+                            else
+                            {
+                                <p class="form-control-static">@Html.BoolLabelIsAgree(Model.GeneralManagerIsAudit)</p>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">主管领导意见：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.GeneralManagerOpinion</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">主管领导签字：</label>
+                        </th>
+                        <td>
+                            <p class="form-control-static">@Model.GeneralManagerSign</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            <label class="control-label">实际外出时间：</label>
+                        </th>                        
+                        <td>
+                            <div class="input-icon right">
+                                <input class="datetime-control form-control" id="@nameof(Model.RealGoOutDateTime)" name="@nameof(Model.RealGoOutDateTime)" value="@DateTimeHelper.FormatDateHasMinute(Model.RealGoOutDateTime)" type="text"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label">实际返回时间：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="datetime-control form-control" id="@nameof(Model.RealBackDateTime)" name="@nameof(Model.RealBackDateTime)" value="@DateTimeHelper.FormatDateHasMinute(Model.RealBackDateTime)" type="text"/>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section style{
+    <link href="~/Plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
+
+@section script{
+<script src="~/Plugin/bootstrap-daterangepicker/js/moment.min.js"></script>
+<script src="~/Plugin/bootstrap-daterangepicker/js/zh-cn.js"></script>
+<script src="~/Plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script>
+        $(function () {
+
+            $('.editform').dataform().initDateTimePicker().initValidate({
+                rules: {
+                    RealGoOutDateTime: {
+                        required: true
+                    },
+                    RealBackDateTime: {
+                        required: true,
+                        compareDate: "#RealGoOutDateTime"
+                    }
+                },
+                messages: {
+                    RealGoOutDateTime: {
+                        required: '请选择实际外出时间'
+                    },
+                    RealBackDateTime: {
+                        required: '请选择实际返回时间',
+                        compareDate: "实际返回时间必须大于实际外出时间"
+                    }
+                },
+                beforeSubmit: function () {
+                    
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+        });
+     
+    </script>
+}
+

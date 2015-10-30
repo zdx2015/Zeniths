@@ -1,0 +1,248 @@
+﻿@model EmployeeLeave
+@{
+    Layout = null;
+}
+
+<table class="table table-form table-dialog-form">
+    <tr>
+        <th>
+            <label class="control-label">姓名：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.EmployeeName</p>
+        </td>
+        <th>
+            <label class="control-label">部门：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.Deparment</p>
+        </td>
+    </tr> 
+    <tr>
+        <th>
+            <label class="control-label">岗位：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.Post</p>
+        </td>
+        <th>
+            <label class="control-label">请假类别：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.LeaveCategory</p>
+        </td>
+    </tr>  
+    <tr>
+        <th>
+            <label class="control-label">请假开始时间：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.StartDatetime)</p>
+        </td>
+        <th>
+            <label class="control-label">请假结束时间：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.EndDatetime)</p>
+        </td>
+    </tr>     
+    <tr>
+        <th>
+            <label class="control-label">请假事由：</label>
+        </th>
+        <td colspan="3">
+            <p class="form-control-static">@Model.Reason</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label class="control-label">请假天数：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.Days</p>
+        </td>
+        <th>
+            <label class="control-label">申请时间：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.ApplyDateTime)</p>
+        </td>
+    </tr>  
+    <tr>
+        <th>
+            <label class="control-label">工作代理人是否同意：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Html.BoolLabelIsAgree(Model.JobAgentIsAudit)</p>
+        </td>
+        <th>
+            <label class="control-label">工作代理人意见：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.JobAgentOpinion</p>
+        </td>
+    </tr> 
+    <tr>
+        <th>
+            <label class="control-label">工作代理人签字：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.JobAgentSign</p>
+        </td>
+        <th>
+            <label class="control-label">工作代理人签字日期：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.JobAgentSignDate)</p>
+        </td>
+    </tr>  
+    <tr>
+        <th>
+            <label class="control-label">部门负责人是否同意：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Html.BoolLabelIsAgree(Model.DepartmentManagerIsAudit)</p>
+        </td>
+        <th>
+            <label class="control-label">部门负责人意见：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.DepartmentManagerOpinion</p>
+        </td>
+    </tr>    
+    <tr>
+        <th>
+            <label class="control-label">部门负责人签字：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.DepartmentManagerSign</p>
+        </td>
+        <th>
+            <label class="control-label">部门负责人签字日期：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.DepartmentManagerSignDate)</p>
+        </td>
+    </tr> 
+    <tr>
+        <th>
+            <label class="control-label">总经理是否同意：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Html.BoolLabelIsAgree(Model.GeneralManagerIsAudit)</p>
+        </td>
+        <th>
+            <label class="control-label">总经理意见：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.GeneralManagerOpinion</p>
+        </td>
+    </tr>   
+    <tr>
+        <th>
+            <label class="control-label">总经理签字：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.GeneralManagerSign</p>
+        </td>    
+        <th>
+            <label class="control-label">总经理签字日期：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.GeneralManagerSignDate)</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label class="control-label">实际请假开始时间：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.RealStartDatetime)</p>
+        </td>
+        <th>
+            <label class="control-label">实际请假结束时间：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.RealEndDatetime)</p>
+        </td>
+    </tr>  
+    <tr>
+        <th>
+            <label class="control-label">销假时间：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.CancelLeaveDateTime)</p>
+        </td>   
+        <th>
+            <label class="control-label">实休天数：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.ActualDays</p>
+        </td>
+    </tr>          
+    <tr>
+        <th>
+            <label class="control-label">销假人：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.CancelLeavePersonName</p>
+        </td>   
+        <th>
+            <label class="control-label">部门负责人(销假)是否同意：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Html.BoolLabelIsAgree(Model.DepartmentManagerCancelIsAudit)</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label class="control-label">部门负责人(销假)意见：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.DepartmentManagerCancelOpinion</p>
+        </td>   
+        <th>
+            <label class="control-label">部门负责人(销假)签字：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.DepartmentManagerCancelSign</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label class="control-label">部门负责人(销假)签字日期：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.DepartmentManagerCancelSignDate)</p>
+        </td>   
+        <th>
+            <label class="control-label">行政人力资源部是否同意：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Html.BoolLabelIsAgree(Model.HRManagerIsAudit)</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label class="control-label">行政人力资源部意见：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.HRManagerOpinion</p>
+        </td>  
+        <th>
+            <label class="control-label">行政人力资源部签字：</label>
+        </th>
+        <td>
+            <p class="form-control-static">@Model.HRManagerSign</p>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            <label class="control-label">行政人力资源部签字日期：</label>
+        </th>
+        <td colspan="3">
+            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.HRManagerSignDate)</p>
+        </td>
+    </tr>
+</table>
+

@@ -12,11 +12,11 @@
             </div>
             <div class="panel-body" style="height: 580px">
                 @Html.AntiForgeryToken()
-                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id"/>
-               
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+
                 <table class="table table-form table-dialog-form">
                     <tr>
-                        <th >
+                        <th>
                             <label class="control-label">报销部门：</label>
                         </th>
                         <td>
@@ -25,7 +25,7 @@
                     </tr>
 
                     <tr>
-                        <th >
+                        <th>
                             <label class="control-label">经办人：</label>
                         </th>
                         <td>
@@ -33,7 +33,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th >
+                        <th>
                             <label class="control-label">申请情况说明：</label>
                         </th>
                         <td>
@@ -45,9 +45,9 @@
                 </table>
 
                 <div class="panel panel-default panel-zeniths">
-                   
+
                     <div class="panel-body" style="height: 415px;overflow:auto">
-                        <div class="datagrid" data-url="@Html.Raw(Url.Action("ViewGrid","DailyReimburse",new {area="HR"}))" id="detailGrid"></div>
+                        <div class="datagrid" data-url="@Html.Raw(Url.Action("AllViewGrid","DailyReimburse",new {area="HR"}))" id="detailGrid"></div>
                     </div>
 
                 </div>
@@ -55,12 +55,12 @@
 
             </div>
             <div class="panel-footer text-center">
-            <div class="buttons">
-                <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
-                    <i class="fa fa-sign-in"></i> 关闭
-                </a>
+                <div class="buttons">
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
             </div>
-        </div>
         </div>
     </form>
 </div>

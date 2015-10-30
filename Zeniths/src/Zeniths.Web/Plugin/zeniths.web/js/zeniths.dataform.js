@@ -18,7 +18,7 @@
             instance.options.validOptions.rules = {};
         }
 
-        //if (instance.options.validOptions.autoAddRequired === true) {
+        if (instance.options.validOptions.autoAddRequired === true) {
         $.each(instance.options.validOptions.rules, function (k, v) {
             if (v.required === true) {
                 $('form [name=' + k + ']').closest('td').prev('th').prepend('<label class="required"></label>');
@@ -35,7 +35,7 @@
             //    parent.siblings('label').addClass('required');
             //}
         });
-        //}
+        }
 
         var defaults = {
             errorElement: 'span',
