@@ -42,6 +42,14 @@
   <ItemGroup>
     <Compile Include="EmpLeave\EmpLeaveDaysLine.cs" />
     <Compile Include="EmpLeave\EmpLeaveRegister.cs" />
+    <Compile Include="EmployeeLeave\LeaveHRManagerCancel.cs" />
+    <Compile Include="EmployeeLeave\LeaveDepartmentCancel.cs" />
+    <Compile Include="EmployeeLeave\LeaveDepartment.cs" />
+    <Compile Include="EmployeeLeave\LeaveAgent.cs" />
+    <Compile Include="EmployeeLeave\LeaveLine.cs" />
+    <Compile Include="EmployeeLeave\LeaveGeneralManager.cs" />
+    <Compile Include="EmployeeLeave\LeaveCancel.cs" />
+    <Compile Include="EmployeeLeave\LeaveReg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

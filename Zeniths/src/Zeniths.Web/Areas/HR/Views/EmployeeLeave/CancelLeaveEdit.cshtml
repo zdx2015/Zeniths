@@ -1,10 +1,11 @@
 ﻿@model EmployeeLeave
 @{
-    var title = "销假管理";
+    var title = Html.GetCurrentStepName();
+    Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
 }
 
 <div class="container-edit-zeniths">
-    <form class="editform" action="@Url.Action("UpdateCancelLeaveInfo")" method="POST" role="form">
+    <form class="editform" action="@Html.GetFlowExecuteUrl()" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
                 <span class="prefix"> <strong>@Model.Id</strong></span>
@@ -196,13 +197,20 @@
             </div>
             <div class="panel-footer text-center">
                 <div class="buttons">
-                    <button class="btn btn-primary" type="submit">
+                    <a class="btn btn-outline btn-success btnWorkFlowSend">
+                        提交 <i class="fa fa-arrow-right"></i>
+                    </a>
+                    @*<button class="btn btn-primary" type="submit">
                         <i class="fa fa-save"></i> 保存
                     </button>
                     &nbsp;
                     <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
                         <i class="fa fa-sign-in"></i> 关闭
+                    </a>*@
+                     @*<a class="btn btn-outline btn-danger btnWorkFlowBack">
+                        <i class="fa fa-arrow-left"></i> 驳回
                     </a>
+                    &nbsp;*@                    
                 </div>
             </div>
         </div>
@@ -220,10 +228,21 @@
     <script>
 
         $(function () {
-            $('.editform').dataform().initDateTimePicker().initValidate({
-                rules: {                  
+            $('.editform').dataform().initWorkFlow({
+                sendCallback: function (wf, result) {
+                    //如果下一步骤的处理人是自己 则继续处理下一步骤
+                    if (result.url) {
+                        window.location.href = result.url;
+                    } else {
+                        //跳转到待办页面
+                        zeniths.util.formAjaxSuccess(result);
+                        //window.location.href = '@Url.Action("PendingTasks","FlowTask",new { area ="WorkFlow"})';
+                    }
+                }
+            }).initDatePicker().initValidate({
+                rules: {
                     RealStartDatetime: {
-                        required: true                       
+                        required: true
                     },
                     RealEndDatetime: {
                         required: true,
@@ -233,7 +252,7 @@
                         required: true
                     }
                 },
-                messages: {                   
+                messages: {
                     RealStartDatetime: {
                         required: '请选择实际开始请假时间'
                     },
