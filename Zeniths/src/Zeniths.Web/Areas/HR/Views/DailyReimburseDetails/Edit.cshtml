@@ -13,12 +13,12 @@
             <div class="panel-body">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@nameof(Model.Id)" id="@nameof(Model.Id)" value="@Model.Id"/>
-                <input type="hidden" name="@nameof(Model.CategoryName)" id="CategoryName" value="@Model.CategoryName"/>
+                @*<input type="hidden" name="@nameof(Model.CategoryName)" id="CategoryName" value="@Model.CategoryName"/>*@
                 <input type="hidden" name="@nameof(Model.TempSortNum)" id="TempSortNum" value="@Model.TempSortNum"/>
                 <input type="hidden" name="@nameof(Model.ItemName)" id="ItemName" value="@Model.ItemName" />
                 <table class="table table-form table-dialog-form">
                     <tr>
-                        <th>
+                        @*<th>
                             <label class="control-label">费用类别：</label>
                         </th>
                         <td>
@@ -30,7 +30,7 @@
                             </div>
 
 
-                        </td>
+                        </td>*@
                     </tr>
                     <tr>
                         <th >
@@ -127,8 +127,8 @@
                 },
                 beforeSubmit: function () {
                    
-                    var cName = $('#CategoryId option:selected').text();
-                    $('#CategoryName').val(cName);
+                    //var cName = $('#CategoryId option:selected').text();
+                    //$('#CategoryName').val(cName);
                   
                     var iName = $('#ItemId option:selected').text();
                  
