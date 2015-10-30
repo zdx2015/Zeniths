@@ -65,8 +65,8 @@ namespace Zeniths.MvcUtility
 </div>";
             int pageIndex = source.PageIndex;
             int totalPages = source.TotalPages;
-            int showPages = 7;
-            int miniPages = 2;
+            int showPages = 5;
+            int miniPages = 1;
             string pagedInfo = $"共 {source.TotalCount} 条 当前显示 {source.RecordStartIndex} 到 {source.RecordEndIndex} 条";
             if (source.RecordEndIndex == 0 && source.RecordEndIndex == 0)
             {
@@ -101,7 +101,7 @@ namespace Zeniths.MvcUtility
                 {
                     BuildPage(helper, pages, pageIndex, i, controller, action, routeDatas);
                 }
-                pages.AppendFormat(@"<li class=""disabled""><span>...</span></li>");
+                pages.AppendFormat(@"<li class=""disabled""><span>···</span></li>");
             }
 
             #endregion
@@ -131,7 +131,7 @@ namespace Zeniths.MvcUtility
             }
             else
             {
-                pages.AppendFormat(@"<li class=""disabled""><span>...</span></li>");
+                pages.AppendFormat(@"<li class=""disabled""><span>···</span></li>");
                 for (int i = totalPages - miniPages + 1; i <= totalPages; i++)
                 {
                     BuildPage(helper, pages, pageIndex, i, controller, action, routeDatas);

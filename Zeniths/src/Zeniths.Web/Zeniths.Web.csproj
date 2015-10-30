@@ -155,6 +155,9 @@
     <Content Include="Plugin\bootstrap-popover-x\css\bootstrap-popover-x.min.css" />
     <Content Include="Plugin\bootstrap-popover-x\js\bootstrap-popover-x.js" />
     <Content Include="Plugin\bootstrap-popover-x\js\bootstrap-popover-x.min.js" />
+    <Content Include="Plugin\jquery-fixed-header-table\defaultTheme.css" />
+    <Content Include="Plugin\jquery-fixed-header-table\jquery.fixedheadertable.js" />
+    <Content Include="Plugin\jquery-fixed-header-table\jquery.fixedheadertable.min.js" />
     <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.date.extensions.js" />
     <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.extensions.js" />
     <Content Include="Plugin\jquery-inputmask\inputmask\jquery.inputmask.js" />
