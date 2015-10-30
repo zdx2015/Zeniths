@@ -40,10 +40,12 @@
                             @Html.Action("DetailsBaseLeave")
                         </div>
                         <div class="tab-pane" id="LeaveStepList">
-                            @Html.Action("DetailsOpinionContent")
+                            @Html.Action("InstanceTasks", "FlowTask", new { area = "WorkFlow", flowInstanceId = Model.FlowInstanceId })
+                            @*@Html.Action("DetailsOpinionContent")*@
                         </div>
                         <div class="tab-pane" id="LeaveStepimg">
-                            @Html.Action("DetailsWorkFlowChart")
+                            @Html.Action("TaskImage", "FlowTask", new { area = "WorkFlow", flowInstanceId = Model.FlowInstanceId })
+                            @*@Html.Action("DetailsWorkFlowChart")*@
                         </div>
                     </div>
                 </div>
