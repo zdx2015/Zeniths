@@ -199,20 +199,11 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             {
                 var currentUser = OrganizeHelper.GetCurrentUser();
                 entity.ApplyDateTime = DateTime.Now;
-
                 entity.CreateUserId = currentUser.Id;
                 entity.CreateUserName = currentUser.Name;
                 entity.CreateDepartmentId = currentUser.DepartmentId;
                 entity.CreateDepartmentName = currentUser.DepartmentName;
                 entity.CreateDateTime = DateTime.Now;
-
-                entity.Title = "";
-                entity.FlowId = "";
-                entity.FlowName = "";
-                entity.FlowInstanceId = "";
-                entity.StepId = "";
-                entity.StepName = "";
-                entity.IsFinish = false;
             }
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
             return Json(result);
@@ -243,9 +234,9 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// 更新销假信息视图
         /// </summary>
         /// <returns>视图模板</returns>
-        public ActionResult CancelLeaveEdit(string id)
+        public ActionResult CancelLeaveEdit(string businessId)
         {
-            var entity = service.Get(id.ToInt());
+            var entity = service.Get(businessId.ToInt());
             return View(entity);
         }
 
@@ -254,9 +245,9 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// 请休假中审批
         /// </summary>
         /// <returns>视图模板</returns>
-        public ActionResult ApproveOpinionEdit(string id)
+        public ActionResult ApproveOpinionEdit(string businessId)
         {
-            var entity = service.Get(id.ToInt());
+            var entity = service.Get(businessId.ToInt());
             return View(entity);
         }
 
