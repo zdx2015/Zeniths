@@ -93,7 +93,11 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var entity = service.Get(id.ToInt());
             return View(entity);
         }
-
+        public ActionResult DetailsList(string id)
+        {
+            var entity = service.Get(id.ToInt());
+            return View(entity);
+        }
         /// <summary>
         /// 数据编辑视图
         /// </summary>
