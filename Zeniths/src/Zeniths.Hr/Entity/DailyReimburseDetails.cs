@@ -26,10 +26,16 @@ namespace Zeniths.Hr.Entity
 		[Column(Caption = "报销主表主键")]
         public int ReimburseId { get; set; }
 
-		/// <summary>
+        /// <summary>
+        /// 项目名称Id
+        /// </summary>
+        [Column(Caption = "项目名称Id")]
+        public int ItemId { get; set; }
+
+        /// <summary>
         /// 项目名称
         /// </summary>
-		[Column(Caption = "项目名称")]
+        [Column(Caption = "项目名称")]
         public string ItemName { get; set; }
 
 		/// <summary>

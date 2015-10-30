@@ -407,6 +407,41 @@ namespace Zeniths.Hr.Service
             return repos.Page(query);
         }
 
+        /// <summary>
+        /// 获取日常费用报销分页列表
+        /// </summary>
+        /// <param name="pageIndex">页面索引</param>
+        /// <param name="pageSize">分页大小</param>
+        /// <param name="orderName">排序列名</param>
+        /// <param name="orderDir">排序方式</param>
+        /// <param name="name">查询关键字</param>
+        /// <returns>返回日常费用报销分页列表</returns>
+        public PageList<DailyReimburse> GetAllPageList(int pageIndex, int pageSize, string orderName, string orderDir, string name, string startDate, string endDate)
+        {
+            orderName = orderName.IsEmpty() ? nameof(DailyReimburse.Id) : orderName;//默认使用主键排序
+            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
+            var query = repos.NewQuery.Take(pageSize).Page(pageIndex).OrderBy(orderName, orderDir.IsAsc());
+
+            if (name.IsNotEmpty())
+            {
+                name = name.Trim();
+                query.Where(p => p.ReimburseDepartmentName.Contains(name) || p.ApplyOpinion.Contains(name)||p.ApplicantName.Contains(name));
+            }
+            if (startDate.IsNotEmpty())
+            {
+                var startDateDT = startDate.ToDateTime();
+                query.Where(p => p.ApplicationDate >= startDateDT);
+            }
+
+            if (endDate.IsNotEmpty())
+            {
+                var endDateDT = endDate.ToDateTime().AddDays(1);
+                query.Where(p => p.ApplicationDate <= endDateDT);
+            }
+
+            return repos.Page(query);
+        }
+
         #region 私有方法
 
 

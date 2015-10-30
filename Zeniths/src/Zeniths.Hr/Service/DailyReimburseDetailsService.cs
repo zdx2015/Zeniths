@@ -182,6 +182,9 @@ namespace Zeniths.Hr.Service
             return repos.Page(query);
         }
 
+
+       
+
         #region 私有方法
 
 

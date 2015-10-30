@@ -15,6 +15,7 @@ using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.Utility;
 using Zeniths.Hr.Utility;
+using Zeniths.Auth.Service;
 
 namespace Zeniths.Web.Areas.Hr.Controllers
 {
@@ -28,6 +29,14 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// 服务对象
         /// </summary>
         private readonly DailyReimburseDetailsService service = new DailyReimburseDetailsService();
+        private readonly SystemDictionaryService  dicSevice = new SystemDictionaryService();
+
+        private object SessionData
+        {
+            get { return Session["DailyReimburseDetails"]; }
+            set { Session["DailyReimburseDetails"] = value; }
+
+        }
 
         /// <summary>
         /// 主视图
@@ -70,7 +79,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         public ActionResult Edit(string id)
         {
             DailyReimburseDetails entity = new DailyReimburseDetails(); //service.Get(id.ToInt());
-            var list = (List<DailyReimburseDetails>)Session["DailyReimburseDetails"];
+            var list = (List<DailyReimburseDetails>)SessionData;
             if (list != null)
             {
                 foreach (var item in list)
@@ -82,14 +91,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
                             entity = item;
                         }
                     }
-                    //else
-                    //{
-                    //    if (item.TempSortNum == TempSortNum.ToInt())
-                    //    {
-                    //        entity = item;
-                    //    }
-
-                    //}
+                   
                 }
             }
 
@@ -132,24 +134,29 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             {
                 return Json(hasResult);
             }
+
+
             var result = BoolMessage.True;
             try
             {
                 List<DailyReimburseDetails> list = new List<DailyReimburseDetails>();
 
-                if (Session["DailyReimburseDetails"] == null)
+                if (SessionData == null)
                 {
-                    Session["DailyReimburseDetails"] = list;
+                    SessionData = list;
                 }
                 else
                 {
-                    list = (List<DailyReimburseDetails>)Session["DailyReimburseDetails"];
+                    list = (List<DailyReimburseDetails>)SessionData;
                 }
                 if (entity.Id == 0)
                 {
-                    //if (entity.TempSortNum == 0)
-                    //{
-                        //entity.TempSortNum = list.Count + 1;
+                    var isCorrect = IsCorrectSelect("DailyReimburseCategory", entity.CategoryName, entity.ItemId);
+                    if (!isCorrect.Success)
+                    {
+                        return Json(isCorrect);
+                    }
+
                     if (list.Count > 0)
                     {
                         entity.Id = list[list.Count - 1].Id + 1;
@@ -159,22 +166,8 @@ namespace Zeniths.Web.Areas.Hr.Controllers
                         entity.Id = 1;
                     }
                     list.Add(entity);
-                        Session["DailyReimburseDetails"] = list;
-                    //}
-                    //else
-                    //{
-                    //    foreach (var item in list)
-                    //    {
-                    //        if (item.TempSortNum == entity.TempSortNum)
-                    //        {
-                    //            item.CategoryId = entity.CategoryId;
-                    //            item.CategoryName = entity.CategoryName;
-                    //            item.ItemName = entity.ItemName;
-                    //            item.Amount = entity.Amount;
-                    //        }
-                    //    }
-                    //    Session["DailyReimburseDetails"] = list;
-                    //}
+                    SessionData = list;
+                  
                 }
                 else
                 {
@@ -188,7 +181,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
                             item.Amount = entity.Amount;
                         }
                     }
-                    Session["DailyReimburseDetails"] = list;
+                    SessionData = list;
 
                 }
             }
@@ -197,9 +190,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
 
                 result = new BoolMessage(false,e.Message);
             }
-            
-
-           // entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
+          
             return Json(result);
         }
 
@@ -207,7 +198,6 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// 删除数据
         /// </summary>
         /// <param name="id">主键</param>
-        /// <param name="TempSortNum">临时虚拟序号</param>
         /// <returns>返回JsonMessage</returns>
         [HttpPost]
         public ActionResult Delete(string id)
@@ -215,7 +205,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var result = BoolMessage.True;
             try
             {
-                var list = (List<DailyReimburseDetails>)Session["DailyReimburseDetails"];
+                var list = (List<DailyReimburseDetails>)SessionData;
 
                 var ids = StringHelper.ConvertToArrayInt(id);
                 for (int i = 0; i < ids.Length; i++)
@@ -229,7 +219,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
                         }
                     }
                 }
-                Session["DailyReimburseDetails"] = list;
+                SessionData = list;
             }
             catch (Exception e)
             {
@@ -248,6 +238,34 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         public ActionResult Export()
         {
             return Export(service.GetList());
+        }
+
+        /// <summary>
+        /// 判断所选的大类和项目名称是否匹配
+        /// </summary>
+        /// <param name="dicCode"></param>
+        /// <param name="dicName"></param>
+        /// <param name="dicDetaiId"></param>
+        /// <returns></returns>
+        private BoolMessage IsCorrectSelect(string dicCode, string dicName, int dicDetaiId)
+        {
+            if (!string.IsNullOrEmpty(dicName))
+            {
+                dicName = dicName.Substring(dicName.IndexOf(":") + 1);
+            }
+            var dicId = dicSevice.GetIDByCodeAndName(dicCode, dicName);
+            var dicDetailEntity = dicSevice.GetDetails(dicDetaiId);
+
+            if (dicId == dicDetailEntity.DictionaryId)
+            {
+                return  BoolMessage.True;
+            }
+            else
+            {
+                
+                return new BoolMessage(false,"项目名称 和所选 费用类别 不匹配");
+            }
+
         }
     }
 }

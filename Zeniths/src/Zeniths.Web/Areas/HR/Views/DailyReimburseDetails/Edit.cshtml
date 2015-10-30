@@ -14,7 +14,8 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@nameof(Model.Id)" id="@nameof(Model.Id)" value="@Model.Id"/>
                 <input type="hidden" name="@nameof(Model.CategoryName)" id="CategoryName" value="@Model.CategoryName"/>
-                <input type="hidden" name="@nameof(Model.TempSortNum)" id="TempSortNum" value="@Model.TempSortNum" />
+                <input type="hidden" name="@nameof(Model.TempSortNum)" id="TempSortNum" value="@Model.TempSortNum"/>
+                <input type="hidden" name="@nameof(Model.ItemName)" id="ItemName" value="@Model.ItemName" />
                 <table class="table table-form table-dialog-form">
                     <tr>
                         <th>
@@ -22,9 +23,9 @@
                         </th>
                         <td>
                             <div>
-                                <select class="select2-control w-500px form-control" name="@nameof(Model.CategoryId)" id="CategoryId" data-placeholder="请选择费用类别" onchange="selectChange();">
+                                <select class="select2-control w-500px form-control" name="@nameof(Model.CategoryId)" id="CategoryId" data-placeholder="请选择费用类别" >
                                     <option></option>
-                                    @Html.DailyReimburseDetailCategoryOptions(Model.CategoryId.ToString());
+                                    @Html.DailyReimburseDicCategoryOptions(Model.CategoryId.ToString());
                                 </select>
                             </div>
 
@@ -37,7 +38,11 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.ItemName)" value="@Model.ItemName" id="ItemName" type="text" readonly/>
+                                @*<input class="form-control" name="@nameof(Model.ItemName)" value="@Model.ItemName" id="ItemName" type="text" readonly/>*@
+                                <select class="select2-control w-500px form-control" name="@nameof(Model.ItemId)" id="ItemId" data-placeholder="请选择项目名称" >
+                                    <option></option>
+                                    @Html.DailyReimburseDetailCategoryOptions(Model.ItemId.ToString());
+                                </select>
                             </div>
                         </td>
                     </tr>
@@ -80,7 +85,7 @@
             $('.editform').dataform().initSelect2().initValidate({
                 rules: {
                   
-                    ItemName: {
+                    ItemId: {
                         required: true
                         /*,maxlength: 100
                           ,digits: true
@@ -101,7 +106,7 @@
                     } 
                 },
                 messages: {
-                    ItemName: {
+                    ItemId: {
                         required: '请填写项目名称'
                         /*,maxlength: '长度不能超过100'
                           ,digits: '只能输入正整数'
@@ -121,16 +126,22 @@
                     } 
                 },
                 beforeSubmit: function () {
+                   
                     var cName = $('#CategoryId option:selected').text();
                     $('#CategoryName').val(cName);
+                  
+                    var iName = $('#ItemId option:selected').text();
+                 
+                    $('#ItemName').val(iName);
+                 
                 }
             }).initAjax({ success: zeniths.util.formAjaxSuccess });
 
         });
 
-        function selectChange() {
-            var selText = $('#CategoryId').find('option:selected').text();
-            $('#ItemName').val(selText);
-        };
+        //function selectChange() {
+        //    var selText = $('#CategoryId').find('option:selected').text();
+        //    $('#ItemName').val(selText);
+        //};
     </script>
 }

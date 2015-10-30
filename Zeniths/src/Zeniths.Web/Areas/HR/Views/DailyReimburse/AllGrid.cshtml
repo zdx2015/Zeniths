@@ -9,6 +9,8 @@
                 <label><input class="checkbox-check" type="checkbox"><span></span></label>
             </th>
             <th class="w-100px" data-order="@nameof(DailyReimburse.ReimburseDepartmentName)">所属部门/项目</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ApplicantName)">经办人</th>
+            <th class="w-100px" data-order="@nameof(DailyReimburse.ApplicationDate)">填报日期</th>
             <th class="w-100px" data-order="@nameof(DailyReimburse.ProjectSumMoney)">报销金额</th>
             <th class="w-100px" data-order="@nameof(DailyReimburse.ApplyOpinion)">申请情况说明</th>
             <th class="w-100px" data-order="@nameof(DailyReimburse.StepName)">当前审批步骤</th>
@@ -27,7 +29,8 @@
                 </td>
 
                 <td>@record.ReimburseDepartmentName</td>
-
+                <td>@record.ApplicantName</td>
+                <td>@DateTimeHelper.FormatDate(record.ApplicationDate)</td>
                 <td>@record.ProjectSumMoney</td>
                 <td>@record.ApplyOpinion</td>
                 <td>@record.StepName</td>
@@ -52,9 +55,9 @@
                     <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("AllDetails",new {id = record.Id})">
                         <i class="fa fa-eye"></i> 查看
                     </a>
-                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                    @*<a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
                         <i class="fa fa-edit"></i> 编辑
-                    </a>
+                    </a>*@
                     
                 </td>
             </tr>

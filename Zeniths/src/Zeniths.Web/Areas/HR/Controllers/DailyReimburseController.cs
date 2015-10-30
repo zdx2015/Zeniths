@@ -30,7 +30,13 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         private readonly DailyReimburseService service = new DailyReimburseService();
         private readonly DailyReimburseDetailsService detailsService = new DailyReimburseDetailsService();
 
-      
+        private object SessionData
+        {
+            get { return Session["DailyReimburseDetails"]; }
+            set { Session["DailyReimburseDetails"] = value; }
+
+        }
+
         /// <summary>
         /// 主视图
         /// </summary>
@@ -69,13 +75,13 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public ActionResult AllGrid(string name)
+        public ActionResult AllGrid(string name, string startDate, string endDate)
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name);
+            var list = service.GetAllPageList(pageIndex, pageSize, orderName, orderDir, name, startDate, endDate);
             return View(list);
         }
 
@@ -89,7 +95,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = (List<DailyReimburseDetails>)Session["DailyReimburseDetails"];
+            var list = (List<DailyReimburseDetails>)SessionData;
             if(list == null)
             {
                 list = new List<DailyReimburseDetails>();
@@ -107,7 +113,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = (List<DailyReimburseDetails>)Session["DailyReimburseDetails"];
+            var list = (List<DailyReimburseDetails>)SessionData;
             if (list == null)
             {
                 list = new List<DailyReimburseDetails>();
@@ -126,7 +132,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = (List<DailyReimburseDetails>)Session["DailyReimburseDetails"];
+            var list = (List<DailyReimburseDetails>)SessionData;
             if (list == null)
             {
                 list = new List<DailyReimburseDetails>();
@@ -145,7 +151,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var entity = new DailyReimburse();
             entity.ReimburseDepartmentName = CurrentUser.DepartmentName;
             entity.ApplicantName = CurrentUser.Name;
-            Session["DailyReimburseDetails"] = null;
+            SessionData = null;
             ViewBag.Title = "添加日常费用报销";
             return EditCore(entity);
         }
@@ -160,7 +166,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
           
             var entity = service.Get(id.ToInt());
             var list = detailsService.GetList(id.ToInt());
-            Session["DailyReimburseDetails"] = list;
+            SessionData = list;
             ViewBag.Title = "编辑日常费用报销";
             return EditCore(entity);
         }
@@ -176,7 +182,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
            
             var entity = service.Get(id.ToInt());
             var list = detailsService.GetList(id.ToInt());
-            Session["DailyReimburseDetails"] = list;
+            SessionData = list;
             ViewBag.Title = "查看日常费用报销";
             return View(entity);
         }
@@ -190,7 +196,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         {
             var entity = service.Get(id.ToInt());
             var list = detailsService.GetList(id.ToInt());
-            Session["DailyReimburseDetails"] = list;
+            SessionData = list;
             ViewBag.Title = "查看日常费用报销";
             return View(entity);
         }
@@ -241,7 +247,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
                 entity.CreateDepartmentName = CurrentUser.DepartmentName;
                 entity.CreateDateTime = DateTime.Now;
                 entity.ProjectSumMoney = 0;
-                var curlist = (List<DailyReimburseDetails>)Session["DailyReimburseDetails"];
+                var curlist = (List<DailyReimburseDetails>)SessionData;
                 foreach (var item in curlist)
                 {
                     item.ReimburseId = entity.Id;

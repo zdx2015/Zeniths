@@ -277,13 +277,30 @@ ON dic.Id = details.DictionaryId AND dic.Code=@code ORDER BY details.SortIndex";
             var sql = @"
                     SELECT a.Id,a.DictionaryId,a.Name,b.Name AS Category ,a.NameSpell,a.Value,a.IsEnabled,a.SortIndex,a.Note
                     FROM dbo.SystemDictionaryDetails a JOIN (
-                    SELECT Id,Name FROM  dbo.SystemDictionary WHERE ParentId in (
-                    SELECT Id FROM dbo.SystemDictionary WHERE Code=@code )
+                    SELECT Id,Name FROM  SystemDictionary WHERE ParentId in (
+                    SELECT Id FROM SystemDictionary WHERE Code=@code )
                     ) b
                     ON a.DictionaryId = b.Id ";
              
             return detailExRepos.Database.Query<SystemDictionaryDetailExtend>(sql, new { code = dicCode }).ToList();
         }
+
+        /// <summary>
+        /// 根据编码和名称找出字典ID
+        /// </summary>
+        /// <param name="dicCode"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public int GetIDByCodeAndName(string dicCode, string name)
+        {
+            var sql = @"  
+                    SELECT Id FROM SystemDictionary WHERE ParentId = (               
+                    SELECT Id FROM SystemDictionary WHERE Code=@code ) 
+                    AND Name=@name ";
+
+            return detailExRepos.Database.ExecuteScalar<int>(sql,new { code = dicCode,name = name }).ToInt();
+        }
+
 
 
 
