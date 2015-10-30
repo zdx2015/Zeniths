@@ -31,13 +31,21 @@
                 <td>@record.ProjectSumMoney</td>
                 <td>@record.ApplyOpinion</td>
                 <td>@record.StepName</td>
-                @if (record.StepStatus)
+                @if (record.StepStatus.HasValue)
                 {
-                    <td>通过</td>
+                    if (record.StepStatus.Value)
+                     {
+                         <td>通过</td>
+                     }
+                     else
+                     {
+                         <td>不通过</td>
+                     }
                 }
                 else
                 {
-                    <td>不通过</td>
+                    <td></td>
+  
                 }
                 @if (record.IsFinish)
                 {
@@ -55,9 +63,9 @@
                     <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
                         <i class="fa fa-edit"></i> 编辑
                     </a>
-                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                    @*<a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
                         <i class="fa fa-trash-o"></i> 删除
-                    </a>
+                    </a>*@
                 </td>
             </tr>
         }

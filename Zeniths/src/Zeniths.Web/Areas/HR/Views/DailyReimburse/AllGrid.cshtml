@@ -34,13 +34,21 @@
                 <td>@record.ProjectSumMoney</td>
                 <td>@record.ApplyOpinion</td>
                 <td>@record.StepName</td>
-                @if (record.StepStatus)
+                @if (record.StepStatus.HasValue)
                 {
-                    <td>通过</td>
+                    if (record.StepStatus.Value)
+                    {
+                        <td>通过</td>
+                    }
+                    else
+                    {
+                        <td>不通过</td>
+                    }
                 }
                 else
                 {
-                    <td>不通过</td>
+                    <td></td>
+
                 }
                 @if (record.IsFinish)
                 {

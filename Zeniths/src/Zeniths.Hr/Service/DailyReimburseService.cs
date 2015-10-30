@@ -135,20 +135,19 @@ namespace Zeniths.Hr.Service
         /// <returns></returns>
         public BoolMessage Update(DailyReimburse entity,int actionFlag)
         {
-            DailyReimburse oldEntity = Get(entity.Id);//取出修改前的数据
+          
             switch (actionFlag)
             {
                 case 1:
                     try
                     {
-                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.DepartmentManagerId, p => p.DepartmentManagerIsAudit, p => p.DepartmentManagerOpinion, p => p.DepartmentManagerSign, p => p.DepartmentManagerSignDate);
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.DepartmentManagerId, p => p.DepartmentManagerIsAudit, p => p.DepartmentManagerOpinion, p => p.DepartmentManagerSign, p => p.DepartmentManagerSignDate,p=>p.FlowInstanceId,p=>p.StepId,p=>p.StepName,p=>p.StepStatus);
                         if (count > 0)
                         {
                             return BoolMessage.True;
                         }
                         else
                         {
-                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.DepartmentManagerId, p => p.DepartmentManagerIsAudit, p => p.DepartmentManagerOpinion, p => p.DepartmentManagerSign, p => p.DepartmentManagerSignDate);
                             return BoolMessage.False;
                         }
                     }
@@ -160,14 +159,14 @@ namespace Zeniths.Hr.Service
                 case 2:
                     try
                     {
-                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.AccountantId, p => p.AccountantIsAudit, p => p.AccountantOpinion, p => p.AccountantSign, p => p.AccountantSignDate);
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.AccountantId, p => p.AccountantIsAudit, p => p.AccountantOpinion, p => p.AccountantSign, p => p.AccountantSignDate, p => p.FlowInstanceId, p => p.StepId, p => p.StepName, p => p.StepStatus);
                         if (count > 0)
                         {
                             return BoolMessage.True;
                         }
                         else
                         {
-                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.AccountantId, p => p.AccountantIsAudit, p => p.AccountantOpinion, p => p.AccountantSign, p => p.AccountantSignDate);
+                           
                             return BoolMessage.False;
                         }
                     }
@@ -179,14 +178,14 @@ namespace Zeniths.Hr.Service
                 case 3:
                     try
                     {
-                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.FinancialManagerId, p => p.FinancialManagerIsAudit, p => p.FinancialManagerOpinion, p => p.FinancialManagerSign, p => p.FinancialManagerSignDate);
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.FinancialManagerId, p => p.FinancialManagerIsAudit, p => p.FinancialManagerOpinion, p => p.FinancialManagerSign, p => p.FinancialManagerSignDate, p => p.FlowInstanceId, p => p.StepId, p => p.StepName, p => p.StepStatus);
                         if (count > 0)
                         {
                             return BoolMessage.True;
                         }
                         else
                         {
-                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.FinancialManagerId, p => p.FinancialManagerIsAudit, p => p.FinancialManagerOpinion, p => p.FinancialManagerSign, p => p.FinancialManagerSignDate);
+                           
                             return BoolMessage.False;
                         }
                     }
@@ -198,14 +197,14 @@ namespace Zeniths.Hr.Service
                 case 4:
                     try
                     {
-                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.GeneralManagerId, p => p.GeneralManagerIsAudit, p => p.GeneralManagerOpinion, p => p.GeneralManagerSign, p => p.GeneralManagerSignDate);
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.GeneralManagerId, p => p.GeneralManagerIsAudit, p => p.GeneralManagerOpinion, p => p.GeneralManagerSign, p => p.GeneralManagerSignDate, p => p.FlowInstanceId, p => p.StepId, p => p.StepName, p => p.StepStatus);
                         if (count > 0)
                         {
                             return BoolMessage.True;
                         }
                         else
                         {
-                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.GeneralManagerId, p => p.GeneralManagerIsAudit, p => p.GeneralManagerOpinion, p => p.GeneralManagerSign, p => p.GeneralManagerSignDate);
+                            
                             return BoolMessage.False;
                         }
                     }
@@ -217,14 +216,14 @@ namespace Zeniths.Hr.Service
                 case 5:
                     try
                     {
-                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.ChairmanId, p => p.ChairmanIsAudit, p => p.ChairmanOpinion, p => p.ChairmanSign, p => p.ChairmanSignDate);
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.ChairmanId, p => p.ChairmanIsAudit, p => p.ChairmanOpinion, p => p.ChairmanSign, p => p.ChairmanSignDate, p => p.FlowInstanceId, p => p.StepId, p => p.StepName, p => p.StepStatus);
                         if (count > 0)
                         {
                             return BoolMessage.True;
                         }
                         else
                         {
-                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.ChairmanId, p => p.ChairmanIsAudit, p => p.ChairmanOpinion, p => p.ChairmanSign, p => p.ChairmanSignDate);
+                           
                             return BoolMessage.False;
                         }
                     }
@@ -236,14 +235,14 @@ namespace Zeniths.Hr.Service
                 case 6:
                     try
                     {
-                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.CashierId, p => p.CashierName, p => p.CashierUpdateDateTime);
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.CashierId, p => p.CashierName, p => p.CashierUpdateDateTime, p => p.FlowInstanceId, p => p.StepId, p => p.StepName, p => p.StepStatus);
                         if (count > 0)
                         {
                             return BoolMessage.True;
                         }
                         else
                         {
-                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.CashierId, p => p.CashierName, p => p.CashierUpdateDateTime);
+                           
                             return BoolMessage.False;
                         }
                     }
@@ -255,14 +254,14 @@ namespace Zeniths.Hr.Service
                 case 7:
                     try
                     {
-                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.AddDepartmentManagerId, p => p.AddDepartmentManagerIsAudit, p => p.AddDepartmentManagerOpinion, p => p.AddDepartmentManagerSign, p => p.AddDepartmentManagerSignDate);
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.AddDepartmentManagerId, p => p.AddDepartmentManagerIsAudit, p => p.AddDepartmentManagerOpinion, p => p.AddDepartmentManagerSign, p => p.AddDepartmentManagerSignDate, p => p.FlowInstanceId, p => p.StepId, p => p.StepName, p => p.StepStatus);
                         if (count > 0)
                         {
                             return BoolMessage.True;
                         }
                         else
                         {
-                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.AddDepartmentManagerId, p => p.AddDepartmentManagerIsAudit, p => p.AddDepartmentManagerOpinion, p => p.AddDepartmentManagerSign, p => p.AddDepartmentManagerSignDate);
+                           
                             return BoolMessage.False;
                         }
                     }
@@ -274,14 +273,14 @@ namespace Zeniths.Hr.Service
                 case 8:
                     try
                     {
-                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.AddGeneralManagerId, p => p.AddGeneralManagerIsAudit, p => p.AddGeneralManagerOpinion, p => p.AddGeneralManagerSign, p => p.AddGeneralManagerSignDate);
+                        var count = repos.Update(entity, p => p.Id == entity.Id, p => p.AddGeneralManagerId, p => p.AddGeneralManagerIsAudit, p => p.AddGeneralManagerOpinion, p => p.AddGeneralManagerSign, p => p.AddGeneralManagerSignDate, p => p.FlowInstanceId, p => p.StepId, p => p.StepName, p => p.StepStatus);
                         if (count > 0)
                         {
                             return BoolMessage.True;
                         }
                         else
                         {
-                            repos.Update(oldEntity, p => p.Id == oldEntity.Id, p => p.AddGeneralManagerId, p => p.AddGeneralManagerIsAudit, p => p.AddGeneralManagerOpinion, p => p.AddGeneralManagerSign, p => p.AddGeneralManagerSignDate);
+                           
                             return BoolMessage.False;
                         }
                     }
