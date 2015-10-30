@@ -39,9 +39,9 @@ namespace Zeniths.Hr.Utility
         /// <param name="helper"></param>
         /// <param name="selected"></param>
         /// <returns></returns>
-        public static MvcHtmlString LeaveCategoryOptitions(this HtmlHelper helper,string selected=null)
+        public static MvcHtmlString LeaveCategoryOptitions(this HtmlHelper helper,string controlName, string selected=null)
         {
-            return MvcHtmlString.Create(AuthHelper.BuildDicOptions("LeaveCategory", selected));
+            return MvcHtmlString.Create(AuthHelper.BuildDicRadioBoxList("LeaveCategory", controlName, selected));
         }
     }
 }

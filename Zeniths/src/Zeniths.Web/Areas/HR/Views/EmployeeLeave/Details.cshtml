@@ -1,8 +1,10 @@
 ﻿@model EmployeeLeave
 @{
-    var title = "查看请休假申请";
+    var title = "请休假申请详情";
 }
-
+@section style{
+    <link href="~/Plugin/zeniths.web/css/form.layout.css" rel="stylesheet" />
+}
 <div class="container-edit-zeniths">
     <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
@@ -13,434 +15,47 @@
             <div class="panel-body">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
-                <table class="table table-form table-dialog-form">
-                
-                    <tr>
-                        <th class="w-100px">
-                            <label class="control-label">员工主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.EmployeeId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">员工姓名：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.EmployeeName</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">部门主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.DeparmentId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">部门名称：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.Deparment</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">岗位：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.Post</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">请假类别：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.LeaveCategory</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">请假开始日期：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.StartDate)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">请假结束日期：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.EndDate)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">请假天数：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.Days</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">请假事由：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.Reason</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">申请时间：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.ApplyDateTime)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">工作代理人主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.JobAgentId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">工作代理人是否同意：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Html.BoolLabel(Model.JobAgentIsAudit)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">工作代理人意见：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.JobAgentOpinion</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">工作代理人签字：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.JobAgentSign</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">工作代理人签字日期：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.JobAgentSignDate)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">部门负责人主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.DepartmentManagerId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">部门负责人是否同意：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Html.BoolLabel(Model.DepartmentManagerIsAudit)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">部门负责人意见：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.DepartmentManagerOpinion</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">部门负责人签字：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.DepartmentManagerSign</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">部门负责人签字日期：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.DepartmentManagerSignDate)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">总经理主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.GeneralManagerId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">总经理是否同意：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Html.BoolLabel(Model.GeneralManagerIsAudit)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">总经理意见：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.GeneralManagerOpinion</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">总经理签字：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.GeneralManagerSign</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">总经理签字日期：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.GeneralManagerSignDate)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">销假时间：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.CancelLeaveDateTime)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">实休天数：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.ActualDays</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">销假人主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.CancelLeavePersonId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">销假人姓名：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.CancelLeavePersonName</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">部门负责人(销假)主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.DepartmentManagerCancelId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">部门负责人(销假]是否同意：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Html.BoolLabel(Model.DepartmentManagerCancelIsAudit)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">部门负责人(销假]意见：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.DepartmentManagerCancelOpinion</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">部门负责人(销假]签字：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.DepartmentManagerCancelSign</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">部门负责人(销假]签字日期：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.DepartmentManagerCancelSignDate)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">行政人力资源部主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.HRManagerId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">行政人力资源部是否同意：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Html.BoolLabel(Model.HRManagerIsAudit)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">行政人力资源部意见：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.HRManagerOpinion</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">行政人力资源部签字：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.HRManagerSign</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">行政人力资源部签字日期：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.HRManagerSignDate)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">任务名称：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.Title</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">流程主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.FlowId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">流程名称：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.FlowName</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">流程实例主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.FlowInstanceId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">步骤主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.StepId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">步骤名称：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.StepName</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">流程是否完成：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Html.BoolLabel(Model.IsFinish)</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">创建用户主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.CreateUserId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">创建用户姓名：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.CreateUserName</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">创建人部门主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.CreateDepartmentId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">创建人部门姓名：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.CreateDepartmentName</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">创建时间：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@DateTimeHelper.FormatDateHasSecond(Model.CreateDateTime)</p>
-                        </td>
-                    </tr>
-                                    
-                </table>
+
+                <!--tab 代码 开始 -->
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#BaseLeaveInfo" data-toggle="tab">
+                                请休假基本信息
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#LeaveStepList" data-toggle="tab">
+                                处理意见
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#LeaveStepimg" data-toggle="tab">
+                                流程图
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="BaseLeaveInfo">
+                            @Html.Action("DetailsBaseLeave")
+                        </div>
+                        <div class="tab-pane" id="LeaveStepList">
+                            @Html.Action("DetailsOpinionContent")
+                        </div>
+                        <div class="tab-pane" id="LeaveStepimg">
+                            @Html.Action("DetailsWorkFlowChart")
+                        </div>
+                    </div>
+                </div>
+                <!-- tab 代码 结束 -->
+                <div class="panel-footer text-center">
+                    <div class="buttons">
+                        <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                            <i class="fa fa-sign-in"></i> 关闭
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="panel-footer text-center">
-            <div class="buttons">
-                <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
-                    <i class="fa fa-sign-in"></i> 关闭
-                </a>
-            </div>
-        </div>
         </div>
     </form>
 </div>

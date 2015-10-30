@@ -242,6 +242,9 @@
     <Content Include="Areas\HR\Views\EmployeeLeave\Index.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeLeave\ApproveOpinionEdit.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeLeave\CancelLeaveEdit.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\DetailsBaseLeave.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\DetailsOpinionContent.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\DetailsWorkFlowChart.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowRun\Send.cshtml" />

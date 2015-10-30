@@ -15,24 +15,24 @@
                 <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
                 <input type="hidden" name="@nameof(Model.EmployeeId)" value="@Model.EmployeeId" />
                 <input type="hidden" name="@nameof(Model.DeparmentId)" value="@Model.DeparmentId" />
-                <table class="table table-form table-dialog-form">                
+                <table class="table table-form table-dialog-form">
                     <tr>
-                        <th >
-                            <label class="control-label">员工姓名：</label>
+                        <th class="w-120px">
+                            <label class="required" aria-required="true"></label><label class="control-label">姓名：</label>
                         </th>
                         <td colspan="3">
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.EmployeeName)" value="@Model.EmployeeName" type="text" readonly/>
+                                <input class="form-control" name="@nameof(Model.EmployeeName)" value="@Model.EmployeeName" type="text" readonly />
                             </div>
                         </td>
-                    </tr>                   
+                    </tr>
                     <tr>
-                        <th >
-                            <label class="control-label">部门名称：</label>
+                        <th>
+                            <label class="required" aria-required="true"></label> <label class="control-label">部门：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Deparment)" value="@Model.Deparment" type="text" readonly/>
+                                <input class="form-control" name="@nameof(Model.Deparment)" value="@Model.Deparment" type="text" readonly />
                             </div>
                         </td>
                         <th>
@@ -43,50 +43,42 @@
                                 <input class="form-control" name="@nameof(Model.Post)" value="@Model.Post" type="text" readonly />
                             </div>
                         </td>
-                    </tr>                   
-                    <tr>
-                        <th>
-                            <label class="control-label">请假类别：</label>
-                        </th>
-                        <td colspan="3">  
-                            <div class="input-icon right">
-                                <div class="radio-list">                                   
-                                    <label class="radio-inline">
-                                        <input class="iradiobox-control" name="@nameof(Model.LeaveCategory)" value="事假" type="radio">
-                                        <span class="radio-label-name">事假</span>
-                                    </label>
-                                   
-                                    @*@Zeniths.Hr.Utility.HtmlExtensions.LeaveCategoryOptitions()*@
-
-                                    @*@{HtmlExtensions.LeaveCategoryOptitions("ddd")}*@
-                                                       
-                                </div>
-                            </div>
-
-                        </td>
                     </tr>
                     <tr>
-                        <th >
-                            <label class="control-label">请假时间：</label>
+                        <th>
+                            <label class="required" aria-required="true"></label><label class="control-label">请假类别：</label>
                         </th>
                         <td colspan="3">
                             <div class="input-icon right">
-                                自 <input class="date-control form-control" name="@nameof(Model.StartDatetime)" value="@Model.StartDatetime" type="text" />至
-                                <input class="date-control form-control" name="@nameof(Model.EndDatetime)" value="@Model.EndDatetime" type="text" />&nbsp;&nbsp;&nbsp;&nbsp;共
-                                <input class="form-control" name="@nameof(Model.Days)" value="@Model.Days" type="text" />天
+                                @Html.LeaveCategoryOptitions(nameof(Model.LeaveCategory), Model.LeaveCategory)
                             </div>
                         </td>
-                    </tr>                 
+                    </tr>
                     <tr>
-                        <th >
+                        <th>
+                            <label class="required" aria-required="true"></label><label class="control-label">请假时间：</label>
+                        </th>
+                        <td colspan="3">
+                            <div class="input-icon right">
+                                <div class="input-icon right form-inline">
+                                    自
+                                    <input class="datetime-control form-control w-180px" id="@nameof(Model.StartDatetime)" name="@nameof(Model.StartDatetime)" value="@DateTimeHelper.FormatDateHasMinute(Model.StartDatetime)" type="text" />至
+                                    <input class="datetime-control form-control w-180px" id="@nameof(Model.EndDatetime)" name="@nameof(Model.EndDatetime)" value="@DateTimeHelper.FormatDateHasMinute(@Model.EndDatetime)" type="text" />&nbsp;&nbsp;&nbsp;&nbsp;共
+                                    <input class="form-control w-80px" name="@nameof(Model.Days)" value="@Model.Days" type="text" />天
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             <label class="control-label">请假事由：</label>
                         </th>
                         <td colspan="3">
                             <div class="input-icon right">
-                                <textarea class="form-control" name="@nameof(Model.Reason)" rows="2">@Model.Reason</textarea>
+                                <textarea class="form-control" name="@nameof(Model.Reason)" rows="3">@Model.Reason</textarea>
                             </div>
                         </td>
-                    </tr>        
+                    </tr>
                 </table>
             </div>
             <div class="panel-footer text-center">
@@ -104,56 +96,63 @@
     </form>
 </div>
 
-
 @section style{
     <link href="~/Plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 }
 
 @section script{
-<script src="~/Plugin/bootstrap-daterangepicker/js/moment.min.js"></script>
-<script src="~/Plugin/bootstrap-daterangepicker/js/zh-cn.js"></script>
-<script src="~/Plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script src="~/Plugin/bootstrap-daterangepicker/js/moment.min.js"></script>
+    <script src="~/Plugin/bootstrap-daterangepicker/js/zh-cn.js"></script>
+    <script src="~/Plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
     <script>
 
         $(function () {
-            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
-            $('.editform').dataform().initDatePicker().initValidate({
-                rules: {                    
+            $('.editform').dataform().initiCheck().initDateTimePicker().initValidate({
+                rules: {
                     EmployeeName: {
                         required: true
-                    },                    
+                    },
+                    Deparment: {
+                        required: true
+                    },
                     LeaveCategory: {
-                        required: true                       
-                    }, 
-                    StartDate: {
-                        required: true                       
-                    }, 
-                    EndDate: {
-                        required: true                       
-                    }, 
+                        required: true
+                    },
+                    StartDatetime: {
+                        required: true
+                    },
+                    EndDatetime: {
+                        required: true,
+                        compareDate: "#StartDatetime"
+                    },
                     Days: {
-                        required: true                        
+                        required: true
                     }
                 },
-                messages: {                  
+                messages: {
                     EmployeeName: {
                         required: '员工姓名不能为空'
-                    }, 
+                    },
+                    Deparment: {
+                        required: '部门不能为空'
+                    },
                     LeaveCategory: {
-                        required: '请选择请假类别'                       
-                    }, 
-                    StartDate: {
-                        required: '请选择预计请假开始时间'                       
-                    }, 
-                    EndDate: {
-                        required: '请选择预计请假结束日期'
-                    }, 
+                        required: '请选择请假类别'
+                    },
+                    StartDatetime: {
+                        required: '请选择请假开始时间'
+                    },
+                    EndDatetime: {
+                        required: '请选择请假结束时间',
+                        compareDate: '请假结束时间必须大于请假开始时间'
+                    },
                     Days: {
                         required: '请填写请假天数'
                     }
                 },
                 beforeSubmit: function () {
-                }
+                },
+                autoAddRequired: false
             }).initAjax({ success: zeniths.util.formAjaxSuccess });
 
         });

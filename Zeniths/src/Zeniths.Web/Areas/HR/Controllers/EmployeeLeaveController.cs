@@ -69,7 +69,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             leaveEntity.DeparmentId = currentEmployee.DepartmentId;
             leaveEntity.Deparment = currentEmployee.Department;
             leaveEntity.Post = currentEmployee.Post;
-            return EditCore(new EmployeeLeave());
+            return EditCore(leaveEntity);
         }
 
         /// <summary>
@@ -96,6 +96,39 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         }
 
         /// <summary>
+        /// 查看视图(请休假基本信息)
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>视图模板</returns>
+        public ActionResult DetailsBaseLeave(string id)
+        {
+            var entity = service.Get(id.ToInt());
+            return View(entity);
+        }
+
+        /// <summary>
+        /// 查看视图(处理意见信息)
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>视图模板</returns>
+        public ActionResult DetailsOpinionContent(string id)
+        {
+            var entity = service.Get(id.ToInt());
+            return View(entity);
+        }
+
+        /// <summary>
+        /// 查看视图(流程图)
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>视图模板</returns>
+        public ActionResult DetailsWorkFlowChart(string id)
+        {
+            var entity = service.Get(id.ToInt());
+            return View(entity);
+        }
+
+        /// <summary>
         /// 数据编辑视图
         /// </summary>
         /// <param name="entity">实体对象</param>
@@ -113,17 +146,25 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Save(EmployeeLeave entity)
-        {         
+        {
             if (entity.Id == 0)
             {
                 var currentUser = OrganizeHelper.GetCurrentUser();
                 entity.ApplyDateTime = DateTime.Now;
-                    
+
                 entity.CreateUserId = currentUser.Id;
                 entity.CreateUserName = currentUser.Name;
                 entity.CreateDepartmentId = currentUser.DepartmentId;
                 entity.CreateDepartmentName = currentUser.DepartmentName;
                 entity.CreateDateTime = DateTime.Now;
+
+                entity.Title = "";
+                entity.FlowId = "";
+                entity.FlowName = "";
+                entity.FlowInstanceId = "";
+                entity.StepId = "";
+                entity.StepName = "";
+                entity.IsFinish = false;
             }
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
             return Json(result);
@@ -148,6 +189,88 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         public ActionResult Export()
         {
             return Export(service.GetList());
+        }
+
+        /// <summary>
+        /// 更新销假信息视图
+        /// </summary>
+        /// <returns>视图模板</returns>
+        public ActionResult CancelLeaveEdit(string id)
+        {
+            var entity = service.Get(id.ToInt());
+            return View(entity);
+        }
+
+        /// <summary>
+        /// 更新工作代理人审批信息
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>返回JsonMessage</returns>
+        [HttpPost]
+        public ActionResult UpdateJobAgentApproval(EmployeeLeave entity)
+        {
+            var result = service.UpdateJobAgentApproval(entity);
+            return Json(result);
+        }
+
+        /// <summary>
+        /// 更新请休假部门负责人审批信息
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>返回JsonMessage</returns>
+        [HttpPost]
+        public ActionResult UpdateDepartmentManagerApproval(EmployeeLeave entity)
+        {
+            var result = service.UpdateDepartmentManagerApproval(entity);
+            return Json(result);
+        }
+
+        /// <summary>
+        /// 更新请休假总经理审批信息
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>返回JsonMessage</returns>
+        [HttpPost]
+        public ActionResult UpdateGeneralManagerApproval(EmployeeLeave entity)
+        {
+            var result = service.UpdateGeneralManagerApproval(entity);
+            return Json(result);
+        }
+
+        /// <summary>
+        /// 更新销假信息
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>返回JsonMessage</returns>
+        [HttpPost]
+        public ActionResult UpdateCancelLeaveInfo(EmployeeLeave entity)
+        {
+            var result = service.UpdateCancelLeaveInfo(entity);
+            return Json(result);
+        }
+
+        /// <summary>
+        /// 更新请休假销假部门负责人审批信息
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>返回JsonMessage</returns>
+        [HttpPost]
+        public ActionResult UpdateCancelLeaveDepartmentManagerApproval(EmployeeLeave entity)
+        {
+            var result = service.UpdateCancelLeaveDepartmentManagerApproval(entity);
+            return Json(result);
+        }
+
+        /// <summary>
+        /// 更新请休假销假行政人力资源部审批信息
+        /// </summary>
+        /// <param name="id">主键</param>
+        /// <returns>返回JsonMessage</returns>
+        [HttpPost]
+        public ActionResult UpdateCancelLeaveHRManagerApproval(EmployeeLeave entity)
+        {
+            var result = service.UpdateCancelLeaveHRManagerApproval(entity);
+            return Json(result);
         }
     }
 }
