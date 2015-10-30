@@ -254,9 +254,12 @@
     <Content Include="Areas\HR\Views\EmployeeLeave\GridWaitHandle.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeLeave\IndexAll.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeLeave\IndexWaitHandle.cshtml" />
-    <Content Include="Areas\HR\Views\EmpLeave\Approve.cshtml" />
-    <Content Include="Areas\HR\Views\EmpLeave\Complete.cshtml" />
-    <Content Include="Areas\HR\Views\EmpLeave\_DetailsCommon.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\AllDetails.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\AllGrid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\AllIndex.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\AllViewGrid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\DetailGrid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\ViewGrid.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowRun\Send.cshtml" />
