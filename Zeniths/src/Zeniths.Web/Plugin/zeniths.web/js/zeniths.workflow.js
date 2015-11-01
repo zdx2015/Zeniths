@@ -12,6 +12,7 @@ zeniths.workflow = function () {
     self.workflow_client_model = null;
     self.selectStepDialogIndex = -1;
 
+    self.beformCommitCallback = null;
     self.saveCallback = null;
     self.sendCallback = null;
     self.backCallback = null;
@@ -70,6 +71,10 @@ zeniths.workflow = function () {
         //window.setTimeout('', 100);
 
         //"title":null,"opinion":null,"isAudit":null,"type":null,"steps":[]
+
+        if (self.beformCommitCallback) {
+            self.beformCommitCallback(self);
+        }
 
         var sendData = $.extend({}, self.extData, { _workflow_execute_params: JSON.stringify(self.workflow_execute_params) });
         self.$formElement.ajaxSubmit({
@@ -254,6 +259,11 @@ zeniths.workflow = function () {
 
             self.initButton();
         },
+
+        instance:function() {
+          return self;  
+        },
+
         /**
          * 初始化流程表单
          * @param {} $formElement 

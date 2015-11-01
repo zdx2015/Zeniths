@@ -64,7 +64,10 @@
                                 <legend>费用明细</legend>
                                 @Html.Action("DetailGrid", new { dailyId=Model.Id })
                             </fieldset>
-
+                            <fieldset>
+                                <legend>附件</legend>
+                                @Html.Action("Files", "System", new { area = "Auth", resName = nameof(DailyReimburse), resId = Model.Id, allowDelete = false })
+                            </fieldset>
                         </div>
 
                         <div class="tab-pane" id="DealOpinion" style="overflow-x: hidden; overflow-y: auto;">
