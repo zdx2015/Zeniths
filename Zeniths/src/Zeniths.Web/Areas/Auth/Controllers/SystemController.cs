@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Zeniths.Auth.Service;
 using Zeniths.Auth.Utility;
+using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.Utility;
 
@@ -73,6 +74,31 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         public ActionResult WebIcons()
         {
             return View();
+        }
+
+        public ActionResult Files(string resName, string resId,bool allowDelete = false)
+        {
+            ViewBag.allowDelete = allowDelete;
+            ViewBag.resName = resName;
+            ViewBag.resId = resId;
+            return View();
+        }
+
+        public ActionResult FilesGrid(string resName, string resId, bool allowDelete)
+        {
+            ViewBag.allowDelete = allowDelete;
+            ViewBag.resName = resName;
+            ViewBag.resId = resId;
+            SystemFileService service = new SystemFileService();
+            var list = service.GetList(resName, resId);
+            return View(list);
+        }
+
+        public ActionResult FileDelete(string id)
+        {
+            SystemFileService service = new SystemFileService();
+            var result = service.Delete(new[] { id.ToInt() });
+            return Json(result);
         }
     }
 }

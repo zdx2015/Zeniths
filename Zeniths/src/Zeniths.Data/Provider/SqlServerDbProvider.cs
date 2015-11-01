@@ -4,6 +4,8 @@
 using System;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Linq;
+using Zeniths.Data.Utilities;
 using Zeniths.Entity;
 
 namespace Zeniths.Data.Provider
@@ -55,6 +57,20 @@ namespace Zeniths.Data.Provider
                                  "select * from grid where rownum between {2} and {3}",
                                  orderBy, sql, startIndex, endIndex);
         }
+
+        public override string BuildPageQuery(long skip, long take, PagingHelper.SQLParts parts)
+        {
+            parts.sqlSelectRemoved = PagingHelper.rxOrderBy.Replace(parts.sqlSelectRemoved, "", 1);
+            if (PagingHelper.rxDistinct.IsMatch(parts.sqlSelectRemoved))
+            {
+                parts.sqlSelectRemoved = "peta_inner.* FROM (SELECT " + parts.sqlSelectRemoved + ") peta_inner";
+            }
+            var sqlPage = string.Format("SELECT * FROM (SELECT ROW_NUMBER() OVER ({0}) peta_rn, {1}) peta_paged WHERE peta_rn>{2} AND peta_rn<={3}",
+                                    parts.sqlOrderBy == null ? "ORDER BY (SELECT NULL)" : parts.sqlOrderBy, parts.sqlSelectRemoved, skip, skip + take);
+            
+            return sqlPage;
+        }
+
 
         /// <summary>
         /// 获取数据库工厂对象

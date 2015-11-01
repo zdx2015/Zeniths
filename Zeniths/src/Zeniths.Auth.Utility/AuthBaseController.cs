@@ -131,6 +131,29 @@ namespace Zeniths.Auth.Utility
         }
 
         /// <summary>
+        /// 更新资源主键
+        /// </summary>
+        /// <param name="newResourceId">新资源主键</param>
+        /// <returns>执行成功返回BoolMessage.True</returns>
+        protected BoolMessage UpdateFileResourceId(string newResourceId)
+        {
+            string resourceName = Request.Form["resName"];
+            string oldResourceId = Request.Form["resId"];
+            var service = new SystemFileService();
+            return service.UpdateResourceId(resourceName, oldResourceId, newResourceId);
+        }
+
+        /// <summary>
+        /// 更新资源主键
+        /// </summary>
+        /// <param name="newResourceId">新资源主键</param>
+        /// <returns>执行成功返回BoolMessage.True</returns>
+        protected BoolMessage UpdateFileResourceId(int newResourceId)
+        { 
+            return UpdateFileResourceId(newResourceId.ToString());
+        }
+
+        /// <summary>
         /// 文件上传Action
         /// </summary>
         /// <param name="resName">资源名称</param>

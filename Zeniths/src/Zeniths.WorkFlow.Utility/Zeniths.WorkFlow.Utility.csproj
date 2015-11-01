@@ -87,6 +87,7 @@
     <Compile Include="ExecuteResult.cs" />
     <Compile Include="WorkFlowBaseController.cs" />
     <Compile Include="HtmlExtensions.cs" />
+    <Compile Include="WorkFlowEventCaptionAttribute.cs" />
     <Compile Include="WorkFlowClientModel.cs" />
     <Compile Include="WorkFlowDesign.cs" />
     <Compile Include="WorkFlowEngine.cs" />

@@ -1,10 +1,12 @@
 ﻿@model SystemDoc
 @{
     var title = "编辑系统文档";
+    var resName = nameof(SystemDoc);
+    var resId = Model.Id > 0 ? Model.Id.ToString() : StringHelper.GetGuid();
 }
 
 <div class="container-edit-zeniths">
-    <form class="editform" action="@Url.Action("Save")" method="POST" role="form" enctype="multipart/form-data">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
                 <span class="prefix"> <strong>@Model.Id</strong></span>
@@ -14,6 +16,8 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
                 <input type="hidden" name="@nameof(Model.CreateDateTime)" value="@Model.CreateDateTime" />
+                <input type="hidden" name="resName" value="@resName" />
+                <input type="hidden" name="resId" value="@resId" />
                 <table class="table table-form table-dialog-form">
                     <tr>
                         <th class='w-120px'>
@@ -38,16 +42,19 @@
                     <tr>
                         <th><label class="control-label">内容：</label></th>
                         <td>
-                            <textarea class="editor-control form-control" name="@nameof(Model.Contents)" rows="24">@Model.Contents</textarea>
+                            <textarea class="editor-control form-control" name="@nameof(Model.Contents)" rows="5">@Model.Contents</textarea>
                         </td>
                     </tr>
                     <tr>
-                        <th><label class="control-label">上传附件：</label></th>
+                        <th><label class="control-label">附件：</label></th>
                         <td>
-                            <input id="fileInput" type="file" multiple="true" class="file-loading">
+                            @Html.Action("Files", "System", new { area = "Auth", resName, resId, allowDelete = true })
+                            <input name="fileInput" type="file" class="file-control file-loading" multiple>
                         </td>
                     </tr>
                 </table>
+
+
             </div>
             <div class="panel-footer text-center">
                 <div class="buttons">
@@ -79,7 +86,10 @@
 
         $(function () {
 
-            $('.editform').dataform().initSelect2().initTagsInput({
+            $('.editform').dataform().initSelect2().initFile({
+                resName: '@resName',
+                resId: '@resId'
+            }).initTag({
                 'height': '60px',
                 'width': '100%',
                 'defaultText': '添加标签'
@@ -97,45 +107,18 @@
                     }
                 },
                 beforeSubmit: function () {
+                    if ($('.file-control').data('fileinput').filenames.length > 0) {
+                        $(document.body).mask('正在上传文件...');
+                        $('.file-control').fileinput('upload');
+                        return false;
+                    } 
+                    return true;
                 }
-            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });;
 
-            //初始化文件上传
-
-            // with plugin options
-            $("#fileInput").fileinput({
-                language: "zh",
-                showCaption: true,
-                showPreview: true,
-                showRemove: false,
-                showUpload: false,
-                showCancel: false,
-                showClose: false,
-                uploadUrl: '@Url.Action("UploadFile")',
-                uploadAsync: true,
-                previewFileIcon: '<i class="fa fa-file"></i>',
-                allowedPreviewTypes: ['image', 'text'], // allow only preview of image & text files
-                previewFileIconSettings: {
-                    'doc': '<i class="fa fa-file-word-o text-primary"></i>',
-                    'docx': '<i class="fa fa-file-word-o text-primary"></i>',
-                    'xls': '<i class="fa fa-file-excel-o text-success"></i>',
-                    'xlsx': '<i class="fa fa-file-excel-o text-success"></i>',
-                    'pptx': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
-                    'jpg': '<i class="fa fa-file-photo-o text-warning"></i>',
-                    'pdf': '<i class="fa fa-file-pdf-o text-danger"></i>',
-                    'zip': '<i class="fa fa-file-archive-o text-muted"></i>',
-                    'ppt': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
-                    'htm': '<i class="fa fa-file-code-o text-info"></i>',
-                    'txt': '<i class="fa fa-file-text-o text-info"></i>',
-                    'mov': '<i class="fa fa-file-movie-o text-warning"></i>',
-                    'mp3': '<i class="fa fa-file-audio-o text-warning"></i>'
-                },
-                uploadExtraData: {
-                    resName: "1000",
-                    resId: "abc"
-                }
+            $('.file-control').on('filebatchuploadcomplete', function (event, data, previewId, index) {
+                $('.editform').ajaxSubmit({ success: zeniths.util.formAjaxSuccess });
             });
-
         });
     </script>
 }

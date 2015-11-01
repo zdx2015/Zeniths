@@ -125,7 +125,9 @@
             }).css('cursor', 'pointer');
 
             //添加没有数据提示
-            _noDataAlert(instance);
+            if (instance.options.showAlert) {
+                _noDataAlert(instance);
+            }
 
             _setTextSplitWidth(instance.$table);
         }
@@ -315,7 +317,7 @@
      * @returns {Options} 配置选项
      */
     $.fn.datagrid.parseOptions = function ($element) {
-        var properties = ['url', 'order', 'dir'];
+        var properties = ['url', 'order', 'dir', 'alert'];
         var options = {};
         $.each(properties, function (index, value) {
             var v = $element.data(value);
@@ -323,17 +325,18 @@
                 options[value] = v;
             }
         });
-
         var _value = $element.data('query-form');
         if (_value) {
             options['queryForm'] = _value;
         }
+         
         _value = $element.data('query-params');
         if (_value) {
             options['queryParams'] = (new Function('return ' + _value))();
         }
-        options['autoLoad'] = $element.data('auto-load');
 
+        options['autoLoad'] = $element.data('auto-load');
+        options['showAlert'] = $element.data('show-alert');
         return options;
     };
 
@@ -346,6 +349,11 @@
          * 自动加载数据
          */
         autoLoad: true,
+
+        /**
+         * 没有数据时自动添加提示
+         */
+        showAlert: true,
 
         /**
          * 表格地址

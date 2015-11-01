@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zeniths.Auth.Entity;
+using Zeniths.Extensions;
+using Zeniths.Helper;
 using Zeniths.Utility;
 
 namespace Zeniths.Auth.Service
@@ -99,13 +102,14 @@ namespace Zeniths.Auth.Service
         {
             try
             {
-                if (fileIds.Length == 1)
+                foreach (var item in fileIds)
                 {
-                    repos.Delete(fileIds[0]);
-                }
-                else
-                {
-                    repos.Delete(fileIds);
+                    var entity = repos.Get(item);
+                    if (entity!=null && entity.Url.IsNotEmpty())
+                    {
+                        File.Delete(WebHelper.GetMapPath(entity.Url));
+                    }
+                    repos.Delete(item);
                 }
                 return BoolMessage.True;
             }

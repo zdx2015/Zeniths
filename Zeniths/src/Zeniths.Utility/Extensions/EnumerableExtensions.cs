@@ -107,7 +107,7 @@ namespace Zeniths.Extensions
         /// <param name="predicate">查找条件。</param>
         /// <exception cref="System.ArgumentNullException">predicate 为null。</exception>
         /// <returns>返回移除的数量。</returns>
-        public static int Remove<TSource>(this List<TSource> list, Func<TSource, bool> predicate)
+        public static int Delete<TSource>(this IList<TSource> list, Func<TSource, bool> predicate)
         {
             CheckPredicate(predicate);
 

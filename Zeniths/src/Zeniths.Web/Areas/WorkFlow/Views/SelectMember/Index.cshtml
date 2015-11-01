@@ -60,10 +60,10 @@
                 checkbox: true,
                 cascadeCheck: false,
                 onBeforeLoad: function () {
-                    zeniths.util.mask('正在加载组织机构...');
+                    $(document.body).mask('正在加载组织机构...');
                 },
                 onLoadSuccess: function () {
-                    zeniths.util.unmask();
+                    $(document.body).unmask();
                     zeniths.tree.expandRoot($tree);
                     var fn = zeniths.util.getDialogCallback(window);
                     var data = fn({
@@ -84,7 +84,7 @@
                     }
                 },
                 onLoadError: function (result) {
-                    zeniths.util.unmask();
+                    $(document.body).unmask();
                     zeniths.util.showAlertDangerLoadFailure($(this), zeniths.util.getServerErrorMessage(result));
                 },
                 onCheck: function (node, checked) {

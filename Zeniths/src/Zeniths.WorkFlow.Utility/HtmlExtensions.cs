@@ -49,6 +49,31 @@ namespace Zeniths.WorkFlow.Utility
         {
             return MvcHtmlString.Create(AuthHelper.BuildDicOptions("FlowCategory", selected));
         }
+
+        /// <summary>
+        /// 获取步骤事件实例下拉选项
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="selected">选中的步骤事件实例值</param>
+        /// <returns></returns>
+        public static MvcHtmlString FlowStepEventOptions(this HtmlHelper helper, string selected = null)
+        {
+            return MvcHtmlString.Create(WebHelper.GetSelectOptions(WorkFlowHelper.GetStepEventCaptionList(),
+                nameof(WorkFlowEventCaptionAttribute.Cation),nameof(WorkFlowEventCaptionAttribute.Provider),selected));
+        }
+
+        /// <summary>
+        /// 获取线事件实例下拉选项
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="selected">选中的步骤事件实例值</param>
+        /// <returns></returns>
+        public static MvcHtmlString FlowLineEventOptions(this HtmlHelper helper, string selected = null)
+        {
+            return MvcHtmlString.Create(WebHelper.GetSelectOptions(WorkFlowHelper.GetLineEventCaptionList(),
+                nameof(WorkFlowEventCaptionAttribute.Cation), nameof(WorkFlowEventCaptionAttribute.Provider), selected));
+        }
+
         public static MvcHtmlString BudgetCategoryOptions(this HtmlHelper helper, string selected = null)
         {
             return MvcHtmlString.Create(AuthHelper.BuildDicOptions("DailyReimburseCategory", selected));
@@ -157,12 +182,13 @@ namespace Zeniths.WorkFlow.Utility
         /// </summary>
         /// <param name="helper"></param>
         /// <param name="flowId">流程主键</param>
+        /// <param name="businessId">业务主键</param>
         /// <returns></returns>
-        public static MvcHtmlString GetFlowStartUrl(this HtmlHelper helper, string flowId)
+        public static MvcHtmlString GetFlowStartUrl(this HtmlHelper helper, string flowId, string businessId = null)
         {
             UrlHelper url = new UrlHelper(helper.ViewContext.RequestContext);
             // ReSharper disable once Mvc.AreaNotResolved
-            return MvcHtmlString.Create(url.Action("Start", "FlowRun", new { area = "WorkFlow", flowId }));
+            return MvcHtmlString.Create(url.Action("Start", "FlowRun", new { area = "WorkFlow", flowId, businessId }));
         }
 
         /// <summary>

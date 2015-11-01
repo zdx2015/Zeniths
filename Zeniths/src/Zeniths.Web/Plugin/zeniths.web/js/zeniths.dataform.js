@@ -19,22 +19,22 @@
         }
 
         if (instance.options.validOptions.autoAddRequired === true) {
-        $.each(instance.options.validOptions.rules, function (k, v) {
-            if (v.required === true) {
-                $('form [name=' + k + ']').closest('td').prev('th').prepend('<label class="required"></label>');
-            }
-            
-            //var parent = $('form [name=' + k + ']').parent();
-            ////console.log(parent);
-            //if (parent.is('.input-group')) {
-            //    parent.parent().siblings('label').addClass('required');
-            //} if (parent.is('.iradio_square-blue') || parent.is('.icheckbox_square-blue')) {
-            //    parent.closest('.radio-list,.checkbox-list').parent().siblings('label').addClass('required');
-            //}
-            //else {
-            //    parent.siblings('label').addClass('required');
-            //}
-        });
+            $.each(instance.options.validOptions.rules, function (k, v) {
+                if (v.required === true) {
+                    $('form [name=' + k + ']').closest('td').prev('th').prepend('<label class="required"></label>');
+                }
+
+                //var parent = $('form [name=' + k + ']').parent();
+                ////console.log(parent);
+                //if (parent.is('.input-group')) {
+                //    parent.parent().siblings('label').addClass('required');
+                //} if (parent.is('.iradio_square-blue') || parent.is('.icheckbox_square-blue')) {
+                //    parent.closest('.radio-list,.checkbox-list').parent().siblings('label').addClass('required');
+                //}
+                //else {
+                //    parent.siblings('label').addClass('required');
+                //}
+            });
         }
 
         var defaults = {
@@ -234,7 +234,7 @@
      * @param {Object} options 控件配置
      * @returns {} 
      */
-    DataForm.prototype.initIpAddress = function(options) {
+    DataForm.prototype.initIpAddress = function (options) {
         $('.ip-control').ipAddress(options);
     };
 
@@ -264,7 +264,7 @@
      * @param {Object} options 控件配置
      * @returns {DataForm} 
      */
-    DataForm.prototype.initTagsInput = function (options) {
+    DataForm.prototype.initTag = function (options) {
         var self = this;
         var ops = $.extend({}, {
             'defaultText': '',
@@ -272,6 +272,61 @@
         }, options);
         $('.tag-control').tagsInput(ops);
 
+        return this;
+    };
+
+    /**
+     * 初始化FileInput控件
+     * @param {Object} options 控件配置
+     * @returns {DataForm} 
+     */
+    DataForm.prototype.initFile = function (options) {
+        var self = this;
+        var ops = $.extend({}, {
+            language: "zh",
+            uploadUrl: '/Auth/System/UploadFile',
+            showCaption: false,
+            showRemove: false,
+            showUpload: false,
+            showClose: false,
+            maxFileCount: 20,
+            uploadAsync: true,
+            overwriteInitial: false,
+            previewFileIcon: '<i class="fa fa-file"></i>',
+            allowedPreviewTypes: ['image'], // , 'video', 'audio', 'flash'allow only preview of image & text files
+            previewFileIconSettings: {
+                'doc': '<i class="fa fa-file-word-o text-primary"></i>',
+                'docx': '<i class="fa fa-file-word-o text-primary"></i>',
+                'xls': '<i class="fa fa-file-excel-o text-success"></i>',
+                'xlsx': '<i class="fa fa-file-excel-o text-success"></i>',
+                'pptx': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+                'jpg': '<i class="fa fa-file-photo-o text-warning"></i>',
+                'pdf': '<i class="fa fa-file-pdf-o text-danger"></i>',
+                'zip': '<i class="fa fa-file-archive-o text-muted"></i>',
+                'ppt': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+                'htm': '<i class="fa fa-file-code-o text-info"></i>',
+                'txt': '<i class="fa fa-file-text-o text-info"></i>',
+                'mov': '<i class="fa fa-file-movie-o text-warning"></i>',
+                'mp3': '<i class="fa fa-file-audio-o text-warning"></i>'
+            },
+            previewSettings: {
+                image: { width: "160px", height: "160px" },
+                html: { width: "160px", height: "160px" },
+                text: { width: "160px", height: "160px" },
+                video: { width: "160px", height: "160px" },
+                audio: { width: "160px", height: "160px" },
+                flash: { width: "160px", height: "160px" },
+                object: { width: "160px", height: "160px" },
+                other: { width: "160px", height: "160px" }
+            },
+            uploadExtraData: {
+                resName: options.resName,
+                resId:options.resId
+            }
+        }, options);
+        $('.file-control').fileinput(ops);
+        var selector = '#datagrid-' + options.resName + '-' + options.resId;
+        $(selector).datagrid();
         return this;
     };
 
@@ -512,7 +567,7 @@
         var self = this;
         var ops = $.extend({}, options);
 
-        zeniths.workflow.initForm(self.$element,ops);
+        zeniths.workflow.initForm(self.$element, ops);
 
         return this;
     };
