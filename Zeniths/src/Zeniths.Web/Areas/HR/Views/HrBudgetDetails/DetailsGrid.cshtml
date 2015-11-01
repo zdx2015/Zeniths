@@ -9,30 +9,16 @@
             <th class="w-100px" data-order="@nameof(HrBudgetDetails.BudgetCategoryName)">类别</th>
             <th class="w-100px" data-order="@nameof(HrBudgetDetails.BudgetMoney)">金额</th>
             <th class="w-120px" data-order="@nameof(HrBudgetDetails.Note)">备注</th>
-            <th class="w-120px text-center">操作</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var record in Model)
         {
             <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
-                @*<td>@record.BudgetId</td>*@
-                @*<td>@record.BudgetCategoryId</td>*@
                 <td>@record.BudgetItemName</td>
                 <td>@record.BudgetCategoryName</td>
                 <td>@record.BudgetMoney</td>
                 <td>@StringHelper.SubStringB(record.Note,12,"...")</td>
-                <td>
-                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
-                        <i class="fa fa-eye"></i> 查看
-                    </a>
-                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
-                        <i class="fa fa-edit"></i> 编辑
-                    </a>
-                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
-                        <i class="fa fa-trash-o"></i> 删除
-                    </a>
-                </td>
             </tr>
         }
     </tbody>

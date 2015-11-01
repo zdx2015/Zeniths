@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Budget\BudgetApproval.cs" />
+    <Compile Include="Budget\BudgetLeaveRegister.cs" />
     <Compile Include="EmpLeave\EmpLeaveDaysLine.cs" />
     <Compile Include="EmpLeave\EmpLeaveRegister.cs" />
     <Compile Include="EmployeeLeave\LeaveHRManagerCancel.cs" />

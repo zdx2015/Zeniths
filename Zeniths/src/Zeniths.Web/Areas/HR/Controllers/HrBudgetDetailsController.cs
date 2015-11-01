@@ -51,14 +51,30 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, BudgetId);
             return View(list);
         }
-
+        /// <summary>
+        /// 预算项目视图
+        /// </summary>
+        /// <param name="BudgetId">部门预算主键</param>
+        /// <returns></returns>
+        public ActionResult DetailsGrid(int BudgetId)
+        {
+            var pageIndex = GetPageIndex();
+            var pageSize = GetPageSize();
+            var orderName = GetOrderName();
+            var orderDir = GetOrderDir();
+            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, BudgetId);
+            return View(list);
+        }
         /// <summary>
         /// 新增视图
         /// </summary>
         /// <returns>视图模板</returns>
-        public ActionResult Create()
+        public ActionResult Create(string BudgetId)
         {
-            return EditCore(new HrBudgetDetails());
+            ViewData["Title"] = "新增预算明细信息";
+            HrBudgetDetails entity = new HrBudgetDetails();
+            entity.BudgetId = BudgetId.ToInt();
+            return EditCore(entity);
         }
 
         /// <summary>
@@ -68,6 +84,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Edit(string id)
         {
+            ViewData["Title"] = "编辑预算明细信息";
             var entity = service.Get(id.ToInt());
             return EditCore(entity);
         }
@@ -108,11 +125,20 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             {
                 return Json(hasResult);
             }
-
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
             return Json(result);
         }
-
+        /// <summary>
+        /// 加载费用类别
+        /// </summary>
+        /// <param name="ParentId">分类类别 1 基类 2 子类</param>
+        /// <param name="id">类别主键</param>
+        /// <param name="Selected">选中id</param>
+        /// <returns></returns>
+        public string GetBudgetCategory(string ParentId, string id="0",string Selected="")
+        {
+            return service.GetBudgetCategory(ParentId, id, Selected);
+        }
         /// <summary>
         /// 删除数据
         /// </summary>

@@ -14,26 +14,9 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
                 <table class="table table-form table-dialog-form">
-                
-                    <tr>
-                        <th class="w-100px">
-                            <label class="control-label">预算主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.BudgetId</p>
-                        </td>
-                    </tr>
                     <tr>
                         <th >
-                            <label class="control-label">预算类别主键：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.BudgetCategoryId</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th >
-                            <label class="control-label">预算类别名称：</label>
+                            <label class="control-label">预算类别：</label>
                         </th>
                         <td>
                             <p class="form-control-static">@Model.BudgetCategoryName</p>

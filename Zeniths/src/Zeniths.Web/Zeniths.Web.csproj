@@ -203,6 +203,10 @@
     <Content Include="Areas\HR\Views\OAWorkLogShare\Edit.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Grid.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Index.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Details.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLog\Share.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\Details.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\Edit.cshtml" />
@@ -215,6 +219,11 @@
     <Content Include="Areas\HR\Views\EmpLeave\Details.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\Register.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Index.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Details.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\Storage.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\Details.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\Edit.cshtml" />
@@ -250,12 +259,20 @@
     <Content Include="Areas\HR\Views\EmployeeLeave\DetailsBaseLeave.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeLeave\GridAll.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeLeave\IndexAll.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\IndexWaitHandle.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudget\DetailsList.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudgetDetails\DetailsGrid.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\AllDetails.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\AllGrid.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\AllIndex.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\AllViewGrid.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\DetailGrid.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\ViewGrid.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudgetDetails\DetailsGrid.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudget\DetailsList.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Approve.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Complete.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\_DetailsCommon.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowRun\Send.cshtml" />
@@ -651,14 +668,17 @@
     <Compile Include="Areas\Auth\Controllers\SystemParamController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemRoleController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeGoOutRegistrationController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeLeaveController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeNotClockController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeGoOutRegistrationController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeLeaveController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeNotClockController.cs" />
     <Compile Include="Areas\HR\Controllers\HrBudgetController.cs" />
     <Compile Include="Areas\HR\Controllers\HrBudgetDetailsController.cs" />
     <Compile Include="Areas\HR\Controllers\DailyReimburseController.cs" />
     <Compile Include="Areas\HR\Controllers\DailyReimburseDetailsController.cs" />
     <Compile Include="Areas\HR\Controllers\EmpLeaveController.cs" />
-    <Compile Include="Areas\HR\Controllers\EmployeeGoOutRegistrationController.cs" />
-    <Compile Include="Areas\HR\Controllers\EmployeeNotClockController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogShareController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />
@@ -712,6 +732,9 @@
   <ItemGroup>
     <Folder Include="Areas\HR\Assets\css\" />
     <Folder Include="Areas\HR\Assets\js\" />
+    <Folder Include="Areas\HR\Views\Shared\" />
+    <Folder Include="Areas\WorkFlow\Models\" />
+    <Folder Include="Assets\js\hr\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zeniths.Auth.Utility\Zeniths.Auth.Utility.csproj">

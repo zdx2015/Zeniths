@@ -13,12 +13,12 @@
             <div class="panel-body">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@nameof(Model.Id)" id="@nameof(Model.Id)" value="@Model.Id"/>
-                <input type="hidden" name="@nameof(Model.CategoryName)" id="CategoryName" value="@Model.CategoryName"/>
+                @*<input type="hidden" name="@nameof(Model.CategoryName)" id="CategoryName" value="@Model.CategoryName"/>*@
                 <input type="hidden" name="@nameof(Model.TempSortNum)" id="TempSortNum" value="@Model.TempSortNum"/>
                 <input type="hidden" name="@nameof(Model.ItemName)" id="ItemName" value="@Model.ItemName" />
                 <table class="table table-form table-dialog-form">
                     <tr>
-                        <th>
+                        @*<th>
                             <label class="control-label">费用类别：</label>
                         </th>
                         <td>
@@ -30,7 +30,7 @@
                             </div>
 
 
-                        </td>
+                        </td>*@
                     </tr>
                     <tr>
                         <th >
@@ -101,7 +101,7 @@
                         required: true
                         /*,maxlength: 100*/
                         ,number: true
-                        ,min:0
+                        ,min:1
                         
                     } 
                 },
@@ -122,13 +122,13 @@
                         required: '请填写费用金额'
                         /*,maxlength: '长度不能超过100'*/
                           ,number: '只能输入数字'
-                          ,min:'不能小于0'
+                          ,min:'不能小于等于0'
                     } 
                 },
                 beforeSubmit: function () {
                    
-                    var cName = $('#CategoryId option:selected').text();
-                    $('#CategoryName').val(cName);
+                    //var cName = $('#CategoryId option:selected').text();
+                    //$('#CategoryName').val(cName);
                   
                     var iName = $('#ItemId option:selected').text();
                  
