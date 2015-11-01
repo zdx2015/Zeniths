@@ -265,6 +265,17 @@
     <Content Include="Areas\HR\Views\EmployeeLeave\IndexWaitHandle.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\DetailsList.cshtml" />
     <Content Include="Areas\HR\Views\HrBudgetDetails\DetailsGrid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\AllDetails.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\AllGrid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\AllIndex.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\AllViewGrid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\DetailGrid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\ViewGrid.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudgetDetails\DetailsGrid.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudget\DetailsList.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Approve.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\Complete.cshtml" />
+    <Content Include="Areas\HR\Views\EmpLeave\_DetailsCommon.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowRun\Send.cshtml" />
@@ -663,6 +674,9 @@
     <Compile Include="Areas\HR\Controllers\EmployeeGoOutRegistrationController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeLeaveController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeNotClockController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeGoOutRegistrationController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeLeaveController.cs" />
+    <Compile Include="Areas\HR\Controllers\EmployeeNotClockController.cs" />
     <Compile Include="Areas\HR\Controllers\GoOutRegistrationController.cs" />
     <Compile Include="Areas\HR\Controllers\HrBudgetController.cs" />
     <Compile Include="Areas\HR\Controllers\HrBudgetDetailsController.cs" />
@@ -722,6 +736,9 @@
   <ItemGroup>
     <Folder Include="Areas\HR\Assets\css\" />
     <Folder Include="Areas\HR\Assets\js\" />
+    <Folder Include="Areas\HR\Views\Shared\" />
+    <Folder Include="Areas\WorkFlow\Models\" />
+    <Folder Include="Assets\js\hr\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Zeniths.Auth.Utility\Zeniths.Auth.Utility.csproj">

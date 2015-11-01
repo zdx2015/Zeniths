@@ -149,13 +149,17 @@ namespace Zeniths.Web.Areas.Hr.Controllers
                 {
                     list = (List<DailyReimburseDetails>)SessionData;
                 }
+                var dicDetailEntity = dicSevice.GetDetails(entity.ItemId);
+                entity.CategoryId = dicDetailEntity.DictionaryId;
+                var dicEntity = dicSevice.GetDictionary(entity.CategoryId);
+                entity.CategoryName = dicEntity.Name;
                 if (entity.Id == 0)
                 {
-                    var isCorrect = IsCorrectSelect("DailyReimburseCategory", entity.CategoryName, entity.ItemId);
-                    if (!isCorrect.Success)
-                    {
-                        return Json(isCorrect);
-                    }
+                    //var isCorrect = IsCorrectSelect("DailyReimburseCategory", entity.CategoryName, entity.ItemId);
+                    //if (!isCorrect.Success)
+                    //{
+                    //    return Json(isCorrect);
+                    //}
 
                     if (list.Count > 0)
                     {
