@@ -54,5 +54,17 @@ namespace Zeniths.Auth.Utility
         {
             return MvcHtmlString.Create(AuthHelper.BuildDicOptions("ParamCategory", selected));
         }
+
+        /// <summary>
+        /// 获取用户下拉选项
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="selected">选中的值</param>
+        /// <returns></returns>
+        public static MvcHtmlString UsersOptions(this HtmlHelper helper, string selected = null)
+        {
+            var list = new SystemUserService().GetUserIdNameList();
+            return MvcHtmlString.Create(WebHelper.GetSelectOptions(list,"Key","Value",selected));
+        }
     }
 }

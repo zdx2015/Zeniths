@@ -206,10 +206,6 @@
     <Content Include="Areas\HR\Views\OAWorkLogShare\Edit.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Grid.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLogShare\Index.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Details.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
     <Content Include="Areas\HR\Views\OAWorkLog\Share.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\Details.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\Edit.cshtml" />
@@ -219,15 +215,6 @@
     <Content Include="Areas\HR\Views\DailyReimburseDetails\Edit.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburseDetails\Grid.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburseDetails\Index.cshtml" />
-    <Content Include="Areas\HR\Views\EmpLeave\Details.cshtml" />
-    <Content Include="Areas\HR\Views\EmpLeave\Register.cshtml" />
-    <Content Include="Areas\HR\Views\EmpLeave\Grid.cshtml" />
-    <Content Include="Areas\HR\Views\EmpLeave\Index.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Details.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Edit.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Grid.cshtml" />
-    <Content Include="Areas\HR\Views\GoOutRegistration\Index.cshtml" />
-    <Content Include="Areas\HR\Views\EmpLeave\Storage.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\Details.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\Edit.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\Index.cshtml" />
@@ -270,9 +257,6 @@
     <Content Include="Areas\HR\Views\DailyReimburse\DetailGrid.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\HR\Views\HrBudgetDetails\DetailsGrid.cshtml" />
-    <Content Include="Areas\HR\Views\EmpLeave\Approve.cshtml" />
-    <Content Include="Areas\HR\Views\EmpLeave\Complete.cshtml" />
-    <Content Include="Areas\HR\Views\EmpLeave\_DetailsCommon.cshtml" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowRun\Send.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowRun\Back.cshtml" />
@@ -676,7 +660,6 @@
     <Compile Include="Areas\HR\Controllers\HrBudgetDetailsController.cs" />
     <Compile Include="Areas\HR\Controllers\DailyReimburseController.cs" />
     <Compile Include="Areas\HR\Controllers\DailyReimburseDetailsController.cs" />
-    <Compile Include="Areas\HR\Controllers\EmpLeaveController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogController.cs" />
     <Compile Include="Areas\HR\Controllers\OAWorkLogShareController.cs" />
     <Compile Include="Areas\HR\HRAreaRegistration.cs" />

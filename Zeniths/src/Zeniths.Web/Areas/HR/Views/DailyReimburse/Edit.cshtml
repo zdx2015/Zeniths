@@ -142,7 +142,7 @@
         }
 
         function deleteSubRow(itemId) {
-            zeniths.util.confirm('确定要删除当前费用明细吗?', function(index) {
+            zeniths.util.confirm('确定要删除当前费用明细吗?', function (index) {
                 zeniths.util.layerClose(index);
                 delete subData[itemId];
                 $('#subTable #' + itemId).remove();
@@ -163,11 +163,14 @@
             return true;
         };
 
-        $(function() {
+        $(function () {
 
             function initWorkFlow() {
                 $('.editform').dataform().initWorkFlow({
-                    sendCallback: function(wf, result) {
+                    beformCommitCallback: function (wf) {
+
+                    },
+                    sendCallback: function (wf, result) {
                         //如果下一步骤的处理人是自己 则继续处理下一步骤
                         if (result.url) {
                             window.location.href = result.url;
@@ -186,19 +189,30 @@
                 resName: '@resName',
                 resId: '@resId'
             }).initValidate({
-                beforeSubmit: function() {
+                beforeSubmit: function () {
                     var result = beforSave();
                     if (result) {
                         initWorkFlow();
                         var detailsArray = [];
-                        $.each(subData,function(i,v) {
+                        $.each(subData, function (i, v) {
                             detailsArray.push(v);
                         });
-                        zeniths.workflow.addExtData({ details: JSON.stringify(detailsArray)});
-                        zeniths.workflow.flowSend();
+                        zeniths.workflow.addExtData({ details: JSON.stringify(detailsArray) });
+                        if ($('.file-control').data('fileinput').filenames.length > 0) {
+                            $(document.body).mask('正在上传文件...');
+                            $('.file-control').fileinput('upload');
+                        } else {
+                            zeniths.workflow.flowSend();
+                        }
                     }
                     return false;
                 }
+            });
+
+            $('.file-control').on('filebatchuploadcomplete', function (event, data, previewId, index) {
+                //$('.editform').ajaxSubmit({ success: zeniths.util.formAjaxSuccess });
+                $(document.body).unmask();
+                zeniths.workflow.flowSend();
             });
 
         });

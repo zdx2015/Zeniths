@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Zeniths.Auth.Service;
 using Zeniths.Auth.Utility;
 using Zeniths.Configuration;
 using Zeniths.Extensions;
@@ -66,6 +67,12 @@ namespace Zeniths.Hr.WorkFlow.Reimburse
             //var result = entity.Id == 0 ? service.Insert(entity, curlist) : service.Update(entity, curlist);
             var result = service.Insert(entity, curlist);
             args.BusinessId = entity.Id.ToString();
+
+            string resourceName = args.Form["resName"];
+            string oldResourceId = args.Form["resId"];
+            var fileService = new SystemFileService();
+            fileService.UpdateResourceId(resourceName, oldResourceId, entity.Id.ToString());
+
             return result;
         }
 

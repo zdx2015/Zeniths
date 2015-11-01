@@ -16,6 +16,7 @@
                 <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
                 <input type="hidden" name="@nameof(Model.EmployeeId)" value="@Model.EmployeeId" />
                 <input type="hidden" name="@nameof(Model.DeparmentId)" value="@Model.DeparmentId" />
+                <input type="hidden" id="FlowId" name="@nameof(Model.FlowId)" value="@ViewData["flowId"]" />
                 <table class="table table-form table-dialog-form">
                     <tr>
                         <th class="w-120px">
@@ -23,7 +24,7 @@
                         </th>
                         <td colspan="3">
                             <div class="input-icon right">
-                                <input class="form-control w-300px" name="@nameof(Model.EmployeeName)" value="@Model.EmployeeName" type="text" readonly />
+                                <input class="form-control w-300px" id="@nameof(Model.EmployeeName)" name="@nameof(Model.EmployeeName)" value="@Model.EmployeeName" type="text" readonly />
                             </div>
                         </td>
                     </tr>
@@ -33,7 +34,7 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control w-300px" name="@nameof(Model.Deparment)" value="@Model.Deparment" type="text" readonly />
+                                <input class="form-control w-300px"  id="@nameof(Model.Deparment)" name="@nameof(Model.Deparment)" value="@Model.Deparment" type="text" readonly />
                             </div>
                         </td>
                         <th>
@@ -41,7 +42,7 @@
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control w-300px" name="@nameof(Model.Post)" value="@Model.Post" type="text" readonly />
+                                <input class="form-control w-300px" id="@nameof(Model.Post)" name="@nameof(Model.Post)" value="@Model.Post" type="text" readonly />
                             </div>
                         </td>
                     </tr>
@@ -65,7 +66,7 @@
                                     自
                                     <input class="datetime-control form-control w-180px" id="@nameof(Model.StartDatetime)" name="@nameof(Model.StartDatetime)" value="@DateTimeHelper.FormatDateHasMinute(Model.StartDatetime)" type="text" />至
                                     <input class="datetime-control form-control w-180px" id="@nameof(Model.EndDatetime)" name="@nameof(Model.EndDatetime)" value="@DateTimeHelper.FormatDateHasMinute(@Model.EndDatetime)" type="text" />&nbsp;&nbsp;&nbsp;&nbsp;共
-                                    <input class="form-control w-80px" name="@nameof(Model.Days)" value="@Model.Days" type="text" />天
+                                    <input class="form-control w-80px" id="@nameof(Model.Days)" name="@nameof(Model.Days)" value="@Model.Days" type="text" />天
                                 </div>
                             </div>
                         </td>
@@ -87,7 +88,7 @@
                     @*<a class="btn btn-outline btn-primary" id="DetailsSave" href="@Url.Action("Save", "EmployeeLeave")">
                         <i class="fa fa-save"></i> 保存
                     </a>*@     
-                    <button class="btn btn-primary" name="Save" id="DetailsSave" type="button">
+                    <button class="btn btn-primary" name="Save" id="DetailsSave" type="button" >
                         <i class="fa fa-save"></i> 保存
                     </button>              
                     &nbsp;
@@ -109,26 +110,18 @@
     <script src="~/Plugin/bootstrap-daterangepicker/js/zh-cn.js"></script>
     <script src="~/Plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
     <script>
-
+        
         $(function () {
-            $('#DetailsSave').on('click', function (e) {
-                //验证数据
+            $('#DetailsSave').click(function () {
+                if ($('.editform').valid()) { //验证通过
+                    $('.editform').ajaxSubmit({
+                        type: 'post',
+                        url: '@Html.Raw(Url.Action("Save"))',
+                        success: zeniths.util.formAjaxSuccess
+                    });
+                }
+            });
 
-                $('#formReg').ajaxSubmit({
-                    url: '@Html.Raw(Url.Action("Save"))',
-                    success: function (data) {
-                        if (data.success) {
-                            zeniths.util.closeFrameDialog(window);
-                            //刷新申请列表页面
-
-
-                        }
-                        else {
-                            alert(data.message);
-                        }
-                    }
-                });
-               });
 
             $('.editform').dataform().initiCheck().initDateTimePicker().initWorkFlow({
                 saveCallback: function (wf, result) {
@@ -189,9 +182,9 @@
                     }
                 },
                 beforeSubmit: function () {
-                },
-                autoAddRequired: false
-            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+                    return false;
+                }
+            })
         });
     </script>
 }

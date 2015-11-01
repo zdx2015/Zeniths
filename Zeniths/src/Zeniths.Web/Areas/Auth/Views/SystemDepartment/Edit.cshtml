@@ -41,6 +41,7 @@
                             <div class="input-icon right">
                                 <select class="select2-control form-control" name="@nameof(Model.DepartmentLeaderId)">
                                     <option></option>
+                                    @Html.UsersOptions(Model.DepartmentLeaderId.ToString())
                                 </select>
                             </div>
                         </td>
@@ -53,6 +54,7 @@
                             <div class="input-icon right">
                                 <select class="select2-control form-control" name="@nameof(Model.ChargeLeaderId)">
                                     <option></option>
+                                    @Html.UsersOptions(Model.ChargeLeaderId.ToString())
                                 </select>
                             </div>
                         </td>
@@ -65,6 +67,7 @@
                             <div class="input-icon right">
                                 <select class="select2-control form-control" name="@nameof(Model.MainLeaderId)">
                                     <option></option>
+                                    @Html.UsersOptions(Model.MainLeaderId.ToString())
                                 </select>
                             </div>
                         </td>

@@ -68,7 +68,7 @@ namespace Zeniths.Hr.Service
         {
             try
             {
-                repos.Update(entity, p => p.Id == entity.Id, p => p.LeaveCategory, p => p.StartDatetime, p => p.EndDatetime, p => p.Days, p => p.Reason, p => p.Status);
+                repos.Update(entity, p => p.Id == entity.Id, p => p.LeaveCategory, p => p.StartDatetime, p => p.EndDatetime, p => p.Days, p => p.Reason);
                 return BoolMessage.True;
             }
             catch (Exception e)

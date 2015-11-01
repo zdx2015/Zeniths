@@ -6,5 +6,5 @@
     string resName = ViewBag.resName;
     string gridId = $"datagrid-{resName}-{resId}";
 }
-<div id="@gridId" data-show-alert="false" data-url="@Html.Raw(Url.Action("FilesGrid",new { resName, resId, allowDelete }))">
+<div id="filedatagrid" data-show-alert="false" data-url="@Html.Raw(Url.Action("FilesGrid",new { resName, resId, allowDelete }))">
 </div>
