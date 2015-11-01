@@ -46,7 +46,7 @@
                     </a>
                     @{ if (record.Status == 1)
                         {
-                            <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit", new { id = record.Id })">
+                            <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Html.GetFlowStartUrl(record.FlowId, record.Id.ToString())">
                                 <i class="fa fa-edit"></i> 编辑
                             </a>                           
                             <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete", new { id = record.Id })">

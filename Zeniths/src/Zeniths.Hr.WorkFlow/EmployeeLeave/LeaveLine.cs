@@ -13,6 +13,7 @@ namespace Zeniths.Hr.WorkFlow.EmployeeLeave
     /// <summary>
     /// 大于5天
     /// </summary>
+    [WorkFlowEventCaption("请休假:大于5天")]
     public class LeaveGreaterThan5Line: DefaultLineEvent
     {
         public override BoolMessage OnValid(FlowLineEventArgs args)
@@ -33,6 +34,7 @@ namespace Zeniths.Hr.WorkFlow.EmployeeLeave
     /// <summary>
     /// 小于等于5天
     /// </summary>
+    [WorkFlowEventCaption("请休假:小于等于5天")]
     public class LeaveLessThan5Line : DefaultLineEvent
     {
         public override BoolMessage OnValid(FlowLineEventArgs args)
