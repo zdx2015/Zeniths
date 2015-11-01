@@ -27,7 +27,7 @@ namespace Zeniths.Hr.WorkFlow.EmployeeLeave
             entity.JobAgentSign = args.CurrentUser.Name;
             entity.JobAgentOpinion =args.ExecuteData.Opinion;
             entity.JobAgentSignDate = DateTime.Now;
-            entity.Status = "审批中";
+            entity.Status = 2;
 
             return service.UpdateJobAgentApproval(entity);            
         }

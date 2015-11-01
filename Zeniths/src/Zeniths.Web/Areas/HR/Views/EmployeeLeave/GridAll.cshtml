@@ -38,7 +38,7 @@
                 <td>@record.Days</td>
                 <td>@record.Reason</td>
                 <td>@record.StepName</td>
-                <td>@record.Status</td>
+                <td>@record.StatusName()</td>
                 <td>@record.ApplyDateTime</td>
                 <td>
                     <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details", new { id = record.Id })">

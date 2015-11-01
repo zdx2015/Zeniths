@@ -27,14 +27,7 @@ namespace Zeniths.Hr.WorkFlow.EmployeeLeave
             entity.DepartmentManagerSign = args.CurrentUser.Name;
             entity.DepartmentManagerOpinion = args.ExecuteData.Opinion;
             entity.DepartmentManagerSignDate = DateTime.Now;
-            if (entity.Days > 5)
-            {
-                entity.Status = "审批中";
-            }
-            else
-            {
-                entity.Status = "销假中";
-            }
+            entity.Status = 2;
             return service.UpdateDepartmentManagerApproval(entity);            
         }
     }
