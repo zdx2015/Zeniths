@@ -111,7 +111,7 @@ namespace Zeniths.Auth.Service
             {
                 throw new ArgumentNullException(nameof(account), "请指定用户账号");
             }
-            return StringHelper.EncryptString($"{account}-@{password}");
+            return StringHelper.EncryptString(password); //StringHelper.EncryptString($"{account}-@{password}");
         }
 
         /// <summary>
