@@ -93,11 +93,11 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             EmployeeLeave leaveEntity = new EmployeeLeave();
             var currentUser = OrganizeHelper.GetCurrentUser();
             var currentEmployee = employeeService.GetEmployeeByUser(currentUser.Id);    //根据当前登录用户的账号查找员工Id信息
-            if (currentEmployee == null)
-            {
-                var script = string.Format("alert('{0}');", "请关联账户");
-                return JavaScript(script);
-            }
+            //if (currentEmployee == null)
+            //{
+            //    var script = string.Format("alert('{0}');", "请关联账户");
+            //    return JavaScript(script);
+            //}
             leaveEntity.EmployeeId = currentEmployee.Id;
             leaveEntity.EmployeeName = currentEmployee.Name;
             leaveEntity.DeparmentId = currentEmployee.DepartmentId;

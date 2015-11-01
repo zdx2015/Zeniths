@@ -461,14 +461,14 @@ namespace Zeniths.WorkFlow.Service
             var query = repos.NewQuery.Take(pageSize).Page(pageIndex)
                 .SetTableName("FlowTask a")
                 .Where(
-                    "a.Id=(SELECT TOP 1 ID FROM FlowTask WHERE FlowId=a.FlowId AND FlowInstanceId=a.FlowInstanceId ORDER BY SortIndex DESC)")
+                    "a.Id=(SELECT TOP 1 ID FROM FlowTask WHERE FlowId=a.FlowId AND FlowInstanceId=a.FlowInstanceId and ReceiveId = '"+receiveId+"' ORDER BY SortIndex DESC)")
                 .OrderBy(orderName, orderDir.IsAsc());
 
             query.Where(p => p.Status == 2 || p.Status == 3);
-            if (receiveId.IsNotEmpty())
-            {
-                query.Where(p => p.ReceiveId == receiveId);
-            }
+            //if (receiveId.IsNotEmpty())
+            //{
+            //    query.Where(p => p.ReceiveId == receiveId);
+            //}
 
             if (senderId.IsNotEmpty())
             {

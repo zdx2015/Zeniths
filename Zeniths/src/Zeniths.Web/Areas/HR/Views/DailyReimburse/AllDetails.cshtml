@@ -102,7 +102,7 @@
                             <td>
                                 <div class="input-icon right">
                                     @*<input class="form-control" name="@nameof(Model.ItemName)" value="@Model.ItemName" id="ItemName" type="text" readonly/>*@
-                                    <select class="select2-control w-500px form-control" name="@nameof(Model.DrawMoneyId)" id="ItemId" data-placeholder="请选择领款人">
+                                    <select class="select2-control w-500px form-control" name="@nameof(Model.DrawMoneyId)" id="DrawMoneyId" data-placeholder="请选择领款人">
                                         <option></option>
                                         @Html.AllEmployeeCategoryOptions(Model.DrawMoneyId.ToString());
                                     </select>
@@ -129,7 +129,7 @@
 
                     @if (currentStep.Uid.Equals(WorkFlowHelper.GetLastStepId(Request.QueryString["flowId"])))
                     {
-                    <a class="btn btn-outline btn-primary btnWorkFlowCompleted">
+                    <a class="btn btn-outline btn-primary btnWorkFlowCompleted" >
                         <i class="fa fa-check"></i> 完成
                     </a>
                     }
@@ -160,9 +160,37 @@
 @section script{
     <script>
 
+
+
         $(function () {
             //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
-            $('#filedatagrid').datagrid();
+            if (zeniths.workflow.instance().workflow_client_model.isLastStep) {
+                $('.editform').dataform().initValidate({
+                    rules: {
+                        DrawMoneyId: {
+                            required: true
+                        },
+                        DrawMoney: {
+                            required: true,
+                            number: true,
+                            min: 1
+                        }
+                    },
+                    messages: {
+                        DrawMoneyId: {
+                            required: '请选择领款人'
+                        },
+                        DrawMoney: {
+                            required: '请填写领款金额',
+                            number: '只能输入数字',
+                            min: '不能小于等于0'
+                        }
+                    },
+                    beforeSubmit: function() {
+                    }
+                });
+            }
+           
             $('.editform').dataform().initSelect2().initWorkFlow({
                 sendCallback: function (wf, result) {
                     //如果下一步骤的处理人是自己 则继续处理下一步骤
@@ -173,19 +201,6 @@
                         zeniths.util.formAjaxSuccess(result);
                         //window.location.href = '@Url.Action("PendingTasks", "FlowTask", new {area = "WorkFlow"})';
                     }
-                }
-            }).initValidate({
-                rules: {
-                    EmployeeId: {
-                        required: true
-                    }
-                },
-                messages: {
-                    EmployeeId: {
-                        required: '请填写员工主键'
-                    }
-                },
-                beforeSubmit: function () {
                 }
             }).initAjax({ success: zeniths.util.formAjaxSuccess });
 

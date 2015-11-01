@@ -5,9 +5,9 @@
 <table class="table table-zeniths table-striped table-bordered table-hover">
     <thead>
         <tr>
-            <th class="w-checkbox">
+            @*<th class="w-checkbox">
                 <label><input class="checkbox-check" type="checkbox"><span></span></label>
-            </th>          
+            </th>*@          
             <th class="w-100px" data-order="@nameof(DailyReimburse.ReimburseDepartmentName)">所属部门/项目</th>
             <th class="w-100px" data-order="@nameof(DailyReimburse.ProjectSumMoney)">报销金额</th>
             <th class="w-100px" data-order="@nameof(DailyReimburse.ApplyOpinion)">申请情况说明</th>
@@ -15,16 +15,16 @@
             <th class="w-100px" data-order="@nameof(DailyReimburse.StepStatus)">当前审批状态</th>
             <th class="w-100px" data-order="@nameof(DailyReimburse.IsFinish)">审批流程状态</th>
           
-            <th class="w-120px text-center">操作</th>
+            @*<th class="w-120px text-center">操作</th>*@
         </tr>
     </thead>
     <tbody>
         @foreach (var record in Model)
         {
             <tr class="cursor-pointer" data-url="@Url.Action("Details",new {businessId = record.Id})">
-                <td>
+                @*<td>
                     <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
-                </td>
+                </td>*@
            
                 <td>@record.ReimburseDepartmentName</td>
           
@@ -56,17 +56,17 @@
                     <td>未完成</td>
                 }
                 
-                <td>
+                @*<td>
                     <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
                         <i class="fa fa-eye"></i> 查看
                     </a>
-                    @*<a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
                         <i class="fa fa-edit"></i> 编辑
-                    </a>*@
-                    @*<a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                    </a>
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
                         <i class="fa fa-trash-o"></i> 删除
-                    </a>*@
-                </td>
+                    </a>
+                </td>*@
             </tr>
         }
     </tbody>

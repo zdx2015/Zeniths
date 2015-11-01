@@ -12,44 +12,10 @@ namespace Zeniths.Hr.WorkFlow.Reimburse
     {
         public override BoolMessage OnValid(FlowLineEventArgs args)
         {
+            var result = new BoolMessage(true);
             //var service = new DailyReimburseDetailsService();
-            //var list = service.GetList(args.ExecuteData.BusinessId.ToInt());
-            //var budList = service.GetBudgetDetailList(args.CurrentUser.DepartmentId);
-            //List<bool> results = new List<bool>();
-            //bool finalResult = false;
-            //if (list != null && budList != null)
-            //{
-            //    if (list.Count > budList.Count)
-            //    {
-            //        return new BoolMessage(finalResult);
-            //    }
-
-            //    for (int i = 0; i < list.Count; i++)
-            //    {
-            //        foreach (var item in budList)
-            //        {
-            //            if (list[i].CategoryId == item.BudgetCategoryId)
-            //            {
-            //                if (list[i].ItemId == item.BudgetItemId)
-            //                {
-            //                    if (list[i].Amount == item.BudgetMoney)
-            //                    {
-            //                        results.Add(true);
-            //                    }
-            //                }
-            //            }
-            //        }
-
-            //    }
-
-            //    if (results.Count == list.Count)
-            //    {
-            //        finalResult = true;
-            //    }
-               
-            //}
-            //return new BoolMessage(finalResult);
-            return BoolMessage.True;
+            //result = service.IsInnerBudget(args.BusinessId.ToInt(), args.CurrentUser.DepartmentId);
+            return result;
         }
     }
 
@@ -59,46 +25,12 @@ namespace Zeniths.Hr.WorkFlow.Reimburse
     {
         public override BoolMessage OnValid(FlowLineEventArgs args)
         {
+            var result = new BoolMessage(true);
             //var service = new DailyReimburseDetailsService();
-            //var list = service.GetList(args.ExecuteData.BusinessId.ToInt());
-            //var budList = service.GetBudgetDetailList(args.CurrentUser.DepartmentId);
-            //List<bool> results = new List<bool>();
-            //bool finalResult = false;
-            //if (list != null && budList != null)
-            //{
-            //    if (list.Count > budList.Count)
-            //    {
-            //        return new BoolMessage(finalResult);
-            //    }
-
-            //    for (int i = 0; i < list.Count; i++)
-            //    {
-            //        foreach (var item in budList)
-            //        {
-            //            if (list[i].CategoryId == item.BudgetCategoryId)
-            //            {
-            //                if (list[i].ItemId == item.BudgetItemId)
-            //                {
-            //                    if (list[i].Amount == item.BudgetMoney)
-            //                    {
-            //                        results.Add(true);
-            //                    }
-            //                }
-            //            }
-            //        }
-
-            //    }
-
-            //    if (results.Count == list.Count)
-            //    {
-            //        finalResult = true;
-            //    }
-
-            //    finalResult = !finalResult;
-
-            //}
-            //return new BoolMessage(finalResult);
-            return BoolMessage.False;
+            //result = service.IsInnerBudget(args.BusinessId.ToInt(), args.CurrentUser.DepartmentId);
+            result = new BoolMessage(!result.Success);
+            return result;
+           
         }
     }
 
