@@ -198,7 +198,16 @@ namespace Zeniths.Hr.Service
             jsonBuilder.Append("]");
             return jsonBuilder.ToString();
         }
-
+        /// <summary>
+        /// 获取预算类别
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DataTable GetItemList(string id)
+        {
+            return repos.Database.ExecuteDataTable("select zs.Id zsid,zs.Name zsname,sy.id ysid,sy.Name ysname from [Zeniths.Auth].dbo.SystemDictionary zs right join [Zeniths.Auth].dbo.SystemDictionaryDetails sy on zs.Id = sy.DictionaryId where sy.id = '"+id+"'");
+        }
+        
         #endregion
     }
 }

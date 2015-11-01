@@ -66,7 +66,6 @@ namespace Zeniths.Hr.Service
                 return new BoolMessage(false, e.Message);
             }
         }
-
         /// <summary>
         /// 更新部门预算
         /// </summary>

@@ -93,9 +93,9 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var entity = service.Get(id.ToInt());
             return View(entity);
         }
-        public ActionResult DetailsList(string id)
+        public ActionResult DetailsList(string businessId)
         {
-            var entity = service.Get(id.ToInt());
+            var entity = service.Get(businessId.ToInt());
             return View(entity);
         }
         /// <summary>
