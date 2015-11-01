@@ -174,13 +174,13 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <summary>
         /// 查看视图
         /// </summary>
-        /// <param name="id">主键</param>
+        /// <param name="businessId">主键</param>
         /// <returns>视图模板</returns>
-        public ActionResult Details(string id)
+        public ActionResult Details(string businessId)
         {
            
-            var entity = service.Get(id.ToInt());
-            var list = detailsService.GetList(id.ToInt());
+            var entity = service.Get(businessId.ToInt());
+            var list = detailsService.GetList(businessId.ToInt());
             SessionData = list;
             ViewBag.Title = "查看日常费用报销";
             return View(entity);
@@ -198,23 +198,23 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <summary>
         /// 审批意见视图
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="businessId"></param>
         /// <returns></returns>
-        public ActionResult ViewDealOpinion(string id)
+        public ActionResult ViewDealOpinion(string businessId)
         {
-            var entity = service.Get(id.ToInt());
+            var entity = service.Get(businessId.ToInt());
             return View(entity);
         }
 
         /// <summary>
         /// 查看视图
         /// </summary>
-        /// <param name="id">主键</param>
+        /// <param name="businessId">主键</param>
         /// <returns>视图模板</returns>
-        public ActionResult AllDetails(string id)
+        public ActionResult AllDetails(string businessId)
         {
-            var entity = service.Get(id.ToInt());
-            var list = detailsService.GetList(id.ToInt());
+            var entity = service.Get(businessId.ToInt());
+            var list = detailsService.GetList(businessId.ToInt());
             SessionData = list;
             ViewBag.Title = "查看日常费用报销";
             return View(entity);
