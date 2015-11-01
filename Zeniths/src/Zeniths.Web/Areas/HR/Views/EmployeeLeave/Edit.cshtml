@@ -111,15 +111,17 @@
     <script>
 
         $(function () {
-
             $('#DetailsSave').on('click', function (e) {
+                //验证数据
+
                 $('#formReg').ajaxSubmit({
                     url: '@Html.Raw(Url.Action("Save"))',
                     success: function (data) {
                         if (data.success) {
-                            alert("22222");
                             zeniths.util.closeFrameDialog(window);
-                            zeniths.util.formAjaxSuccess(result);
+                            //刷新申请列表页面
+
+
                         }
                         else {
                             alert(data.message);
@@ -190,7 +192,6 @@
                 },
                 autoAddRequired: false
             }).initAjax({ success: zeniths.util.formAjaxSuccess });
-
         });
     </script>
 }

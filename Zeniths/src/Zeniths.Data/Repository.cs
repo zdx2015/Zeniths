@@ -695,8 +695,8 @@ namespace Zeniths.Data
             var groupby = SQLinqSelectResult.ConcatFieldArray(result.GroupBy);
             var columnsString = SQLinqSelectResult.ConcatFieldArray(result.Select);
 
-            dataSql.AppendFormat("select {0} from {1}", columnsString, TableName);
-            countSql.AppendFormat("select count(1) from {0}", TableName);
+            dataSql.AppendFormat("select {0} from {1}", columnsString, linq.TableName);
+            countSql.AppendFormat("select count(1) from {0}", linq.TableName);
 
             if (!string.IsNullOrEmpty(result.Where))
             {

@@ -1,6 +1,6 @@
 ﻿@model DailyReimburse
 @{
-    var title = "查看日常费用报销";
+    var title = Html.GetCurrentStepName();
     Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
     var currentStep = Html.GetCurrentStep();
 }
@@ -14,50 +14,14 @@
             </div>
             <div class="panel-body" style="height: 580px; overflow-x: hidden; overflow-y: auto;">
                 @Html.AntiForgeryToken()
-                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id"/>
-
-                <table class="table table-form table-dialog-form">
-                    <tr>
-                        <th>
-                            <label class="control-label">报销部门：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.ReimburseDepartmentName</p>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>
-                            <label class="control-label">经办人：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.ApplicantName</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <label class="control-label">申请情况说明：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.ApplyOpinion</p>
-                        </td>
-                    </tr>
-
-
-                </table>
-
-                <div class="panel panel-default panel-zeniths" style="height: 270px;">
-
-                    <div class="panel-body" style="height: 250px; overflow-x: hidden; overflow-y: auto;">
-                        <div class="datagrid" data-url="@Html.Raw(Url.Action("AllViewGrid", "DailyReimburse", new {area = "HR"}))" id="detailGrid"></div>
-                    </div>
-
-                </div>
-
-                <!--tab 代码 开始 -->
                 <div class="tabbable-line">
                     <ul class="nav nav-tabs ">
                         <li class="active">
+                            <a href="#DealBase" data-toggle="tab">
+                                基本信息
+                            </a>
+                        </li>
+                        <li>
                             <a href="#DealOpinion" data-toggle="tab">
                                 处理意见
                             </a>
@@ -70,61 +34,90 @@
 
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="DealOpinion" style="overflow-x: hidden; overflow-y: auto;">
-                            @Html.Action("ViewDealOpinion")
+                        <div class="tab-pane active" id="DealBase" style="overflow-x: hidden; overflow-y: auto;">
+                            <table class="table table-form table-dialog-form">
+                                <tr>
+                                    <th class="w-130px">
+                                        <label class="control-label">报销部门：</label>
+                                    </th>
+                                    <td>
+                                        <p class="form-control-static">@Model.ReimburseDepartmentName</p>
+                                    </td>
+
+                                    <th>
+                                        <label class="control-label">经办人：</label>
+                                    </th>
+                                    <td>
+                                        <p class="form-control-static">@Model.ApplicantName</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label class="control-label">申请情况说明：</label>
+                                    </th>
+                                    <td colspan="3">
+                                        <p class="form-control-static">@Model.ApplyOpinion</p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <fieldset>
+                                <legend>费用明细</legend>
+                                @Html.Action("DetailGrid", new { dailyId=Model.Id })
+                            </fieldset>
+
+                        </div>
+
+                        <div class="tab-pane" id="DealOpinion" style="overflow-x: hidden; overflow-y: auto;">
+                            @Html.Action("InstanceTasks", "FlowTask", new { area = "WorkFlow", flowInstanceId = Model.FlowInstanceId })
                         </div>
                         <div class="tab-pane" id="DealFlow" style="overflow-x: hidden; overflow-y: auto;">
-                            @Html.Action("ViewDealFlow")
+                            @Html.Action("TaskImage", "FlowTask", new { area = "WorkFlow", flowInstanceId = Model.FlowInstanceId })
                         </div>
 
                     </div>
                 </div>
-                <!-- tab 代码 结束 -->
-
 
                 <table class="table table-form table-dialog-form">
-                   @if (!currentStep.Uid.Equals(WorkFlowHelper.GetLastStepId(Request.QueryString["flowId"])))
-                   {
-                       <tr>
-                           <th>
-                               <label class="control-label">处理意见：</label>
-                           </th>
-                           <td>
-                               <textarea class="form-control" name="workflow_opinion" rows="3"></textarea>
-                           </td>
-                       </tr>
-                   }
-                   else
-                   {
-                       <tr>
+                    @if (!currentStep.Uid.Equals(WorkFlowHelper.GetLastStepId(Request.QueryString["flowId"])))
+                    {
+                        <tr>
+                            <th class="w-100px">
+                                <label class="control-label">处理意见：</label>
+                            </th>
+                            <td>
+                                <textarea class="form-control" name="workflow_opinion" rows="3"></textarea>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
 
-                           <th>
-                               <label class="control-label">领款人：</label>
-                           </th>
-                           <td>
-                               <div class="input-icon right">
-                                   @*<input class="form-control" name="@nameof(Model.ItemName)" value="@Model.ItemName" id="ItemName" type="text" readonly/>*@
-                                   <select class="select2-control w-500px form-control" name="@nameof(Model.DrawMoneyId)" id="ItemId" data-placeholder="请选择领款人">
-                                       <option></option>
-                                       @Html.AllEmployeeCategoryOptions(Model.DrawMoneyId.ToString());
-                                   </select>
-                               </div>
-                           </td>
-                       </tr>
-                       <tr>
-                           <th>
-                               <label class="control-label">领款金额：</label>
-                           </th>
-                           <td>
-                               <div class="input-icon right">
-                                   <input class="form-control" name="@nameof(Model.DrawMoney)" value="@Model.DrawMoney" type="text"/>
-                               </div>
-                           </td>
-                       </tr>
-                   }
-
+                            <th>
+                                <label class="control-label">领款人：</label>
+                            </th>
+                            <td>
+                                <div class="input-icon right">
+                                    @*<input class="form-control" name="@nameof(Model.ItemName)" value="@Model.ItemName" id="ItemName" type="text" readonly/>*@
+                                    <select class="select2-control w-500px form-control" name="@nameof(Model.DrawMoneyId)" id="ItemId" data-placeholder="请选择领款人">
+                                        <option></option>
+                                        @Html.AllEmployeeCategoryOptions(Model.DrawMoneyId.ToString());
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label class="control-label">领款金额：</label>
+                            </th>
+                            <td>
+                                <div class="input-icon right">
+                                    <input class="form-control" name="@nameof(Model.DrawMoney)" value="@Model.DrawMoney" type="text" />
+                                </div>
+                            </td>
+                        </tr>
+                    }
                 </table>
-
 
             </div>
 
@@ -133,25 +126,25 @@
 
                     @if (currentStep.Uid.Equals(WorkFlowHelper.GetLastStepId(Request.QueryString["flowId"])))
                     {
-                        <a class="btn btn-outline btn-primary btnWorkFlowCompleted">
-                            <i class="fa fa-check"></i> 完成
-                        </a>
+                    <a class="btn btn-outline btn-primary btnWorkFlowCompleted">
+                        <i class="fa fa-check"></i> 完成
+                    </a>
                     }
                     else
                     {
-                        <a class="btn btn-outline btn-danger btnWorkFlowBack">
-                            <i class="fa fa-arrow-left"></i> 驳回
-                        </a>
+                    <a class="btn btn-outline btn-danger btnWorkFlowBack">
+                        <i class="fa fa-arrow-left"></i> 驳回
+                    </a>
 
-                        <a class="btn btn-outline btn-success btnWorkFlowSend">
-                            审核通过
-                            <i class="fa fa-arrow-right"></i>
-                        </a>
+                    <a class="btn btn-outline btn-success btnWorkFlowSend">
+                        审核通过
+                        <i class="fa fa-arrow-right"></i>
+                    </a>
                     }
 
                     @*<a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
-                        <i class="fa fa-sign-in"></i> 关闭
-                    </a>*@
+                            <i class="fa fa-sign-in"></i> 关闭
+                        </a>*@
                 </div>
             </div>
         </div>
@@ -164,10 +157,10 @@
 @section script{
     <script>
 
-        $(function() {
+        $(function () {
             //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
             $('.editform').dataform().initSelect2().initWorkFlow({
-                sendCallback: function(wf, result) {
+                sendCallback: function (wf, result) {
                     //如果下一步骤的处理人是自己 则继续处理下一步骤
                     if (result.url) {
                         window.location.href = result.url;
@@ -188,7 +181,7 @@
                         required: '请填写员工主键'
                     }
                 },
-                beforeSubmit: function() {
+                beforeSubmit: function () {
                 }
             }).initAjax({ success: zeniths.util.formAjaxSuccess });
 
