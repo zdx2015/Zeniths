@@ -16,16 +16,25 @@
                         <input class="w-180px form-control" id="DepartmentName" name="DepartmentName" type="text" placeholder="请选择预算部门">
                         <label class="control-label">预算状态：</label>
                         <select class="select2-control w-200px form-control"  id="status" name="status"  data-placeholder="请选择预算状态">
-                        <option></option>
+                            <option></option>
+                            <option value=" ">全部</option>
+                            <option value="1">未提交</option>
+                            <option value="2">申请中</option>
+                            <option value="3">已审核</option>
+                            <option value="4">驳回</option>
+
                         </select>
                     </div>
                     &nbsp;
                     <button class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> 查询
                     </button>
-                    <a class="btn btn-success" id="btnCreate" data-url="@Html.GetFlowStartUrl(Request.QueryString["flowId"])">
-                        <i class="fa fa-plus"></i> 新建
-                    </a>
+                    @if (ViewData["type"].ToString() == "1")
+                    {
+                        <a class="btn btn-success" id="btnCreate" data-url="@Html.GetFlowStartUrl(Request.QueryString["flowId"])">
+                            <i class="fa fa-plus"></i> 新建
+                        </a>
+                    }
                     @*<a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
                         <i class="fa fa-trash-o"></i> 删除
                     </a>*@

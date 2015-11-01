@@ -12,6 +12,7 @@ using Zeniths.WorkFlow.Utility;
 
 namespace Zeniths.Hr.WorkFlow.EmployeeLeave
 {
+    [WorkFlowEventCaption("请休假:部门负责人销假意见")]
     public class LeaveDepartmentCancel : DefaultStepEvent
     {
         /// <summary>
@@ -23,12 +24,12 @@ namespace Zeniths.Hr.WorkFlow.EmployeeLeave
             var entity = service.Get(args.BusinessId.ToInt());
             
             entity.DepartmentManagerCancelId = args.CurrentUser.Id;
-            entity.DepartmentManagerIsAudit = true;
-            entity.DepartmentManagerSign = args.CurrentUser.Name;
-            entity.DepartmentManagerOpinion = args.ExecuteData.Opinion;
-            entity.DepartmentManagerSignDate = DateTime.Now;
-            entity.Status = "审批中";
-
+            entity.DepartmentManagerCancelIsAudit = true;
+            entity.DepartmentManagerCancelSign = args.CurrentUser.Name;
+            entity.DepartmentManagerCancelOpinion = args.ExecuteData.Opinion;
+            entity.DepartmentManagerCancelSignDate = DateTime.Now;
+            entity.Status = 2;
+            
             return service.UpdateCancelLeaveDepartmentManagerApproval(entity);
         }
     }

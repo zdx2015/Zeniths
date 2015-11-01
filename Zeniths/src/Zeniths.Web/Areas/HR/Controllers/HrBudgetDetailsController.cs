@@ -14,6 +14,7 @@ using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.Utility;
 using Zeniths.Hr.Utility;
+using System.Data;
 
 namespace Zeniths.Web.Areas.Hr.Controllers
 {
@@ -121,6 +122,15 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         public ActionResult Save(HrBudgetDetails entity)
         {
             var hasResult = service.Exists(entity);
+            DataTable dt = service.GetItemList(entity.BudgetItemId.ToString());
+            if (dt.Rows.Count > 0)
+            {
+                entity.BudgetItemName = dt.Rows[0]["ysname"].ToString();
+                entity.BudgetItemId = dt.Rows[0]["ysid"].ToInt();
+                entity.BudgetCategoryId = dt.Rows[0]["zsid"].ToInt();
+                entity.BudgetCategoryName = dt.Rows[0]["zsname"].ToString();
+
+            }
             if (hasResult.Failure)
             {
                 return Json(hasResult);

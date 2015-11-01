@@ -49,20 +49,11 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         }
 
         /// <summary>
-        /// 待审视图
-        /// </summary>
-        /// <returns>视图模板</returns>
-        public ActionResult IndexWaitHandle()
-        {
-            return View();
-        }
-
-        /// <summary>
         /// 表格视图
         /// </summary>
         /// <param name="name">按钮名称</param>
         /// <returns>视图模板</returns>
-        public ActionResult GridAll(string employeeName,string deparment, string startDatetime, string startEndDatetime, string applyDateTime, string status)
+        public ActionResult GridAll(string employeeName,string deparment, string startDatetime, string startEndDatetime, string applyDateTime, int? status)
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
@@ -77,7 +68,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="name">按钮名称</param>
         /// <returns>视图模板</returns>
-        public ActionResult Grid(string startDatetime, string startEndDatetime, string applyDateTime, string status)
+        public ActionResult Grid(string startDatetime, string startEndDatetime, string applyDateTime, int? status)
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
@@ -85,21 +76,6 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var orderDir = GetOrderDir();
             var currentUser = OrganizeHelper.GetCurrentUser();
             var list = service.GetPageListMyself(pageIndex, pageSize, orderName, orderDir, currentUser.Id, startDatetime, startEndDatetime, applyDateTime, status);
-            return View(list);
-        }
-
-        /// <summary>
-        /// 表格视图
-        /// </summary>
-        /// <param name="name">按钮名称</param>
-        /// <returns>视图模板</returns>
-        public ActionResult GridWaitHandle(string employeeName, string deparment, string startDatetime, string startEndDatetime, string applyDateTime)
-        {
-            var pageIndex = GetPageIndex();
-            var pageSize = GetPageSize();
-            var orderName = GetOrderName();
-            var orderDir = GetOrderDir();
-            var list = service.GetPageListWaitHandle(pageIndex, pageSize, orderName, orderDir, employeeName, deparment, startDatetime, startEndDatetime, applyDateTime);
             return View(list);
         }
 
@@ -125,12 +101,21 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns>视图模板</returns>
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id,string flowId)
         {
             var entity = service.Get(id.ToInt());
             return EditCore(entity);
         }
 
+        /// <summary>
+        /// 数据编辑视图
+        /// </summary>
+        /// <param name="entity">实体对象</param>
+        /// <returns>视图模板</returns>
+        private ActionResult EditCore(EmployeeLeave entity)
+        {
+            return View("Edit", entity);
+        }
 
         /// <summary>
         /// 查看视图
@@ -155,46 +140,13 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         }
 
         /// <summary>
-        /// 查看视图(处理意见信息)
+        /// 保存方法
         /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns>视图模板</returns>
-        public ActionResult DetailsOpinionContent(string id)
-        {
-            var entity = service.Get(id.ToInt());
-            return View(entity);
-        }
-
-        /// <summary>
-        /// 查看视图(流程图)
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns>视图模板</returns>
-        public ActionResult DetailsWorkFlowChart(string id)
-        {
-            var entity = service.Get(id.ToInt());
-            return View(entity);
-        }
-
-        /// <summary>
-        /// 数据编辑视图
-        /// </summary>
-        /// <param name="entity">实体对象</param>
-        /// <returns>视图模板</returns>
-        private ActionResult EditCore(EmployeeLeave entity)
-        {
-            return View("Edit", entity);
-        }
-
-        /// <summary>
-        /// 保存数据
-        /// </summary>
-        /// <param name="entity">实体对象</param>
-        /// <returns>返回JsonMessage</returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public ActionResult Save(EmployeeLeave entity)
         {
+            var service = new EmployeeLeaveService();
             if (entity.Id == 0)
             {
                 var currentUser = OrganizeHelper.GetCurrentUser();
@@ -204,6 +156,8 @@ namespace Zeniths.Web.Areas.Hr.Controllers
                 entity.CreateDepartmentId = currentUser.DepartmentId;
                 entity.CreateDepartmentName = currentUser.DepartmentName;
                 entity.CreateDateTime = DateTime.Now;
+                entity.IsFinish = false;
+                entity.Status = 1;
             }
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
             return Json(result);
@@ -220,15 +174,6 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var result = service.Delete(StringHelper.ConvertToArrayInt(id));
             return Json(result);
         }
-        
-        /// <summary>
-        /// 数据导出
-        /// </summary>
-        /// <returns>返回文件下载流</returns>
-        public ActionResult Export()
-        {
-            return Export(service.GetList());
-        }
 
         /// <summary>
         /// 更新销假信息视图
@@ -239,10 +184,9 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var entity = service.Get(businessId.ToInt());
             return View(entity);
         }
-
-
+        
         /// <summary>
-        /// 请休假中审批
+        /// 请休假审批
         /// </summary>
         /// <returns>视图模板</returns>
         public ActionResult ApproveOpinionEdit(string businessId)
@@ -251,76 +195,5 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             return View(entity);
         }
 
-        /// <summary>
-        /// 更新工作代理人审批信息
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns>返回JsonMessage</returns>
-        [HttpPost]
-        public ActionResult UpdateJobAgentApproval(EmployeeLeave entity)
-        {
-            var result = service.UpdateJobAgentApproval(entity);
-            return Json(result);
-        }
-
-        /// <summary>
-        /// 更新请休假部门负责人审批信息
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns>返回JsonMessage</returns>
-        [HttpPost]
-        public ActionResult UpdateDepartmentManagerApproval(EmployeeLeave entity)
-        {
-            var result = service.UpdateDepartmentManagerApproval(entity);
-            return Json(result);
-        }
-
-        /// <summary>
-        /// 更新请休假总经理审批信息
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns>返回JsonMessage</returns>
-        [HttpPost]
-        public ActionResult UpdateGeneralManagerApproval(EmployeeLeave entity)
-        {
-            var result = service.UpdateGeneralManagerApproval(entity);
-            return Json(result);
-        }
-
-        /// <summary>
-        /// 更新销假信息
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns>返回JsonMessage</returns>
-        [HttpPost]
-        public ActionResult UpdateCancelLeaveInfo(EmployeeLeave entity)
-        {
-            var result = service.UpdateCancelLeaveInfo(entity);
-            return Json(result);
-        }
-
-        /// <summary>
-        /// 更新请休假销假部门负责人审批信息
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns>返回JsonMessage</returns>
-        [HttpPost]
-        public ActionResult UpdateCancelLeaveDepartmentManagerApproval(EmployeeLeave entity)
-        {
-            var result = service.UpdateCancelLeaveDepartmentManagerApproval(entity);
-            return Json(result);
-        }
-
-        /// <summary>
-        /// 更新请休假销假行政人力资源部审批信息
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns>返回JsonMessage</returns>
-        [HttpPost]
-        public ActionResult UpdateCancelLeaveHRManagerApproval(EmployeeLeave entity)
-        {
-            var result = service.UpdateCancelLeaveHRManagerApproval(entity);
-            return Json(result);
-        }
     }
 }

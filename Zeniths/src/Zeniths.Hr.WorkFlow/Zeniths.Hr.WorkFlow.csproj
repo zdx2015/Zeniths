@@ -43,8 +43,6 @@
   <ItemGroup>
     <Compile Include="Budget\BudgetApproval.cs" />
     <Compile Include="Budget\BudgetLeaveRegister.cs" />
-    <Compile Include="EmpLeave\EmpLeaveDaysLine.cs" />
-    <Compile Include="EmpLeave\EmpLeaveRegister.cs" />
     <Compile Include="EmployeeLeave\LeaveHRManagerCancel.cs" />
     <Compile Include="EmployeeLeave\LeaveDepartmentCancel.cs" />
     <Compile Include="EmployeeLeave\LeaveDepartment.cs" />

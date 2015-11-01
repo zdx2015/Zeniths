@@ -66,7 +66,6 @@ namespace Zeniths.Hr.Service
                 return new BoolMessage(false, e.Message);
             }
         }
-
         /// <summary>
         /// 更新部门预算
         /// </summary>
@@ -77,7 +76,7 @@ namespace Zeniths.Hr.Service
             try
             {
                 repos.Update(entity);
-                return BoolMessage.True;
+                return new BoolMessage(true, entity.Id.ToString());
             }
             catch (Exception e) 
             {

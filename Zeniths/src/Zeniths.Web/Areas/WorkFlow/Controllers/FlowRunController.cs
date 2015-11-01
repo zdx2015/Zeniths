@@ -10,7 +10,7 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
 {
     public class FlowRunController : WorkFlowBaseController
     {
-        public ActionResult Start(string flowId)
+        public ActionResult Start(string flowId, string businessId = null)
         {
             if (string.IsNullOrEmpty(flowId))
             {
@@ -33,7 +33,9 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
                 ViewBag.ErrorMessage = "表单的地址无效";
                 return View("Error");
             }
-            string query = $"flowId={flowId}&stepId={firstStepId}";
+            string query = string.IsNullOrEmpty(businessId) ? 
+                $"flowId={flowId}&stepId={firstStepId}&businessId={businessId}" : 
+                $"flowId={flowId}&stepId={firstStepId}";
             var fix = WebHelper.GetUrlJoinSymbol(src);
             return Redirect(src + fix + query);
         }
@@ -104,7 +106,7 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
         {
             string workflowParams = Request.Form["_workflow_execute_params"];
             WorkFlowEngine engine = new WorkFlowEngine();
-            var executeData = engine.GetExecuteData(workflowParams,CurrentUser,Request.QueryString,Request.Form);
+            var executeData = engine.GetExecuteData(workflowParams, CurrentUser, Request.QueryString, Request.Form);
             var result = engine.Process(executeData);
             if (result.Success)
             {
@@ -116,7 +118,7 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
                 var nextTask = nextTasks?.FirstOrDefault();
                 if (nextTask != null)
                 {
-                    url = Url.Action("Process", new {taskId = nextTask.Id});
+                    url = Url.Action("Process", new { taskId = nextTask.Id });
                 }
 
                 return Json(new

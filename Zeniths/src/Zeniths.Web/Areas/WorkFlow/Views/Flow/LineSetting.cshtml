@@ -21,7 +21,8 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">事件验证类：</label>
                     <div class="col-sm-8">
-                        <select class="select2-control form-control" id="validProvider" name="validProvider" data-placeholder="请选择事件验证类">
+                        <select class="select2-control form-control" id="validProvider" name="validProvider" data-allow-clear="true" data-placeholder="">
+                            <option></option>
                             @Html.FlowLineEventOptions()
                         </select>
                     </div>

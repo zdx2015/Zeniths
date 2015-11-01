@@ -12,9 +12,9 @@ using Zeniths.WorkFlow.Utility;
 
 namespace Zeniths.Hr.WorkFlow.EmployeeLeave
 {
+    [WorkFlowEventCaption("请休假:销假信息确认")]
     public class LeaveCancel : DefaultStepEvent
     {
-
         /// <summary>
         /// 流程提交后
         /// </summary>
@@ -29,9 +29,9 @@ namespace Zeniths.Hr.WorkFlow.EmployeeLeave
             entity.CancelLeaveDateTime = DateTime.Now;
             entity.CancelLeavePersonId = args.CurrentUser.Id;
             entity.CancelLeavePersonName = args.CurrentUser.Name;
-            entity.Status = "审批中";
+            entity.Status = 2;
 
-            return service.Update(entity);
+            return service.UpdateCancelLeaveInfo(entity);
         }
     }
 }

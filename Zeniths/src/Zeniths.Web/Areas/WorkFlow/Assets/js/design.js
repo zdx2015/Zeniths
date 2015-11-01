@@ -126,7 +126,7 @@
      */
     self.flowSetting = function () {
         var url = new URI($('#flowSettingUrl').val()).addSearch({ id: self.flowId, windowId: window.name }).toString();
-        zeniths.util.dialog(url, 800, 535);
+        zeniths.util.dialog(url, 800, 615);
     };
 
     /**

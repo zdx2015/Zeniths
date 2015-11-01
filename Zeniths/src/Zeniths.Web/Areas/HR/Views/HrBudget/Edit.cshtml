@@ -2,11 +2,11 @@
 @{
     //var title = ViewData["Title"];
     var title = Html.GetCurrentStepName();
-    //Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
+    Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
 }
 
 <div class="container-edit-zeniths">
-    <form class="editform" id="form1" action="@Url.Action("Save")" method="POST" role="form">
+    <form class="editform" id="form1" action="@Html.GetFlowExecuteUrl()" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
                 <span class="prefix"> <strong id="Mid">@Model.Id</strong></span>
@@ -16,6 +16,7 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" id="Id" name="@nameof(Model.Id)" value="@Model.Id" />
                 <input type="hidden" id="Status" name="@nameof(Model.Status)" value="0" />
+                <input type="hidden" id="FlowId" name="@nameof(Model.FlowId)" value="@ViewData["flowId"]" />
                 <table class="table table-form table-dialog-form">
 
                     <tr>
@@ -38,20 +39,18 @@
                 </div>
                 <div class="panel-footer text-center">
                     <div class="buttons">
-                        <button class="btn btn-primary" name="Save" value="1" type="submit">
+                        <button class="btn btn-primary" name="Save" id="DetailsSave" value="1" type="button">
                             <i class="fa fa-save"></i> 保存
                         </button>
-                        &nbsp;
-                        <button class="btn btn-primary" name="Submit" value="2" type="submit">
-                            <i class="fa fa-save"></i> 提交
-                        </button>
-                        &nbsp;
+                        @*<button class="btn btn-primary" name="Submit" value="2" type="submit">
+        <i class="fa fa-save"></i> 提交
+    </button>*@  &nbsp;
+                        <a class="btn btn-outline btn-danger btnWorkFlowSend">
+                            <i class="fa fa-arrow-right"></i> 提交
+                        </a>                        &nbsp;
                         <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
                             <i class="fa fa-sign-in"></i> 关闭
                         </a>
-                        @*<a class="btn btn-outline btn-danger btnWorkFlowSend">
-                            <i class="fa fa-arrow-right"></i> 提交
-                        </a>*@
                     </div>
                 </div>
             </div>
@@ -60,13 +59,35 @@
 </div>
 @section script{
     <script>
-        //function Save(id)
-        //{
-        //    $("#Status").val(id);
-        //    document.getElementById("form1").submit();
-        //}
+        
         $(function () {
             //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
+            $('#DetailsSave').on('click', function () {
+                var id = $('#Id').val();
+                if (id == 0) {
+                    if ($('#BudgetMonth').val().length == 0) {
+                        zeniths.util.alert("请先选择预算月份！");
+                        return;
+                    }
+                }
+                $.ajax({
+                    cache: true,
+                    type: 'POST',
+                    url: 'Save',
+                    data: $('#form1').serialize(),// 你的formid
+                    async: false,
+                    error: function (request) {
+                    },
+                    success: function (data) {
+                        if (isNaN(data)) {
+                            zeniths.util.alert(data);
+                            return;
+                        } else {
+                            zeniths.util.closeFrameDialog(window);
+                        }
+                    }
+                });
+            });
             $('#btnDetailsCreate').on('click', function () {
                 var id = $('#Id').val();
                 if (id == 0) {
@@ -113,7 +134,7 @@
 
             });
             //添加表单
-            $('.editform').dataform().initDatePicker({
+            $('.editform').dataform().initWorkFlow(wfCallback).initDatePicker({
                     format: "yyyy-mm",
                     minViewMode: 'months'
                 }).initValidate({
@@ -129,8 +150,19 @@
                     },
                     beforeSubmit: function () {
                     }
-                }).initAjax({ success: zeniths.util.formAjaxSuccess });
-
+                });
+            //流程回调
+            var wfCallback = {
+                sendCallback: function (wf, result) {
+                    //如果下一步骤的处理人是自己 则继续处理下一步骤
+                    if (result.url) {
+                        window.location.href = result.url;
+                    } else {
+                        //跳转到待办页面
+                        window.location.href = '@Url.Action("PendingTasks","FlowTask",new { area ="WorkFlow"})';
+                    }
+                }
+            };
             zeniths.util.standardGridBind({
                 editWidth: 700,
                 editHeight: 400,

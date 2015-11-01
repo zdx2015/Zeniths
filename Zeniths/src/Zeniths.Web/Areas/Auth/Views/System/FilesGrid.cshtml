@@ -1,0 +1,47 @@
+﻿@model List<SystemFile>
+@{
+    Layout = null;
+    bool allowDelete = ViewBag.allowDelete;
+    string resId = ViewBag.resId;
+    string resName = ViewBag.resName;
+    string gridId = $"#datagrid-{resName}-{resId}";
+}
+
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-150px">文件名</th>
+            <th class="w-80px text-center">大小</th>
+            <th class="w-80px text-center">上传人</th>
+            <th class="w-120px text-center">上传时间</th>
+            @if (allowDelete)
+            {
+                <th class="w-50px text-center">操作</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+            {
+            <tr class="cursor-pointer">
+                <td>
+                    <a href="@Url.Content(record.Url)" target="_blank">
+                        @record.Name
+                    </a>
+                </td>
+                <td class="text-center">@StringHelper.GetSpaceSizeString(record.Size)</td>
+                <td class="text-center">@record.CreateUserName</td>
+                <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.CreateDateTime)</td>
+                @if (allowDelete)
+                {
+                    <td class="text-center">
+                        <a class="btn btn-default btn-xs red-stripe btnFileDelete"
+                           onclick="zeniths.util.deleteFile('@Url.Action("FileDelete", new {id = record.Id})','@gridId');">
+                            <i class="fa fa-trash-o"></i> 删除
+                        </a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

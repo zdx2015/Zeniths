@@ -318,7 +318,27 @@ namespace Zeniths.Hr.Entity
         /// 状态
         /// </summary>
 		[Column(Caption = "状态")]
-        public string Status { get; set; }
+        public int Status { get; set; }
+
+        /// <summary>
+        /// 状态名称
+        /// </summary>
+        /// <returns></returns>
+        public string StatusName()
+        {
+            if (Status == 1)
+            {
+                return "待提交";
+            }
+            else if (Status == 2)
+            {
+                return "审批中";
+            }
+            else
+            {
+                return "完成";
+            }
+        }
 
         /// <summary>
         /// 创建用户主键

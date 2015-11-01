@@ -182,12 +182,13 @@ namespace Zeniths.WorkFlow.Utility
         /// </summary>
         /// <param name="helper"></param>
         /// <param name="flowId">流程主键</param>
+        /// <param name="businessId">业务主键</param>
         /// <returns></returns>
-        public static MvcHtmlString GetFlowStartUrl(this HtmlHelper helper, string flowId)
+        public static MvcHtmlString GetFlowStartUrl(this HtmlHelper helper, string flowId, string businessId = null)
         {
             UrlHelper url = new UrlHelper(helper.ViewContext.RequestContext);
             // ReSharper disable once Mvc.AreaNotResolved
-            return MvcHtmlString.Create(url.Action("Start", "FlowRun", new { area = "WorkFlow", flowId }));
+            return MvcHtmlString.Create(url.Action("Start", "FlowRun", new { area = "WorkFlow", flowId, businessId }));
         }
 
         /// <summary>

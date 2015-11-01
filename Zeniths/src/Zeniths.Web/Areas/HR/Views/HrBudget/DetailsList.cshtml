@@ -2,6 +2,7 @@
 @{
     var title = Html.GetCurrentStepName();
     Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
+    var currentStep = Html.GetCurrentStep();
 }
 
 <div class="container-edit-zeniths">
@@ -33,14 +34,37 @@
                 </table>
                 <div class="datagrid" id="datagrid" data-url="@Html.Raw(Url.Action("../HrBudgetDetails/DetailsGrid",new { BudgetId = Model.Id}))">
                 </div>
+                <table style="width:100%">
+                    <tr>
+                        <th style="width:100px">
+                            <label class="control-label">处理意见：</label>
+                        </th>
+                        <td>
+                            <textarea class="form-control" name="workflow_opinion" rows="3"></textarea>
+                        </td>
+                    </tr>
+                </table>
             <div class="panel-footer text-center">
             <div class="buttons">
                 @*<a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
                     <i class="fa fa-sign-in"></i> 关闭
                 </a>*@
-                <a class="btn btn-outline btn-danger btnWorkFlowSend">
-                    <i class="fa fa-arrow-right"></i> 提交
-                </a>
+                @*@if (currentStep.Uid.Equals(WorkFlowHelper.GetLastStepId(Request.QueryString["flowId"])))
+                {
+                    <a class="btn btn-outline btn-primary btnWorkFlowCompleted">
+                        <i class="fa fa-check"></i> 完成
+                    </a>
+                }
+                else
+                {*@
+                    <a class="btn btn-outline btn-danger btnWorkFlowBack">
+                        <i class="fa fa-arrow-left"></i> 驳回
+                    </a>
+
+                        <a class="btn btn-outline btn-success btnWorkFlowCompleted">
+                            <i class="fa fa-check"></i> 审核通过
+                        </a>
+                @*}*@
             </div>
         </div>
         </div>

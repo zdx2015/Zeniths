@@ -12,6 +12,7 @@ using Zeniths.WorkFlow.Utility;
 
 namespace Zeniths.Hr.WorkFlow.EmployeeLeave
 {
+    [WorkFlowEventCaption("请休假:人力资源部负责人销假意见")]
     public class LeaveHRManagerCancel : DefaultStepEvent
     {
         /// <summary>
@@ -28,7 +29,7 @@ namespace Zeniths.Hr.WorkFlow.EmployeeLeave
             entity.HRManagerOpinion = args.ExecuteData.Opinion;
             entity.HRManagerSignDate = DateTime.Now;
             entity.IsFinish = true;
-            entity.Status = "完成";
+            entity.Status = 3;
 
             return service.UpdateCancelLeaveHRManagerApproval(entity);
         }
