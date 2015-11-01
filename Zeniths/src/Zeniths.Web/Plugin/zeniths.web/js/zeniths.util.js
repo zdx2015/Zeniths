@@ -1249,7 +1249,7 @@ zeniths.util.showFlowDetailsDialog = function (ele, flowId, flowInstanceId, busi
 
             zeniths.util.dialog(result.url, result.width, result.height, {
                 callback: function () {
-                    $(ele).closest('table').parent().datagrid().reload()
+                    //$(ele).closest('table').parent().datagrid().reload()
                 }
             });
 
@@ -1267,7 +1267,7 @@ zeniths.util.showFlowProcessDialog = function (ele, flowId, stepId) {
         if (result.success) {
 
             zeniths.util.dialog($(ele).data('url'), result.width, result.height, {
-                callback: function () {
+                end: function () {
                     $(ele).closest('table').parent().datagrid().reload()
                 }
             });

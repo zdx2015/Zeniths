@@ -30,7 +30,7 @@ zeniths.workflow = function () {
         if (!self.valid()) {
             return;
         }
-
+        self.workflow_execute_params.isAudit = true;
         self.selectStep();
     };
 
@@ -39,6 +39,7 @@ zeniths.workflow = function () {
         if (!self.valid()) {
             return;
         }
+        self.workflow_execute_params.isAudit = false;
     };
 
     self.flowCompleted = function () {
