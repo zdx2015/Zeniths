@@ -83,8 +83,14 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// 新增视图
         /// </summary>
         /// <returns>视图模板</returns>
-        public ActionResult Create()
+        public ActionResult Create(string id)
         {
+            //EmployeeLeave leaveEntity = new EmployeeLeave();
+            //if (id != null)
+            //{
+            //    leaveEntity = service.Get(id);
+            //}
+
             EmployeeLeave leaveEntity = new EmployeeLeave();
             var currentUser = OrganizeHelper.GetCurrentUser();
             var currentEmployee = employeeService.GetEmployeeByUser(currentUser.Id);    //根据当前登录用户的账号查找员工Id信息
