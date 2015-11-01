@@ -255,6 +255,7 @@
     <Content Include="Areas\HR\Views\DailyReimburse\AllGrid.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\AllIndex.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\DetailGrid.cshtml" />
+    <Content Include="Areas\HR\Views\HrBudget\DetailsBaseBudget.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\HR\Views\HrBudgetDetails\DetailsGrid.cshtml" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
