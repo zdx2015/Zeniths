@@ -126,7 +126,12 @@ namespace Zeniths.Hr.Entity
         /// </summary>
         [Column(Caption = "sumMoney")]
         public decimal? sumMoney { get; set; }
-
+        
+        /// <summary>
+        /// 流程主键
+        /// </summary>
+		[Column(Caption = "流程主键")]
+        public string FlowId { get; set; }
         /// <summary>
         /// 复制对象
         /// </summary>

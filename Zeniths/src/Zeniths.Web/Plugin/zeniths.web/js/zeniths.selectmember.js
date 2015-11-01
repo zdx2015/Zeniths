@@ -1,7 +1,6 @@
 ﻿var selectmember = function () {
 
     var self = this;
-    self.$parent
 
     /**
      * 初始化控件

@@ -16,6 +16,7 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" id="Id" name="@nameof(Model.Id)" value="@Model.Id" />
                 <input type="hidden" id="Status" name="@nameof(Model.Status)" value="0" />
+                <input type="hidden" id="FlowId" name="@nameof(Model.FlowId)" value="@ViewData["flowId"]" />
                 <table class="table table-form table-dialog-form">
 
                     <tr>

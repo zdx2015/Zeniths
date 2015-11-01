@@ -16,6 +16,7 @@ using Zeniths.WorkFlow.Utility;
 
 namespace Zeniths.Hr.WorkFlow.Reimburse
 {
+    [WorkFlowEventCaption("日常报销:财务负责人审核")]
     public class DailyReimburseStep4: DefaultStepEvent
     {
         /// <summary>
