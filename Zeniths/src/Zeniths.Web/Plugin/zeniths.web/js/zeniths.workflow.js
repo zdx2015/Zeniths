@@ -6,11 +6,13 @@
 zeniths.workflow = function () {
 
     var self = this;
+    self.extData = {};
     self.$formElement = null;
     self.workflow_execute_params = null;
     self.workflow_client_model = null;
     self.selectStepDialogIndex = -1;
 
+    self.beformCommitCallback = null;
     self.saveCallback = null;
     self.sendCallback = null;
     self.backCallback = null;
@@ -30,7 +32,7 @@ zeniths.workflow = function () {
         if (!self.valid()) {
             return;
         }
-
+        self.workflow_execute_params.isAudit = true;
         self.selectStep();
     };
 
@@ -39,6 +41,7 @@ zeniths.workflow = function () {
         if (!self.valid()) {
             return;
         }
+        self.workflow_execute_params.isAudit = false;
     };
 
     self.flowCompleted = function () {
@@ -69,10 +72,13 @@ zeniths.workflow = function () {
 
         //"title":null,"opinion":null,"isAudit":null,"type":null,"steps":[]
 
+        if (self.beformCommitCallback) {
+            self.beformCommitCallback(self);
+        }
+
+        var sendData = $.extend({}, self.extData, { _workflow_execute_params: JSON.stringify(self.workflow_execute_params) });
         self.$formElement.ajaxSubmit({
-            data: {
-                _workflow_execute_params: JSON.stringify(self.workflow_execute_params)
-            },
+            data: sendData,
             success: function (result) {
                 $(top.document.body).unmask();
                 zeniths.util.alert(result.message, { icon: 1 }, function (idx) {
@@ -139,12 +145,13 @@ zeniths.workflow = function () {
                     self.workflow_execute_params.type = "submit";
                     self.workflow_execute_params.steps = [];
                     var isSubmit = true;
-                    console.log($target.find(':checked[name="step"]'));
+                    //console.log($target.find(':checked[name="step"]'));
                     $target.find(':checked[name="step"]').each(function () {
                         var step = $(this).val();
-                        var member = $target.find("#user_" + step).data('id') || '';
+                        var member = $target.find("#user_" + step).attr('workflow-id') || '';
+                        //console.log($target.find("#user_" + step));
                         if (member.length == 0) {
-                            zeniths.util.alert($(this).next().text() + ' 没有选择处理人员!');
+                            zeniths.util.alert($(this).parent().next().text() + ' 没有选择处理人员!');
                             isSubmit = false;
                             return false;
                         }
@@ -191,8 +198,8 @@ zeniths.workflow = function () {
             return false;
         }
 
-       self.workflow_execute_params.opinion = self.$formElement.find('[name=workflow_opinion]').val();
-       
+        self.workflow_execute_params.opinion = self.$formElement.find('[name=workflow_opinion]').val();
+
         if (self.workflow_client_model.isNeedSignature &&
             self.workflow_execute_params.isSignature == false) {
             self.workflow_execute_params.isSignature =
@@ -252,6 +259,11 @@ zeniths.workflow = function () {
 
             self.initButton();
         },
+
+        instance:function() {
+          return self;  
+        },
+
         /**
          * 初始化流程表单
          * @param {} $formElement 
@@ -280,6 +292,10 @@ zeniths.workflow = function () {
          */
         setExecuteParam: function (params) {
             $.extend(self.workflow_execute_params, params);
+        },
+
+        addExtData: function (data) {
+            $.extend(self.extData, data);
         },
 
         /**

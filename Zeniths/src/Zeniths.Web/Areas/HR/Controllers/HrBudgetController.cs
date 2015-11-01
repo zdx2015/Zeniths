@@ -56,6 +56,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var orderDir = GetOrderDir();
             orderName = orderName == "" ? "id" : orderName;
             orderDir = orderDir == "" ? "asc" : orderDir;
+            DepartmentName = DepartmentName != null ? DepartmentName.Replace("'", "") : "";
             var list = service.GetPageListView(currentUser.DepartmentId,DepartmentName,type,BudgetMonth,status, pageIndex, pageSize, orderName, orderDir);
             return View(list);
         }

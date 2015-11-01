@@ -1,64 +1,45 @@
-﻿@model DailyReimburseDetails
+﻿@using System.Globalization
+@model DailyReimburseDetails
 @{
-    var title = "编辑日常费用报销明细";
+    var title = "费用明细";
 }
 
 <div class="container-edit-zeniths">
-    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+    <form class="editform">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
-                @*<span class="prefix"> <strong>@Model.Id</strong></span>*@
                 @title
             </div>
             <div class="panel-body">
-                @Html.AntiForgeryToken()
-                <input type="hidden" name="@nameof(Model.Id)" id="@nameof(Model.Id)" value="@Model.Id"/>
-                @*<input type="hidden" name="@nameof(Model.CategoryName)" id="CategoryName" value="@Model.CategoryName"/>*@
-                <input type="hidden" name="@nameof(Model.TempSortNum)" id="TempSortNum" value="@Model.TempSortNum"/>
-                <input type="hidden" name="@nameof(Model.ItemName)" id="ItemName" value="@Model.ItemName" />
                 <table class="table table-form table-dialog-form">
+                    <tr></tr>
                     <tr>
-                        @*<th>
-                            <label class="control-label">费用类别：</label>
-                        </th>
-                        <td>
-                            <div>
-                                <select class="select2-control w-500px form-control" name="@nameof(Model.CategoryId)" id="CategoryId" data-placeholder="请选择费用类别" >
-                                    <option></option>
-                                    @Html.DailyReimburseDicCategoryOptions(Model.CategoryId.ToString());
-                                </select>
-                            </div>
-
-
-                        </td>*@
-                    </tr>
-                    <tr>
-                        <th >
+                        <th class="w-100px">
                             <label class="control-label">项目名称：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
-                                @*<input class="form-control" name="@nameof(Model.ItemName)" value="@Model.ItemName" id="ItemName" type="text" readonly/>*@
-                                <select class="select2-control w-500px form-control" name="@nameof(Model.ItemId)" id="ItemId" data-placeholder="请选择项目名称" >
+                                <select class="select2-control form-control" id="@nameof(Model.ItemId)" name="@nameof(Model.ItemId)">
                                     <option></option>
                                     @Html.DailyReimburseDetailCategoryOptions(Model.ItemId.ToString());
                                 </select>
                             </div>
                         </td>
                     </tr>
-                   
-                   
+
+
                     <tr>
-                        <th >
+                        <th>
                             <label class="control-label">费用金额：</label>
                         </th>
                         <td>
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.Amount)" value="@Model.Amount" type="text" />
+                                <input class="form-control" id="@nameof(Model.Amount)" name="@nameof(Model.Amount)"
+                                       value="@Html.Write(Model.Amount==0,string.Empty,Model.Amount.ToString(CultureInfo.InvariantCulture))" type="text" />
                             </div>
                         </td>
                     </tr>
-                                    
+
                 </table>
             </div>
             <div class="panel-footer text-center">
@@ -80,68 +61,61 @@
 @section script{
     <script>
 
-        $(function () {
-            //$('.editform').dataform().initiCheck().initDatePicker()
+        $(function() {
+
+            var windowId = zeniths.util.GetUrlQuery('windowId');
+            var parentWindow = top.frames[windowId];
+
             $('.editform').dataform().initSelect2().initValidate({
                 rules: {
-                  
                     ItemId: {
                         required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
-                    CategoryId: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    }, 
+                    },
                     Amount: {
-                        required: true
-                        /*,maxlength: 100*/
-                        ,number: true
-                        ,min:1
-                        
-                    } 
+                        required: true,
+                        number: true,
+                        min: 1
+                    }
                 },
                 messages: {
                     ItemId: {
                         required: '请填写项目名称'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
-                    CategoryId: {
-                        required: '请填写费用类别'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }, 
+                    },
                     Amount: {
-                        required: '请填写费用金额'
-                        /*,maxlength: '长度不能超过100'*/
-                          ,number: '只能输入数字'
-                          ,min:'不能小于等于0'
-                    } 
+                        required: '请填写费用金额',
+                        number: '只能输入数字',
+                        min: '不能小于等于0'
+                    }
                 },
-                beforeSubmit: function () {
-                   
-                    //var cName = $('#CategoryId option:selected').text();
-                    //$('#CategoryName').val(cName);
-                  
-                    var iName = $('#ItemId option:selected').text();
-                 
-                    $('#ItemName').val(iName);
-                 
-                }
-            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+                beforeSubmit: function() {
 
+                    var ops = $('#ItemId option:selected');
+                    var itemId = ops.val();
+                    var itemName = ops.text().substr(2);
+                    var categoryName = ops.parent().attr('label');
+                    var amount = $('#Amount').val();
+
+                    var has = false;
+
+                    $.each(parentWindow.subData, function(i, v) {
+                        if (v.ItemId == itemId) {
+                            has = true;
+                            return false;
+                        }
+                    });
+
+                    if (has) {
+                        zeniths.util.alert('指定的费用项目已经存在');
+                    } else {
+                        var record = new parentWindow.subRecord(itemId, itemName, categoryName, amount);
+                        parentWindow.addSubRow(record);
+                        zeniths.util.closeFrameDialog(window);
+                    }
+
+                    return false;
+                }
+            });
         });
 
-        //function selectChange() {
-        //    var selText = $('#CategoryId').find('option:selected').text();
-        //    $('#ItemName').val(selText);
-        //};
     </script>
 }

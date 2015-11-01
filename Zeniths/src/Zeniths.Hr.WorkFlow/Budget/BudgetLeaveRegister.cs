@@ -32,7 +32,7 @@ namespace Zeniths.Hr.WorkFlow.Budget
             WorkFlowHelper.SetCurrentFlowInfo(entity, args);//设置业务表中流程信息
             if (string.IsNullOrEmpty(args.ExecuteData.Title))
             {
-                args.ExecuteData.Title = entity.Title = $"{args.CurrentUser.DepartmentName}的预算申请({entity.CreateDateTime.ToString("yyyy年MM月")})";
+                args.ExecuteData.Title = entity.Title = $"{args.CurrentUser.DepartmentName}的预算申请({entity.BudgetMonth.ToString("yyyy年MM月")})";
             }
 
             var result = service.Update(entity);

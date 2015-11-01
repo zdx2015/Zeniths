@@ -83,6 +83,7 @@
                             zeniths.util.alert(data);
                             return;
                         } else {
+                            zeniths.util.callDialogCallback(window);
                             zeniths.util.closeFrameDialog(window);
                         }
                     }
@@ -134,35 +135,36 @@
 
             });
             //添加表单
-            $('.editform').dataform().initWorkFlow(wfCallback).initDatePicker({
-                    format: "yyyy-mm",
-                    minViewMode: 'months'
-                }).initValidate({
-                    rules: {
-                        BudgetMonth: {
-                            required: true
-                        }
-                    },
-                    messages: {
-                        BudgetMonth: {
-                            required: '请填写预算月份'
-                        }
-                    },
-                    beforeSubmit: function () {
-                    }
-                });
-            //流程回调
-            var wfCallback = {
+            $('.editform').dataform().initWorkFlow({
+                saveCallback: function (wf, result) {
+                    zeniths.util.formAjaxSuccess(result);
+                },
                 sendCallback: function (wf, result) {
                     //如果下一步骤的处理人是自己 则继续处理下一步骤
                     if (result.url) {
                         window.location.href = result.url;
                     } else {
                         //跳转到待办页面
-                        window.location.href = '@Url.Action("PendingTasks","FlowTask",new { area ="WorkFlow"})';
+                        zeniths.util.formAjaxSuccess(result);
                     }
                 }
-            };
+            }).initDatePicker({
+                format: "yyyy-mm",
+                minViewMode: 'months'
+            }).initValidate({
+                rules: {
+                    BudgetMonth: {
+                        required: true
+                    }
+                },
+                messages: {
+                    BudgetMonth: {
+                        required: '请填写预算月份'
+                    }
+                },
+                beforeSubmit: function () {
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
             zeniths.util.standardGridBind({
                 editWidth: 700,
                 editHeight: 400,

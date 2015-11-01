@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Zeniths.Extensions;
 using Zeniths.Helper;
+using Zeniths.Utility;
 using Zeniths.WorkFlow.Service;
 using Zeniths.WorkFlow.Utility;
 
@@ -34,8 +35,8 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
                 return View("Error");
             }
             string query = string.IsNullOrEmpty(businessId) ?
-                $"flowId={flowId}&stepId={firstStepId}" :
-            $"flowId={flowId}&stepId={firstStepId}&businessId={businessId}";
+                $"flowId={flowId}&stepId={firstStepId}&businessId={businessId}" :
+                $"flowId={flowId}&stepId={firstStepId}";
             var fix = WebHelper.GetUrlJoinSymbol(src);
             return Redirect(src + fix + query);
         }
@@ -79,6 +80,49 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
             string query = $"flowId={task.FlowId}&stepId={task.StepId}&taskId={task.Id}&flowInstanceId={task.FlowInstanceId}&businessId={task.BusinessId}";
             var fix = WebHelper.GetUrlJoinSymbol(src);
             return Redirect(src + fix + query);
+        }
+
+
+        public ActionResult GetFlowDetailsDialogInfo(string flowId, string flowInstanceId, string businessId)
+        {
+            var design = WorkFlowHelper.GetWorkFlowDesign(flowId);
+            var formId = design.Property.DetailsFormName;
+            var formService = new FlowFormService();
+            var formEntity = formService.Get(formId.ToInt());
+            if (formEntity==null || formEntity.Url.IsEmpty())
+            {
+                return Json(new BoolMessage(false, "流程详情表单的地址无效"));
+            }
+            if (formEntity.Width.IsEmpty())
+            {
+                formEntity.Width = "500px";
+            }
+            if (formEntity.Height.IsEmpty())
+            {
+                formEntity.Height = "500px";
+            }
+            var fix = WebHelper.GetUrlJoinSymbol(formEntity.Url);
+            var url = formEntity.Url + fix + $"businessId={businessId}";
+            return Json(new { success = true, width = formEntity.Width, height = formEntity.Height, url = url });
+        }
+
+        public ActionResult GetFlowProcessDialogInfo(string flowId,string stepId)
+        {
+            var step = WorkFlowHelper.GetStepSetting(flowId, stepId);
+            var formId = step.FormName;
+            
+            var formService = new FlowFormService();
+            var formEntity = formService.Get(formId.ToInt());
+            
+            if (formEntity.Width.IsEmpty())
+            {
+                formEntity.Width = "500px";
+            }
+            if (formEntity.Height.IsEmpty())
+            {
+                formEntity.Height = "500px";
+            }
+            return Json(new { success = true, width = formEntity.Width, height = formEntity.Height});
         }
 
         public ActionResult Send(string flowId, string stepId, string taskId, string flowInstanceId, string businessId)
