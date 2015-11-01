@@ -63,7 +63,7 @@
                                 <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.BudgetId})">
                                     <i class="fa fa-eye"></i> 查看
                                 </a>
-                                if (ViewData["type"].ToString() == "1")
+                                if (ViewData["type"].ToString() == "1") 
                                 {
                                     <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit", new { id = record.BudgetId })">
                                         <i class="fa fa-edit"></i> 编辑
@@ -84,7 +84,7 @@
                                 {
                                     <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.BudgetId})">
                                         <i class="fa fa-eye"></i> 查看
-                                    </a>
+                                    </a>//@Html.GetFlowStartUrl(Request.QueryString["flowId"])
                                     <a class="btn btn-default btn-xs green-stripe btnRecordView" data-url="@Url.Action("DetailsList",new {id = record.BudgetId})">
                                         <i class="fa fa-eye"></i> 审批
                                     </a>

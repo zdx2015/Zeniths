@@ -33,6 +33,16 @@
                 </table>
                 <div class="datagrid" id="datagrid" data-url="@Html.Raw(Url.Action("../HrBudgetDetails/DetailsGrid",new { BudgetId = Model.Id}))">
                 </div>
+                <table style="width:100%">
+                    <tr>
+                        <th style="width:100px">
+                            <label class="control-label">处理意见：</label>
+                        </th>
+                        <td>
+                            <textarea class="form-control" name="workflow_opinion" rows="3"></textarea>
+                        </td>
+                    </tr>
+                </table>
             <div class="panel-footer text-center">
             <div class="buttons">
                 @*<a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">

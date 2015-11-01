@@ -115,36 +115,30 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>返回JsonMessage</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Save(HrBudget entity)
+        public string Save(HrBudget entity)
         {
             //判斷是否有明細信息
             var resul = service.ExistsCount(entity);
             if (!resul.Success)
             {
-                return Json(resul);
+                return resul.Message;
             }
-            if (Request.Form["Save"] != null)
-                entity.Status = 1;
-            else
-                entity.Status = 2;
+            entity.Status = 1;
 
             entity.CreateDateTime = DateTime.Now;
             entity.IsFinish = false;
             OrganizeHelper.SetCurrentUserCreateInfo(entity);
-            var currentUser = OrganizeHelper.GetCurrentUser();
-            entity.CreateDepartmentid = currentUser.DepartmentId;
-            entity.CreateDepartmentName = currentUser.DepartmentName;
-            entity.BudgetDepartmentId = entity.CreateDepartmentid;
+            entity.BudgetDepartmentId = entity.CreateDepartmentId;
             entity.BudgetDepartmentName = entity.CreateDepartmentName;
             entity.Title = entity.CreateDepartmentName + " " + entity.BudgetMonth.ToString("yyyy年MM月") + "预算申请";
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {
-                return Json(hasResult);
+                return hasResult.Message;
             }
 
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
-            return Json(result);
+            return result.Message;
         }
         /// <summary>
         /// 在添加明細信息時判斷是否添加了預算主體信息
@@ -156,14 +150,10 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             entity.CreateDateTime = DateTime.Now;
             entity.IsFinish = false;
             OrganizeHelper.SetCurrentUserCreateInfo(entity);
-            OrganizeHelper.SetCurrentUserCreateInfo(entity);
-            var currentUser = OrganizeHelper.GetCurrentUser();
-            entity.CreateDepartmentid = currentUser.DepartmentId;
-            entity.CreateDepartmentName = currentUser.DepartmentName;
-            entity.BudgetDepartmentId = entity.CreateDepartmentid;
+            entity.BudgetDepartmentId = entity.CreateDepartmentId;
             entity.BudgetDepartmentName = entity.CreateDepartmentName;
             entity.Status = 1;
-            entity.Title = entity.CreateDepartmentName + "提交" + entity.BudgetMonth.ToString("yyyy年MM月") + "预算申请";
+            entity.Title = entity.CreateDepartmentName + " " + entity.BudgetMonth.ToString("yyyy年MM月") + "预算申请";
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {
