@@ -15,6 +15,7 @@ using Zeniths.WorkFlow.Utility;
 
 namespace Zeniths.Hr.WorkFlow.Reimburse
 {
+    [WorkFlowEventCaption("日常报销:填写费用报销单")]
     public  class DailyReimburseStep1: DefaultStepEvent
     {
         /// <summary>

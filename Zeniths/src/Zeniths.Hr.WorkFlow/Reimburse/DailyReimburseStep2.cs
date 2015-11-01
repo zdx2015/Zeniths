@@ -15,7 +15,8 @@ using Zeniths.WorkFlow.Utility;
 
 namespace Zeniths.Hr.WorkFlow.Reimburse
 {
-   public  class DailyReimburseStep2: DefaultStepEvent
+    [WorkFlowEventCaption("日常报销:部门负责人签字确认")]
+    public  class DailyReimburseStep2: DefaultStepEvent
     {
         /// <summary>
         /// 流程提交后
