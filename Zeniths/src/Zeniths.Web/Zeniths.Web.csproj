@@ -677,7 +677,6 @@
     <Compile Include="Areas\HR\Controllers\EmployeeGoOutRegistrationController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeLeaveController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeNotClockController.cs" />
-    <Compile Include="Areas\HR\Controllers\GoOutRegistrationController.cs" />
     <Compile Include="Areas\HR\Controllers\HrBudgetController.cs" />
     <Compile Include="Areas\HR\Controllers\HrBudgetDetailsController.cs" />
     <Compile Include="Areas\HR\Controllers\DailyReimburseController.cs" />
