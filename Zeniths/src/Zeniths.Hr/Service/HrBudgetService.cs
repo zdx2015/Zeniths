@@ -77,7 +77,7 @@ namespace Zeniths.Hr.Service
             try
             {
                 repos.Update(entity);
-                return BoolMessage.True;
+                return new BoolMessage(true, entity.Id.ToString());
             }
             catch (Exception e) 
             {

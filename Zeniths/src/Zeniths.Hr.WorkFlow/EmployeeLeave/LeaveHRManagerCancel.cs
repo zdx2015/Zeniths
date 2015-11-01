@@ -28,7 +28,7 @@ namespace Zeniths.Hr.WorkFlow.EmployeeLeave
             entity.HRManagerOpinion = args.ExecuteData.Opinion;
             entity.HRManagerSignDate = DateTime.Now;
             entity.IsFinish = true;
-            entity.Status = "完成";
+            entity.Status = 3;
 
             return service.UpdateCancelLeaveHRManagerApproval(entity);
         }

@@ -35,6 +35,7 @@ namespace Zeniths.Hr.WorkFlow.EmployeeLeave
             entity.CreateDepartmentId = args.CurrentUser.DepartmentId;
             entity.CreateDepartmentName = args.CurrentUser.DepartmentName;
             entity.CreateDateTime = DateTime.Now;
+            entity.Status = 1;
 
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
             args.BusinessId = entity.Id.ToString();
@@ -52,8 +53,8 @@ namespace Zeniths.Hr.WorkFlow.EmployeeLeave
             entity.StepId = args.StepId;
             entity.StepName = args.StepSetting.Name;
             entity.IsFinish = false;
-            entity.Status = "已申请";
-            return service.Update(entity);
+            entity.Status = 2;
+            return service.UpdateReg(entity);
         }
     }
 }

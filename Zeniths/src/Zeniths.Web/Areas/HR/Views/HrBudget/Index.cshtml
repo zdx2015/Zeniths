@@ -23,9 +23,12 @@
                     <button class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> 查询
                     </button>
-                    <a class="btn btn-success" id="btnCreate" data-url="@Html.GetFlowStartUrl(Request.QueryString["flowId"])">
-                        <i class="fa fa-plus"></i> 新建
-                    </a>
+                    @if (ViewData["type"].ToString() == "1")
+                    {
+                        <a class="btn btn-success" id="btnCreate" data-url="@Html.GetFlowStartUrl(Request.QueryString["flowId"])">
+                            <i class="fa fa-plus"></i> 新建
+                        </a>
+                    }
                     @*<a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
                         <i class="fa fa-trash-o"></i> 删除
                     </a>*@

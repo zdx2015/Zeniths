@@ -374,9 +374,9 @@ namespace Zeniths.WorkFlow.Utility
             var eventArgs = new FlowLineEventArgs();
             eventArgs.FlowId = flowId;
             eventArgs.StepId = stepId;
-            eventArgs.FlowInstanceId = queryString["FlowInstanceId"];
-            eventArgs.TaskId = queryString["TaskId"];
-            eventArgs.BusinessId = queryString["BusinessId"];
+            eventArgs.FlowInstanceId = form["FlowInstanceId"];
+            eventArgs.TaskId = form["TaskId"];
+            eventArgs.BusinessId = form["BusinessId"];
 
             eventArgs.QueryString = queryString;
             eventArgs.Form = form;
