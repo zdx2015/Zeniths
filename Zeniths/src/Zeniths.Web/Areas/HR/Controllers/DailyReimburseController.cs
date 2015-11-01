@@ -188,6 +188,26 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         }
 
         /// <summary>
+        /// 流程图视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ViewDealFlow()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 审批意见视图
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult ViewDealOpinion(string id)
+        {
+            var entity = service.Get(id.ToInt());
+            return View(entity);
+        }
+
+        /// <summary>
         /// 查看视图
         /// </summary>
         /// <param name="id">主键</param>

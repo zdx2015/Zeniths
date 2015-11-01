@@ -3,14 +3,14 @@
     var title = "查看日常费用报销";
 }
 
-<div class="container-edit-zeniths">
+<div class="container-edit-zeniths" style="overflow-x: hidden; overflow-y: auto;">
     <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
-        <div class="panel panel-default panel-zeniths" style="height: 685px">
+        <div class="panel panel-default panel-zeniths" style="height: 685px;overflow-x: hidden; overflow-y: auto;">
             <div class="panel-heading">
                 <span class="prefix"> <strong>@Model.Id</strong></span>
                 @title
             </div>
-            <div class="panel-body" style="height: 580px">
+            <div class="panel-body" style="height: 580px;overflow-x: hidden; overflow-y: auto;">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
 
@@ -44,13 +44,40 @@
 
                 </table>
 
-                <div class="panel panel-default panel-zeniths">
+                <div class="panel panel-default panel-zeniths" style="height: 270px;">
 
-                    <div class="panel-body" style="height: 415px;overflow-x: hidden; overflow-y: auto;">
+                    <div class="panel-body" style="height: 250px; overflow-x: hidden; overflow-y: auto;">
                         <div class="datagrid" data-url="@Html.Raw(Url.Action("AllViewGrid","DailyReimburse",new {area="HR"}))" id="detailGrid"></div>
                     </div>
 
                 </div>
+
+                <!--tab 代码 开始 -->
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#DealOpinion" data-toggle="tab">
+                                处理意见
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#DealFlow" data-toggle="tab">
+                                流程图
+                            </a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="DealOpinion" style="overflow-x: hidden; overflow-y: auto;">
+                            @Html.Action("ViewDealOpinion")
+                        </div>
+                        <div class="tab-pane" id="DealFlow" style="overflow-x: hidden; overflow-y: auto;">
+                            @Html.Action("ViewDealFlow")
+                        </div>
+
+                    </div>
+                </div>
+                <!-- tab 代码 结束 -->
 
 
             </div>

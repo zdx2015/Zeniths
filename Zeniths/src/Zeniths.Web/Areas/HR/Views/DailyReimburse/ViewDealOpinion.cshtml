@@ -1,7 +1,308 @@
-﻿
+﻿@model DailyReimburse
 @{
-    ViewBag.Title = "ViewDealOpinion";
+    Layout = null;
 }
 
-<h2>ViewDealOpinion</h2>
+
+<div class="panel panel-default panel-zeniths">
+    <div class="panel-heading">
+        部门负责人审核
+    </div>
+
+    <div class="panel-body" style="height: 110px; overflow-x: hidden; overflow-y: auto;">
+        <table class="table table-form table-dialog-form">
+            <tr>
+                <th style="width: 25%">
+                    <label class="control-label">部门负责人签字：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.AddDepartmentManagerSign</p>
+                </td>
+                <th style="width: 25%">
+                    <label class="control-label">部门负责人是否同意：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.AddDepartmentManagerIsAudit</p>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label class="control-label">部门负责人意见：</label>
+                </th>
+                <td>
+                    <p class="form-control-static">@Model.AddDepartmentManagerOpinion</p>
+                </td>
+                <th>
+                    <label class="control-label">签字日期：</label>
+                </th>
+                <td>
+                    <p class="form-control-static">@Model.AddDepartmentManagerSignDate</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="panel panel-default panel-zeniths">
+    <div class="panel-heading">
+        总经理确认
+    </div>
+
+    <div class="panel-body" style="height: 110px; overflow-x: hidden; overflow-y: auto;">
+        <table class="table table-form table-dialog-form">
+            <tr>
+                <th style="width: 25%">
+                    <label class="control-label">总经理签字：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.AddGeneralManagerSign</p>
+                </td>
+                <th style="width: 25%">
+                    <label class="control-label">总经理是否同意：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.AddGeneralManagerIsAudit</p>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label class="control-label">总经理意见：</label>
+                </th>
+                <td>
+                    <p class="form-control-static">@Model.AddGeneralManagerOpinion</p>
+                </td>
+                <th>
+                    <label class="control-label">签字日期：</label>
+                </th>
+                <td>
+                    <p class="form-control-static">@Model.AddGeneralManagerSignDate</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="panel panel-default panel-zeniths">
+    <div class="panel-heading">
+        部门负责人意见
+    </div>
+
+    <div class="panel-body" style="height: 110px; overflow-x: hidden; overflow-y: auto;">
+        <table class="table table-form table-dialog-form">
+            <tr>
+                <th style="width: 25%">
+                    <label class="control-label">部门负责人签字：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.DepartmentManagerSign</p>
+                </td>
+                <th style="width: 25%">
+                    <label class="control-label">部门负责人是否同意：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.DepartmentManagerIsAudit</p>
+                </td>
+            </tr>
+            <tr>
+                <th >
+                    <label class="control-label">部门负责人意见：</label>
+                </th>
+                <td >
+                    <p class="form-control-static">@Model.DepartmentManagerOpinion</p>
+                </td>
+                <th >
+                    <label class="control-label">签字日期：</label>
+                </th>
+                <td>
+                    <p class="form-control-static">@Model.DepartmentManagerSignDate</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="panel panel-default panel-zeniths">
+    <div class="panel-heading">
+        会计审核
+    </div>
+
+    <div class="panel-body" style="height: 110px; overflow-x: hidden; overflow-y: auto;">
+        <table class="table table-form table-dialog-form">
+            <tr>
+                <th style="width: 25%">
+                    <label class="control-label">会计签字：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.AccountantSign</p>
+                </td>
+                <th style="width: 25%">
+                    <label class="control-label">会计是否同意：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.AccountantIsAudit</p>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label class="control-label">会计意见：</label>
+                </th>
+                <td>
+                    <p class="form-control-static">@Model.AccountantOpinion</p>
+                </td>
+                <th>
+                    <label class="control-label">签字日期：</label>
+                </th>
+                <td>
+                    <p class="form-control-static">@Model.AccountantSignDate</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="panel panel-default panel-zeniths">
+    <div class="panel-heading">
+        财务负责人审核
+    </div>
+
+    <div class="panel-body" style="height: 110px; overflow-x: hidden; overflow-y: auto;">
+        <table class="table table-form table-dialog-form">
+            <tr>
+                <th style="width: 25%">
+                    <label class="control-label">财务负责人签字：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.FinancialManagerSign</p>
+                </td>
+                <th style="width: 25%">
+                    <label class="control-label">财务负责人是否同意：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.FinancialManagerIsAudit</p>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label class="control-label">财务负责人意见：</label>
+                </th>
+                <td>
+                    <p class="form-control-static">@Model.FinancialManagerOpinion</p>
+                </td>
+                <th>
+                    <label class="control-label">签字日期：</label>
+                </th>
+                <td>
+                    <p class="form-control-static">@Model.FinancialManagerSignDate</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="panel panel-default panel-zeniths">
+    <div class="panel-heading">
+        总经理审核
+    </div>
+
+    <div class="panel-body" style="height: 110px; overflow-x: hidden; overflow-y: auto;">
+        <table class="table table-form table-dialog-form">
+            <tr>
+                <th style="width: 25%">
+                    <label class="control-label">总经理签字：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.GeneralManagerSign</p>
+                </td>
+                <th style="width: 25%">
+                    <label class="control-label">总经理是否同意：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.GeneralManagerIsAudit</p>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label class="control-label">总经理意见：</label>
+                </th>
+                <td>
+                    <p class="form-control-static">@Model.GeneralManagerOpinion</p>
+                </td>
+                <th>
+                    <label class="control-label">签字日期：</label>
+                </th>
+                <td>
+                    <p class="form-control-static">@Model.GeneralManagerSignDate</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="panel panel-default panel-zeniths">
+    <div class="panel-heading">
+        董事长签字
+    </div>
+
+    <div class="panel-body" style="height: 110px; overflow-x: hidden; overflow-y: auto;">
+        <table class="table table-form table-dialog-form">
+            <tr>
+                <th style="width: 25%">
+                    <label class="control-label">董事长签字：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.ChairmanSign</p>
+                </td>
+                <th style="width: 25%">
+                    <label class="control-label">董事长是否同意：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.ChairmanIsAudit</p>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label class="control-label">董事长意见：</label>
+                </th>
+                <td>
+                    <p class="form-control-static">@Model.ChairmanOpinion</p>
+                </td>
+                <th>
+                    <label class="control-label">签字日期：</label>
+                </th>
+                <td>
+                    <p class="form-control-static">@Model.ChairmanSignDate</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="panel panel-default panel-zeniths">
+    <div class="panel-heading">
+       出纳付款
+    </div>
+
+    <div class="panel-body" style="height: 110px; overflow-x: hidden; overflow-y: auto;">
+        <table class="table table-form table-dialog-form">
+            <tr>
+                <th style="width: 25%">
+                    <label class="control-label">出纳签字：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.CashierName</p>
+                </td>
+                <th style="width: 25%">
+                    <label class="control-label">签字日期：</label>
+                </th>
+                <td style="width: 25%">
+                    <p class="form-control-static">@Model.CashierUpdateDateTime</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+
+
 
