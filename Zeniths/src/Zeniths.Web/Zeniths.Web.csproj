@@ -269,6 +269,7 @@
     <Content Include="Areas\HR\Views\DailyReimburse\AllViewGrid.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\DetailGrid.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\ViewGrid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\ViewBaseInfo.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowRun\Send.cshtml" />
