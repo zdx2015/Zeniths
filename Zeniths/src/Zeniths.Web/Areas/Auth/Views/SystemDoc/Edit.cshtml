@@ -1,6 +1,8 @@
 ﻿@model SystemDoc
 @{
     var title = "编辑系统文档";
+    var resName = nameof(SystemDoc);
+    var resId = Model.Id > 0 ? Model.Id.ToString() : StringHelper.GetGuid();
 }
 
 <div class="container-edit-zeniths">
@@ -14,6 +16,8 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
                 <input type="hidden" name="@nameof(Model.CreateDateTime)" value="@Model.CreateDateTime" />
+                <input type="hidden" name="resName" value="@resName" />
+                <input type="hidden" name="resId" value="@resId" />
                 <table class="table table-form table-dialog-form">
                     <tr>
                         <th class='w-120px'>
@@ -42,13 +46,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <th><label class="control-label">上传附件：</label></th>
+                        <th><label class="control-label">附件：</label></th>
                         <td>
-                            <input id="fileInput1" name="fileInput1" type="file" class="file-loading" multiple >
-                            <input id="fileInput2" name="fileInput2" type="file" class="file-loading" multiple >
+                            @Html.Action("Files", "System", new { area = "Auth", resName, resId, allowDelete = true })
+                            <input name="fileInput" type="file" class="file-control file-loading" multiple>
                         </td>
                     </tr>
                 </table>
+
+
             </div>
             <div class="panel-footer text-center">
                 <div class="buttons">
@@ -80,7 +86,10 @@
 
         $(function () {
 
-            $('.editform').dataform().initSelect2().initTagsInput({
+            $('.editform').dataform().initSelect2().initFile({
+                resName: '@resName',
+                resId: '@resId'
+            }).initTag({
                 'height': '60px',
                 'width': '100%',
                 'defaultText': '添加标签'
@@ -98,62 +107,18 @@
                     }
                 },
                 beforeSubmit: function () {
+                    if ($('.file-control').data('fileinput').filenames.length > 0) {
+                        $(document.body).mask('正在上传文件...');
+                        $('.file-control').fileinput('upload');
+                        return false;
+                    } 
+                    return true;
                 }
-            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });;
 
-            //初始化文件上传
-
-            // with plugin options
-            $("#fileInput1,#fileInput2").fileinput({
-                language: "zh",
-                uploadUrl: '@Url.Action("UploadFile")',
-                showCaption: false,
-                showRemove: false,
-                showUpload: false,
-                showClose: false,
-                maxFileCount:20 
-                @*
-                uploadAsync: true,
-                overwriteInitial: false,
-                //maxFileSize: 100,
-                initialCaption: "The Moon and the Earth",
-                previewFileIcon: '<i class="fa fa-file"></i>',
-                allowedPreviewTypes: ['image', 'video', 'audio', 'flash'], // allow only preview of image & text files
-                previewFileIconSettings: {
-                    'doc': '<i class="fa fa-file-word-o text-primary"></i>',
-                    'docx': '<i class="fa fa-file-word-o text-primary"></i>',
-                    'xls': '<i class="fa fa-file-excel-o text-success"></i>',
-                    'xlsx': '<i class="fa fa-file-excel-o text-success"></i>',
-                    'pptx': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
-                    'jpg': '<i class="fa fa-file-photo-o text-warning"></i>',
-                    'pdf': '<i class="fa fa-file-pdf-o text-danger"></i>',
-                    'zip': '<i class="fa fa-file-archive-o text-muted"></i>',
-                    'ppt': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
-                    'htm': '<i class="fa fa-file-code-o text-info"></i>',
-                    'txt': '<i class="fa fa-file-text-o text-info"></i>',
-                    'mov': '<i class="fa fa-file-movie-o text-warning"></i>',
-                    'mp3': '<i class="fa fa-file-audio-o text-warning"></i>'
-                },
-                //previewSettings: {
-                //    image: { width: "160px", height: "160px" },
-                //    html: { width: "160px", height: "160px" },
-                //    text: { width: "160px", height: "160px" },
-                //    video: { width: "160px", height: "160px" },
-                //    audio: { width: "160px", height: "160px" },
-                //    flash: { width: "160px", height: "160px" },
-                //    object: { width: "160px", height: "160px" },
-                //    other: { width: "160px", height: "160px" }
-                //},
-                uploadExtraData: {
-                    resName: "1000",
-                    resId: "abc"
-                },
-                initialPreview: [
-                    '<img src="/UploadFiles/a.jpg" class="file-preview-image" alt="Desert" title="Desert">',
-                    '<img src="/UploadFiles/b.jpg" class="file-preview-image" alt="Desert" title="Desert">'
-                ]*@
+            $('.file-control').on('filebatchuploadcomplete', function (event, data, previewId, index) {
+                $('.editform').ajaxSubmit({ success: zeniths.util.formAjaxSuccess });
             });
-
         });
     </script>
 }

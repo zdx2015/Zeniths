@@ -288,6 +288,8 @@
     <Content Include="Areas\WorkFlow\Views\FlowTask\HandledTasksGrid.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowTask\HandledTasks.cshtml" />
     <Content Include="Areas\WorkFlow\Views\FlowTask\PendingTasksGrid.cshtml" />
+    <Content Include="Areas\Auth\Views\System\Files.cshtml" />
+    <Content Include="Areas\Auth\Views\System\FilesGrid.cshtml" />
     <None Include="Plugin\_references.js" />
     <Content Include="Plugin\bootstrap-clockpicker\css\bootstrap-clockpicker.css" />
     <Content Include="Plugin\bootstrap-clockpicker\js\bootstrap-clockpicker.js" />

@@ -1219,3 +1219,15 @@ zeniths.tree.getChildrenIds = function ($tree, node, isAddSelf) {
     }
     return ids;
 };
+
+/**
+ * 删除附件
+ * @param {} url 
+ * @param {} gridSelector 
+ * @returns {} 
+ */
+zeniths.util.deleteFile = function (url,gridSelector) {
+    zeniths.util.delete(url, function() {
+        $(gridSelector).datagrid().reload();
+    });
+};
