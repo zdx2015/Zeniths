@@ -39,6 +39,18 @@ namespace Zeniths.WorkFlow.Entity
         public string Url { get; set; }
 
         /// <summary>
+        /// 窗口宽度
+        /// </summary>
+        [Column(Caption = "窗口宽度")]
+        public string Width { get; set; }
+
+        /// <summary>
+        /// 窗口高度
+        /// </summary>
+        [Column(Caption = "窗口高度")]
+        public string Height { get; set; }
+
+        /// <summary>
         /// 启用状态
         /// </summary>
         [Column(Caption = "启用状态")]

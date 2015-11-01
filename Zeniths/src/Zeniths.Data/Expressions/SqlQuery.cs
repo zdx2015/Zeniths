@@ -80,6 +80,8 @@ namespace Zeniths.Data
         private List<string> SelectColumns { get; set; }
         private List<string> ExcludeSelectColumns { get; set; }
         private EntityMetadata Metadata { get; set; }
+        private string _tableName { get; set; }
+
 
         /// <summary>
         /// 转为查询语句结果对象
@@ -351,9 +353,23 @@ namespace Zeniths.Data
             return OrderBy(keySelector, false);
         }
 
+        /// <summary>
+        /// 设置表名
+        /// </summary>
+        /// <param name="tableName"></param>
+        public SQLQuery<T> SetTableName(string tableName)
+        {
+            _tableName = tableName;
+            return this;
+        }
+        
         private string GetTableName()
         {
-            return Metadata.TableInfo.TableName;
+            if (string.IsNullOrEmpty(_tableName))
+            {
+                return Metadata.TableInfo.TableName;
+            }
+            return _tableName;
         }
 
         private SqlExpressionCompilerResult ToSQL_Where(int parameterNumber, IDictionary<string, object> parameters)
