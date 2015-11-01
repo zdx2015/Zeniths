@@ -10,7 +10,7 @@
         <div class="panel-body form" style="margin:10px">
 
             <form class="form-horizontal">
-               
+
                 <div class="form-group">
                     <label class="col-sm-2 control-label">流程标识：</label>
                     <div class="col-sm-9">
@@ -29,8 +29,22 @@
                     <label class="col-sm-2 control-label">分类：</label>
                     <div class="col-sm-9">
                         <select class="select2-control form-control" id="category" name="category">
+                            <option></option>
                             @Html.FlowCategoryOptions()
                         </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">查看表单：</label>
+                    <div class="col-sm-9">
+                        <select class="select2-control form-control" id="detailsFormName" name="detailsFormName" data-allow-clear="true" data-placeholder="">
+                            <option></option>
+                            @Html.FlowFormOptions()
+                        </select>
+                        <span class="help-block">
+                            主要用来查看流程的详细信息
+                        </span>
                     </div>
                 </div>
 
@@ -70,8 +84,8 @@
                         <textarea class="form-control" id="note" name="note" rows="3"></textarea>
                     </div>
                 </div>
- 
-                  
+
+
             </form>
 
         </div>
@@ -95,7 +109,7 @@
 
             var windowId = zeniths.util.GetUrlQuery('windowId');
             var parentWindow = top.frames[windowId];
-             
+
 
             $('form').dataform().initSelect2({
                 allowClear: false,

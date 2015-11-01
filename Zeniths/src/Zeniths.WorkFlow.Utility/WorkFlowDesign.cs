@@ -58,6 +58,12 @@ namespace Zeniths.WorkFlow.Utility
         public string Category { get; set; }
 
         /// <summary>
+        /// 查看表单
+        /// </summary>
+        [JsonProperty("detailsFormName")]
+        public string DetailsFormName { get; set; }
+        
+        /// <summary>
         /// 是否发布
         /// </summary>
         [JsonProperty("isEnabled")]
