@@ -28,15 +28,16 @@ namespace Zeniths.Hr.WorkFlow.EmployeeLeave
             {
                 args.ExecuteData.Title = entity.Title = $"{args.CurrentUser.Name}的请假申请({DateTimeHelper.FormatDate(entity.CreateDateTime)})";
             }
-
-            entity.ApplyDateTime = DateTime.Now;
-            entity.CreateUserId = args.CurrentUser.Id;
-            entity.CreateUserName = args.CurrentUser.Name;
-            entity.CreateDepartmentId = args.CurrentUser.DepartmentId;
-            entity.CreateDepartmentName = args.CurrentUser.DepartmentName;
-            entity.CreateDateTime = DateTime.Now;
-            entity.Status = 1;
-
+            if (entity.Id == 0)
+            {
+                entity.ApplyDateTime = DateTime.Now;
+                entity.CreateUserId = args.CurrentUser.Id;
+                entity.CreateUserName = args.CurrentUser.Name;
+                entity.CreateDepartmentId = args.CurrentUser.DepartmentId;
+                entity.CreateDepartmentName = args.CurrentUser.DepartmentName;
+                entity.CreateDateTime = DateTime.Now;
+                entity.Status = 1;
+            }
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
             args.BusinessId = entity.Id.ToString();
             return result;

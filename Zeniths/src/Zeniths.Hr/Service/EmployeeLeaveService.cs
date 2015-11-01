@@ -26,6 +26,18 @@ namespace Zeniths.Hr.Service
         private readonly Repository<EmployeeLeave> repos = new Repository<EmployeeLeave>();
 
         /// <summary>
+        /// 检测是否存在指定的请休假申请
+        /// </summary>
+        /// <param name="entity">未打卡记录表实体</param>
+        /// <returns>如果存在指定记录返回BoolMessage.False</returns>
+        public BoolMessage Exists(EmployeeLeave entity)
+        {
+            return BoolMessage.True;
+            var has = repos.Exists(p => p.Status==1);
+            return has ? new BoolMessage(false, "指定的请假申请单已保存") : BoolMessage.True;
+        }
+
+        /// <summary>
         /// 新增请休假申请
         /// </summary>
         /// <param name="entity">请休假申请实体</param>
@@ -34,7 +46,11 @@ namespace Zeniths.Hr.Service
         {
             try
             {
-                repos.Insert(entity);
+                //BoolMessage result = Exists(entity);
+                //if (result.Success)
+                //{
+                    repos.Insert(entity);
+               // }                
                 return BoolMessage.True;
             }
             catch (Exception e)

@@ -259,7 +259,6 @@
     <Content Include="Areas\HR\Views\EmployeeLeave\DetailsBaseLeave.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeLeave\GridAll.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeLeave\IndexAll.cshtml" />
-    <Content Include="Areas\HR\Views\EmployeeLeave\IndexWaitHandle.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\DetailsList.cshtml" />
     <Content Include="Areas\HR\Views\HrBudgetDetails\DetailsGrid.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\AllDetails.cshtml" />
@@ -668,9 +667,6 @@
     <Compile Include="Areas\Auth\Controllers\SystemParamController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemRoleController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
-    <Compile Include="Areas\HR\Controllers\EmployeeGoOutRegistrationController.cs" />
-    <Compile Include="Areas\HR\Controllers\EmployeeLeaveController.cs" />
-    <Compile Include="Areas\HR\Controllers\EmployeeNotClockController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeGoOutRegistrationController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeLeaveController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeNotClockController.cs" />
