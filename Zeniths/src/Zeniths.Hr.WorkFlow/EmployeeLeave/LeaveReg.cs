@@ -12,6 +12,7 @@ using Zeniths.WorkFlow.Utility;
 
 namespace Zeniths.Hr.WorkFlow.EmployeeLeave
 {
+    [WorkFlowEventCaption("请休假:登记")]
     public class LeaveReg : DefaultStepEvent
     {
         /// <summary>
@@ -36,7 +37,7 @@ namespace Zeniths.Hr.WorkFlow.EmployeeLeave
                 entity.CreateDepartmentId = args.CurrentUser.DepartmentId;
                 entity.CreateDepartmentName = args.CurrentUser.DepartmentName;
                 entity.CreateDateTime = DateTime.Now;
-                entity.Status = 1;
+                entity.Status = 2;
             }
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
             args.BusinessId = entity.Id.ToString();

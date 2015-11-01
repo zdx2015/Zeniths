@@ -270,8 +270,11 @@
     <Content Include="Areas\HR\Views\DailyReimburse\AllViewGrid.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\DetailGrid.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\ViewGrid.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\ViewBaseInfo.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\ViewDealOpinion.cshtml" />
+    <Content Include="Areas\HR\Views\DailyReimburse\ViewDealFlow.cshtml" />
+    <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\HR\Views\HrBudgetDetails\DetailsGrid.cshtml" />
-    <Content Include="Areas\HR\Views\HrBudget\DetailsList.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\Approve.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\Complete.cshtml" />
     <Content Include="Areas\HR\Views\EmpLeave\_DetailsCommon.cshtml" />

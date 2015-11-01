@@ -2,10 +2,11 @@
 @{
     var title = ViewBag.Title;
     var detailTile = "添加费用明细";
+    Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
 }
 
 <div class="container-edit-zeniths">
-    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+    <form class="editform" action="@Html.GetFlowExecuteUrl()" method="POST" role="form">
         <div class="panel panel-default panel-zeniths" style="height: 685px">
             <div class="panel-heading">
                 <span class="prefix"> <strong>@Model.Id</strong></span>
@@ -77,9 +78,13 @@
           
                 <div class="panel-footer text-center">
                     <div class="buttons">
-                        <button class="btn btn-primary" type="submit">
+                        @*<button class="btn btn-primary" type="submit">
                             <i class="fa fa-save"></i> 保存
                         </button>
+                        &nbsp;*@
+                        <a class="btn btn-outline btn-danger btnWorkFlowSend">
+                            <i class="fa fa-arrow-right"></i> 提交
+                        </a>
                         &nbsp;
                         <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
                             <i class="fa fa-sign-in"></i> 关闭
@@ -142,7 +147,18 @@
             });
 
             //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
-            $('.editform').dataform().initValidate({
+            $('.editform').dataform().initWorkFlow({
+                sendCallback: function (wf, result) {
+                    //如果下一步骤的处理人是自己 则继续处理下一步骤
+                    if (result.url) {
+                        window.location.href = result.url;
+                    } else {
+                        //跳转到待办页面
+                        zeniths.util.formAjaxSuccess(result);
+                        @*window.location.href = '@Url.Action("PendingTasks","FlowTask",new { area ="WorkFlow"})';*@
+                        }
+                }
+            }).initValidate({
                 rules: {
                     ReimburseDepartmentName: {
                         required: true

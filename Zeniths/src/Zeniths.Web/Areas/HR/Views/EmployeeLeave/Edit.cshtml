@@ -5,7 +5,7 @@
 }
 
 <div class="container-edit-zeniths">
-    <form class="editform" action="@Html.GetFlowExecuteUrl()" method="POST" role="form">
+    <form  id="formReg" class="editform" action="@Html.GetFlowExecuteUrl()" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
                 <span class="prefix"> <strong>@Model.Id</strong></span>
@@ -84,9 +84,12 @@
             </div>
             <div class="panel-footer text-center">
                 <div class="buttons">                    
-                    <a class="btn btn-outline btn-primary btnWorkFlowSave">
+                    @*<a class="btn btn-outline btn-primary" id="DetailsSave" href="@Url.Action("Save", "EmployeeLeave")">
                         <i class="fa fa-save"></i> 保存
-                    </a>
+                    </a>*@     
+                    <button class="btn btn-primary" name="Save" id="DetailsSave" type="button">
+                        <i class="fa fa-save"></i> 保存
+                    </button>              
                     &nbsp;
                     <a class="btn btn-outline btn-danger btnWorkFlowSend">
                         <i class="fa fa-arrow-right"></i> 提交
@@ -108,6 +111,25 @@
     <script>
 
         $(function () {
+            $('#DetailsSave').on('click', function (e) {
+                //验证数据
+
+                $('#formReg').ajaxSubmit({
+                    url: '@Html.Raw(Url.Action("Save"))',
+                    success: function (data) {
+                        if (data.success) {
+                            zeniths.util.closeFrameDialog(window);
+                            //刷新申请列表页面
+
+
+                        }
+                        else {
+                            alert(data.message);
+                        }
+                    }
+                });
+               });
+
             $('.editform').dataform().initiCheck().initDateTimePicker().initWorkFlow({
                 saveCallback: function (wf, result) {
                     zeniths.util.formAjaxSuccess(result);
@@ -170,7 +192,6 @@
                 },
                 autoAddRequired: false
             }).initAjax({ success: zeniths.util.formAjaxSuccess });
-
         });
     </script>
 }

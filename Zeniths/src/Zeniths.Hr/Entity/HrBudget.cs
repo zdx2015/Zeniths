@@ -48,7 +48,7 @@ namespace Zeniths.Hr.Entity
         /// 流程主键
         /// </summary>
 		[Column(Caption = "流程主键")]
-        public int? FlowId { get; set; }
+        public string FlowId { get; set; }
 
 		/// <summary>
         /// 流程名称
@@ -60,13 +60,13 @@ namespace Zeniths.Hr.Entity
         /// 流程实例主键
         /// </summary>
 		[Column(Caption = "流程实例主键")]
-        public int? FlowInstanceId { get; set; }
+        public string FlowInstanceId { get; set; }
 
 		/// <summary>
         /// 当前步骤主键
         /// </summary>
 		[Column(Caption = "当前步骤主键")]
-        public int? StepId { get; set; }
+        public string StepId { get; set; }
 
 		/// <summary>
         /// 当前步骤名称
@@ -132,7 +132,7 @@ namespace Zeniths.Hr.Entity
         /// 创建用户部门主键
         /// </summary>
 		[Column(Caption = "创建用户部门主键")]
-        public int CreateDepartmentid { get; set; }
+        public int CreateDepartmentId { get; set; }
 
 		/// <summary>
         /// 创建用户部门名称

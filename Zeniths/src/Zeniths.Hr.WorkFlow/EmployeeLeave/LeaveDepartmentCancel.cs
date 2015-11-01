@@ -12,6 +12,7 @@ using Zeniths.WorkFlow.Utility;
 
 namespace Zeniths.Hr.WorkFlow.EmployeeLeave
 {
+    [WorkFlowEventCaption("请休假:部门负责人销假意见")]
     public class LeaveDepartmentCancel : DefaultStepEvent
     {
         /// <summary>

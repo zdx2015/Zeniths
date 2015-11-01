@@ -16,6 +16,7 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" id="Id" name="@nameof(Model.Id)" value="@Model.Id" />
                 <input type="hidden" id="Status" name="@nameof(Model.Status)" value="0" />
+                <input type="hidden" id="FlowId" name="@nameof(Model.FlowId)" value="@ViewData["flowId"]" />
                 <table class="table table-form table-dialog-form">
 
                     <tr>
@@ -43,13 +44,12 @@
                         </button>
                         @*<button class="btn btn-primary" name="Submit" value="2" type="submit">
         <i class="fa fa-save"></i> 提交
-    </button>
-    &nbsp;
-    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
-        <i class="fa fa-sign-in"></i> 关闭
-    </a>*@
+    </button>*@  &nbsp;
                         <a class="btn btn-outline btn-danger btnWorkFlowSend">
                             <i class="fa fa-arrow-right"></i> 提交
+                        </a>                        &nbsp;
+                        <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                            <i class="fa fa-sign-in"></i> 关闭
                         </a>
                     </div>
                 </div>

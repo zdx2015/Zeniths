@@ -83,8 +83,14 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// 新增视图
         /// </summary>
         /// <returns>视图模板</returns>
-        public ActionResult Create()
+        public ActionResult Create(string id)
         {
+            //EmployeeLeave leaveEntity = new EmployeeLeave();
+            //if (id != null)
+            //{
+            //    leaveEntity = service.Get(id);
+            //}
+
             EmployeeLeave leaveEntity = new EmployeeLeave();
             var currentUser = OrganizeHelper.GetCurrentUser();
             var currentEmployee = employeeService.GetEmployeeByUser(currentUser.Id);    //根据当前登录用户的账号查找员工Id信息
@@ -101,7 +107,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns>视图模板</returns>
-        public ActionResult Edit(string id)
+        public ActionResult Edit(string id,string flowId)
         {
             var entity = service.Get(id.ToInt());
             return EditCore(entity);
@@ -138,7 +144,31 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var entity = service.Get(id.ToInt());
             return View(entity);
         }
-        
+
+        /// <summary>
+        /// 保存方法
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public ActionResult Save(EmployeeLeave entity)
+        {
+            var service = new EmployeeLeaveService();
+            if (entity.Id == 0)
+            {
+                var currentUser = OrganizeHelper.GetCurrentUser();
+                entity.ApplyDateTime = DateTime.Now;
+                entity.CreateUserId = currentUser.Id;
+                entity.CreateUserName = currentUser.Name;
+                entity.CreateDepartmentId = currentUser.DepartmentId;
+                entity.CreateDepartmentName = currentUser.DepartmentName;
+                entity.CreateDateTime = DateTime.Now;
+                entity.IsFinish = false;
+                entity.Status = 1;
+            }
+            var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
+            return Json(result);
+        }
+
         /// <summary>
         /// 删除数据
         /// </summary>

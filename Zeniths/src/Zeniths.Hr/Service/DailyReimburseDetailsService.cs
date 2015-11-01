@@ -183,7 +183,24 @@ namespace Zeniths.Hr.Service
         }
 
 
-       
+        /// <summary>
+        /// 获取预算表Id
+        /// </summary>budGetRepos
+        /// <param name="dpartId"></param>
+        /// <returns></returns>
+        public List<HrBudgetDetails> GetBudgetDetailList(int dpartId)
+        {
+            var curMonth = DateTime.Now.Month - 1;
+            var sql = @"
+                       SELECT Id,BudgetId,BudgetCategoryId,BudgetCategoryName,BudgetItemId,BudgetItemName,BudgetMoney,Note
+                       FROM HrBudgetDetails WHERE BudgetId = (
+                       SELECT Id FROM HrBudget WHERE BudgetDepartmentId = @dpartId AND Month(BudgetMonth) = @curMonth ) 
+                    ";
+            return repos.Database.Query<HrBudgetDetails>(sql, new { dpartId = dpartId, curMonth = curMonth }).ToList();
+
+        }
+
+
 
         #region 私有方法
 

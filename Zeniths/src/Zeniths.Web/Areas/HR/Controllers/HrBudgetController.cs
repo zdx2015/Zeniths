@@ -66,7 +66,14 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Create()
         {
+            string businessId = Request.QueryString["businessId"]==null?"": Request.QueryString["businessId"];
+            if (businessId!="")
+            {
+                ViewData["Title"] = "编辑部门预算";
+                return Edit(businessId);
+            }
             ViewData["Title"] = "新增部门预算";
+            ViewData["flowId"] = Request.QueryString["flowId"];
             return EditCore(new HrBudget());
         }
 
@@ -78,6 +85,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         public ActionResult Edit(string id)
         {
             ViewData["Title"] = "编辑部门预算";
+            ViewData["flowId"] = Request.QueryString["flowId"];
             var entity = service.Get(id.ToInt());
             return EditCore(entity);
         }
@@ -93,9 +101,9 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var entity = service.Get(id.ToInt());
             return View(entity);
         }
-        public ActionResult DetailsList(string id)
+        public ActionResult DetailsList(string businessId)
         {
-            var entity = service.Get(id.ToInt());
+            var entity = service.Get(businessId.ToInt());
             return View(entity);
         }
         /// <summary>
@@ -128,7 +136,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             entity.CreateDateTime = DateTime.Now;
             entity.IsFinish = false;
             OrganizeHelper.SetCurrentUserCreateInfo(entity);
-            //entity.BudgetDepartmentId = entity.CreateDepartmentId;
+            entity.BudgetDepartmentId = entity.CreateDepartmentId;
             entity.BudgetDepartmentName = entity.CreateDepartmentName;
             entity.Title = entity.CreateDepartmentName + " " + entity.BudgetMonth.ToString("yyyy年MM月") + "预算申请";
             var hasResult = service.Exists(entity);
@@ -150,7 +158,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             entity.CreateDateTime = DateTime.Now;
             entity.IsFinish = false;
             OrganizeHelper.SetCurrentUserCreateInfo(entity);
-           //entity.BudgetDepartmentId = entity.CreateDepartmentId;
+            entity.BudgetDepartmentId = entity.CreateDepartmentId;
             entity.BudgetDepartmentName = entity.CreateDepartmentName;
             entity.Status = 1;
             entity.Title = entity.CreateDepartmentName + " " + entity.BudgetMonth.ToString("yyyy年MM月") + "预算申请";
