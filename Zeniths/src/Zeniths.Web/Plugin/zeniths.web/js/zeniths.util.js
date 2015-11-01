@@ -1222,12 +1222,25 @@ zeniths.tree.getChildrenIds = function ($tree, node, isAddSelf) {
 
 /**
  * 删除附件
- * @param {} url 
- * @param {} gridSelector 
+ * @param {String} url 
+ * @param {String} gridSelector 
  * @returns {} 
  */
 zeniths.util.deleteFile = function (url,gridSelector) {
     zeniths.util.delete(url, function() {
         $(gridSelector).datagrid().reload();
+    });
+};
+
+/**
+ * 显示流程详情对话框
+ * @param {String} flowId 流程主键
+ * @param {String} flowInstanceId 流程实例主键
+ * @param {String} businessId 业务主键
+ * @returns {} 
+ */
+zeniths.util.showFlowDetailsDialog = function(flowId,flowInstanceId,businessId) {
+    zeniths.util.post('', {flowId:flowId,flowInstanceId:flowInstanceId,businessId:businessId}, function() {
+
     });
 };

@@ -68,10 +68,12 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = service.GetTaskPageList(pageIndex, pageSize, orderName, orderDir,
-               CurrentUserId.ToString(), null, flowId, title, null, null, 1);
+            var list = service.GetBusinessTaskPageList(pageIndex, pageSize, orderName, orderDir,
+               CurrentUserId.ToString(), null, flowId, title, null, null);
             return View(list);
         }
+
+
         
     }
 }

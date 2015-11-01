@@ -80,7 +80,19 @@ namespace Zeniths.Data
         private List<string> SelectColumns { get; set; }
         private List<string> ExcludeSelectColumns { get; set; }
         private EntityMetadata Metadata { get; set; }
-        private string _tableName { get; set; }
+
+        private string _tableName;
+        public string TableName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_tableName))
+                {
+                    return Metadata.TableInfo.TableName;
+                }
+                return _tableName;
+            }
+        }
 
 
         /// <summary>
@@ -365,11 +377,7 @@ namespace Zeniths.Data
         
         private string GetTableName()
         {
-            if (string.IsNullOrEmpty(_tableName))
-            {
-                return Metadata.TableInfo.TableName;
-            }
-            return _tableName;
+            return TableName;
         }
 
         private SqlExpressionCompilerResult ToSQL_Where(int parameterNumber, IDictionary<string, object> parameters)
