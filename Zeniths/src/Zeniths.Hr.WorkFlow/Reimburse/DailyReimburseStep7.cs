@@ -15,7 +15,8 @@ using Zeniths.WorkFlow.Utility;
 
 namespace Zeniths.Hr.WorkFlow.Reimburse
 {
-   public class DailyReimburseStep7 : DefaultStepEvent
+    [WorkFlowEventCaption("日常报销:付款")]
+    public class DailyReimburseStep7 : DefaultStepEvent
     {
         /// <summary>
         /// 流程提交后
@@ -31,6 +32,10 @@ namespace Zeniths.Hr.WorkFlow.Reimburse
             entity.CashierId = args.CurrentUser.Id;
             entity.CashierName = args.CurrentUser.Name;
             entity.CashierUpdateDateTime = DateTime.Now;
+            entity.DrawMoney = 0;
+            entity.DrawMoneyId = 0;
+            entity.DrawMoneyName = "admin";
+            entity.DrawMoneyDateTime = DateTime.Now;
             var list = (List<DailyReimburseDetails>)HttpContext.Current.Session["DailyReimburseDetails"];
             return service.Update(entity, 6);
         }

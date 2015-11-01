@@ -147,7 +147,6 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Create()
         {
-           
             var entity = new DailyReimburse();
             entity.ReimburseDepartmentName = CurrentUser.DepartmentName;
             entity.ApplicantName = CurrentUser.Name;
@@ -184,6 +183,26 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var list = detailsService.GetList(id.ToInt());
             SessionData = list;
             ViewBag.Title = "查看日常费用报销";
+            return View(entity);
+        }
+
+        /// <summary>
+        /// 流程图视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ViewDealFlow()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 审批意见视图
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult ViewDealOpinion(string id)
+        {
+            var entity = service.Get(id.ToInt());
             return View(entity);
         }
 

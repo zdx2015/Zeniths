@@ -15,6 +15,7 @@ using Zeniths.WorkFlow.Utility;
 
 namespace Zeniths.Hr.WorkFlow.Reimburse
 {
+    [WorkFlowEventCaption("日常报销:填写费用报销单")]
     public  class DailyReimburseStep1: DefaultStepEvent
     {
         /// <summary>
@@ -27,12 +28,40 @@ namespace Zeniths.Hr.WorkFlow.Reimburse
             ObjectHelper.SetObjectPropertys(entity, args.Form);//从表单数据中读取实体属性
             OrganizeHelper.SetCurrentUserInfo(entity);//设置登陆用户信息
             WorkFlowHelper.SetCurrentFlowInfo(entity, args);//设置业务表中流程信息
+
+            entity.ReimburseDepartmentId = args.CurrentUser.DepartmentId;
+            entity.ReimburseDepartmentName = args.CurrentUser.DepartmentName;
+            entity.ApplicantId = args.CurrentUser.Id;
+            entity.ApplicantName = args.CurrentUser.Name;
+            entity.ApplicationDate = DateTime.Now.Date;
+            entity.ApplySortNumber = service.GetYearAndMonthString() + "0000";
+            //entity.Title = "填写报销单";
+            entity.IsFinish = false;
+            entity.FlowId = args.FlowId;
+            //entity.FlowInstanceId = args.FlowInstanceId;
+            entity.FlowName = "日常报销";
+           // entity.StepId = args.StepId;
+           // entity.StepName = "填写报销单";
+            entity.BudgetId = service.GetBudgetId(args.CurrentUser.DepartmentId);
+            entity.CreateUserId = args.CurrentUser.Id;
+            entity.CreateUserName = args.CurrentUser.Name;
+            entity.CreateDepartmentId = args.CurrentUser.DepartmentId;
+            entity.CreateDepartmentName = args.CurrentUser.DepartmentName;
+            entity.CreateDateTime = DateTime.Now;
+            entity.ProjectSumMoney = 0;
+            var curlist = (List<DailyReimburseDetails>)HttpContext.Current.Session["DailyReimburseDetails"]; 
+            foreach (var item in curlist)
+            {
+                item.ReimburseId = entity.Id;
+                entity.ProjectSumMoney = entity.ProjectSumMoney + item.Amount;
+            }
+
             if (string.IsNullOrEmpty(args.ExecuteData.Title))
             {
                 args.ExecuteData.Title = entity.Title = $"{args.CurrentUser.Name}的报销单({DateTimeHelper.FormatDate(entity.CreateDateTime)})";
             }
-            var list = (List<DailyReimburseDetails>) HttpContext.Current.Session["DailyReimburseDetails"];
-            var result = entity.Id == 0 ? service.Insert(entity,list) : service.Update(entity,list);
+          
+            var result = entity.Id == 0 ? service.Insert(entity, curlist) : service.Update(entity, curlist);
             args.BusinessId = entity.Id.ToString();
             return result;
         }
