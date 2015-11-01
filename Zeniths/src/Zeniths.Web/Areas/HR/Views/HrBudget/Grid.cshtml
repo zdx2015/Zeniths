@@ -33,7 +33,7 @@
         <tbody>
             @foreach (var record in Model)
             {
-                <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.BudgetId})">
+                <tr class="cursor-pointer" data-url="@Url.Action("Details",new {businessId = record.BudgetId})">
                     <td>
                         <label><input class="checkbox-check" type="checkbox" value="@record.BudgetId"><span></span></label>
                     </td>
