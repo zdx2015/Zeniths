@@ -162,6 +162,7 @@
 
         $(function () {
             //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
+            $('#filedatagrid').datagrid();
             $('.editform').dataform().initSelect2().initWorkFlow({
                 sendCallback: function (wf, result) {
                     //如果下一步骤的处理人是自己 则继续处理下一步骤
