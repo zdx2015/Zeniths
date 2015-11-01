@@ -58,6 +58,10 @@
     <Compile Include="SQLQueryTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\src\Zeniths.Auth\Zeniths.Auth.csproj">
+      <Project>{EB7B2A8A-484D-4279-861C-5560B1D76160}</Project>
+      <Name>Zeniths.Auth</Name>
+    </ProjectReference>
     <ProjectReference Include="..\src\Zeniths.Data\Zeniths.Data.csproj">
       <Project>{E67F375D-EE64-4BDF-8458-A1C2B2A29472}</Project>
       <Name>Zeniths.Data</Name>

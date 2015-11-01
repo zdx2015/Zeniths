@@ -54,6 +54,11 @@ namespace Zeniths.Web.Areas.Auth.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save(SystemDoc entity)
         {
+            foreach (string key in Request.Files.Keys)
+            {
+                var file = Request.Files[key];
+                file.SaveAs(Server.MapPath("~/UploadFiles/"+file.FileName));
+            }
             var hasResult = service.Exists(entity);
             if (hasResult.Failure)
             {

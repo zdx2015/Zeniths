@@ -126,7 +126,7 @@
      */
     self.flowSetting = function () {
         var url = new URI($('#flowSettingUrl').val()).addSearch({ id: self.flowId, windowId: window.name }).toString();
-        zeniths.util.dialog(url, 800, 595);
+        zeniths.util.dialog(url, 800, 535);
     };
 
     /**
@@ -143,7 +143,7 @@
             };
         }
         var url = new URI($('#stepSettingUrl').val()).addSearch({ id: self.flowId, stepId: stepId, windowId: window.name }).toString();
-        zeniths.util.dialog(url, 800, 640);
+        zeniths.util.dialog(url, 800, 690);
     };
 
     /**
@@ -155,7 +155,7 @@
             self.designJson.line[lineId] = {};
         }
         var url = new URI($('#lineSettingUrl').val()).addSearch({ id: self.flowId, lineId: lineId, windowId: window.name }).toString();
-        zeniths.util.dialog(url, 770, 585);
+        zeniths.util.dialog(url, 800, 625);
     };
 
     /**

@@ -10,81 +10,68 @@
         <div class="panel-body form" style="margin:10px">
 
             <form class="form-horizontal">
-                <div class="tabbable-line">
-                    <ul class="nav nav-tabs ">
-                        <li class="active">
-                            <a href="#tab_base" data-toggle="tab">
-                                基本
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab_base">
+               
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">流程标识：</label>
+                    <div class="col-sm-9">
+                        <p class="form-control-static" id="id"></p>
+                    </div>
+                </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">流程标识：</label>
-                                <div class="col-sm-9">
-                                    <p class="form-control-static" id="id"></p>
-                                </div>
-                            </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">流程名称：</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="name" name="name" type="text">
+                    </div>
+                </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">流程名称：</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control" id="name" name="name" type="text">
-                                </div>
-                            </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">分类：</label>
+                    <div class="col-sm-9">
+                        <select class="select2-control form-control" id="category" name="category">
+                            @Html.FlowCategoryOptions()
+                        </select>
+                    </div>
+                </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">分类：</label>
-                                <div class="col-sm-9">
-                                    <select class="select2-control form-control" id="category" name="category">
-                                        @Html.FlowCategoryOptions()
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">选项：</label>
-                                <div class="col-sm-9">
-                                    <div class="checkbox-list">
-                                        <label class="checkbox-inline">
-                                            <input class="icheckbox-control" id="isEnabled" name="isEnabled" type="checkbox" value="true" />
-                                            <span>发布流程</span>
-                                        </label>
-                                        <label class="checkbox-inline" style="padding-left:0">
-                                            <input class="icheckbox-control" id="isDebug" name="isDebug" type="checkbox" value="true" />
-                                            <span>开启调试</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">调试用户：</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="selectmember form-control" id="debugUserIds" name="debugUserIds" disabled>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">序号：</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="sortIndex" name="sortIndex">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">备注：</label>
-                                <div class="col-sm-9">
-                                    <textarea class="form-control" id="note" name="note" rows="3"></textarea>
-                                </div>
-                            </div>
-
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">选项：</label>
+                    <div class="col-sm-9">
+                        <div class="checkbox-list">
+                            <label class="checkbox-inline">
+                                <input class="icheckbox-control" id="isEnabled" name="isEnabled" type="checkbox" value="true" />
+                                <span>发布流程</span>
+                            </label>
+                            <label class="checkbox-inline" style="padding-left:0">
+                                <input class="icheckbox-control" id="isDebug" name="isDebug" type="checkbox" value="true" />
+                                <span>开启调试</span>
+                            </label>
                         </div>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">调试用户：</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="selectmember form-control" id="debugUserIds" name="debugUserIds" disabled>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">序号：</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="sortIndex" name="sortIndex">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">备注：</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" id="note" name="note" rows="3"></textarea>
+                    </div>
+                </div>
+ 
+                  
             </form>
 
         </div>

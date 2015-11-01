@@ -24,32 +24,13 @@ namespace Zeniths.MvcUtility
         /// <typeparam name="T">实体类型</typeparam>
         /// <param name="helper">HtmlHelper</param>
         /// <param name="source">数据源</param>
-        /// <param name="routeDatas">路由数据</param>
-        public static MvcHtmlString RenderPages<T>(this HtmlHelper helper, PageList<T> source, object routeDatas = null)
-        {
-            var routeData = helper.ViewContext.RouteData.Values;
-            string controller = routeData["controller"].ToString();
-            string action = routeData["action"].ToString();
-            return RenderPages(helper, source, controller, action, routeDatas);
-        }
-
-        /// <summary>
-        /// 生成分页
-        /// </summary>
-        /// <typeparam name="T">实体类型</typeparam>
-        /// <param name="helper">HtmlHelper</param>
-        /// <param name="source">数据源</param>
-        /// <param name="controller">控制器</param>
-        /// <param name="action">过程</param>
-        /// <param name="routeDatas">路由数据</param>
-        public static MvcHtmlString RenderPages<T>(this HtmlHelper helper, PageList<T> source, string controller,
-                                                   string action, object routeDatas)
+        public static MvcHtmlString RenderPages<T>(this HtmlHelper helper, PageList<T> source)
         {
             if (source == null || source.Count <= 0)
             {
                 return MvcHtmlString.Empty;
             }
-            var pages = new StringBuilder();
+
             var pagetemplate = @"
 <div class=""row paginateArea"">
     <div class=""col-sm-6"">
@@ -63,118 +44,58 @@ namespace Zeniths.MvcUtility
         </div>
     </div>
 </div>";
+            int showPages = 10;
             int pageIndex = source.PageIndex;
             int totalPages = source.TotalPages;
-            int showPages = 5;
-            int miniPages = 1;
-            string pagedInfo = $"共 {source.TotalCount} 条 当前显示 {source.RecordStartIndex} 到 {source.RecordEndIndex} 条";
-            if (source.RecordEndIndex == 0 && source.RecordEndIndex == 0)
-            {
-                pagedInfo = $"共 {source.TotalCount} 条";
-            }
+
+            string pagedInfo = (source.RecordEndIndex == 0 && source.RecordEndIndex == 0) ?
+                $"共 {source.TotalCount} 条" :
+                $"共 {source.TotalCount} 条 当前显示 {source.RecordStartIndex} 到 {source.RecordEndIndex} 条";
+
             if (totalPages <= showPages)
             {
-                for (int i = 1; i <= totalPages; i++)
-                {
-                    BuildPage(helper, pages, pageIndex, i, controller, action, routeDatas);
-                }
-                return MvcHtmlString.Create(string.Format(pagetemplate, pagedInfo, pages));
+                return MvcHtmlString.Create(string.Format(pagetemplate, pagedInfo, BuildPage(1, totalPages, pageIndex)));
             }
 
-            var lastShowIndex = totalPages - showPages;
-            var isBuildFirstShowPages = pageIndex < showPages;
-            var isBuildLastShowPages = lastShowIndex > 0 && pageIndex > lastShowIndex;
-            var isBuildCenterPages = !isBuildFirstShowPages && !isBuildLastShowPages;
+            var pages = new StringBuilder();
 
-            #region 开始
-
-            if (isBuildFirstShowPages)
+            if (pageIndex <= 7)
             {
-                for (int i = 1; i <= showPages; i++)
-                {
-                    BuildPage(helper, pages, pageIndex, i, controller, action, routeDatas);
-                }
+                pages.Append(BuildPage(1, 11, pageIndex));
+                pages.Append("<li class=\"disabled\"><span>···</span></li>");
+                pages.Append(BuildPage(totalPages, totalPages, pageIndex));
+            }
+            else if (pageIndex >= (totalPages - 7))
+            {
+                pages.Append(BuildPage(1, 1, pageIndex));
+                pages.Append("<li class=\"disabled\"><span>···</span></li>");
+                pages.Append(BuildPage(totalPages - 10, totalPages, pageIndex));
             }
             else
             {
-                for (int i = 1; i <= miniPages; i++)
-                {
-                    BuildPage(helper, pages, pageIndex, i, controller, action, routeDatas);
-                }
-                pages.AppendFormat(@"<li class=""disabled""><span>···</span></li>");
+                pages.Append(BuildPage(1, 1, pageIndex));
+                pages.Append("<li class=\"disabled\"><span>···</span></li>");
+                pages.Append(BuildPage(pageIndex - 5, pageIndex + 5, pageIndex));
+                pages.Append("<li class=\"disabled\"><span>···</span></li>");
+                pages.Append(BuildPage(totalPages, totalPages, pageIndex));
             }
-
-            #endregion
-
-            #region 中间
-
-            if (isBuildCenterPages)
-            {
-                int start = pageIndex - 3;
-                int end = pageIndex + 3;
-                for (int i = start; i <= end; i++)
-                {
-                    BuildPage(helper, pages, pageIndex, i, controller, action, routeDatas);
-                }
-            }
-
-            #endregion
-
-            #region 最后
-
-            if (isBuildLastShowPages)
-            {
-                for (int i = lastShowIndex; i <= totalPages; i++)
-                {
-                    BuildPage(helper, pages, pageIndex, i, controller, action, routeDatas);
-                }
-            }
-            else
-            {
-                pages.AppendFormat(@"<li class=""disabled""><span>···</span></li>");
-                for (int i = totalPages - miniPages + 1; i <= totalPages; i++)
-                {
-                    BuildPage(helper, pages, pageIndex, i, controller, action, routeDatas);
-                }
-            }
-
-            #endregion
 
             return MvcHtmlString.Create(string.Format(pagetemplate, pagedInfo, pages));
         }
 
         /// <summary>
-        /// 生成页面
+        /// 生成页面链接
         /// </summary>
-        /// <param name="helper"></param>
-        /// <param name="pages"></param>
-        /// <param name="pageIndex"></param>
-        /// <param name="currentPage"></param>
-        /// <param name="controller"></param>
-        /// <param name="action"></param>
-        /// <param name="routeDatas">路由数据</param>
-        private static void BuildPage(HtmlHelper helper, StringBuilder pages, int pageIndex, int currentPage,
-                                      string controller, string action, object routeDatas)
+        private static string BuildPage(int start, int end, int currentPageIndex)
         {
-            var routeData = WebHelper.GetRouteValues(helper.ViewContext.RouteData.Values, null, true, true);
-
-            routeData["page"] = currentPage;
-            routeData["controller"] = controller;
-            routeData["action"] = action;
-
-            if (routeDatas != null)
+            var sb = new StringBuilder();
+            for (int i = start; i <= end; i++)
             {
-                var pros = TypeDescriptor.GetProperties(routeDatas);
-                foreach (PropertyDescriptor propertyDescriptor in pros)
-                {
-                    routeData[propertyDescriptor.Name] = propertyDescriptor.GetValue(routeDatas);
-                }
+                sb.Append(currentPageIndex == i
+                    ? $"<li class=\"active\" title=\"第{i}页\"><span>{i}</span></li>"
+                    : $"<li title=\"第{i}页\"><a data-page=\"{i}\">{i}</a></li>");
             }
-
-            pages.AppendFormat(
-                currentPage == pageIndex
-                    ? @"<li class=""active"" title=""第{0}页""><span>{0}</span></li>"
-                    : @"<li title=""第{0}页""><a data-page=""{0}"">{0}</a></li>", currentPage);
+            return sb.ToString();
         }
 
         /// <summary>
@@ -266,7 +187,7 @@ namespace Zeniths.MvcUtility
             return isReadonly ? MvcHtmlString.Create("readonly") : MvcHtmlString.Empty;
         }
 
-        public static MvcHtmlString BoolFaIcon(this HtmlHelper helper,bool result)
+        public static MvcHtmlString BoolFaIcon(this HtmlHelper helper, bool result)
         {
             if (result)
             {
@@ -275,13 +196,13 @@ namespace Zeniths.MvcUtility
             return MvcHtmlString.Create("<i class=\"fa fa-lg fa-close\" style=\"color: red\"></i>");
         }
 
-        public static MvcHtmlString BoolLabel(this HtmlHelper helper, bool result,string trueLable= "启用", string falseLable= "禁用")
+        public static MvcHtmlString BoolLabel(this HtmlHelper helper, bool result, string trueLable = "启用", string falseLable = "禁用")
         {
             if (result)
             {
-                return MvcHtmlString.Create("<span class=\"label label-success\">"+ trueLable + "</span>");
+                return MvcHtmlString.Create("<span class=\"label label-success\">" + trueLable + "</span>");
             }
-            return MvcHtmlString.Create("<span class=\"label label-danger\">"+ falseLable + "</span>");
+            return MvcHtmlString.Create("<span class=\"label label-danger\">" + falseLable + "</span>");
         }
 
         public static MvcHtmlString BoolLabelIsAgree(this HtmlHelper helper, bool? result, string trueLable = "同意", string falseLable = "不同意")

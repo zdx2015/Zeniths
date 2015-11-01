@@ -1,5 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Zeniths.Auth.Entity;
+using Zeniths.Auth.Service;
 using Zeniths.Data;
 using Zeniths.Data.Expressions;
 using Zeniths.Data.Tests.Entity;
@@ -59,5 +61,13 @@ namespace Zeniths.DataTests
             repos.UpdateExclude(new TestUser(),p=>p.Id==5,p=>p.Account,p=>p.Name);
 
         }
+
+        [TestMethod()]
+        public void SequenceTest()
+        {
+            var seqService = new SystemSequenceService();
+            var v = seqService.GetNextValue("test");
+        }
+
     }
 }

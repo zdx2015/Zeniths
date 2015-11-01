@@ -49,6 +49,31 @@ namespace Zeniths.WorkFlow.Utility
         {
             return MvcHtmlString.Create(AuthHelper.BuildDicOptions("FlowCategory", selected));
         }
+
+        /// <summary>
+        /// 获取步骤事件实例下拉选项
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="selected">选中的步骤事件实例值</param>
+        /// <returns></returns>
+        public static MvcHtmlString FlowStepEventOptions(this HtmlHelper helper, string selected = null)
+        {
+            return MvcHtmlString.Create(WebHelper.GetSelectOptions(WorkFlowHelper.GetStepEventCaptionList(),
+                nameof(WorkFlowEventCaptionAttribute.Cation),nameof(WorkFlowEventCaptionAttribute.Provider),selected));
+        }
+
+        /// <summary>
+        /// 获取线事件实例下拉选项
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="selected">选中的步骤事件实例值</param>
+        /// <returns></returns>
+        public static MvcHtmlString FlowLineEventOptions(this HtmlHelper helper, string selected = null)
+        {
+            return MvcHtmlString.Create(WebHelper.GetSelectOptions(WorkFlowHelper.GetLineEventCaptionList(),
+                nameof(WorkFlowEventCaptionAttribute.Cation), nameof(WorkFlowEventCaptionAttribute.Provider), selected));
+        }
+
         public static MvcHtmlString BudgetCategoryOptions(this HtmlHelper helper, string selected = null)
         {
             return MvcHtmlString.Create(AuthHelper.BuildDicOptions("DailyReimburseCategory", selected));

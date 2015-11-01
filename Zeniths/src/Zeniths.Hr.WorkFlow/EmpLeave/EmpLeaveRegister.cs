@@ -8,6 +8,7 @@ using Zeniths.WorkFlow.Utility;
 
 namespace Zeniths.Hr.WorkFlow.EmpLeave
 {
+    [WorkFlowEventCaption("请假:登记步骤")]
     public class EmpLeaveRegister : DefaultStepEvent
     {
         /// <summary>
