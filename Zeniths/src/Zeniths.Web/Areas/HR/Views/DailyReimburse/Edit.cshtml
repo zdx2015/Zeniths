@@ -1,8 +1,9 @@
 ﻿@model DailyReimburse
 @{
     var title = ViewBag.Title;
-    var detailTile = "添加费用明细";
     Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
+    var resName = nameof(DailyReimburse);
+    var resId = Model.Id > 0 ? Model.Id.ToString() : StringHelper.GetGuid();
 }
 
 <div class="container-edit-zeniths">
@@ -14,98 +15,146 @@
             </div>
             <div class="panel-body" style="height: 580px">
                 @Html.AntiForgeryToken()
-                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id"/>
-               
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <input type="hidden" name="resName" value="@resName" />
+                <input type="hidden" name="resId" value="@resId" />
                 <table class="table table-form table-dialog-form">
 
                     <tr>
-                        <th >
+                        <th class="w-100px">
                             <label class="control-label">报销部门：</label>
                         </th>
                         <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.ReimburseDepartmentName)" value="@Model.ReimburseDepartmentName" type="text" readonly />
-                            </div>
+
+                            <input class="form-control" name="@nameof(Model.ReimburseDepartmentName)" value="@Model.ReimburseDepartmentName" type="text" readonly />
+
                         </td>
                     </tr>
 
                     <tr>
-                        <th >
+                        <th>
                             <label class="control-label">经办人：</label>
                         </th>
                         <td>
-                            <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.ApplicantName)" value="@Model.ApplicantName" type="text" readonly/>
-                            </div>
+
+                            <input class="form-control" name="@nameof(Model.ApplicantName)" value="@Model.ApplicantName" type="text" readonly />
+
                         </td>
                     </tr>
                     <tr>
-                        <th >
-                            <label class="control-label">申请情况说明：</label>
+                        <th>
+                            <label class="control-label">情况说明：</label>
                         </th>
                         <td>
-                            <div class="input-icon right">
-                                <textarea class="form-control" name="@nameof(Model.ApplyOpinion)" value="@Model.ApplyOpinion" type="text">@Model.ApplyOpinion</textarea>
-                            </div>
+                            <textarea class="form-control" name="@nameof(Model.ApplyOpinion)" value="@Model.ApplyOpinion" type="text">@Model.ApplyOpinion</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="control-label">附件：</label></th>
+                        <td>
+                            <input name="fileInput" type="file" class="file-control file-loading" multiple>
                         </td>
                     </tr>
                 </table>
+
                 <div class="panel panel-default panel-zeniths">
                     <div class="panel-heading">
-                        @*<span class="prefix"> <strong>@Model.Id</strong></span>*@
-                        @detailTile
+                        费用明细
                         <div class="pull-right">
-                            <a class="btn btn-xs btn-success" id="btnDetailCreate" data-url="@Url.Action("Create", "DailyReimburseDetails", new {area = "HR"})" onclick="newDetailWindow();">
-                                <i class="fa fa-plus"></i> 新建
+                            <a class="btn btn-xs btn-success" id="btnDetailCreate"
+                               data-url="@Url.Action("Create", "DailyReimburseDetails")"
+                               onclick="createSubDialog();">
+                                <i class="fa fa-plus"></i> 添加费用明细
                             </a>
-                            <a class="btn btn-xs btn-danger" id="btnDetailDelete" data-url="@Url.Action("Delete", "DailyReimburseDetails", new {area = "HR"})" onclick="deleteDetailData();">
-                                <i class="fa fa-trash-o"></i> 删除
-                            </a>
+                            @*<a class="btn btn-xs btn-danger" id="btnDetailDelete" data-url="@Url.Action("Delete", "DailyReimburseDetails", new {area = "HR"})" onclick="deleteDetailData();">
+                                    <i class="fa fa-trash-o"></i> 删除
+                                </a>*@
                         </div>
                     </div>
-                    
-                        <div class="panel-body" style="height: 341px; overflow-x: hidden; overflow-y: auto;">
-                          
-                            <div class="datagrid" data-url="@Html.Raw(Url.Action("DetailGrid", "DailyReimburse", new {area = "HR"}))" id="detailGrid"></div>
 
-                        </div>
-                       
-
+                    <div class="panel-body" style="height: 200px; overflow-x: hidden; overflow-y: auto;">
+                        <table id="subTable" class="table table-zeniths table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="w-150px">费用类别</th>
+                                    <th class="w-150px">项目名称</th>
+                                    <th class="w-150px">费用金额</th>
+                                    <th class="w-50px">操作</th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
 
                 </div>
 
-          
-                <div class="panel-footer text-center">
-                    <div class="buttons">
-                        @*<button class="btn btn-primary" type="submit">
+            </div>
+
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    @*<button class="btn btn-primary" type="submit">
                             <i class="fa fa-save"></i> 保存
                         </button>
                         &nbsp;*@
-                        <a class="btn btn-outline btn-danger btnWorkFlowSend">
-                            <i class="fa fa-arrow-right"></i> 提交
-                        </a>
-                        &nbsp;
-                        <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
-                            <i class="fa fa-sign-in"></i> 关闭
-                        </a>
-                    </div>
+                    <button class="btn btn-outline btn-danger" type="submit">
+                        <i class="fa fa-arrow-right"></i> 提交
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
                 </div>
             </div>
+        </div>
     </form>
 </div>
 <div class="search-form"></div>
 
+@section style{
+    <link href="~/Plugin/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+}
 @section script{
+    <script src="~/Plugin/bootstrap-fileinput/js/plugins/canvas-to-blob.min.js"></script>
+    <script src="~/Plugin/bootstrap-fileinput/js/fileinput.min.js"></script>
+    <script src="~/Plugin/bootstrap-fileinput/js/fileinput_locale_zh.js"></script>
+
     <script>
-        
+        window.subData = {};
+
+        function subRecord(itemId, itemName, categoryName, amount) {
+            this.ItemId = itemId;
+            this.ItemName = itemName;
+            this.CategoryName = categoryName;
+            this.Amount = amount;
+        }
+
+        function createSubDialog() {
+            var url = new URI($('#btnDetailCreate').data('url')).addSearch({ windowId: window.name }).toString();
+            zeniths.util.dialog(url, 600, 400);
+        };
+
+
+        function addSubRow(record) {
+            subData[record.ItemId] = record;
+
+            $('#subTable')
+                .append('<tr id="{3}"><td>{0}</td><td>{1}</td><td>{2}</td><td><a class="btn btn-default btn-xs red-stripe btnRecordDelete" onclick="deleteSubRow({3})"><i class="fa fa-trash-o"></i> 删除</a></td></tr>'
+                    .format(record.CategoryName, record.ItemName, record.Amount, record.ItemId));
+        }
+
+        function deleteSubRow(itemId) {
+            zeniths.util.confirm('确定要删除当前费用明细吗?', function(index) {
+                zeniths.util.layerClose(index);
+                delete subData[itemId];
+                $('#subTable #' + itemId).remove();
+            });
+        }
+
         /*
           验证表单数据
         */
         function beforSave() {
-            
-            var tCount = $('#detailGrid').find('tbody tr').length;
-           
+
+            var tCount = $('#subTable').find('tbody tr').length;
             if (tCount <= 0) {
                 zeniths.util.alert('请添加费用明细');
                 return false;
@@ -113,85 +162,44 @@
 
             return true;
         };
-       
-        /*
-          打开新建窗口
-        */
-        function newDetailWindow() {
-            zeniths.util.dialog($('#btnDetailCreate').data('url'), 900, 420, {
-                callback: function() {
-                    $('#detailGrid').datagrid().reload();
 
-                }
-            });
-        };
-        /*
-         删除选择数据
-        */
-        function deleteDetailData() {
+        $(function() {
 
-            zeniths.util.deleteBatch($('#btnDetailDelete').data('url'), $('#detailGrid').datagrid().getSelectedIds(), function () {
-                $('#detailGrid').datagrid().reload();
-            });
-
-           
-
-        };
-
-        $(function () {
-            zeniths.util.standardGridBind({
-                editWidth: 900,
-                editHeight: 360,
-                viewWidth: 900,
-                viewHeight: 360
-            });
+            function initWorkFlow() {
+                $('.editform').dataform().initWorkFlow({
+                    sendCallback: function(wf, result) {
+                        //如果下一步骤的处理人是自己 则继续处理下一步骤
+                        if (result.url) {
+                            window.location.href = result.url;
+                        } else {
+                            //跳转到待办页面
+                            zeniths.util.formAjaxSuccess(result);
+                            @*window.location.href = '@Url.Action("PendingTasks","FlowTask",new { area ="WorkFlow"})';*@
+                        }
+                    }
+                });
+            }
 
             //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
-            $('.editform').dataform().initWorkFlow({
-                sendCallback: function (wf, result) {
-                    //如果下一步骤的处理人是自己 则继续处理下一步骤
-                    if (result.url) {
-                        window.location.href = result.url;
-                    } else {
-                        //跳转到待办页面
-                        zeniths.util.formAjaxSuccess(result);
-                        @*window.location.href = '@Url.Action("PendingTasks","FlowTask",new { area ="WorkFlow"})';*@
-                        }
-                }
+            $('.editform').dataform().initFile({
+                showPreview: false,
+                resName: '@resName',
+                resId: '@resId'
             }).initValidate({
-                rules: {
-                    ReimburseDepartmentName: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
-                    },
-                    ApplicantName: {
-                        required: true
-                        /*,maxlength: 100
-                          ,digits: true
-                        */
+                beforeSubmit: function() {
+                    var result = beforSave();
+                    if (result) {
+                        initWorkFlow();
+                        var detailsArray = [];
+                        $.each(subData,function(i,v) {
+                            detailsArray.push(v);
+                        });
+                        zeniths.workflow.addExtData({ details: JSON.stringify(detailsArray)});
+                        zeniths.workflow.flowSend();
                     }
-                },
-                messages: {
-                    ReimburseDepartmentName: {
-                        required: '请填写报销部门名称'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    },
-
-                    ApplicantName: {
-                        required: '请填写经办人姓名'
-                        /*,maxlength: '长度不能超过100'
-                          ,digits: '只能输入正整数'
-                        */
-                    }
-                },
-                beforeSubmit: function () {
-                    return beforSave();
+                    return false;
                 }
-            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+            });
 
         });
     </script>

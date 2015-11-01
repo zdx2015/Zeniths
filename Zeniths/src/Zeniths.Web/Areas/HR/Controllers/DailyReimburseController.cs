@@ -214,7 +214,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             else
             {
                
-                result = service.Update(entity, curlist);
+                //result = service.Update(entity, curlist);
             }
 
            

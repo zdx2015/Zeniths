@@ -6,6 +6,7 @@
 zeniths.workflow = function () {
 
     var self = this;
+    self.extData = {};
     self.$formElement = null;
     self.workflow_execute_params = null;
     self.workflow_client_model = null;
@@ -70,10 +71,9 @@ zeniths.workflow = function () {
 
         //"title":null,"opinion":null,"isAudit":null,"type":null,"steps":[]
 
+        var sendData = $.extend({}, self.extData, { _workflow_execute_params: JSON.stringify(self.workflow_execute_params) });
         self.$formElement.ajaxSubmit({
-            data: {
-                _workflow_execute_params: JSON.stringify(self.workflow_execute_params)
-            },
+            data: sendData,
             success: function (result) {
                 $(top.document.body).unmask();
                 zeniths.util.alert(result.message, { icon: 1 }, function (idx) {
@@ -193,8 +193,8 @@ zeniths.workflow = function () {
             return false;
         }
 
-       self.workflow_execute_params.opinion = self.$formElement.find('[name=workflow_opinion]').val();
-       
+        self.workflow_execute_params.opinion = self.$formElement.find('[name=workflow_opinion]').val();
+
         if (self.workflow_client_model.isNeedSignature &&
             self.workflow_execute_params.isSignature == false) {
             self.workflow_execute_params.isSignature =
@@ -282,6 +282,10 @@ zeniths.workflow = function () {
          */
         setExecuteParam: function (params) {
             $.extend(self.workflow_execute_params, params);
+        },
+
+        addExtData: function (data) {
+            $.extend(self.extData, data);
         },
 
         /**

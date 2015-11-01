@@ -197,9 +197,7 @@ namespace Zeniths.Hr.Service
                        SELECT Id FROM HrBudget WHERE BudgetDepartmentId = @dpartId AND Month(BudgetMonth) = @curMonth ) 
                     ";
             return repos.Database.Query<HrBudgetDetails>(sql, new { dpartId = dpartId, curMonth = curMonth }).ToList();
-
         }
-
 
 
         #region 私有方法

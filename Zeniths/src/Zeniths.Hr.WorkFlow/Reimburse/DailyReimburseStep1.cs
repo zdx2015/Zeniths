@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Zeniths.Auth.Utility;
+using Zeniths.Configuration;
 using Zeniths.Extensions;
 using Zeniths.Helper;
 using Zeniths.Hr.Entity;
@@ -16,7 +17,7 @@ using Zeniths.WorkFlow.Utility;
 namespace Zeniths.Hr.WorkFlow.Reimburse
 {
     [WorkFlowEventCaption("日常报销:填写费用报销单")]
-    public  class DailyReimburseStep1: DefaultStepEvent
+    public class DailyReimburseStep1 : DefaultStepEvent
     {
         /// <summary>
         /// 保存数据方法
@@ -40,8 +41,8 @@ namespace Zeniths.Hr.WorkFlow.Reimburse
             entity.FlowId = args.FlowId;
             //entity.FlowInstanceId = args.FlowInstanceId;
             entity.FlowName = "日常报销";
-           // entity.StepId = args.StepId;
-           // entity.StepName = "填写报销单";
+            // entity.StepId = args.StepId;
+            // entity.StepName = "填写报销单";
             entity.BudgetId = service.GetBudgetId(args.CurrentUser.DepartmentId);
             entity.CreateUserId = args.CurrentUser.Id;
             entity.CreateUserName = args.CurrentUser.Name;
@@ -49,7 +50,8 @@ namespace Zeniths.Hr.WorkFlow.Reimburse
             entity.CreateDepartmentName = args.CurrentUser.DepartmentName;
             entity.CreateDateTime = DateTime.Now;
             entity.ProjectSumMoney = 0;
-            var curlist = (List<DailyReimburseDetails>)HttpContext.Current.Session["DailyReimburseDetails"]; 
+
+            var curlist = JsonHelper.Deserialize<List<DailyReimburseDetails>>(args.Form["details"]);
             foreach (var item in curlist)
             {
                 item.ReimburseId = entity.Id;
@@ -60,8 +62,9 @@ namespace Zeniths.Hr.WorkFlow.Reimburse
             {
                 args.ExecuteData.Title = entity.Title = $"{args.CurrentUser.Name}的报销单({DateTimeHelper.FormatDate(entity.CreateDateTime)})";
             }
-          
-            var result = entity.Id == 0 ? service.Insert(entity, curlist) : service.Update(entity, curlist);
+
+            //var result = entity.Id == 0 ? service.Insert(entity, curlist) : service.Update(entity, curlist);
+            var result = service.Insert(entity, curlist);
             args.BusinessId = entity.Id.ToString();
             return result;
         }

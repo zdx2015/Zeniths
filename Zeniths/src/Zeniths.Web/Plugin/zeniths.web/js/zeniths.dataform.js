@@ -285,7 +285,7 @@
         var ops = $.extend({}, {
             language: "zh",
             uploadUrl: '/Auth/System/UploadFile',
-            showCaption: false,
+            showCaption: true,
             showRemove: false,
             showUpload: false,
             showClose: false,
