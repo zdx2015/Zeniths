@@ -4,6 +4,7 @@ using Zeniths.WorkFlow.Utility;
 
 namespace Zeniths.Hr.WorkFlow.EmpLeave
 {
+    [WorkFlowEventCaption("请假:1天内")]
     public class EmpLeaveDaysLineLessThanOne : DefaultLineEvent
     {
         public override BoolMessage OnValid(FlowLineEventArgs args)
@@ -30,6 +31,7 @@ namespace Zeniths.Hr.WorkFlow.EmpLeave
         }
     }
 
+    [WorkFlowEventCaption("请假:大于3天")]
     public class EmpLeaveDaysLineGreaterThanThree : DefaultLineEvent
     {
         public override BoolMessage OnValid(FlowLineEventArgs args)

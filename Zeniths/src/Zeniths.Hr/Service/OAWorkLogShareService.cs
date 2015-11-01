@@ -196,7 +196,7 @@ namespace Zeniths.Hr.Service
 
             var querySql = @"select LogDate, ShareUserId, ShareUserName, ShareDepartmentName, IsFeedback, FeedbackInfomation, FeedbackDateTime
             from[Zeniths.HR].[dbo].[OAWorkLog], [Zeniths.HR].[dbo].[OAWorkLogShare]
-            where[Zeniths.HR].[dbo].[OAWorkLog].Id = [Zeniths.HR].[dbo].[OAWorkLogShare].WorkLogId and year(LogDate) / month(LogDate) = year(getdate()) / month(getdate())
+            where[Zeniths.HR].[dbo].[OAWorkLog].Id = [Zeniths.HR].[dbo].[OAWorkLogShare].WorkLogId and WorkLogId=@WorkLogId
             Order by LogDate Desc";
 
             var list = reposExtend.Database.Query<OAWorkLogExtend>(querySql).ToList();

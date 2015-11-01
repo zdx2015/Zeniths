@@ -8,133 +8,116 @@
             流转条件设置
         </div>
         <div class="panel-body form" style="margin:10px">
-
+            
             <form class="form-horizontal">
-                <div class="tabbable-line">
-                    <ul class="nav nav-tabs ">
-                        <li class="active">
-                            <a href="#tab_base" data-toggle="tab">
-                                基本
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#tab_organize" data-toggle="tab">
-                                组织机构
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tab_base">
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">条件标签：</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="name" name="name">
-                                </div>
-                            </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">条件标签：</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">验证实现类：</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="validProvider" name="validProvider">
-                                </div>
-                            </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">事件验证类：</label>
+                    <div class="col-sm-8">
+                        <select class="select2-control form-control" id="validProvider" name="validProvider" data-placeholder="请选择事件验证类">
+                            @Html.FlowLineEventOptions()
+                        </select>
+                    </div>
+                </div>
 
-                        </div>
-                        <div class="tab-pane" id="tab_organize">
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">发送者属于：</label>
-                                <div class="col-sm-8">
-                                    <input class="selectmember form-control" id="organize_senderin" name="organize_senderin" type="text">
-                                </div>
-                            </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">发送者属于：</label>
+                    <div class="col-sm-8">
+                        <input class="selectmember form-control" id="organize_senderin" name="organize_senderin" type="text">
+                    </div>
+                </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">发送者不属于：</label>
-                                <div class="col-sm-8">
-                                    <input class="selectmember form-control" id="organize_sendernotin" name="organize_sendernotin" type="text">
-                                </div>
-                            </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">发送者不属于：</label>
+                    <div class="col-sm-8">
+                        <input class="selectmember form-control" id="organize_sendernotin" name="organize_sendernotin" type="text">
+                    </div>
+                </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">发起者属于：</label>
-                                <div class="col-sm-8">
-                                    <input class="selectmember form-control" id="organize_sponsorin" name="organize_sponsorin" type="text">
-                                </div>
-                            </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">发起者属于：</label>
+                    <div class="col-sm-8">
+                        <input class="selectmember form-control" id="organize_sponsorin" name="organize_sponsorin" type="text">
+                    </div>
+                </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">发起者不属于：</label>
-                                <div class="col-sm-8">
-                                    <input class="selectmember form-control" id="organize_sponsornotin" name="organize_sponsornotin" type="text">
-                                </div>
-                            </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">发起者不属于：</label>
+                    <div class="col-sm-8">
+                        <input class="selectmember form-control" id="organize_sponsornotin" name="organize_sponsornotin" type="text">
+                    </div>
+                </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">发送者是领导：</label>
-                                <div class="col-sm-8">
-                                    <div class="checkbox-list">
-                                        <label class="checkbox-inline w-150px" style="width:150px">
-                                            <input class="icheckbox-control" id="organize_senderleader" name="organize_senderleader" value="true" type="checkbox" />
-                                            <span>是部门领导</span>
-                                        </label>
-                                        <label class="checkbox-inline">
-                                            <input class="icheckbox-control" id="organize_senderchargeleader" name="organize_senderchargeleader" value="true" type="checkbox" />
-                                            <span>是部门分管领导</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">发起者是领导：</label>
-                                <div class="col-sm-8">
-                                    <div class="checkbox-list">
-                                        <label class="checkbox-inline w-150px">
-                                            <input class="icheckbox-control" id="organize_sponsorleader" name="organize_sponsorleader" value="true" type="checkbox" />
-                                            <span>是部门领导</span>
-                                        </label>
-                                        <label class="checkbox-inline">
-                                            <input class="icheckbox-control" id="organize_sponsorchargeleader" name="organize_sponsorchargeleader" value="true" type="checkbox" />
-                                            <span>是部门分管领导</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">发送者不是领导：</label>
-                                <div class="col-sm-8">
-                                    <div class="checkbox-list">
-                                        <label class="checkbox-inline w-150px">
-                                            <input class="icheckbox-control" id="organize_notsenderleader" name="organize_notsenderleader" value="true" type="checkbox" />
-                                            <span>不是部门领导</span>
-                                        </label>
-                                        <label class="checkbox-inline">
-                                            <input class="icheckbox-control" id="organize_notsenderchargeleader" name="organize_notsenderchargeleader" value="true" type="checkbox" />
-                                            <span>不是部门分管领导</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">发起者不是领导：</label>
-                                <div class="col-sm-8">
-                                    <div class="checkbox-list">
-                                        <label class="checkbox-inline w-150px">
-                                            <input class="icheckbox-control" id="organize_notsponsorleader" name="organize_notsponsorleader" value="true" type="checkbox" />
-                                            <span>不是部门领导</span>
-                                        </label>
-                                        <label class="checkbox-inline">
-                                            <input class="icheckbox-control" id="organize_notsponsorchargeleader" name="organize_notsponsorchargeleader" value="true" type="checkbox" />
-                                            <span>不是部门分管领导</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">发送者是领导：</label>
+                    <div class="col-sm-8">
+                        <div class="checkbox-list">
+                            <label class="checkbox-inline w-150px" style="width:150px">
+                                <input class="icheckbox-control" id="organize_senderleader" name="organize_senderleader" value="true" type="checkbox" />
+                                <span>是部门领导</span>
+                            </label>
+                            <label class="checkbox-inline">
+                                <input class="icheckbox-control" id="organize_senderchargeleader" name="organize_senderchargeleader" value="true" type="checkbox" />
+                                <span>是部门分管领导</span>
+                            </label>
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">发起者是领导：</label>
+                    <div class="col-sm-8">
+                        <div class="checkbox-list">
+                            <label class="checkbox-inline w-150px">
+                                <input class="icheckbox-control" id="organize_sponsorleader" name="organize_sponsorleader" value="true" type="checkbox" />
+                                <span>是部门领导</span>
+                            </label>
+                            <label class="checkbox-inline">
+                                <input class="icheckbox-control" id="organize_sponsorchargeleader" name="organize_sponsorchargeleader" value="true" type="checkbox" />
+                                <span>是部门分管领导</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">发送者不是领导：</label>
+                    <div class="col-sm-8">
+                        <div class="checkbox-list">
+                            <label class="checkbox-inline w-150px">
+                                <input class="icheckbox-control" id="organize_notsenderleader" name="organize_notsenderleader" value="true" type="checkbox" />
+                                <span>不是部门领导</span>
+                            </label>
+                            <label class="checkbox-inline">
+                                <input class="icheckbox-control" id="organize_notsenderchargeleader" name="organize_notsenderchargeleader" value="true" type="checkbox" />
+                                <span>不是部门分管领导</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">发起者不是领导：</label>
+                    <div class="col-sm-8">
+                        <div class="checkbox-list">
+                            <label class="checkbox-inline w-150px">
+                                <input class="icheckbox-control" id="organize_notsponsorleader" name="organize_notsponsorleader" value="true" type="checkbox" />
+                                <span>不是部门领导</span>
+                            </label>
+                            <label class="checkbox-inline">
+                                <input class="icheckbox-control" id="organize_notsponsorchargeleader" name="organize_notsponsorchargeleader" value="true" type="checkbox" />
+                                <span>不是部门分管领导</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
             </form>
 
         </div>
@@ -158,11 +141,10 @@
             var windowId = zeniths.util.GetUrlQuery('windowId');
             var lineId = zeniths.util.GetUrlQuery('lineId');
             var parentWindow = top.frames[windowId];
-             
 
-            $('form').dataform().initiCheck();
-            $('.tab-content>.tab-pane').height(375);
-            
+
+            $('form').dataform().initiCheck().initSelect2();
+
 
             function initForm() {
                 var data = parentWindow.flowDesign.getLine(lineId);
@@ -178,7 +160,7 @@
                 if (!validForm()) return;
                 var formData = zeniths.util.getFormData($('form'));
                 //zeniths.util.debugObject(formData);
-                parentWindow.flowDesign.setLine(lineId,formData);
+                parentWindow.flowDesign.setLine(lineId, formData);
                 zeniths.util.closeFrameDialog(window);
             }
 

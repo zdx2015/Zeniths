@@ -41,7 +41,6 @@ namespace Zeniths.Auth.Utility
         /// 生成数据字典下拉选项
         /// </summary>
         /// <param name="dicCode">数据字典编码</param>
-        /// <param name="isCategoryGroup">是否分组</param>
         /// <param name="selected">选中的值</param>
         /// <returns></returns>
         public static string BuildDicListOptions(string dicCode,string selected = null)

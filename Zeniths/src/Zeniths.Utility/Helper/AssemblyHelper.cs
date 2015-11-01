@@ -152,7 +152,6 @@ namespace Zeniths.Helper
                 {
                     continue;
                 }
-
                 if (CheckSubClass(t, baseType))
                 {
                     list.Add(t);

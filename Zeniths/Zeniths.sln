@@ -68,6 +68,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zeniths.Test", "src\Zeniths
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zeniths.Hr.WorkFlow", "src\Zeniths.Hr.WorkFlow\Zeniths.Hr.WorkFlow.csproj", "{69D3E92A-AC3D-465B-A146-BE54432F19E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zeniths.DataTests", "Zeniths.DataTests\Zeniths.DataTests.csproj", "{28420501-47E8-4A8B-B957-C773F6BF46CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,6 +128,10 @@ Global
 		{69D3E92A-AC3D-465B-A146-BE54432F19E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69D3E92A-AC3D-465B-A146-BE54432F19E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69D3E92A-AC3D-465B-A146-BE54432F19E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28420501-47E8-4A8B-B957-C773F6BF46CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28420501-47E8-4A8B-B957-C773F6BF46CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28420501-47E8-4A8B-B957-C773F6BF46CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28420501-47E8-4A8B-B957-C773F6BF46CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -144,5 +150,6 @@ Global
 		{140BA391-680A-4506-9BF9-9E1BDBF1D519} = {C78080EA-663A-438F-837C-998428ECC522}
 		{78C549DD-C839-44BD-B4CE-845F01F8695B} = {F0399B32-1204-4F39-925F-6F6CBE8001EF}
 		{69D3E92A-AC3D-465B-A146-BE54432F19E1} = {691678C3-3E16-47A8-8C07-8B1216DFA856}
+		{28420501-47E8-4A8B-B957-C773F6BF46CE} = {F0399B32-1204-4F39-925F-6F6CBE8001EF}
 	EndGlobalSection
 EndGlobal

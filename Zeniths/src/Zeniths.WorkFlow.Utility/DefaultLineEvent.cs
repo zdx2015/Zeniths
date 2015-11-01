@@ -2,7 +2,7 @@
 
 namespace Zeniths.WorkFlow.Utility
 {
-    public class DefaultLineEvent: ILineEvent
+    public abstract class DefaultLineEvent: ILineEvent
     {
         #region Implementation of ILineEvent
 

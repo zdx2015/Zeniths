@@ -374,7 +374,7 @@ namespace Zeniths.Data.Expressions.Compiler
         static string ProcessBinaryExpression(string sqlOperator, Expression rootExpression, BinaryExpression e, IDictionary<string, object> parameters, Func<string> getParameterName)
         {
             var left = ProcessSingleSideExpression(rootExpression, e.Left, parameters, getParameterName);
-            var right = ProcessSingleSideExpression(rootExpression, e.Right, parameters, getParameterName);
+            var right = ProcessRightSingleSideExpression(rootExpression, e.Right, parameters, getParameterName);
 
             var op = sqlOperator;
             if (right == "NULL")
@@ -391,6 +391,22 @@ namespace Zeniths.Data.Expressions.Compiler
 
             return string.Format("{1} {0} {2}", op, left, right);
         }
+
+        static string ProcessRightSingleSideExpression(Expression rootExpression, Expression e, IDictionary<string, object> parameters, Func<string> getParameterName)
+        {
+            var value = Expression.Lambda(e).Compile().DynamicInvoke();
+            if (value == null)
+            {
+                return "NULL";
+            }
+            else
+            {
+                var name = getParameterName();
+                SetParamValue(parameters, name, value);
+                return name;
+            }
+        }
+
 
         static string ProcessLessThanOrEqualExpression(Expression rootExpression, BinaryExpression e, IDictionary<string, object> parameters, Func<string> getParameterName)
         {
@@ -626,7 +642,7 @@ namespace Zeniths.Data.Expressions.Compiler
             {
                 return GetExpressionValue(rootExpression, de.Operand, parameters, getParameterName);
             }
-            if (de.NodeType == ExpressionType.Call)
+            if (de.NodeType == ExpressionType.Call || de.NodeType == ExpressionType.NewArrayInit)
             {
                 object val = Expression.Lambda(de).Compile().DynamicInvoke();
                 var id = getParameterName();
@@ -654,6 +670,10 @@ namespace Zeniths.Data.Expressions.Compiler
                             val = propInfo.GetValue(val, null);
                         }
                     }
+                }
+                else if (e.Type==typeof(SQLStatement))
+                {
+                    return ((SQLStatement) ((ConstantExpression) e).Value).Statement;
                 }
 
                 if (val == null)
@@ -684,6 +704,7 @@ namespace Zeniths.Data.Expressions.Compiler
                 SetParamValue(parameters, id, val);
                 return id;
             }
+            
             return null;
         }
 
