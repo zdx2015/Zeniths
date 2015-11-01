@@ -65,7 +65,7 @@
                                 </a>
                                 if (ViewData["type"].ToString() == "1") 
                                 {
-                                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit", new { id = record.BudgetId })">
+                                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.BudgetId})">@*@Html.GetFlowStartUrl(record.FlowId, record.BudgetId.ToString())*@
                                         <i class="fa fa-edit"></i> 编辑
                                     </a>
                                     @*<a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete", new { id = record.BudgetId })">
