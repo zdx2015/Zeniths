@@ -30,7 +30,7 @@ zeniths.workflow = function () {
         if (!self.valid()) {
             return;
         }
-
+        self.workflow_execute_params.isAudit = true;
         self.selectStep();
     };
 
@@ -39,6 +39,7 @@ zeniths.workflow = function () {
         if (!self.valid()) {
             return;
         }
+        self.workflow_execute_params.isAudit = false;
     };
 
     self.flowCompleted = function () {
@@ -139,12 +140,13 @@ zeniths.workflow = function () {
                     self.workflow_execute_params.type = "submit";
                     self.workflow_execute_params.steps = [];
                     var isSubmit = true;
-                    console.log($target.find(':checked[name="step"]'));
+                    //console.log($target.find(':checked[name="step"]'));
                     $target.find(':checked[name="step"]').each(function () {
                         var step = $(this).val();
-                        var member = $target.find("#user_" + step).data('id') || '';
+                        var member = $target.find("#user_" + step).attr('workflow-id') || '';
+                        //console.log($target.find("#user_" + step));
                         if (member.length == 0) {
-                            zeniths.util.alert($(this).next().text() + ' 没有选择处理人员!');
+                            zeniths.util.alert($(this).parent().next().text() + ' 没有选择处理人员!');
                             isSubmit = false;
                             return false;
                         }

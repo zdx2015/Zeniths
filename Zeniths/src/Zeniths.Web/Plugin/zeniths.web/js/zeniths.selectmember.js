@@ -37,8 +37,11 @@
                         }
                         else if (data.accpetData) {
                             //console.log(data.data);
+                            console.log($element);
                             $element.data('id', data.data.id);
                             $element.data('text', data.data.text);
+                            $element.attr('workflow-id', data.data.id);
+                            $element.attr('workflow-text', data.data.text);
                             $element.val(data.data.text);
                             zeniths.util.layerClose(dialogIndex);
                         }

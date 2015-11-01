@@ -13,7 +13,7 @@
                         <label class="control-label">预算月份：</label>@*<input class="w-300px form-control" name="year" type="text" placeholder="请选择年份">*@
                         <input class="date-control form-control" id="BudgetMonth" name="BudgetMonth" placeholder="请选择预算月份" type="text" autocomplete="off" />
                         <label class="control-label">预算部门：</label>
-                        <input class="w-180px form-control" id="DepartmentName" name="DepartmentName" type="text" placeholder="请选择预算部门">
+                        <input class="w-180px form-control" id="DepartmentName" name="DepartmentName" type="text" placeholder="请输入预算部门">
                         <label class="control-label">预算状态：</label>
                         <select class="select2-control w-200px form-control"  id="status" name="status"  data-placeholder="请选择预算状态">
                             <option></option>
@@ -41,9 +41,9 @@
                     <a class="btn btn-default" id="btnRefresh">
                         <i class="fa fa-repeat"></i> 刷新
                     </a>
-                    <a class="btn btn-default" href="@Url.Action("Export")">
+                    @*<a class="btn btn-default" href="@Url.Action("Export")">
                         <i class="fa fa-share-square-o"></i> 导出
-                    </a>
+                    </a>*@
                     <input type="hidden" id="type" name="type" value="@ViewData["type"]" />
                 </form>
             </div>

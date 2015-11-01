@@ -89,7 +89,7 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
             var formId = design.Property.DetailsFormName;
             var formService = new FlowFormService();
             var formEntity = formService.Get(formId.ToInt());
-            if (formEntity.Url.IsEmpty())
+            if (formEntity==null || formEntity.Url.IsEmpty())
             {
                 return Json(new BoolMessage(false, "流程详情表单的地址无效"));
             }

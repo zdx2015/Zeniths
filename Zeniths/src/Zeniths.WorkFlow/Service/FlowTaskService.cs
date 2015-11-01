@@ -463,7 +463,8 @@ namespace Zeniths.WorkFlow.Service
                 .Where(
                     "a.Id=(SELECT TOP 1 ID FROM FlowTask WHERE FlowId=a.FlowId AND FlowInstanceId=a.FlowInstanceId ORDER BY SortIndex DESC)")
                 .OrderBy(orderName, orderDir.IsAsc());
-             
+
+            query.Where(p => p.Status == 2 || p.Status == 3);
             if (receiveId.IsNotEmpty())
             {
                 query.Where(p => p.ReceiveId == receiveId);
