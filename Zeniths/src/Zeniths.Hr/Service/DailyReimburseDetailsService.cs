@@ -128,10 +128,11 @@ namespace Zeniths.Hr.Service
         /// <summary>
         /// 获取日常费用报销明细列表
         /// </summary>
-        /// <returns>返回日常费用报销明细列表</returns>
-        public List<DailyReimburseDetails> GetList(int reimburseId)
+        /// <param name="businessId">主业务表(预算主表)id</param>
+        /// <returns></returns>
+        public List<DailyReimburseDetails> GetList(int businessId)
         {
-            var query = repos.NewQuery.Where(p => p.ReimburseId == reimburseId);
+            var query = repos.NewQuery.Where(p => p.ReimburseId == businessId);
             query.OrderBy(p => p.Id);
             return repos.Query(query).ToList();
         }
@@ -197,6 +198,53 @@ namespace Zeniths.Hr.Service
                        SELECT Id FROM HrBudget WHERE BudgetDepartmentId = @dpartId AND Month(BudgetMonth) = @curMonth ) 
                     ";
             return repos.Database.Query<HrBudgetDetails>(sql, new { dpartId = dpartId, curMonth = curMonth }).ToList();
+        }
+
+        /// <summary>
+        /// 判断是否在预算内
+        /// </summary>
+        /// <param name="businessId">主业务表(预算主表)id </param>
+        /// <param name="curUserDepartId">当前登录用户部门id</param>
+        /// <returns>true:预算内，flase:预算外</returns>
+        public BoolMessage IsInnerBudget(int businessId,int curUserDepartId)
+        {
+           
+            var list = GetList(businessId);
+            var budList = GetBudgetDetailList(curUserDepartId);
+            List<bool> results = new List<bool>();
+            bool finalResult = false;
+            if (list != null && budList != null)
+            {
+                if (list.Count > budList.Count)
+                {
+                    return new BoolMessage(finalResult);
+                }
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    foreach (var item in budList)
+                    {
+                        if (list[i].CategoryId == item.BudgetCategoryId)
+                        {
+                            if (list[i].ItemId == item.BudgetItemId)
+                            {
+                                if (list[i].Amount == item.BudgetMoney)
+                                {
+                                    results.Add(true);
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                if (results.Count == list.Count)
+                {
+                    finalResult = true;
+                }
+
+            }
+            return new BoolMessage(finalResult);
         }
 
 
