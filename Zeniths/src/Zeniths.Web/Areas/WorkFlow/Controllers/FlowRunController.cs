@@ -34,7 +34,7 @@ namespace Zeniths.Web.Areas.WorkFlow.Controllers
                 ViewBag.ErrorMessage = "表单的地址无效";
                 return View("Error");
             }
-            string query = string.IsNullOrEmpty(businessId) ?
+            string query = !string.IsNullOrEmpty(businessId) ?
                 $"flowId={flowId}&stepId={firstStepId}&businessId={businessId}" :
                 $"flowId={flowId}&stepId={firstStepId}";
             var fix = WebHelper.GetUrlJoinSymbol(src);
