@@ -83,8 +83,13 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// 新增视图
         /// </summary>
         /// <returns>视图模板</returns>
-        public ActionResult Create(string id)
+        public ActionResult Create()
         {
+            string businessId = Request.QueryString["businessId"] == null ? "" : Request.QueryString["businessId"];
+            if (businessId != "")
+            {
+               return Edit(businessId);
+            }
             //EmployeeLeave leaveEntity = new EmployeeLeave();
             //if (id != null)
             //{
@@ -99,6 +104,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             leaveEntity.DeparmentId = currentEmployee.DepartmentId;
             leaveEntity.Deparment = currentEmployee.Department;
             leaveEntity.Post = currentEmployee.Post;
+            ViewData["flowId"] = Request.QueryString["flowId"];
             return EditCore(leaveEntity);
         }
 
@@ -107,7 +113,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns>视图模板</returns>
-        public ActionResult Edit(string id,string flowId)
+        public ActionResult Edit(string id)
         {
             var entity = service.Get(id.ToInt());
             return EditCore(entity);
