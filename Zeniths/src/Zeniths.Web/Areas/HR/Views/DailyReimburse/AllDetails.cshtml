@@ -1,18 +1,20 @@
 ﻿@model DailyReimburse
 @{
     var title = "查看日常费用报销";
+    Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
+    var currentStep = Html.GetCurrentStep();
 }
 
 <div class="container-edit-zeniths" style="overflow-x: hidden; overflow-y: auto;">
-    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
-        <div class="panel panel-default panel-zeniths" style="height: 685px;overflow-x: hidden; overflow-y: auto;">
+    <form class="editform" action="@Html.GetFlowExecuteUrl()" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths" style="height: 685px; overflow-x: hidden; overflow-y: auto;">
             <div class="panel-heading">
                 <span class="prefix"> <strong>@Model.Id</strong></span>
                 @title
             </div>
-            <div class="panel-body" style="height: 580px;overflow-x: hidden; overflow-y: auto;">
+            <div class="panel-body" style="height: 580px; overflow-x: hidden; overflow-y: auto;">
                 @Html.AntiForgeryToken()
-                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id"/>
 
                 <table class="table table-form table-dialog-form">
                     <tr>
@@ -47,7 +49,7 @@
                 <div class="panel panel-default panel-zeniths" style="height: 270px;">
 
                     <div class="panel-body" style="height: 250px; overflow-x: hidden; overflow-y: auto;">
-                        <div class="datagrid" data-url="@Html.Raw(Url.Action("AllViewGrid","DailyReimburse",new {area="HR"}))" id="detailGrid"></div>
+                        <div class="datagrid" data-url="@Html.Raw(Url.Action("AllViewGrid", "DailyReimburse", new {area = "HR"}))" id="detailGrid"></div>
                     </div>
 
                 </div>
@@ -80,14 +82,116 @@
                 <!-- tab 代码 结束 -->
 
 
+                <table class="table table-form table-dialog-form">
+                   @if (!currentStep.Uid.Equals(WorkFlowHelper.GetLastStepId(Request.QueryString["flowId"])))
+                   {
+                       <tr>
+                           <th>
+                               <label class="control-label">处理意见：</label>
+                           </th>
+                           <td>
+                               <textarea class="form-control" name="workflow_opinion" rows="3"></textarea>
+                           </td>
+                       </tr>
+                   }
+                   else
+                   {
+                       <tr>
+
+                           <th>
+                               <label class="control-label">领款人：</label>
+                           </th>
+                           <td>
+                               <div class="input-icon right">
+                                   @*<input class="form-control" name="@nameof(Model.ItemName)" value="@Model.ItemName" id="ItemName" type="text" readonly/>*@
+                                   <select class="select2-control w-500px form-control" name="@nameof(Model.DrawMoneyId)" id="ItemId" data-placeholder="请选择领款人">
+                                       <option></option>
+                                       @Html.AllEmployeeCategoryOptions(Model.DrawMoneyId.ToString());
+                                   </select>
+                               </div>
+                           </td>
+                       </tr>
+                       <tr>
+                           <th>
+                               <label class="control-label">领款金额：</label>
+                           </th>
+                           <td>
+                               <div class="input-icon right">
+                                   <input class="form-control" name="@nameof(Model.DrawMoney)" value="@Model.DrawMoney" type="text"/>
+                               </div>
+                           </td>
+                       </tr>
+                   }
+
+                </table>
+
+
             </div>
+
             <div class="panel-footer text-center">
                 <div class="buttons">
-                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+
+                    @if (currentStep.Uid.Equals(WorkFlowHelper.GetLastStepId(Request.QueryString["flowId"])))
+                    {
+                        <a class="btn btn-outline btn-primary btnWorkFlowCompleted">
+                            <i class="fa fa-check"></i> 完成
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline btn-danger btnWorkFlowBack">
+                            <i class="fa fa-arrow-left"></i> 驳回
+                        </a>
+
+                        <a class="btn btn-outline btn-success btnWorkFlowSend">
+                            审核通过
+                            <i class="fa fa-arrow-right"></i>
+                        </a>
+                    }
+
+                    @*<a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
                         <i class="fa fa-sign-in"></i> 关闭
-                    </a>
+                    </a>*@
                 </div>
             </div>
         </div>
     </form>
 </div>
+
+
+
+
+@section script{
+    <script>
+
+        $(function() {
+            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
+            $('.editform').dataform().initSelect2().initWorkFlow({
+                sendCallback: function(wf, result) {
+                    //如果下一步骤的处理人是自己 则继续处理下一步骤
+                    if (result.url) {
+                        window.location.href = result.url;
+                    } else {
+                        //跳转到待办页面
+                        zeniths.util.formAjaxSuccess(result);
+                        //window.location.href = '@Url.Action("PendingTasks", "FlowTask", new {area = "WorkFlow"})';
+                    }
+                }
+            }).initValidate({
+                rules: {
+                    EmployeeId: {
+                        required: true
+                    }
+                },
+                messages: {
+                    EmployeeId: {
+                        required: '请填写员工主键'
+                    }
+                },
+                beforeSubmit: function() {
+                }
+            }).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+        });
+    </script>
+}

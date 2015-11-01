@@ -139,6 +139,7 @@ zeniths.workflow = function () {
                     self.workflow_execute_params.type = "submit";
                     self.workflow_execute_params.steps = [];
                     var isSubmit = true;
+                    console.log($target.find(':checked[name="step"]'));
                     $target.find(':checked[name="step"]').each(function () {
                         var step = $(this).val();
                         var member = $target.find("#user_" + step).data('id') || '';
@@ -149,11 +150,11 @@ zeniths.workflow = function () {
                         }
                         self.workflow_execute_params.steps.push({ id: step, member: member });
                     });
-                    if (self.workflow_execute_params.steps.length == 0) {
-                        zeniths.util.alert("没有选择要处理的步骤!");
-                        return false;
-                    }
                     if (isSubmit) {
+                        if (self.workflow_execute_params.steps.length == 0) {
+                            zeniths.util.alert("没有选择要处理的步骤!");
+                            return false;
+                        }
                         self._flowCommit();
                     }
                 };

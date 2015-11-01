@@ -147,7 +147,6 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Create()
         {
-           
             var entity = new DailyReimburse();
             entity.ReimburseDepartmentName = CurrentUser.DepartmentName;
             entity.ApplicantName = CurrentUser.Name;

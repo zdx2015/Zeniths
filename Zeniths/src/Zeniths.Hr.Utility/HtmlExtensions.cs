@@ -35,6 +35,15 @@ namespace Zeniths.Hr.Utility
         }
 
         /// <summary>
+        /// 获取员工下拉选项
+        /// </summary>
+        /// <returns></returns>
+        public static MvcHtmlString AllEmployeeCategoryOptions(this HtmlHelper helper, string selected = null)
+        {
+            return MvcHtmlString.Create(HrHelper.BuildDicListOptions(selected));
+        }
+
+        /// <summary>
         /// 获取费用类型下拉选项
         /// </summary>
         /// <param name="helper"></param>

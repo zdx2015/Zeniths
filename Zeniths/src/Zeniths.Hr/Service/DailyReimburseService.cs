@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using Zeniths.Auth;
 using Zeniths.Data.Extensions;
 using Zeniths.Hr.Entity;
 using Zeniths.Collections;
@@ -25,6 +26,7 @@ namespace Zeniths.Hr.Service
         /// </summary>
         private readonly Repository<DailyReimburse> repos = new Repository<DailyReimburse>();
         private readonly Repository<DailyReimburseDetails> detailRepos = new Repository<DailyReimburseDetails>();
+        private readonly Repository<HrBudgetDetails>  budGetRepos = new AuthRepository<HrBudgetDetails>(); 
       
 
         /// <summary>
@@ -440,6 +442,24 @@ namespace Zeniths.Hr.Service
 
             return repos.Page(query);
         }
+
+        /// <summary>
+        /// 获取预算表Id
+        /// </summary>budGetRepos
+        /// <param name="dpartId"></param>
+        /// <returns></returns>
+        public int GetBudgetId(int dpartId)
+        {
+            var curMonth = DateTime.Now.Month - 1;
+            var sql = @"
+                       SELECT Id FROM HrBudget WHERE BudgetDepartmentId = @dpartId AND Month(BudgetMonth) = @curMonth 
+                    ";
+            return repos.Database.ExecuteScalar<int>(sql, new { dpartId = dpartId, curMonth = curMonth }).ToInt();
+
+        }
+
+      
+
 
         #region 私有方法
 
