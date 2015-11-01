@@ -11,7 +11,7 @@ namespace Zeniths.Auth.Entity
     /// 上传文件表
     /// </summary>
     [Table(Caption = "上传文件表")]
-    [PrimaryKey("Id")]
+    [PrimaryKey("Id",true)]
     public class SystemFile
     {
         /// <summary>

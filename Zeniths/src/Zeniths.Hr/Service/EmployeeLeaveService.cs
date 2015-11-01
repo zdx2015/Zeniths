@@ -26,15 +26,15 @@ namespace Zeniths.Hr.Service
         private readonly Repository<EmployeeLeave> repos = new Repository<EmployeeLeave>();
 
         /// <summary>
-        /// 检测是否存在指定请休假申请
+        /// 检测是否存在指定的请休假申请
         /// </summary>
-        /// <param name="entity">请休假申请实体</param>
+        /// <param name="entity">未打卡记录表实体</param>
         /// <returns>如果存在指定记录返回BoolMessage.False</returns>
         public BoolMessage Exists(EmployeeLeave entity)
         {
             return BoolMessage.True;
-            //var has = repos.Exists(p => p.Name == entity.Name && p.Id != entity.Id);
-            //return has ? new BoolMessage(false, "输入名称已经存在") : BoolMessage.True;
+            var has = repos.Exists(p => p.Status==1);
+            return has ? new BoolMessage(false, "指定的请假申请单已保存") : BoolMessage.True;
         }
 
         /// <summary>
@@ -46,7 +46,11 @@ namespace Zeniths.Hr.Service
         {
             try
             {
-                repos.Insert(entity);
+                //BoolMessage result = Exists(entity);
+                //if (result.Success)
+                //{
+                    repos.Insert(entity);
+               // }                
                 return BoolMessage.True;
             }
             catch (Exception e)
@@ -64,8 +68,25 @@ namespace Zeniths.Hr.Service
         {
             try
             {
-                //repos.Update(entity);
-                repos.Update(entity, p => p.Id == entity.Id, p => p.LeaveCategory, p => p.StartDatetime, p => p.EndDatetime, p => p.Days, p => p.Reason);
+                repos.Update(entity, p => p.Id == entity.Id, p => p.LeaveCategory, p => p.StartDatetime, p => p.EndDatetime, p => p.Days, p => p.Reason, p => p.Status);
+                return BoolMessage.True;
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
+
+        /// <summary>
+        /// 更新请休假登记信息
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public BoolMessage UpdateReg(EmployeeLeave entity)
+        {
+            try
+            {
+                repos.Update(entity, p => p.Id == entity.Id, p => p.FlowInstanceId, p => p.StepId, p => p.StepName, p => p.IsFinish, p => p.Status);
                 return BoolMessage.True;
             }
             catch (Exception e)
@@ -83,7 +104,7 @@ namespace Zeniths.Hr.Service
         {
             try
             {
-                repos.Update(entity, p => p.Id == entity.Id, p => p.JobAgentId, p => p.JobAgentIsAudit, p => p.JobAgentOpinion, p => p.JobAgentSign, p => p.JobAgentSignDate);
+                repos.Update(entity, p => p.Id == entity.Id, p => p.JobAgentId, p => p.JobAgentIsAudit, p => p.JobAgentOpinion, p => p.JobAgentSign, p => p.JobAgentSignDate, p => p.Status);
                 return BoolMessage.True;
             }
             catch (Exception e)
@@ -101,7 +122,7 @@ namespace Zeniths.Hr.Service
         {
             try
             {
-                repos.Update(entity, p => p.Id == entity.Id, p => p.DepartmentManagerId, p => p.DepartmentManagerIsAudit, p => p.DepartmentManagerOpinion, p => p.DepartmentManagerSign, p => p.DepartmentManagerSignDate);
+                repos.Update(entity, p => p.Id == entity.Id, p => p.DepartmentManagerId, p => p.DepartmentManagerIsAudit, p => p.DepartmentManagerOpinion, p => p.DepartmentManagerSign, p => p.DepartmentManagerSignDate, p => p.Status);
                 return BoolMessage.True;
             }
             catch (Exception e)
@@ -119,7 +140,7 @@ namespace Zeniths.Hr.Service
         {
             try
             {
-                repos.Update(entity, p => p.Id == entity.Id, p => p.GeneralManagerId, p => p.GeneralManagerIsAudit, p => p.GeneralManagerOpinion, p => p.GeneralManagerSign, p => p.GeneralManagerSignDate);
+                repos.Update(entity, p => p.Id == entity.Id, p => p.GeneralManagerId, p => p.GeneralManagerIsAudit, p => p.GeneralManagerOpinion, p => p.GeneralManagerSign, p => p.GeneralManagerSignDate, p => p.Status);
                 return BoolMessage.True;
             }
             catch (Exception e)
@@ -137,7 +158,7 @@ namespace Zeniths.Hr.Service
         {
             try
             {
-                repos.Update(entity, p => p.Id == entity.Id, p => p.RealStartDatetime, p => p.RealEndDatetime, p => p.ActualDays, p => p.CancelLeaveDateTime, p => p.CancelLeavePersonId, p => p.CancelLeavePersonName);
+                repos.Update(entity, p => p.Id == entity.Id, p => p.RealStartDatetime, p => p.RealEndDatetime, p => p.ActualDays, p => p.CancelLeaveDateTime, p => p.CancelLeavePersonId, p => p.CancelLeavePersonName, p => p.Status);
                 return BoolMessage.True;
             }
             catch (Exception e)
@@ -155,7 +176,7 @@ namespace Zeniths.Hr.Service
         {
             try
             {
-                repos.Update(entity, p => p.Id == entity.Id, p => p.DepartmentManagerCancelId, p => p.DepartmentManagerCancelIsAudit, p => p.DepartmentManagerCancelOpinion, p => p.DepartmentManagerCancelSign, p => p.DepartmentManagerCancelSignDate);
+                repos.Update(entity, p => p.Id == entity.Id, p => p.DepartmentManagerCancelId, p => p.DepartmentManagerCancelIsAudit, p => p.DepartmentManagerCancelOpinion, p => p.DepartmentManagerCancelSign, p => p.DepartmentManagerCancelSignDate, p => p.Status);
                 return BoolMessage.True;
             }
             catch (Exception e)
@@ -173,7 +194,7 @@ namespace Zeniths.Hr.Service
         {
             try
             {
-                repos.Update(entity, p => p.Id == entity.Id, p => p.HRManagerId, p => p.HRManagerIsAudit, p => p.HRManagerOpinion, p => p.HRManagerSign, p => p.HRManagerSignDate);
+                repos.Update(entity, p => p.Id == entity.Id, p => p.HRManagerId, p => p.HRManagerIsAudit, p => p.HRManagerOpinion, p => p.HRManagerSign, p => p.HRManagerSignDate, p => p.IsFinish, p => p.Status);
                 return BoolMessage.True;
             }
             catch (Exception e)
@@ -191,7 +212,7 @@ namespace Zeniths.Hr.Service
         {
             try
             {
-                if (ids.Length==1)
+                if (ids.Length == 1)
                 {
                     repos.Delete(ids[0]);
                 }
@@ -206,7 +227,7 @@ namespace Zeniths.Hr.Service
                 return new BoolMessage(false, e.Message);
             }
         }
-        
+
         /// <summary>
         /// 获取请休假申请对象
         /// </summary>
@@ -216,7 +237,7 @@ namespace Zeniths.Hr.Service
         {
             return repos.Get(id);
         }
-                
+
         /// <summary>
         /// 获取请休假申请列表
         /// </summary>
@@ -228,15 +249,20 @@ namespace Zeniths.Hr.Service
         }
 
         /// <summary>
-        /// 获取请休假申请分页列表
+        /// 获取所有请休假申请分页列表
         /// </summary>
         /// <param name="pageIndex">页面索引</param>
         /// <param name="pageSize">分页大小</param>
         /// <param name="orderName">排序列名</param>
         /// <param name="orderDir">排序方式</param>
-        /// <param name="userId">当前登录用户Id</param>
-        /// <returns>返回请休假申请分页列表</returns>
-        public PageList<EmployeeLeave> GetPageListAll(int pageIndex, int pageSize, string orderName,string orderDir, string employeeName, string department, string startDatetime, string startEndDatetime, string applyDateTime, string status)
+        /// <param name="employeeName">员工姓名</param>
+        /// <param name="department">部门名称</param>
+        /// <param name="startDatetime">请假开始时间</param>
+        /// <param name="startEndDatetime">请假开始终止时间</param>
+        /// <param name="applyDateTime">申请日期</param>
+        /// <param name="status">状态</param>
+        /// <returns>返回所有请休假申请分页列表</returns>
+        public PageList<EmployeeLeave> GetPageListAll(int pageIndex, int pageSize, string orderName, string orderDir, string employeeName, string department, string startDatetime, string startEndDatetime, string applyDateTime, int? status)
         {
             orderName = orderName.IsEmpty() ? nameof(EmployeeLeave.Id) : orderName;//默认使用主键排序
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
@@ -267,7 +293,7 @@ namespace Zeniths.Hr.Service
             {
                 query.Where(p => p.ApplyDateTime.Between(applyDateTime.ToDateTime(), applyDateTime.ToDateTime().AddDays(1).AddSeconds(-1)));
             }
-            if (status.IsNotEmpty())
+            if (status.HasValue)
             {
                 query.Where(p => p.Status == status);
             }
@@ -275,16 +301,20 @@ namespace Zeniths.Hr.Service
         }
 
         /// <summary>
-        /// 获取请休假申请分页列表
+        /// 获取待审理请休假申请分页列表
         /// </summary>
         /// <param name="pageIndex">页面索引</param>
         /// <param name="pageSize">分页大小</param>
         /// <param name="orderName">排序列名</param>
         /// <param name="orderDir">排序方式</param>
         /// <param name="userId">当前登录用户Id</param>
-        /// <returns>返回请休假申请分页列表</returns>
-        public PageList<EmployeeLeave> GetPageListMyself(int pageIndex, int pageSize, string orderName, string orderDir, int userId,string startDatetime,string startEndDatetime,string applyDateTime,string status)
-        { 
+        /// <param name="startDatetime">请假开始时间</param>
+        /// <param name="startEndDatetime">请假开始终止时间</param>
+        /// <param name="applyDateTime">申请日期</param>
+        /// <param name="status">状态</param>
+        /// <returns></returns>
+        public PageList<EmployeeLeave> GetPageListMyself(int pageIndex, int pageSize, string orderName, string orderDir, int userId, string startDatetime, string startEndDatetime, string applyDateTime, int? status)
+        {
             orderName = orderName.IsEmpty() ? nameof(EmployeeLeave.Id) : orderName;//默认使用主键排序
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
             var query = repos.NewQuery.Take(pageSize).Page(pageIndex).OrderBy(orderName, orderDir.IsAsc());
@@ -310,56 +340,12 @@ namespace Zeniths.Hr.Service
             {
                 query.Where(p => p.ApplyDateTime.Between(applyDateTime.ToDateTime(), applyDateTime.ToDateTime().AddDays(1).AddSeconds(-1)));
             }
-            if (status.IsNotEmpty())
+            if (status.HasValue)
             {
                 query.Where(p => p.Status == status);
             }
             return repos.Page(query);
         }
-
-        /// <summary>
-        /// 获取请休假申请分页列表
-        /// </summary>
-        /// <param name="pageIndex">页面索引</param>
-        /// <param name="pageSize">分页大小</param>
-        /// <param name="orderName">排序列名</param>
-        /// <param name="orderDir">排序方式</param>
-        /// <param name="userId">当前登录用户Id</param>
-        /// <returns>返回请休假申请分页列表</returns>
-        public PageList<EmployeeLeave> GetPageListWaitHandle(int pageIndex, int pageSize, string orderName, string orderDir, string employeeName, string department, string startDatetime, string startEndDatetime, string applyDateTime)
-        {
-            orderName = orderName.IsEmpty() ? nameof(EmployeeLeave.Id) : orderName;//默认使用主键排序
-            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
-            var query = repos.NewQuery.Take(pageSize).Page(pageIndex).OrderBy(orderName, orderDir.IsAsc());
-            if (employeeName.IsNotEmpty())
-            {
-                query.Where(p => p.EmployeeName.Contains(employeeName));
-            }
-            if (department.IsNotEmpty())
-            {
-                query.Where(p => p.Deparment == department);
-            }
-            if (startDatetime.IsNotEmpty() && startEndDatetime.IsNotEmpty())
-            {
-                query.Where(p => p.StartDatetime.Between(startDatetime.ToDateTime(), startEndDatetime.ToDateTime().AddDays(1).AddSeconds(-1)));
-            }
-            else if (startDatetime.IsNotEmpty())
-            {
-                DateTime startDatetimetemp = startDatetime.ToDateTime();
-                query.Where(p => p.StartDatetime >= startDatetimetemp);
-            }
-            else if (startEndDatetime.IsNotEmpty())
-            {
-                DateTime startEndDatetimetemp = startEndDatetime.ToDateTime().AddDays(1);
-                query.Where(p => p.StartDatetime < startEndDatetimetemp);
-            }
-            if (applyDateTime.IsNotEmpty())
-            {
-                query.Where(p => p.ApplyDateTime.Between(applyDateTime.ToDateTime(), applyDateTime.ToDateTime().AddDays(1).AddSeconds(-1)));
-            }
-            return repos.Page(query);
-        }
-
 
         #region 私有方法
 

@@ -2,7 +2,7 @@
 
 namespace Zeniths.WorkFlow.Utility
 {
-    public class DefaultStepEvent : IStepEvent
+    public abstract class DefaultStepEvent : IStepEvent
     {
         #region Implementation of IStepEvent
 

@@ -61,6 +61,7 @@ namespace Zeniths.Web.Areas.Auth.Controllers
             }
 
             var result = entity.Id == 0 ? service.Insert(entity) : service.Update(entity);
+            UpdateFileResourceId(entity.Id);
             return Json(result);
         }
 

@@ -30,6 +30,10 @@
         color: #fff;
     }
 
+        .header .topbar .menu .item a{
+            color: #fff;
+        }
+
         .header .topbar .userinfo {
             height: 30px;
             line-height: 30px;
@@ -44,6 +48,8 @@
             text-align: right;
             float: right;
         }
+
+
 
             .header .topbar .menu a:visited,
             .header .topbar .menu a:active,
@@ -67,9 +73,10 @@
             padding-right: 6px;
             padding-left: 3px;
         }
-        .header .topbar .item a{
-            cursor: pointer;
-        }
+
+            .header .topbar .item a {
+                cursor: pointer;
+            }
 
 .footer {
     background: #e6eef8;

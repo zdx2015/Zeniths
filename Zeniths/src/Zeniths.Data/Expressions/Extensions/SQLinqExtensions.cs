@@ -24,7 +24,7 @@ namespace Zeniths.Data.Extensions
         /// </summary>
         /// <param name="column">列名</param>
         /// <param name="values">列值</param>
-        public static bool In(this object column, params string[] values)
+        public static bool In(this object column, string[] values)
         {
             return true;
         }
@@ -34,7 +34,7 @@ namespace Zeniths.Data.Extensions
         /// </summary>
         /// <param name="column">列名</param>
         /// <param name="values">列值</param>
-        public static bool In(this object column, params int[] values)
+        public static bool In(this object column, int[] values)
         {
             return true;
         }
@@ -44,7 +44,7 @@ namespace Zeniths.Data.Extensions
         /// </summary>
         /// <param name="column">列名</param>
         /// <param name="values">列值</param>
-        public static bool NotIn(this object column, params string[] values)
+        public static bool NotIn(this object column, string[] values)
         {
             return true;
         }
@@ -54,7 +54,7 @@ namespace Zeniths.Data.Extensions
         /// </summary>
         /// <param name="column">列名</param>
         /// <param name="values">列值</param>
-        public static bool NotIn(this object column, params int[] values)
+        public static bool NotIn(this object column, int[] values)
         {
             return true;
         }

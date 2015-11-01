@@ -168,30 +168,24 @@
                             <label class="control-label">实际开始请假时间：</label>
                         </th>
                         <td>
-                            <input class="date-control form-control" id="@nameof(Model.RealStartDatetime)" name="@nameof(Model.RealStartDatetime)" value="@DateTimeHelper.FormatDateHasMinute(Model.RealStartDatetime)" type="text" />
+                            <input class="date-control form-control w-200px" id="@nameof(Model.RealStartDatetime)" name="@nameof(Model.RealStartDatetime)" value="@DateTimeHelper.FormatDateHasMinute(Model.RealStartDatetime)" type="text" />
                         </td>
                         <th>
                             <label class="control-label">实际结束请假时间：</label>
                         </th>
                         <td>
-                            <input class="date-control form-control" id="@nameof(Model.RealEndDatetime)" name="@nameof(Model.RealEndDatetime)" value="@DateTimeHelper.FormatDateHasMinute(Model.RealEndDatetime)" type="text" />
+                            <input class="date-control form-control w-200px" id="@nameof(Model.RealEndDatetime)" name="@nameof(Model.RealEndDatetime)" value="@DateTimeHelper.FormatDateHasMinute(Model.RealEndDatetime)" type="text" />
                         </td>
                     </tr>     
                     <tr>
                         <th>
                             <label class="control-label">实休天数：</label>
                         </th>
-                        <td>
+                        <td colspan="3">
                             <div class="input-icon right">
-                                <input class="form-control" name="@nameof(Model.ActualDays)" value="@Model.ActualDays" type="text" />
+                                <input class="form-control w-200px" name="@nameof(Model.ActualDays)" value="@Model.ActualDays" type="text" />
                             </div>
-                        </td>
-                        <th>
-                            <label class="control-label">销假时间：</label>
-                        </th>
-                        <td>
-                            <input class="date-control form-control" name="@nameof(Model.CancelLeaveDateTime)" value="@DateTimeHelper.FormatDateHasMinute(Model.CancelLeaveDateTime)" type="text" />
-                        </td>
+                        </td>                      
                     </tr>                             
                 </table>
             </div>
@@ -249,7 +243,8 @@
                         compareDate: "#RealStartDatetime"
                     },
                     ActualDays: {
-                        required: true
+                        required: true,
+                        number:true
                     }
                 },
                 messages: {
@@ -257,11 +252,12 @@
                         required: '请选择实际开始请假时间'
                     },
                     RealEndDatetime: {
-                        required: '请选择实际结束请假时间'
-                    },
-                    ActualDays: {
                         required: '请选择实际结束请假时间',
                         compareDate: "实际结束请假时间必须大于实际开始请假时间"
+                    },
+                    ActualDays: {
+                        required: '实际请假天数不能为空',
+                        number: '请填写数字'
                     }
                 },
                 beforeSubmit: function () {

@@ -94,7 +94,7 @@ namespace Zeniths.Data
         /// <returns>删除成功返回true</returns>
         public static bool DeleteSetting(string name)
         {
-            return Settings.Remove(p => p.Name.Equals(name)) > 0;
+            return Settings.Delete(p => p.Name.Equals(name)) > 0;
         }
 
         /// <summary>

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using Zeniths.WorkFlow.Entity;
 using Zeniths.Collections;
 using Zeniths.Data;
@@ -437,157 +439,61 @@ namespace Zeniths.WorkFlow.Service
             return repos.Page(query);
         }
 
-        //public List<FlowTask> GetTasks(Guid userID, string query = "", 
-        //    string title = "", string flowid = "", string sender = "", string date1 = "", 
-        //    string date2 = "", int type = 0)
-        //{
-        //    return new List<FlowTask>();
+        /// <summary>
+        /// 得到流程业务列表(每条业务记录一条记录)
+        /// </summary>
+        /// <param name="pageIndex">页面索引</param>
+        /// <param name="pageSize">分页大小</param>
+        /// <param name="orderName">排序列名</param>
+        /// <param name="orderDir">排序方式</param>
+        /// <param name="receiveId">接收人主键</param>
+        /// <param name="senderId">发送人主键</param>
+        /// <param name="flowId">流程主键</param>
+        /// <param name="title">任务标题</param>
+        /// <param name="startDate">开始日期</param>
+        /// <param name="endDate">结束日期</param>
+        /// <returns></returns>
+        public PageList<FlowTask> GetBusinessTaskPageList(int pageIndex, int pageSize, string orderName, string orderDir,
+            string receiveId, string senderId, string flowId, string title, string startDate, string endDate)
+        {
+            orderName = orderName.IsEmpty() ? nameof(FlowTask.ActualFinishDateTime) : orderName;
+            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;
+            var query = repos.NewQuery.Take(pageSize).Page(pageIndex)
+                .SetTableName("FlowTask a")
+                .Where(
+                    "a.Id=(SELECT TOP 1 ID FROM FlowTask WHERE FlowId=a.FlowId AND FlowInstanceId=a.FlowInstanceId ORDER BY SortIndex DESC)")
+                .OrderBy(orderName, orderDir.IsAsc());
+             
+            if (receiveId.IsNotEmpty())
+            {
+                query.Where(p => p.ReceiveId == receiveId);
+            }
 
-        //    //List<SqlParameter> parList = new List<SqlParameter>();
-        //    //StringBuilder sql = new StringBuilder("SELECT *,ROW_NUMBER() OVER(ORDER BY " +
-        //    //(type == 0 ? "ReceiveTime DESC" : "CompletedTime1 DESC") + ") AS PagerAutoRowNumber 
-        //    //FROM WorkFlowTask WHERE ReceiveID=@ReceiveID");
-        //    //sql.Append(type == 0 ? " AND Status IN(0,1)" : " AND Status IN(2,3)");
-        //    //parList.Add(new SqlParameter("@ReceiveID", SqlDbType.UniqueIdentifier) { Value = userID });
-        //    //if (!title.IsNullOrEmpty())
-        //    //{
-        //    //    sql.Append(" AND CHARINDEX(@Title,Title)>0");
-        //    //    parList.Add(new SqlParameter("@Title", SqlDbType.NVarChar, 2000) { Value = title });
-        //    //}
-        //    //if (flowid.IsGuid())
-        //    //{
-        //    //    sql.Append(" AND FlowID=@FlowID");
-        //    //    parList.Add(new SqlParameter("@FlowID", SqlDbType.UniqueIdentifier) { Value = flowid.ToGuid() });
-        //    //}
-        //    //else if (!flowid.IsNullOrEmpty() && flowid.IndexOf(',') >= 0)
-        //    //{
-        //    //    sql.Append(" AND FlowID IN(" + RoadFlow.Utility.Tools.GetSqlInString(flowid) + ")");
-        //    //}
-        //    //if (sender.IsGuid())
-        //    //{
-        //    //    sql.Append(" AND SenderID=@SenderID");
-        //    //    parList.Add(new SqlParameter("@SenderID", SqlDbType.UniqueIdentifier) { Value = sender.ToGuid() });
-        //    //}
-        //    //if (date1.IsDateTime())
-        //    //{
-        //    //    sql.Append(" AND ReceiveTime>=@ReceiveTime");
-        //    //    parList.Add(new SqlParameter("@ReceiveTime", SqlDbType.DateTime) { Value = date1.ToDateTime().Date });
-        //    //}
-        //    //if (date2.IsDateTime())
-        //    //{
-        //    //    sql.Append(" AND ReceiveTime<=@ReceiveTime1");
-        //    //    parList.Add(new SqlParameter("@ReceiveTime1", SqlDbType.DateTime) { Value = date2.ToDateTime().AddDays(1).Date });
-        //    //}
+            if (senderId.IsNotEmpty())
+            {
+                query.Where(p => p.SenderId == senderId);
+            }
 
-        //    //long count;
-        //    //int size = RoadFlow.Utility.Tools.GetPageSize();
-        //    //int number = RoadFlow.Utility.Tools.GetPageNumber();
-        //    //string sql1 = dbHelper.GetPaerSql(sql.ToString(), size, number, out count, parList.ToArray());
-        //    //pager = RoadFlow.Utility.Tools.GetPagerHtml(count, size, number, query);
-
-
-        //    //SqlDataReader dataReader = dbHelper.GetDataReader(sql1, parList.ToArray());
-        //    //List<RoadFlow.Data.Model.WorkFlowTask> List = DataReaderToList(dataReader);
-        //    //dataReader.Close();
-        //    //return List;
-        //}
-
-        ///// <summary>
-        ///// 得到流程实例列表
-        ///// </summary>
-        ///// <param name="flowID"></param>
-        ///// <param name="senderID"></param>
-        ///// <param name="receiveID"></param>
-        ///// <param name="pager"></param>
-        ///// <param name="query"></param>
-        ///// <param name="title"></param>
-        ///// <param name="flowid"></param>
-        ///// <param name="date1"></param>
-        ///// <param name="date2"></param>
-        ///// <param name="status">是否完成 0:全部 1:未完成 2:已完成</param>
-        ///// <returns></returns>
-        //public List<RoadFlow.Data.Model.WorkFlowTask> GetInstances(Guid[] flowID, Guid[] senderID, Guid[] receiveID, out string pager, string query = "", string title = "", string flowid = "", string date1 = "", string date2 = "", int status = 0)
-        //{
-        //    List<SqlParameter> parList = new List<SqlParameter>();
-        //    StringBuilder sql = new StringBuilder(@"SELECT a.*,ROW_NUMBER() OVER(ORDER BY a.SenderTime DESC) AS PagerAutoRowNumber FROM WorkFlowTask a
-        //        WHERE a.ID=(SELECT TOP 1 ID FROM WorkFlowTask WHERE FlowID=a.FlowID AND GroupID=a.GroupID ORDER BY Sort DESC)");
-
-        //    if (status != 0)
-        //    {
-        //        if (status == 1)
-        //        {
-        //            sql.Append(" AND a.Status IN(0,1,5)");
-        //        }
-        //        else if (status == 2)
-        //        {
-        //            sql.Append(" AND a.Status IN(2,3,4)");
-        //        }
-        //    }
-
-        //    if (flowID != null && flowID.Length > 0)
-        //    {
-        //        sql.Append(string.Format(" AND a.FlowID IN({0})", RoadFlow.Utility.Tools.GetSqlInString(flowID)));
-        //    }
-        //    if (senderID != null && senderID.Length > 0)
-        //    {
-        //        if (senderID.Length == 1)
-        //        {
-        //            sql.Append(" AND a.SenderID=@SenderID");
-        //            parList.Add(new SqlParameter("@SenderID", SqlDbType.UniqueIdentifier) { Value = senderID[0] });
-        //        }
-        //        else
-        //        {
-        //            sql.Append(string.Format(" AND a.SenderID IN({0})", RoadFlow.Utility.Tools.GetSqlInString(senderID)));
-        //        }
-        //    }
-        //    if (receiveID != null && receiveID.Length > 0)
-        //    {
-        //        if (senderID.Length == 1)
-        //        {
-        //            sql.Append(" AND a.ReceiveID=@ReceiveID");
-        //            parList.Add(new SqlParameter("@ReceiveID", SqlDbType.UniqueIdentifier) { Value = receiveID[0] });
-        //        }
-        //        else
-        //        {
-        //            sql.Append(string.Format(" AND a.ReceiveID IN({0})", RoadFlow.Utility.Tools.GetSqlInString(receiveID)));
-        //        }
-        //    }
-        //    if (!title.IsNullOrEmpty())
-        //    {
-        //        sql.Append(" AND CHARINDEX(@Title,a.Title)>0");
-        //        parList.Add(new SqlParameter("@Title", SqlDbType.NVarChar, 2000) { Value = title });
-        //    }
-        //    if (flowid.IsGuid())
-        //    {
-        //        sql.Append(" AND a.FlowID=@FlowID");
-        //        parList.Add(new SqlParameter("@FlowID", SqlDbType.UniqueIdentifier) { Value = flowid.ToGuid() });
-        //    }
-        //    else if (!flowid.IsNullOrEmpty() && flowid.IndexOf(',') >= 0)
-        //    {
-        //        sql.Append(" AND a.FlowID IN(" + RoadFlow.Utility.Tools.GetSqlInString(flowid) + ")");
-        //    }
-        //    if (date1.IsDateTime())
-        //    {
-        //        sql.Append(" AND a.SenderTime>=@SenderTime");
-        //        parList.Add(new SqlParameter("@SenderTime", SqlDbType.DateTime) { Value = date1.ToDateTime().Date });
-        //    }
-        //    if (date2.IsDateTime())
-        //    {
-        //        sql.Append(" AND a.SenderTime<=@SenderTime1");
-        //        parList.Add(new SqlParameter("@SenderTime1", SqlDbType.DateTime) { Value = date1.ToDateTime().AddDays(1).Date });
-        //    }
-
-        //    long count;
-        //    int size = RoadFlow.Utility.Tools.GetPageSize();
-        //    int number = RoadFlow.Utility.Tools.GetPageNumber();
-        //    string sql1 = dbHelper.GetPaerSql(sql.ToString(), size, number, out count, parList.ToArray());
-        //    pager = RoadFlow.Utility.Tools.GetPagerHtml(count, size, number, query);
-
-        //    SqlDataReader dataReader = dbHelper.GetDataReader(sql1, parList.ToArray());
-        //    List<RoadFlow.Data.Model.WorkFlowTask> List = DataReaderToList(dataReader);
-        //    dataReader.Close();
-        //    return List;
-        //}
+            if (flowId.IsNotEmpty())
+            {
+                query.Where(p => p.FlowId == flowId);
+            }
+            if (title.IsNotEmpty())
+            {
+                query.Where(p => p.Title.Contains(title));
+            }
+            if (startDate.IsNotEmpty())
+            {
+                var _startDate = startDate.ToDateTime().Date;
+                query.Where(p => p.SenderDateTime >= _startDate);
+            }
+            if (endDate.IsNotEmpty())
+            {
+                var _endDate = endDate.ToDateTime().AddDays(1).Date;
+                query.Where(p => p.SenderDateTime <= _endDate);
+            }
+            return repos.Page(query);
+        }
 
 
 

@@ -38,13 +38,13 @@
                 <td>@record.Days</td>
                 <td>@record.Reason</td>
                 <td>@record.StepName</td> 
-                <td>@record.Status</td>               
+                <td>@record.StatusName()</td>
                 <td>@record.ApplyDateTime</td> 
                 <td>
                     <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details", new { id = record.Id })">
                         <i class="fa fa-eye"></i> 查看
                     </a>
-                    @{ if (!record.JobAgentIsAudit.HasValue)
+                    @{ if (record.Status == 1)
                         {
                             <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit", new { id = record.Id })">
                                 <i class="fa fa-edit"></i> 编辑
@@ -53,13 +53,7 @@
                                 <i class="fa fa-trash-o"></i> 删除
                             </a>
                         }
-                        if (record.GeneralManagerIsAudit.HasValue && record.GeneralManagerIsAudit == true)
-                        {
-                            <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("CancelLeaveEdit", new { id = record.Id })">
-                                <i class="fa fa-edit"></i> 销假确认
-                            </a>
-                            }
-                        }
+                    }
                 </td>
             </tr>
         }

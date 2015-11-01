@@ -128,7 +128,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             entity.CreateDateTime = DateTime.Now;
             entity.IsFinish = false;
             OrganizeHelper.SetCurrentUserCreateInfo(entity);
-            entity.BudgetDepartmentId = entity.CreateDepartmentId;
+            //entity.BudgetDepartmentId = entity.CreateDepartmentId;
             entity.BudgetDepartmentName = entity.CreateDepartmentName;
             entity.Title = entity.CreateDepartmentName + " " + entity.BudgetMonth.ToString("yyyy年MM月") + "预算申请";
             var hasResult = service.Exists(entity);
@@ -150,7 +150,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             entity.CreateDateTime = DateTime.Now;
             entity.IsFinish = false;
             OrganizeHelper.SetCurrentUserCreateInfo(entity);
-            entity.BudgetDepartmentId = entity.CreateDepartmentId;
+           //entity.BudgetDepartmentId = entity.CreateDepartmentId;
             entity.BudgetDepartmentName = entity.CreateDepartmentName;
             entity.Status = 1;
             entity.Title = entity.CreateDepartmentName + " " + entity.BudgetMonth.ToString("yyyy年MM月") + "预算申请";

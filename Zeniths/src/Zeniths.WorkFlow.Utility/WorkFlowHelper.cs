@@ -374,9 +374,9 @@ namespace Zeniths.WorkFlow.Utility
             var eventArgs = new FlowLineEventArgs();
             eventArgs.FlowId = flowId;
             eventArgs.StepId = stepId;
-            eventArgs.FlowInstanceId = queryString["FlowInstanceId"];
-            eventArgs.TaskId = queryString["TaskId"];
-            eventArgs.BusinessId = queryString["BusinessId"];
+            eventArgs.FlowInstanceId = form["FlowInstanceId"];
+            eventArgs.TaskId = form["TaskId"];
+            eventArgs.BusinessId = form["BusinessId"];
 
             eventArgs.QueryString = queryString;
             eventArgs.Form = form;
@@ -573,5 +573,41 @@ namespace Zeniths.WorkFlow.Utility
             type?.GetProperty("StepName")?.SetValue(entity, args.StepSetting.Name);
         }
 
+        /// <summary>
+        /// 获取步骤事件描述属性对象列表
+        /// </summary>
+        /// <returns></returns>
+        public static List<WorkFlowEventCaptionAttribute> GetStepEventCaptionList()
+        {
+            return GetEventCaptionList<IStepEvent>();
+        }
+
+        /// <summary>
+        /// 获取线事件描述属性对象列表
+        /// </summary>
+        /// <returns></returns>
+        public static List<WorkFlowEventCaptionAttribute> GetLineEventCaptionList()
+        {
+            return GetEventCaptionList<ILineEvent>();
+        }
+
+        /// <summary>
+        /// 获取事件描述属性对象列表
+        /// </summary>
+        /// <typeparam name="T">事件类型</typeparam>
+        /// <returns></returns>
+        private static List<WorkFlowEventCaptionAttribute> GetEventCaptionList<T>()
+        {
+            var types = AssemblyHelper.GetInterfaceSubClass(TypeHelper.GetApplicateTypes(), false, typeof(T));
+            var atts = new List<WorkFlowEventCaptionAttribute>();
+            foreach (var item in types)
+            {
+                var att = AssemblyHelper.GetAttribute<WorkFlowEventCaptionAttribute>(item) ??
+                          new WorkFlowEventCaptionAttribute(item.Name);
+                att.InstanceType = item;
+                atts.Add(att);
+            }
+            return atts;
+        }
     }
 }

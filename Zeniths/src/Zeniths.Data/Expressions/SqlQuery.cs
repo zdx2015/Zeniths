@@ -77,8 +77,11 @@ namespace Zeniths.Data
         /// </summary>
         private bool? DistinctValue { get; set; }
 
-        private IList<string> SelectColumns { get; set; }
+        private List<string> SelectColumns { get; set; }
+        private List<string> ExcludeSelectColumns { get; set; }
         private EntityMetadata Metadata { get; set; }
+        private string _tableName { get; set; }
+
 
         /// <summary>
         /// 转为查询语句结果对象
@@ -94,7 +97,7 @@ namespace Zeniths.Data
             var tableName = this.GetTableName();
 
             //// SELECT
-            var selectResult = this.ToSQL_Select(_parameterNumber,parameters);
+            var selectResult = this.ToSQL_Select(_parameterNumber, parameters);
             _parameterNumber = existingParameterCount + parameters.Count;
 
             // WHERE
@@ -108,7 +111,7 @@ namespace Zeniths.Data
             //Group By 
             var groupbyResult = this.ToSQL_GroupBy(_parameterNumber, parameters);
             //_parameterNumber = existingParameterCount + parameters.Count;
-            
+
             return new SQLinqSelectResult
             {
                 Select = selectResult.Select.ToArray(),
@@ -124,7 +127,7 @@ namespace Zeniths.Data
                 Parameters = parameters
             };
         }
-        
+
         /// <summary>
         /// 去重
         /// </summary>
@@ -214,14 +217,33 @@ namespace Zeniths.Data
         }
 
         /// <summary>
+        /// 添加查询条件
+        /// </summary>
+        /// <param name="statement">SQL语句</param>
+        /// <returns>返回查询对象</returns>
+        public SQLQuery<T> Where(string statement)
+        {
+            this.Expressions.Add(Expression.Constant(new SQLStatement(statement)));
+            return this;
+        }
+
+        /// <summary>
         /// 指定查询列
         /// </summary>
-        /// <param name="selector">查询列表达式</param>
+        /// <param name="selectors">查询列表达式</param>
         /// <returns>返回查询对象</returns>
-        public SQLQuery<T> Select(Expression<Func<T, object>> selector)
+        public SQLQuery<T> Select(params Expression<Func<T, object>>[] selectors)
         {
-            this.Selects = selector;
-            return this;
+            if (selectors == null || selectors.Length == 0) return this;
+            var names = new string[selectors.Length];
+            for (int index = 0; index < selectors.Length; index++)
+            {
+                var item = selectors[index];
+                var name = ExpressionHelper.GetPropertyName<T, object>(item);
+                names[index] = name;
+            }
+
+            return Select(names);
         }
 
         /// <summary>
@@ -239,6 +261,43 @@ namespace Zeniths.Data
             Array.ForEach(columns, p => SelectColumns.Add(p));
             return this;
         }
+
+        /// <summary>
+        /// 排除查询列
+        /// </summary>
+        /// <param name="excludeSelectors">排除查询列表达式</param>
+        /// <returns>返回查询对象</returns>
+        public SQLQuery<T> ExcludeSelect(params Expression<Func<T, object>>[] excludeSelectors)
+        {
+            if (excludeSelectors == null || excludeSelectors.Length == 0) return this;
+            var names = new string[excludeSelectors.Length];
+            for (int index = 0; index < excludeSelectors.Length; index++)
+            {
+                var item = excludeSelectors[index];
+                var name = ExpressionHelper.GetPropertyName<T, object>(item);
+                names[index] = name;
+            }
+
+            return ExcludeSelect(names);
+        }
+
+
+        /// <summary>
+        /// 排除查询列
+        /// </summary>
+        /// <param name="excludeColumns">排除查询列数组</param>
+        /// <returns>返回查询对象</returns>
+        public SQLQuery<T> ExcludeSelect(params string[] excludeColumns)
+        {
+            if (excludeColumns == null || excludeColumns.Length == 0) return this;
+            if (ExcludeSelectColumns == null)
+            {
+                ExcludeSelectColumns = new List<string>();
+            }
+            Array.ForEach(excludeColumns, p => ExcludeSelectColumns.Add(p));
+            return this;
+        }
+
 
         /// <summary>
         /// 指定分组列
@@ -283,7 +342,7 @@ namespace Zeniths.Data
             this.OrderByExpressions.Add(new OrderByExpression { Expression = keySelector, Ascending = ascending });
             return this;
         }
-        
+
         /// <summary>
         /// 添加倒序子句
         /// </summary>
@@ -291,12 +350,26 @@ namespace Zeniths.Data
         /// <returns>返回查询对象</returns>
         public SQLQuery<T> OrderByDescending(Expression<Func<T, object>> keySelector)
         {
-            return OrderBy(keySelector,false);
+            return OrderBy(keySelector, false);
         }
 
+        /// <summary>
+        /// 设置表名
+        /// </summary>
+        /// <param name="tableName"></param>
+        public SQLQuery<T> SetTableName(string tableName)
+        {
+            _tableName = tableName;
+            return this;
+        }
+        
         private string GetTableName()
         {
-            return Metadata.TableInfo.TableName;
+            if (string.IsNullOrEmpty(_tableName))
+            {
+                return Metadata.TableInfo.TableName;
+            }
+            return _tableName;
         }
 
         private SqlExpressionCompilerResult ToSQL_Where(int parameterNumber, IDictionary<string, object> parameters)
@@ -304,7 +377,7 @@ namespace Zeniths.Data
             SqlExpressionCompilerResult whereResult = null;
             if (this.Expressions.Count > 0)
             {
-                whereResult = SqlExpressionCompiler.Compile(parameterNumber,this.Expressions);
+                whereResult = SqlExpressionCompiler.Compile(parameterNumber, this.Expressions);
                 foreach (var item in whereResult.Parameters)
                 {
                     parameters.Add(item.Key, item.Value);
@@ -315,7 +388,7 @@ namespace Zeniths.Data
 
         private SqlExpressionCompilerSelectorResult ToSQL_Select(int parameterNumber, IDictionary<string, object> parameters)
         {
-            var selectResult = SqlExpressionCompiler.CompileSelector(parameterNumber,this.Selects);
+            var selectResult = SqlExpressionCompiler.CompileSelector(parameterNumber, this.Selects);
             foreach (var item in selectResult.Parameters)
             {
                 parameters.Add(item.Key, item.Value);
@@ -327,6 +400,10 @@ namespace Zeniths.Data
             if (selectResult.Select.Count == 0)
             {
                 Array.ForEach(Metadata.QueryColumns, p => selectResult.Select.Add(p));
+            }
+            if (ExcludeSelectColumns != null && ExcludeSelectColumns.Count > 0)
+            {
+                ExcludeSelectColumns.ForEach(p => selectResult.Select.Delete(s => s == p));
             }
             return selectResult;
         }
@@ -347,7 +424,7 @@ namespace Zeniths.Data
 
             for (var i = 0; i < this.OrderByExpressions.Count; i++)
             {
-                var r = SqlExpressionCompiler.CompileSelector(parameterNumber,this.OrderByExpressions[i].Expression);
+                var r = SqlExpressionCompiler.CompileSelector(parameterNumber, this.OrderByExpressions[i].Expression);
                 foreach (var s in r.Select)
                 {
                     orderbyResult.Select.Add(s);

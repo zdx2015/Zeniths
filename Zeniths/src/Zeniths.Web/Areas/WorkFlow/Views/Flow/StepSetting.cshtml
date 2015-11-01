@@ -32,19 +32,41 @@
                                 按钮
                             </a>
                         </li>
-                        <li>
-                            <a href="#tab_event" data-toggle="tab">
-                                事件
-                            </a>
-                        </li>
+
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_base">
 
                             <div class="form-group">
+                                <label class="col-sm-2 control-label">步骤标识：</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-static" id="id"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">步骤名称：</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" id="name" name="name" type="text">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">表单：</label>
+                                <div class="col-sm-9">
+                                    <select class="select2-control form-control" id="formName" name="formName" data-allow-clear="true" data-placeholder="">
+                                        <option></option>
+                                        @Html.FlowFormOptions()
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">事件控制类：</label>
+                                <div class="col-sm-9">
+                                    <select class="select2-control form-control" id="controlProvider" name="controlProvider" data-allow-clear="true" data-placeholder="">
+                                        <option></option>
+                                        @Html.FlowStepEventOptions()
+                                    </select>
                                 </div>
                             </div>
 
@@ -109,16 +131,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">表单：</label>
-                                <div class="col-sm-9">
-                                    <select class="select2-control form-control" id="formName" name="formName">
-                                        <option>&nbsp;</option>
-                                        @Html.FlowFormOptions()
-                                    </select>
-                                </div>
-                            </div>
-
+                            
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">说明：</label>
                                 <div class="col-sm-9">
@@ -377,23 +390,7 @@
                         <div class="tab-pane" id="tab_button">
                             Nestable List 控件实现
                         </div>
-                        <div class="tab-pane" id="tab_event">
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">步骤标识：</label>
-                                <div class="col-sm-9">
-                                    <p class="form-control-static" id="id"></p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">控制实现类：</label>
-                                <div class="col-sm-9">
-                                    <input class="form-control" id="controlProvider" name="controlProvider" type="text">
-                                </div>
-                            </div>
-                             
-                        </div>
                     </div>
                 </div>
             </form>
@@ -426,7 +423,7 @@
                 width: '100%'
             }).initiCheck();
 
-            $('.tab-content>.tab-pane').height(430);
+            $('.tab-content>.tab-pane').height(470);
 
             zeniths.util.initFieldHelp();
 

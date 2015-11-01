@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using Zeniths.Utility;
 
 namespace Zeniths.Helper
 {
@@ -13,6 +14,9 @@ namespace Zeniths.Helper
     /// </summary>
     public static class TypeHelper
     {
+        private static readonly List<Type> Types = new List<Type>();
+        private static readonly object typeLockObject = new object();
+
         /// <summary>
         /// 数字类型
         /// </summary>
@@ -114,33 +118,39 @@ namespace Zeniths.Helper
         }
 
         /// <summary>
-        /// 加载当前应用程序中的所有类型
+        /// 获取当前应用程序中加载的所有类型
         /// </summary>
-        public static IEnumerable<Type> LoadTypes(params string[] files)
+        public static IEnumerable<Type> GetApplicateTypes()
         {
-            var names = new List<string>();
-            var typeList = new List<Type>();
-            foreach (string item in files)
+            lock (typeLockObject)
             {
-                var _name = Path.GetFileName(item);
-                if (names.IndexOf(_name)>-1)
+                if (Types.Count == 0)
                 {
-                    continue;
+                    var files = FileHelper.GetFiles(DirHelper.OutDirectory);
+                    var names = new List<string>();
+                    foreach (string item in files)
+                    {
+                        var _name = Path.GetFileName(item);
+                        if (names.IndexOf(_name) > -1)
+                        {
+                            continue;
+                        }
+                        if (!ValidateFileExtension(item)) continue;
+                        string assemblyName = Path.GetFileNameWithoutExtension(item);
+                        if (string.IsNullOrEmpty(assemblyName)) continue;
+                        try
+                        {
+                            Types.AddRange(Assembly.Load(assemblyName).GetTypes());
+                            names.Add(_name);
+                        }
+                        catch (Exception e)
+                        {
+                            DebugHelper.Debug(e.Message);
+                        }
+                    }
                 }
-                if (!ValidateFileExtension(item)) continue;
-                string assemblyName = Path.GetFileNameWithoutExtension(item);
-                if (string.IsNullOrEmpty(assemblyName)) continue;
-                try
-                {
-                    typeList.AddRange(Assembly.Load(assemblyName).GetTypes());
-                    names.Add(_name);
-                }
-                catch (Exception e)
-                {
-                    DebugHelper.Debug(e.Message);
-                }
+                return Types;
             }
-            return typeList;
         }
 
         /// <summary>
@@ -149,7 +159,7 @@ namespace Zeniths.Helper
         /// <param name="loadedTypes">已经加载的类型</param>
         /// <param name="type">指定的接口或者父类</param>
         /// <returns>返回当前应用程序中的所有类型中检索继承自指定类型或者实现了指定类型的类型列表。</returns>
-        public static IEnumerable<Type> GetSubClassList(IEnumerable<Type> loadedTypes,Type type)
+        public static IEnumerable<Type> GetSubClassList(IEnumerable<Type> loadedTypes, Type type)
         {
             if (type == null) return null;
             List<Type> list = new List<Type>();

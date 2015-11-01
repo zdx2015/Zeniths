@@ -495,5 +495,15 @@ namespace Zeniths.Helper
             }
             return options.ToString();
         }
+
+        /// <summary>
+        /// 返回与指定虚拟路径相对应的物理路径。
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static string GetMapPath(string url)
+        {
+            return HttpContext.Current.Server.MapPath(url);
+        }
     }
 }
