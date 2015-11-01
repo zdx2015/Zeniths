@@ -109,11 +109,11 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <summary>
         /// 查看视图
         /// </summary>
-        /// <param name="id">主键</param>
+        /// <param name="businessId">主键</param>
         /// <returns>视图模板</returns>
-        public ActionResult Details(string id)
+        public ActionResult Details(string businessId)
         {
-            var entity = service.Get(id.ToInt());
+            var entity = service.Get(businessId.ToInt());
             return View(entity);
         }
 

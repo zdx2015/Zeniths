@@ -18,7 +18,7 @@
                     </button>
                 </form>
             </div>
-            <div class="datagrid" data-url="@Html.Raw(Url.Action("PendingTasksGrid"))" 
+            <div class="datagrid" data-url="@Html.Raw(Url.Action("PendingTasksGrid"))"
                  data-query-form=".search-form" data-query-params="{ flowId:'@Request.QueryString["flowId"]' }">
             </div>
         </div>
@@ -29,9 +29,10 @@
 {
     <script>
         $(function () {
-            zeniths.util.standardGridBind({
-                editWidth: 900,
-                editHeight: 700
+            $('.datagrid').datagrid();
+
+            $('.btnRecordProcess').click(function() {
+                
             });
         });
     </script>

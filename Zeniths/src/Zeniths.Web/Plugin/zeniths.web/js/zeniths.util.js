@@ -4,7 +4,7 @@ zeniths.tree = zeniths.tree || {};
 
 
 jQuery.validator.methods.compareDate = function (value, element, param) {
-    var date1= new Date($(param).val().replace(/[-\.,]/g,"/"));        
+    var date1 = new Date($(param).val().replace(/[-\.,]/g, "/"));
     var date2 = new Date(value.replace(/[-\.,]/g, "/"));
     return date1 <= date2;
 };
@@ -1009,10 +1009,10 @@ zeniths.util.standardGridBind = function (options) {
     initGrid();
 
     var $searchForm = $('.search-form');
-    if ($searchForm.length == 1){
+    if ($searchForm.length == 1) {
         $searchForm.dataform().initSelect2().initDatePicker();
     }
-   
+
 
     //绑定刷新事件
     $('#btnRefresh').on('click', function () {
@@ -1226,8 +1226,8 @@ zeniths.tree.getChildrenIds = function ($tree, node, isAddSelf) {
  * @param {String} gridSelector 
  * @returns {} 
  */
-zeniths.util.deleteFile = function (url,gridSelector) {
-    zeniths.util.delete(url, function() {
+zeniths.util.deleteFile = function (url, gridSelector) {
+    zeniths.util.delete(url, function () {
         $(gridSelector).datagrid().reload();
     });
 };
@@ -1239,8 +1239,23 @@ zeniths.util.deleteFile = function (url,gridSelector) {
  * @param {String} businessId 业务主键
  * @returns {} 
  */
-zeniths.util.showFlowDetailsDialog = function(flowId,flowInstanceId,businessId) {
-    zeniths.util.post('', {flowId:flowId,flowInstanceId:flowInstanceId,businessId:businessId}, function() {
+zeniths.util.showFlowDetailsDialog = function (ele, flowId, flowInstanceId, businessId) {
+    zeniths.util.post('/WorkFlow/FlowRun/GetFlowDetailsDialogInfo', {
+        flowId: flowId,
+        flowInstanceId: flowInstanceId,
+        businessId: businessId
+    }, function (result) {
+        if (result.success) {
 
+            zeniths.util.dialog(result.url, result.width, result.height, {
+                callback: function () {
+                    $(ele).closest('table').parent().datagrid().reload()
+                }
+            });
+
+        } else {
+            zeniths.util.alert(result.message);
+        }
     });
 };
+

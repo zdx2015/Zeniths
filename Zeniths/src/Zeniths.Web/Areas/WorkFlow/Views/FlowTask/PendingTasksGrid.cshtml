@@ -22,7 +22,7 @@
     <tbody>
         @foreach (var record in Model)
         {
-            <tr>
+            <tr class="cursor-pointer" ondblclick="zeniths.util.showFlowDetailsDialog(this,'@record.FlowId','@record.FlowInstanceId','@record.BusinessId')">
                 <td>@record.Title</td>
                 <td>@record.FlowName</td>
                 <td>@record.StepName</td>
@@ -34,7 +34,7 @@
                 <td>@WorkFlowHelper.GetTaskStatusName(record.Status)</td>
                 <td>@record.Note</td>
                 <td class="text-center">
-                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit"
+                    <a class="btn btn-default btn-xs green-stripe btnRecordProcess"
                        data-url="@Html.GetFlowProcessUrl(record.Id)">
                         <i class="fa fa-edit"></i> 处理
                     </a>

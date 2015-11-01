@@ -20,7 +20,7 @@
     <tbody>
         @foreach (var record in Model)
         {
-            <tr>
+            <tr class="cursor-pointer" ondblclick="zeniths.util.showFlowDetailsDialog(this,'@record.FlowId','@record.FlowInstanceId','@record.BusinessId')">
                 <td>@record.Title</td>
                 <td>@record.FlowName</td>
                 <td>@record.StepName</td>
