@@ -1,8 +1,10 @@
 ﻿@model HrBudget
 @{
-    var title = "查看部门预算";
+    var title = "部门预算申请详情";
 }
-
+@section style{
+    <link href="~/Plugin/zeniths.web/css/form.layout.css" rel="stylesheet" />
+}
 <div class="container-edit-zeniths">
     <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
@@ -13,32 +15,47 @@
             <div class="panel-body">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
-                <table class="table table-form table-dialog-form">
-                
-                    <tr>
-                        <th class="w-100px">
-                            <label class="control-label">任务标题：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.Title</p>
-                        </td>
-                        <th >
-                            <label class="control-label">预算月份：</label>
-                        </th>
-                        <td>
-                            <p class="form-control-static">@Model.BudgetMonth.ToString("yyyy年MM月")</p>
-                        </td>
-                    </tr>
-                </table>
-                <div class="datagrid" id="datagrid" data-url="@Html.Raw(Url.Action("../HrBudgetDetails/DetailsGrid",new { BudgetId = Model.Id}))">
+
+                <!--tab 代码 开始 -->
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#BaseLeaveInfo" data-toggle="tab">
+                                部门预算申请详情
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#LeaveStepList" data-toggle="tab">
+                                处理意见
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#LeaveStepimg" data-toggle="tab">
+                                流程图
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="BaseLeaveInfo">
+                            @Html.Action("DetailsBaseBudget")
+                        </div>
+                        <div class="tab-pane" id="LeaveStepList">
+                            @Html.Action("InstanceTasks", "FlowTask", new { area = "WorkFlow", flowInstanceId = Model.FlowInstanceId })
+                        </div>
+                        <div class="tab-pane" id="LeaveStepimg">
+                            @Html.Action("TaskImage", "FlowTask", new { area = "WorkFlow", flowInstanceId = Model.FlowInstanceId })
+                        </div>
+                    </div>
                 </div>
-            <div class="panel-footer text-center">
-            <div class="buttons">
-                <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
-                    <i class="fa fa-sign-in"></i> 关闭
-                </a>
+                <!-- tab 代码 结束 -->
+                <div class="panel-footer text-center">
+                    <div class="buttons">
+                        <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                            <i class="fa fa-sign-in"></i> 关闭
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
         </div>
     </form>
 </div>
