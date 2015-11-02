@@ -10,8 +10,8 @@
                     <label><input class="checkbox-check" type="checkbox"><span></span></label>
                 </th>
                 <th class="w-100px text-center" data-order="@nameof(OAWorkLogExtend.LogDate)">日志日期</th>
-                <th class="w-100px text-center" data-order="@nameof(OAWorkLogExtend.ShareUserName)">员工姓名</th>
-                <th class="w-100px text-center" data-order="@nameof(OAWorkLogExtend.ShareDepartmentName)">部门名称</th>
+                <th class="w-100px text-center" data-order="@nameof(OAWorkLogExtend.CreateUserName)">员工姓名</th>
+                <th class="w-100px text-center" data-order="@nameof(OAWorkLogExtend.CreateDepartmentName)">部门名称</th>
                 <th class="w-100px text-center" data-order="@nameof(OAWorkLogExtend.IsFeedback)">反馈情况</th>
                 <th class="w-100px text-center" data-order="@nameof(OAWorkLogExtend.FeedbackInfomation)">反馈信息</th>
                 <th class="w-100px text-center" data-order="@nameof(OAWorkLogExtend.FeedbackDateTime)">反馈时间</th>
@@ -26,14 +26,17 @@
                         <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
                     </td>
                     <td class="text-center">@DateTimeHelper.FormatDate(record.LogDate)</td>
-                    <td class="text-center">@record.ShareUserName</td>
-                    <td class="text-center">@record.ShareDepartmentName</td>
+                    <td class="text-center">@record.CreateUserName</td>
+                    <td class="text-center">@record.CreateDepartmentName</td>
                     <td class="text-center">@Html.BoolLabelIsFeedback(record.IsFeedback)</td>
                     <td>@record.FeedbackInfomation</td>
                     <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.FeedbackDateTime)</td>
                     <td class="text-center">
                         <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">
                             <i class="fa fa-eye"></i> 查看
+                        </a>
+                        <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                            <i class="fa fa-edit"></i> 编辑
                         </a>
                     </td>
                 </tr>

@@ -24,7 +24,7 @@
                     <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
                 </td>
                 <td class="text-center">@DateTimeHelper.FormatDate(record.LogDate)</td>
-                <td>@record.WorkSummary</td>
+                <td>@Html.Raw(record.WorkSummary)</td>
                 <td>@record.TomorrowPlan</td>
                 <td>@record.OtheInstructions</td>
                 <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.CreateDateTime)</td>

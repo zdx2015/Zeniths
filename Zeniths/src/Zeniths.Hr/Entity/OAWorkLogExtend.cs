@@ -62,5 +62,23 @@ namespace Zeniths.Hr.Entity
         [Column(Caption = "反馈时间")]
         public DateTime? FeedbackDateTime { get; set; }
 
+        /// <summary>
+        /// 创建用户主键
+        /// </summary>
+		[Column(Caption = "创建用户主键")]
+        public int CreateUserId { get; set; }
+
+        /// <summary>
+        /// 创建用户姓名
+        /// </summary>
+        [Column(Caption = "创建用户姓名")]
+        public string CreateUserName { get; set; }
+
+        /// <summary>
+        /// 创建人部门名称
+        /// </summary>
+        [Column(Caption = "创建人部门名称")]
+        public string CreateDepartmentName { get; set; }
+
     }
 }

@@ -38,18 +38,38 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             return View();
         }
 
+        public ActionResult SharedIndex()
+        {
+            return View();
+        }
+
         /// <summary>
         /// 表格视图
         /// </summary>
         /// <param name="name">按钮名称</param>
         /// <returns>视图模板</returns>
-        public ActionResult Grid()
+        public ActionResult Grid(DateTime? logDateFirst, DateTime? logDateLast)
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = service.GetMyShareList(pageIndex, pageSize, orderName, orderDir);
+            var list = service.GetMyShareList(pageIndex, pageSize, orderName, orderDir, logDateFirst, logDateLast);
+            return View(list);
+        }
+
+        /// <summary>
+        /// 表格视图
+        /// </summary>
+        /// <param name="name">按钮名称</param>
+        /// <returns>视图模板</returns>
+        public ActionResult SharedGrid(DateTime? logDateFirst, DateTime? logDateLast)
+        {
+            var pageIndex = GetPageIndex();
+            var pageSize = GetPageSize();
+            var orderName = GetOrderName();
+            var orderDir = GetOrderDir();
+            var list = service.GetShared(pageIndex, pageSize, orderName, orderDir, logDateFirst, logDateLast);
             return View(list);
         }
 
@@ -135,5 +155,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         {
             return Export(service.GetList());
         }
+
+
     }
 }
