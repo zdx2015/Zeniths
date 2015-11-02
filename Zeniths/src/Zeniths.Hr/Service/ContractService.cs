@@ -12,6 +12,8 @@ using Zeniths.Data;
 using Zeniths.Extensions;
 using Zeniths.Utility;
 using Zeniths.Helper;
+using Zeniths.Data.Extensions;
+
 namespace Zeniths.Hr.Service
 {
     /// <summary>
@@ -311,7 +313,7 @@ namespace Zeniths.Hr.Service
         /// <param name="orderDir">排序方式</param>
         /// <param name="name">查询关键字</param>
         /// <returns>返回分页列表</returns>
-        public PageList<Contract> GetPageList(int pageIndex, int pageSize, string orderName,string orderDir, string name,DateTime sendtime_start, DateTime sendtime_end,string state,string UndertakeDepartment,string sender)
+        public PageList<Contract> GetPageList(int pageIndex, int pageSize, string orderName,string orderDir, string name, string sendtime_start, string sendtime_end,string state,string UndertakeDepartment,string sender)
         {
             orderName = orderName.IsEmpty() ? nameof(Contract.Id) : orderName;//默认使用主键排序
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
@@ -321,13 +323,18 @@ namespace Zeniths.Hr.Service
                 name = name.Trim();
                 query.Where(p => p.Name.Contains(name));
             }
-            if (sendtime_start!=null)
+            if (sendtime_start.IsNotEmpty() && sendtime_end.IsNotEmpty())
             {
-                query.Where(p=>p.SendDateTime>= sendtime_start);
+                query.Where(p => p.SendDateTime.Between(sendtime_start.ToDateTime(), sendtime_end.ToDateTime()));
+                //query.Where(p=>p.SendDateTime>= sendtime_start.ToDateTime());
             }
-            if (sendtime_end != null)
+            else if (sendtime_start.IsNotEmpty())
             {
-                query.Where(p => p.SendDateTime <= sendtime_end);
+                query.Where(p => p.SendDateTime >= sendtime_start.ToDateTime());
+            }
+            else if (sendtime_end.IsNotEmpty())
+            {
+                query.Where(p => p.SendDateTime <= sendtime_end.ToDateTime());
             }
             if (state.IsNotEmpty())
             {
@@ -352,7 +359,7 @@ namespace Zeniths.Hr.Service
         /// <param name="orderDir">排序方式</param>
         /// <param name="name">查询关键字</param>
         /// <returns>返回分页列表</returns>
-        public PageList<Contract> GetPageList_Complated(int pageIndex, int pageSize, string orderName, string orderDir, string name, DateTime sendtime_start, DateTime sendtime_end,string UndertakeDepartment, string sender)
+        public PageList<Contract> GetPageList_Complated(int pageIndex, int pageSize, string orderName, string orderDir, string name, string sendtime_start, string sendtime_end,string UndertakeDepartment, string sender)
         {
             orderName = orderName.IsEmpty() ? nameof(Contract.Id) : orderName;//默认使用主键排序
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
@@ -362,13 +369,18 @@ namespace Zeniths.Hr.Service
                 name = name.Trim();
                 query.Where(p => p.Name.Contains(name));
             }
-            if (sendtime_start != null)
+            if (sendtime_start.IsNotEmpty() && sendtime_end.IsNotEmpty())
             {
-                query.Where(p => p.SendDateTime >= sendtime_start);
+                query.Where(p => p.SendDateTime.Between(sendtime_start.ToDateTime(), sendtime_end.ToDateTime()));
+                //query.Where(p=>p.SendDateTime>= sendtime_start.ToDateTime());
             }
-            if (sendtime_end != null)
+            else if (sendtime_start.IsNotEmpty())
             {
-                query.Where(p => p.SendDateTime <= sendtime_end);
+                query.Where(p => p.SendDateTime >= sendtime_start.ToDateTime());
+            }
+            else if (sendtime_end.IsNotEmpty())
+            {
+                query.Where(p => p.SendDateTime <= sendtime_end.ToDateTime());
             }
             if (UndertakeDepartment.IsNotEmpty())
             {
