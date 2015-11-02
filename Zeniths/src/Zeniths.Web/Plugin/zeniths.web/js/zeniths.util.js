@@ -12,20 +12,12 @@ jQuery.validator.methods.compareDate = function (value, element, param) {
 jQuery.validator.methods.compareDateHours = function (value, element, param) {
     var date1 = new Date($(param).val().replace(/[-\.,]/g, "/"));
     var date2 = new Date(value.replace(/[-\.,]/g, "/"));
-    
     var datediff = date2.getTime() - date1.getTime();
-    alert(datediff);
-    var leave1 = datediff % (24 * 3600 * 1000);
-    var hours = Math.floor(leave1 / (3600 * 1000));
-    if (hours < 2) {
-        return false;
-    }
-    else {
-        return true;
-    }
+    //var leave1 = datediff % (24 * 3600 * 1000);
+    //var hours = Math.floor(leave1 / (3600 * 1000));
+    var hours = datediff / (3600 * 1000);
+    return hours > 2 ? true : false;
 };
-
-sd = new Date(dd[0] * 1, dd[1] * 1 - 1, dd[2] * 1).getTime();
 
 /**
  * 获取当前操作系统信息
