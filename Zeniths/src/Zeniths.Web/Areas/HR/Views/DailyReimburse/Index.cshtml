@@ -16,7 +16,7 @@
                     <button class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> 查询
                     </button>
-                    <a class="btn btn-success" id="btnCreate" data-url="@Html.GetFlowStartUrl(Request.QueryString["flowid"])">
+                    <a class="btn btn-success" id="btnCreate" data-url="@Html.GetFlowStartUrl(Request.QueryString["flowid"])" onclick="openNewDialog();">
                         <i class="fa fa-plus"></i> 新建
                     </a>
                     @*<a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
@@ -39,6 +39,15 @@
 @section script
 {
     <script>
+
+        function openNewDialog() {
+            zeniths.util.dialog($('#btnCreate').data('url'), 950, 750, {
+                callback: function () {
+                    $('.datagrid').datagrid().reload();
+                }
+            });
+        };
+
         $(function () {
             $('.datagrid').datagrid();
 
@@ -48,6 +57,9 @@
             //    viewWidth: 950,
             //    viewHeight: 750
             //});
+
+
+
         });
     </script>
 }
