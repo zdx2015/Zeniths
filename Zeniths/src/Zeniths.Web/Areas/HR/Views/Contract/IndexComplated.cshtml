@@ -1,0 +1,45 @@
+﻿@{
+    var title = "合同台帐";
+}
+<div class="container-zeniths">
+    <div class="panel panel-default panel-zeniths">
+        <div class="panel-heading">
+            @title
+        </div>
+        <div class="panel-body">
+            <div class="search-panel-zeniths">
+                <form class="form-inline search-form">
+                    <div class="form-group">
+                        <input class="w-300px form-control" name="@nameof(Contract.Name)" type="text" placeholder="请输入关键字查询">
+                    </div>
+                    &nbsp;
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa fa-search"></i> 查询
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default" id="btnRefresh">
+                        <i class="fa fa-repeat"></i> 刷新
+                    </a>
+                </form>
+            </div>
+            <div class="datagrid" data-url="@Html.Raw(Url.Action("GridComplated"))" data-query-form=".search-form">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script
+{
+    <script>
+        $(function () {
+            zeniths.util.standardGridBind({
+                editWidth: 900,
+                editHeight: 700,
+                viewWidth: 900,
+                viewHeight: 700
+            });
+        });
+    </script>
+}
+
+

@@ -1,0 +1,190 @@
+﻿@model Contract
+@{
+    var title = "确定合同等级";
+}
+@section style{
+    <link href="~/Plugin/zeniths.web/css/form.layout.css" rel="stylesheet" />
+}
+<div class="container-edit-zeniths">
+    <form class="editform form-horizontal" action="@Url.Action("EditLevelCore")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"><strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div>
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">合同名称：</label>
+                    <div class="col-sm-10">
+                        <label class="control-label">@Model.Name</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">我方：</label>
+                    <div class="col-sm-10">
+                        <label class="control-label">@Model.FirstParty</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">签约方：</label>
+                    <div class="col-sm-10">
+                        <label class="control-label">@Model.SecondParty</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">是否为变更合同：</label>
+                    <div class="col-sm-10">
+                        @{ if (Model.IsChange == true)
+                            {
+                                <label class="control-label">是</label>
+                            }
+                            else
+                            {
+                                <label class="control-label">否</label>
+                            }
+                        }
+                    </div>
+                </div>
+                @{
+                    if (Model.IsChange == true)
+                    {
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">原合同编号：</label>
+                            <div class="col-sm-10">
+                                <label class="control-label">@Model.ChangeNo</label>
+                            </div>
+                        </div>
+                    }
+                }
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">合同简要内容：</label>
+                    <div class="col-sm-9">
+                       <textarea class="editor-control form-control" name="@nameof(Model.Content)" rows="24">@Model.Content</textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">合同附件：</label>
+                            <div class="col-sm-6">
+                                <label class="control-label"><a class="fa-hand-o-down" href="~/App_Data/aaa.docx">合同协议书</a></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">承办部门：</label>
+                            <div class="col-sm-6">
+                                <label class="control-label">@Model.UndertakeDepartmentName</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">送审人：</label>
+                            <div class="col-sm-6">
+                                <label class="control-label">@Model.SenderName</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">送审时间：</label>
+                            <div class="col-sm-6">
+                                <label class="control-label">@Model.SendDateTime</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">合同分类：</label>
+                            <div class="col-sm-6">
+                                <div class="input-icon right">
+                                    <select class="select2-control form-control" name="@nameof(Model.TypeName)">
+                                        <option></option>
+                                        @Html.ContractTypeOptitions(Model.TypeName)
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">合同级别：</label>
+                        <div class="col-sm-6">
+                            <div class="input-icon right">
+                                <select class="select2-control form-control" name="@nameof(Model.LevelName)" dada-placeholder="请选择合同级别">
+                                    <option></option>
+                                    @Html.ContractLevelOptitions(Model.LevelName)
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button id="save" class="btn btn-primary" type="submit">
+                        <i class="fa fa-save"></i> 提交
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+
+@section script{
+    <script src="~/Plugin/kindeditor/kindeditor-min.js"></script>
+    <script>
+
+        $(function () {
+            var ops = {
+                rules: {
+                    LevelName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    TypeName: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }
+                },
+                messages: {
+                    LevelName: {
+                        required: '请选择'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    TypeName: {
+                        required: '请选择'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }
+                },
+                beforeSubmit: function () {
+                }
+            };
+            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
+            $('.editform').dataform().initKindEditor().initValidate(ops).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+        });
+    </script>
+}
