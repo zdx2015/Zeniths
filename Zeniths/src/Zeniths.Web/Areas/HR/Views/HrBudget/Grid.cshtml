@@ -60,7 +60,7 @@
                         {
                             case "未提交":
                             case "驳回":
-                                <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.BudgetId})">
+                                <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {businessId = record.BudgetId})">
                                     <i class="fa fa-eye"></i> 查看
                                 </a>
                                 if (ViewData["type"].ToString() == "1") 
@@ -76,13 +76,13 @@
                             case "申请中":
                                 if (ViewData["type"].ToString() == "1")
                                 {
-                                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.BudgetId})">
+                                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {businessId = record.BudgetId})">
                                         <i class="fa fa-eye"></i> 查看
                                     </a>
                                 }
                                 else if (ViewData["type"].ToString() == "2")
                                 {
-                                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.BudgetId})">
+                                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {businessId = record.BudgetId})">
                                         <i class="fa fa-eye"></i> 查看
                                     </a>//@Html.GetFlowStartUrl(Request.QueryString["flowId"])
                                     <a class="btn btn-default btn-xs green-stripe btnRecordView" data-url="@Url.Action("DetailsList",new {id = record.BudgetId})">
@@ -91,7 +91,7 @@
                                 }
                                 break;
                             default:
-                                <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.BudgetId})">
+                                <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {businessId = record.BudgetId})">
                                     <i class="fa fa-eye"></i> 查看
                                 </a>
                                 break;
