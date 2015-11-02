@@ -1,5 +1,5 @@
 ﻿@{
-    var title = "我分享的工作日志";
+    var title = "加班申请";
 }
 <div class="container-zeniths">
     <div class="panel panel-default panel-zeniths">
@@ -10,18 +10,20 @@
             <div class="search-panel-zeniths">
                 <form class="form-inline search-form">
                     <div class="form-group">
-                        按日志日期查询:<input class="date-control form-control" name="logDateFirst" type="text" />
-                        &nbsp;~&nbsp;&nbsp;<input class="date-control form-control" name="logDateLast" type="text" />
+                        加班日期：<input class="date-control form-control" name="@nameof(EmployeeOvertime.StartDatetime)" type="text" />&nbsp;至
+                        <input class="date-control form-control" name="StartEndDatetime" type="text" />
+                        申请日期：<input class="date-control form-control" name="@nameof(EmployeeOvertime.ApplyDateTime)" type="text" />
+                        状态：<select class="select2-control w-200px form-control" id="Status" name="@nameof(EmployeeOvertime.Status)" data-placeholder="请选择状态">
+                            <option></option>
+                            @Html.EmployeeOvertimeOptions()
+                        </select>
                     </div>
                     &nbsp;
                     <button class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> 查询
                     </button>
-                    <a class="btn btn-default" id="btnRefresh">
-                        <i class="fa fa-repeat"></i> 刷新
-                    </a>
-                    <a class="btn btn-default" href="@Url.Action("Export")">
-                        <i class="fa fa-share-square-o"></i> 导出
+                    <a class="btn btn-success" id="btnCreate" data-url="@Html.GetFlowStartUrl(Request.QueryString["flowId"])">
+                        <i class="fa fa-plus"></i> 申请
                     </a>
                 </form>
             </div>
@@ -39,17 +41,7 @@
                 editWidth: 900,
                 editHeight: 700,
                 viewWidth: 900,
-                viewHeight: 700,
-                loadCallback:function () {
-                    $(' .btnRecordShare').on('click', function () {
-                        var url = $(this).data('url');
-                        zeniths.util.dialog(url, 900, 700, {
-                            callback: function () {
-
-                            }
-                        });
-                    });
-                }
+                viewHeight: 700
             });
         });
     </script>

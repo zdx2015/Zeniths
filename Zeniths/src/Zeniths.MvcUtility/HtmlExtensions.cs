@@ -222,5 +222,14 @@ namespace Zeniths.MvcUtility
             }
             return MvcHtmlString.Create(string.Empty);
         }
+
+        public static MvcHtmlString BoolLabelIsFeedback(this HtmlHelper helper, bool result, string trueLable = "已反馈", string falseLable = "未反馈")
+        {
+            if (result)
+            {
+                return MvcHtmlString.Create("<span class=\"label label-success\">" + trueLable + "</span>");
+            }
+            return MvcHtmlString.Create("<span class=\"label label-danger\">" + falseLable + "</span>");
+        }
     }
 }

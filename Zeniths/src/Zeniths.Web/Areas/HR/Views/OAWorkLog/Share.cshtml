@@ -15,10 +15,10 @@
                 <div class="col-md-12">
                     <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
                     <span>请选择用户:</span>
-                    <select class="select2-control form-control" id="shareUser" name="shareUser"
+                    <select class="select2-control form-control" id="ShareUsers" name="ShareUsers"
                             style="width:96%" multiple>
                         <option value=""></option>
-                        @Html.ShareUserOptions()  
+                        @Html.UsersOptions()  
                     </select>
   
                 </div>
@@ -48,7 +48,7 @@
                 }
             }).initAjax({
                 success: function (result) {
-                    
+                    console.log(result);
                     zeniths.util.alert(result.message);
                     zeniths.util.formAjaxSuccess(result);
                 }
