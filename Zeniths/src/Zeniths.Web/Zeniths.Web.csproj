@@ -266,6 +266,7 @@
     <Content Include="Areas\HR\Views\Contract\GridComplated.cshtml" />
     <Content Include="Areas\HR\Views\Contract\Index.cshtml" />
     <Content Include="Areas\HR\Views\Contract\IndexComplated.cshtml" />
+    <Content Include="Areas\HR\Views\EmployeeLeave\_GridColumnCommon.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\HR\Views\HrBudgetDetails\DetailsGrid.cshtml" />
     <Content Include="Areas\WorkFlow\Views\SelectMember\Index.cshtml" />

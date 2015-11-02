@@ -80,6 +80,15 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         }
 
         /// <summary>
+        /// 表格列头视图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult _GridColumnCommon()
+        {
+            return View();
+        }
+
+        /// <summary>
         /// 新增视图
         /// </summary>
         /// <returns>视图模板</returns>
