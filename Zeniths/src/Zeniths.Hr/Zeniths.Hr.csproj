@@ -44,6 +44,7 @@
     <Compile Include="Entity\EmployeeGoOutRegistration.cs" />
     <Compile Include="Entity\EmployeeLeave.cs" />
     <Compile Include="Entity\EmployeeNotClock.cs" />
+    <Compile Include="Entity\EmployeeOvertime.cs" />
     <Compile Include="Entity\OAWorkLog.cs" />
     <Compile Include="Entity\OAWorkLogExtend.cs" />
     <Compile Include="Entity\OAWorkLogShare.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Service\EmployeeGoOutRegistrationService.cs" />
     <Compile Include="Service\EmployeeLeaveService.cs" />
     <Compile Include="Service\EmployeeNotClockService.cs" />
+    <Compile Include="Service\EmployeeOvertimeService.cs" />
     <Compile Include="Service\EmployeeService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\HrBudgetDetailsService.cs" />

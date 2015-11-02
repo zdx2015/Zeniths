@@ -1,6 +1,6 @@
 ﻿@model OAWorkLogShare
 @{
-    var title = "查看分享工作日志";
+    var title = "查看我分享的工作日志";
 }
 
 <div class="container-edit-zeniths">
@@ -44,7 +44,7 @@
                             <label class="control-label">是否反馈：</label>
                         </th>
                         <td>
-                            <p class="form-control-static">@Html.BoolLabel(Model.IsFeedback)</p>
+                            <p class="form-control-static">@Html.BoolLabelIsFeedback(Model.IsFeedback)</p>
                         </td>
                     </tr>
                     <tr>
