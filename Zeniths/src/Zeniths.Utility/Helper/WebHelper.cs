@@ -476,6 +476,35 @@ namespace Zeniths.Helper
             return options.ToString();
         }
 
+
+        public static string GetSelectGroupValueOptions(IList list, string displayMember = "Name",
+            string valueMember = "Id", string groupDisplayMember = "CategoryName",string groupValueMember = "CategoryId",
+            string selectedValue = null, bool firstAlpha = true)
+        {
+            var options = new StringBuilder();
+            var groupDic = new Dictionary<string,Tuple<string,List<object>>>();
+            foreach (object item in list)
+            {
+                string groupName = ObjectHelper.GetObjectValue(item, groupDisplayMember).ToStringOrEmpty();
+                string groupId = ObjectHelper.GetObjectValue(item, groupValueMember).ToStringOrEmpty();
+                if (string.IsNullOrEmpty(groupName))
+                {
+                    groupName = "默认";
+                }
+                if (!groupDic.Keys.Contains(groupName))
+                {
+                    groupDic.Add(groupName, new Tuple<string, List<object>>(groupId, new List<object>()));
+                }
+                groupDic[groupName].Item2.Add(item);
+            }
+            foreach (var item in groupDic)
+            {
+                options.Append($"<optgroup label=\"{item.Key}\" value=\"{item.Value.Item1}\">{GetSelectOptions(item.Value.Item2, displayMember, valueMember, selectedValue, firstAlpha)}</optgroup>");
+            }
+
+            return options.ToString();
+        }
+
         /// <summary>
         /// 获取Select控件option列表(使用数组对象)
         /// </summary>

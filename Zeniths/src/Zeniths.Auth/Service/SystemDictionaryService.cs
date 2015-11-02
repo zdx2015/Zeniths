@@ -275,7 +275,7 @@ ON dic.Id = details.DictionaryId AND dic.Code=@code ORDER BY details.SortIndex";
         public List<SystemDictionaryDetailExtend> GetEnabledDicListByDicCode(string dicCode)
         {
             var sql = @"
-                    SELECT a.Id,a.DictionaryId,a.Name,b.Name AS Category ,a.NameSpell,a.Value,a.IsEnabled,a.SortIndex,a.Note
+                    SELECT a.Id,a.DictionaryId,a.Name,b.Name AS CategoryName b.Id AS CategoryId,a.NameSpell,a.Value,a.IsEnabled,a.SortIndex,a.Note
                     FROM dbo.SystemDictionaryDetails a JOIN (
                     SELECT Id,Name FROM  SystemDictionary WHERE ParentId in (
                     SELECT Id FROM SystemDictionary WHERE Code=@code )
