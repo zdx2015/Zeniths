@@ -27,5 +27,9 @@ namespace Zeniths.Hr.WorkFlow.Contract
             WorkFlowHelper.SetCurrentFlowInfo(entity, args);//设置业务表中流程信息
             return base.OnSaveData(args);
         }
+        public override BoolMessage OnAfterSubmit(FlowEventArgs args)
+        {
+            return base.OnAfterSubmit(args);
+        }
     }
 }
