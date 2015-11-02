@@ -120,9 +120,10 @@
     <script>
         window.subData = {};
 
-        function subRecord(itemId, itemName, categoryName, amount) {
+        function subRecord(itemId, itemName, categoryId, categoryName, amount) {
             this.ItemId = itemId;
             this.ItemName = itemName;
+            this.CategoryId = categoryId;
             this.CategoryName = categoryName;
             this.Amount = amount;
         }
@@ -137,12 +138,12 @@
             subData[record.ItemId] = record;
 
             $('#subTable')
-                .append('<tr id="{3}"><td>{0}</td><td>{1}</td><td>{2}</td><td><a class="btn btn-default btn-xs red-stripe btnRecordDelete" onclick="deleteSubRow({3})"><i class="fa fa-trash-o"></i> 删除</a></td></tr>'
-                    .format(record.CategoryName, record.ItemName, record.Amount, record.ItemId));
+                .append('<tr id="{3}"><td>{0}</td><td>{1}</td><td>{2}</td><td style="display:none">{4}</td><td><a class="btn btn-default btn-xs red-stripe btnRecordDelete" onclick="deleteSubRow({3})"><i class="fa fa-trash-o"></i> 删除</a></td></tr>'
+                    .format(record.CategoryName, record.ItemName, record.Amount, record.ItemId, record.CategoryId));
         }
 
         function deleteSubRow(itemId) {
-            zeniths.util.confirm('确定要删除当前费用明细吗?', function (index) {
+            zeniths.util.confirm('确定要删除当前费用明细吗?', function(index) {
                 zeniths.util.layerClose(index);
                 delete subData[itemId];
                 $('#subTable #' + itemId).remove();
@@ -163,14 +164,14 @@
             return true;
         };
 
-        $(function () {
+        $(function() {
 
             function initWorkFlow() {
                 $('.editform').dataform().initWorkFlow({
-                    beformCommitCallback: function (wf) {
+                    beformCommitCallback: function(wf) {
 
                     },
-                    sendCallback: function (wf, result) {
+                    sendCallback: function(wf, result) {
                         //如果下一步骤的处理人是自己 则继续处理下一步骤
                         if (result.url) {
                             window.location.href = result.url;
@@ -189,12 +190,12 @@
                 resName: '@resName',
                 resId: '@resId'
             }).initValidate({
-                beforeSubmit: function () {
+                beforeSubmit: function() {
                     var result = beforSave();
                     if (result) {
                         initWorkFlow();
                         var detailsArray = [];
-                        $.each(subData, function (i, v) {
+                        $.each(subData, function(i, v) {
                             detailsArray.push(v);
                         });
                         zeniths.workflow.addExtData({ details: JSON.stringify(detailsArray) });
@@ -209,7 +210,7 @@
                 }
             });
 
-            $('.file-control').on('filebatchuploadcomplete', function (event, data, previewId, index) {
+            $('.file-control').on('filebatchuploadcomplete', function(event, data, previewId, index) {
                 //$('.editform').ajaxSubmit({ success: zeniths.util.formAjaxSuccess });
                 $(document.body).unmask();
                 zeniths.workflow.flowSend();

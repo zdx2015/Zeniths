@@ -1,0 +1,44 @@
+﻿@model PageList<EmployeeOvertime>
+@{
+    Layout = null;
+}
+
+<thead>
+    <tr>
+        <th class="w-checkbox">
+            <label><input class="checkbox-check" type="checkbox"><span></span></label>
+        </th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.EmployeeName)">员工姓名</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.Deparment)">部门名称</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.Post)">职务</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.Reasons)">加班事由</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.StartDate)">加班起始日期</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.EndDate)">加班结束日期</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.ApplyDateTime)">加班起始日期</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.Days)">加班天数</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.DepartmentManagerId)">部门负责人签字</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.DepartmentManagerIsAudit)">部门负责人是否同意</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.DepartmentManagerOpinion)">部门负责人签字</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.DepartmentManagerSign)">部门负责人签字</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.DepartmentManagerSignDate)">部门负责人签字日期</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.GeneralManagerId)">总经理主键</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.GeneralManagerIsAudit)">总经理是否同意</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.GeneralManagerOpinion)">总经理意见</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.GeneralManagerSign)">总经理签字</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.GeneralManagerSignDate)">总经理签字日期</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.Status)"></th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.Title)">任务名称</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.FlowId)">流程主键</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.FlowName)">流程名称</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.FlowInstanceId)">流程实例主键</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.StepId)">步骤主键</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.StepName)">步骤名称</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.IsFinish)">流程是否完成</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.CreateUserId)">创建用户主键</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.CreateUserName)">创建用户姓名</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.CreateDepartmentId)">创建人部门主键</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.CreateDepartmentName)">创建人部门姓名</th>
+        <th class="w-100px" data-order="@nameof(EmployeeOvertime.CreateDateTime)">创建时间</th>
+        <th class="w-120px text-center">操作</th>
+    </tr>
+</thead>

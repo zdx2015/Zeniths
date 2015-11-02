@@ -92,6 +92,7 @@
                     var ops = $('#ItemId option:selected');
                     var itemId = ops.val();
                     var itemName = ops.text().substr(2);
+                    var categoryId = ops.parent().attr('value');
                     var categoryName = ops.parent().attr('label');
                     var amount = $('#Amount').val();
 
@@ -107,7 +108,7 @@
                     if (has) {
                         zeniths.util.alert('指定的费用项目已经存在');
                     } else {
-                        var record = new parentWindow.subRecord(itemId, itemName, categoryName, amount);
+                        var record = new parentWindow.subRecord(itemId, itemName, categoryId,categoryName, amount);
                         parentWindow.addSubRow(record);
                         zeniths.util.closeFrameDialog(window);
                     }

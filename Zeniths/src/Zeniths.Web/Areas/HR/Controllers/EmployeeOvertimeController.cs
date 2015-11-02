@@ -22,14 +22,14 @@ namespace Zeniths.Web.Areas.Hr.Controllers
     /// 流程按钮控制器
     /// </summary>
     [Authorize]
-    public class EmployeeLeaveController : HrBaseController
+    public class EmployeeOvertimeController : HrBaseController
     {
         /// <summary>
         /// 服务对象
         /// </summary>
-        private readonly EmployeeLeaveService service = new EmployeeLeaveService();
+        private readonly EmployeeOvertimeService service = new EmployeeOvertimeService();
         private readonly EmployeeService employeeService = new EmployeeService();
-        
+
         /// <summary>
         /// 主视图(查询所有记录)
         /// </summary>
@@ -40,7 +40,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         }
 
         /// <summary>
-        /// 主视图(编辑自己请休假信息)
+        /// 主视图
         /// </summary>
         /// <returns>视图模板</returns>
         public ActionResult Index()
@@ -97,18 +97,18 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             string businessId = Request.QueryString["businessId"] == null ? "" : Request.QueryString["businessId"];
             if (businessId != "")
             {
-               return Edit(businessId);
-            }          
-            EmployeeLeave leaveEntity = new EmployeeLeave();
+                return Edit(businessId);
+            }
+            EmployeeOvertime overtimeEntity = new EmployeeOvertime();
             var currentUser = OrganizeHelper.GetCurrentUser();
             var currentEmployee = employeeService.GetEmployeeByUser(currentUser.Id);    //根据当前登录用户的账号查找员工Id信息           
-            leaveEntity.EmployeeId = currentEmployee.Id;
-            leaveEntity.EmployeeName = currentEmployee.Name;
-            leaveEntity.DeparmentId = currentEmployee.DepartmentId;
-            leaveEntity.Deparment = currentEmployee.Department;
-            leaveEntity.Post = currentEmployee.Post;
+            overtimeEntity.EmployeeId = currentEmployee.Id;
+            overtimeEntity.EmployeeName = currentEmployee.Name;
+            overtimeEntity.DeparmentId = currentEmployee.DepartmentId;
+            overtimeEntity.Deparment = currentEmployee.Department;
+            overtimeEntity.Post = currentEmployee.Post;
             ViewData["flowId"] = Request.QueryString["flowId"];
-            return EditCore(leaveEntity);
+            return EditCore(overtimeEntity);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="entity">实体对象</param>
         /// <returns>视图模板</returns>
-        private ActionResult EditCore(EmployeeLeave entity)
+        private ActionResult EditCore(EmployeeOvertime entity)
         {
             return View("Edit", entity);
         }
@@ -148,20 +148,21 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns>视图模板</returns>
-        public ActionResult DetailsBaseLeave(string businessId)
+        public ActionResult DetailsBaseOvertime(string businessId)
         {
             var entity = service.Get(businessId.ToInt());
             return View(entity);
         }
 
         /// <summary>
-        /// 保存方法
+        /// 保存数据
         /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        public ActionResult Save(EmployeeLeave entity)
-        {
-            var service = new EmployeeLeaveService();
+        /// <param name="entity">实体对象</param>
+        /// <returns>返回JsonMessage</returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Save(EmployeeOvertime entity)
+        {            
             if (entity.Id == 0)
             {
                 var currentUser = OrganizeHelper.GetCurrentUser();
@@ -189,19 +190,9 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var result = service.Delete(StringHelper.ConvertToArrayInt(id));
             return Json(result);
         }
-
-        /// <summary>
-        /// 更新销假信息视图
-        /// </summary>
-        /// <returns>视图模板</returns>
-        public ActionResult CancelLeaveEdit(string businessId)
-        {
-            var entity = service.Get(businessId.ToInt());
-            return View(entity);
-        }
         
         /// <summary>
-        /// 请休假审批
+        /// 加班审批
         /// </summary>
         /// <returns>视图模板</returns>
         public ActionResult ApproveOpinionEdit(string businessId)
@@ -209,6 +200,5 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var entity = service.Get(businessId.ToInt());
             return View(entity);
         }
-
     }
 }
