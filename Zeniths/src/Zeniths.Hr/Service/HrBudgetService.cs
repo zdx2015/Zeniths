@@ -217,6 +217,23 @@ namespace Zeniths.Hr.Service
                 return new BoolMessage(false, e.Message);
             }
         }
+        /// <summary>
+        /// 获取当前订单是否可以删除
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public BoolMessage GetBaseBudget(string id)
+        {
+            DataTable dt= repos.Database.ExecuteDataTable("select case Status when 1 then '1' when 2 then '2' when 3 then '2' else '1'  end Status,case Status when 1 then '未提交' when 2 then '申请中' when 3 then '已审核' else '驳回'  end msg from HrBudget where id='" + id+"'");
+            string msg = "";
+            int Status = dt.Rows[0][0].ToInt();
+            if (Status== 2)
+            {
+                msg = dt.Rows[0][1].ToString();
+                return new BoolMessage(false,"预算信息状态为： "+msg+" ，无法删除！ ");
+            }
+            return new BoolMessage(true);
+        }
 
         #endregion
     }
