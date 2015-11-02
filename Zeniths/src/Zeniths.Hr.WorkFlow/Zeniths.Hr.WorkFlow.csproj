@@ -51,6 +51,9 @@
     <Compile Include="EmployeeLeave\LeaveGeneralManager.cs" />
     <Compile Include="EmployeeLeave\LeaveCancel.cs" />
     <Compile Include="EmployeeLeave\LeaveReg.cs" />
+    <Compile Include="EmployeeOvertime\OvertimeGeneralManager.cs" />
+    <Compile Include="EmployeeOvertime\OvertimeDepartment.cs" />
+    <Compile Include="EmployeeOvertime\OvertimeReg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reimburse\DailyReimburseLine.cs" />
     <Compile Include="Reimburse\DailyReimburseStep1.cs" />
@@ -93,6 +96,7 @@
       <Name>Zeniths.WorkFlow</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
