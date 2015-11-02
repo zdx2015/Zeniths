@@ -1,5 +1,5 @@
 ﻿@{
-    var title = "我分享的工作日志";
+    var title = "分享给我的工作日志";
 }
 <div class="container-zeniths">
     <div class="panel panel-default panel-zeniths">
@@ -25,7 +25,7 @@
                     </a>
                 </form>
             </div>
-            <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid"))" data-query-form=".search-form">
+            <div class="datagrid" data-url="@Html.Raw(Url.Action("SharedGrid"))" data-query-form=".search-form">
             </div>
         </div>
     </div>

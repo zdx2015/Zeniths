@@ -46,13 +46,13 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="name">按钮名称</param>
         /// <returns>视图模板</returns>
-        public ActionResult Grid(string name, DateTime sendtime_start, DateTime sendtime_end,string state, string UndertakeDepartment, string sender)
+        public ActionResult Grid(string name, string SendDateTime, string SendDateTimeEnd, string state, string UndertakeDepartment, string sender)
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name, sendtime_start, sendtime_end, state, UndertakeDepartment, sender);
+            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name, SendDateTime, SendDateTimeEnd, state, UndertakeDepartment, sender);
             return View(list);
         }
         /// <summary>
@@ -60,13 +60,13 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="name">查询条件</param>
         /// <returns>视图模板</returns>
-        public ActionResult GridComplated(string name, DateTime sendtime_start, DateTime sendtime_end, string UndertakeDepartment, string sender)
+        public ActionResult GridComplated(string name, string SendDateTime, string SendDateTimeEnd, string UndertakeDepartment, string sender)
         {
             var pageIndex = GetPageIndex();
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = service.GetPageList_Complated(pageIndex, pageSize, orderName, orderDir, name, sendtime_start, sendtime_end, UndertakeDepartment, sender);
+            var list = service.GetPageList_Complated(pageIndex, pageSize, orderName, orderDir, name, SendDateTime, SendDateTimeEnd, UndertakeDepartment, sender);
             return View(list);
         }
 
