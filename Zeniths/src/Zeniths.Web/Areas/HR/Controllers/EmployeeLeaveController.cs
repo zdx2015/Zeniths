@@ -92,12 +92,7 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             }          
             EmployeeLeave leaveEntity = new EmployeeLeave();
             var currentUser = OrganizeHelper.GetCurrentUser();
-            var currentEmployee = employeeService.GetEmployeeByUser(currentUser.Id);    //根据当前登录用户的账号查找员工Id信息
-            //if (currentEmployee == null)
-            //{
-            //    var script = string.Format("alert('{0}');", "请关联账户");
-            //    return JavaScript(script);
-            //}
+            var currentEmployee = employeeService.GetEmployeeByUser(currentUser.Id);    //根据当前登录用户的账号查找员工Id信息           
             leaveEntity.EmployeeId = currentEmployee.Id;
             leaveEntity.EmployeeName = currentEmployee.Name;
             leaveEntity.DeparmentId = currentEmployee.DepartmentId;
@@ -133,9 +128,9 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns>视图模板</returns>
-        public ActionResult Details(string id)
+        public ActionResult Details(string businessId)
         {
-            var entity = service.Get(id.ToInt());
+            var entity = service.Get(businessId.ToInt());
             return View(entity);
         }
 
@@ -144,9 +139,9 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns>视图模板</returns>
-        public ActionResult DetailsBaseLeave(string id)
+        public ActionResult DetailsBaseLeave(string businessId)
         {
-            var entity = service.Get(id.ToInt());
+            var entity = service.Get(businessId.ToInt());
             return View(entity);
         }
 

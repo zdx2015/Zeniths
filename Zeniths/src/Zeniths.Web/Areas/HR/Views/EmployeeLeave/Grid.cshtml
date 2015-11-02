@@ -25,7 +25,7 @@
     <tbody>
         @foreach (var record in Model)
         {
-            <tr class="cursor-pointer" data-url="@Url.Action("Details", new { id = record.Id })">
+            <tr class="cursor-pointer" data-url="@Url.Action("Details", new { businessId = record.Id })">
                 <td>
                     <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
                 </td>
@@ -41,7 +41,7 @@
                 <td>@record.StatusName()</td>
                 <td>@record.ApplyDateTime</td> 
                 <td>
-                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details", new { id = record.Id })">
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details", new { businessId = record.Id })">
                         <i class="fa fa-eye"></i> 查看
                     </a>
                     @{ if (record.Status == 1)

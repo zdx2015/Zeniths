@@ -114,6 +114,7 @@
         $(function () {
             $('#DetailsSave').click(function () {
                 if ($('.editform').valid()) { //验证通过
+                    $(document.body).mask('正在保存数据，请稍等...');
                     $('.editform').ajaxSubmit({
                         type: 'post',
                         url: '@Html.Raw(Url.Action("Save"))',

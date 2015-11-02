@@ -65,7 +65,7 @@
                             </fieldset>
                             <fieldset>
                                 <legend>附件</legend>
-                                @Html.Action("Files", "System", new { area = "Auth", resName = nameof(DailyReimburse), resId = Model.Id, allowDelete = true })
+                                @Html.Action("Files", "System", new { area = "Auth", resName = nameof(DailyReimburse), resId = Model.Id, allowDelete = false })
                             </fieldset>
                         </div>
 
