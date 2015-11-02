@@ -2,30 +2,12 @@
 @{
     Layout = null;
 }
-<table class="table table-zeniths table-striped table-bordered table-hover">
-    <thead>
-        <tr>
-            <th class="w-checkbox">
-                <label><input class="checkbox-check" type="checkbox"><span></span></label>
-            </th>
-            <th class="w-50px">姓名</th>
-            <th class="w-100px">部门</th>
-            <th class="w-100px">岗位</th>
-            <th class="w-80px" data-order="@nameof(EmployeeLeave.LeaveCategory)">请假类别</th>
-            <th class="w-100px" data-order="@nameof(EmployeeLeave.StartDatetime)">预计开始请假时间</th>
-            <th class="w-150px">预计结束请假时间</th>
-            <th class="w-100px">预计请假天数</th>
-            <th class="w-100px">请假事由</th>
-            <th class="w-100px">当前处理步骤</th>
-            <th class="w-50px">状态</th>
-            <th class="w-100px">申请时间</th>
-            <th class="w-120px text-center">操作</th>
-        </tr>
-    </thead>
+<table class="table table-zeniths table-striped table-bordered table-hover">   
+    @Html.Action("_GridColumnCommon")
     <tbody>
         @foreach (var record in Model)
         {
-            <tr class="cursor-pointer" data-url="@Url.Action("Details", new { bussinessId = record.Id })">
+            <tr class="cursor-pointer" data-url="@Url.Action("Details", new { businessId = record.Id })">
                 <td>
                     <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
                 </td>
@@ -41,7 +23,7 @@
                 <td>@record.StatusName()</td>
                 <td>@record.ApplyDateTime</td> 
                 <td>
-                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details", new { id = record.Id })">
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details", new { businessId = record.Id })">
                         <i class="fa fa-eye"></i> 查看
                     </a>
                     @{ if (record.Status == 1)

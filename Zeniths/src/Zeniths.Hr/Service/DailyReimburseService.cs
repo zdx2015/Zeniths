@@ -269,6 +269,31 @@ namespace Zeniths.Hr.Service
             return BoolMessage.False;
         }
 
+        /// <summary>
+        /// 提交后未审批前，实例id，当前步骤
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public BoolMessage Update(DailyReimburse entity)
+        {
+            try
+            {
+                var count = repos.Update(entity, p => p.Id == entity.Id, p => p.FlowInstanceId, p => p.StepId, p => p.StepName, p => p.StepStatus);
+                if (count > 0)
+                {
+                    return BoolMessage.True;
+                }
+                else
+                {
+                    return BoolMessage.False;
+                }
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
+
 
         /// <summary>
         /// 删除日常费用报销
@@ -366,7 +391,7 @@ namespace Zeniths.Hr.Service
         /// <param name="orderDir">排序方式</param>
         /// <param name="name">查询关键字</param>
         /// <returns>返回日常费用报销分页列表</returns>
-        public PageList<DailyReimburse> GetPageList(int pageIndex, int pageSize, string orderName, string orderDir, string name)
+        public PageList<DailyReimburse> GetPageList(int pageIndex, int pageSize, string orderName, string orderDir, string name,int curUid)
         {
             orderName = orderName.IsEmpty() ? nameof(DailyReimburse.Id) : orderName;//默认使用主键排序
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
@@ -377,6 +402,12 @@ namespace Zeniths.Hr.Service
                 name = name.Trim();
                 query.Where(p => p.ReimburseDepartmentName.Contains(name) || p.ApplyOpinion.Contains(name));
             }
+
+            if (curUid > 0)
+            {
+                query.Where(p => p.ApplicantId == curUid);
+            }
+
 
             return repos.Page(query);
         }

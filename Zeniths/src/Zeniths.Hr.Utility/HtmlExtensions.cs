@@ -66,6 +66,35 @@ namespace Zeniths.Hr.Utility
             return MvcHtmlString.Create(AuthHelper.BuildDicRadioBoxList("LeaveCategory", controlName, selected));
         }
 
-
+        /// <summary>
+        /// 获取合同级别选项
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="selected"></param>
+        /// <returns></returns>
+        public static MvcHtmlString ContractLevelOptitions(this HtmlHelper helper, string selected = null)
+        {
+            return MvcHtmlString.Create(AuthHelper.BuildDicOptions("ContractLevel", selected));
+        }
+        /// <summary>
+        /// 获取合同类别选项
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="selected"></param>
+        /// <returns></returns>
+        public static MvcHtmlString ContractTypeOptitions(this HtmlHelper helper, string selected = null)
+        {
+            return MvcHtmlString.Create(AuthHelper.BuildDicOptions("ContractType", selected));
+        }
+        /// <summary>
+        /// 获取合同状态
+        /// </summary>
+        /// <param name="helper"></param>
+        /// <param name="selected"></param>
+        /// <returns></returns>
+        public static MvcHtmlString ContractStateOptitions(this HtmlHelper helper, string selected = null)
+        {
+            return MvcHtmlString.Create(AuthHelper.BuildDicOptions("ContractState", selected));
+        }
     }
 }

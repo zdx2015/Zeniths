@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Budget\BudgetApproval.cs" />
     <Compile Include="Budget\BudgetLeaveRegister.cs" />
+    <Compile Include="Contract\ContractStep_Send1.cs" />
     <Compile Include="EmployeeLeave\LeaveHRManagerCancel.cs" />
     <Compile Include="EmployeeLeave\LeaveDepartmentCancel.cs" />
     <Compile Include="EmployeeLeave\LeaveDepartment.cs" />
@@ -93,6 +94,7 @@
       <Name>Zeniths.WorkFlow</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

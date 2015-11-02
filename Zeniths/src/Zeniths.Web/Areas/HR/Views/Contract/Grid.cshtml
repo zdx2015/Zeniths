@@ -1,0 +1,69 @@
+﻿@model PageList<Contract>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-checkbox">
+                <label><input class="checkbox-check" type="checkbox"><span></span></label>
+            </th>            
+            <th class="w-100px" data-order="@nameof(Contract.Name)">合同名称</th>
+            <th class="w-100px" data-order="@nameof(Contract.UndertakeDepartmentName)">承办部门</th>
+            <th class="w-100px" data-order="@nameof(Contract.SenderName)">送审人</th>
+            <th class="w-100px" data-order="@nameof(Contract.SendDateTime)">送审日期</th>
+            <th class="w-100px" data-order="@nameof(Contract.StepName)">当前处理步骤</th>
+            <th class="w-100px" data-order="@nameof(Contract.StepDateTime)">最后处理时间</th>
+            <th class="w-100px" data-order="@nameof(Contract.StateName)">状态</th>
+            <th class="w-120px text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details", new { id = record.Id })">
+                <td>
+                    <label><input class="checkbox-check" type="checkbox" value="@record.Id"><span></span></label>
+                </td>
+                <td>@record.Name</td>
+                <td>@record.UndertakeDepartmentName</td>
+                <td>@record.SenderName</td>
+                <td>@DateTimeHelper.FormatDate(record.SendDateTime)</td>
+                <td>@record.StepName</td>
+                <td>@DateTimeHelper.FormatDateHasSecond(record.StepDateTime)</td>
+                <td>@record.StateName</td>
+                <td>
+                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details", new { id = record.Id })">
+                        <i class="fa fa-eye"></i> 查看
+                    </a>
+                    @{
+                        switch (record.StateId.Trim())
+                        {
+                            case "Modifying":
+                                {
+
+                                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("Edit",new {id = record.Id})">
+                                        <i class="fa fa-edit"></i> 修改
+                                    </a>
+                                    break;
+                                }
+                            case "Auditing":
+                                {
+
+                                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("EditLevel",new {id = record.Id})">
+                                        <i class="fa fa-edit"></i> 处理
+                                    </a>
+                                    break;
+                                }
+                        }
+                    }
+                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete",new {id = record.Id})">
+                        <i class="fa fa-trash-o"></i> 删除
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)

@@ -1,5 +1,5 @@
 ﻿@{
-    var title = "管理日常费用报销";
+    var title = "合同列表";
 }
 <div class="container-zeniths">
     <div class="panel panel-default panel-zeniths">
@@ -10,24 +10,31 @@
             <div class="search-panel-zeniths">
                 <form class="form-inline search-form">
                     <div class="form-group">
-                        <input class="w-300px form-control" name="name" type="text" placeholder="请输入关键字查询">
+                        送审时间:<input class="date-control form-control" name="@nameof(Contract.SendDateTime)" />&nbsp;至
+                        <input class="date-control form-control" name="SendDateTimeEnd" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <select class="select2-control w-200px form-control" name="@nameof(Contract.StepName)" data-placeholder="请选择合同状态">
+                            <option></option>
+                            @Html.ContractStateOptitions()
+                        </select>
                     </div>
                     &nbsp;
                     <button class="btn btn-primary" type="submit">
                         <i class="fa fa-search"></i> 查询
                     </button>
-                    <a class="btn btn-success" id="btnCreate" data-url="@Html.GetFlowStartUrl(Request.QueryString["flowid"])" onclick="openNewDialog();">
+                    <a class="btn btn-success" id="btnCreate" data-url="@Url.Action("Create")">
                         <i class="fa fa-plus"></i> 新建
                     </a>
-                    @*<a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
+                    <a class="btn btn-danger" id="btnDelete" data-url="@Url.Action("Delete")">
                         <i class="fa fa-trash-o"></i> 删除
-                    </a>*@
+                    </a>
                     <a class="btn btn-default" id="btnRefresh">
                         <i class="fa fa-repeat"></i> 刷新
                     </a>
-                    @*<a class="btn btn-default" href="@Url.Action("Export")">
+                    <a class="btn btn-default" href="@Url.Action("Export")">
                         <i class="fa fa-share-square-o"></i> 导出
-                    </a>*@
+                    </a>
                 </form>
             </div>
             <div class="datagrid" data-url="@Html.Raw(Url.Action("Grid"))" data-query-form=".search-form">
@@ -39,27 +46,13 @@
 @section script
 {
     <script>
-
-        function openNewDialog() {
-            zeniths.util.dialog($('#btnCreate').data('url'), 950, 750, {
-                callback: function () {
-                    $('.datagrid').datagrid().reload();
-                }
-            });
-        };
-
         $(function () {
-            $('.datagrid').datagrid();
-
-            //zeniths.util.standardGridBind({
-            //    editWidth: 950,
-            //    editHeight: 750,
-            //    viewWidth: 950,
-            //    viewHeight: 750
-            //});
-
-
-
+            zeniths.util.standardGridBind({
+                editWidth: 900,
+                editHeight: 700,
+                viewWidth: 900,
+                viewHeight: 700
+            });
         });
     </script>
 }

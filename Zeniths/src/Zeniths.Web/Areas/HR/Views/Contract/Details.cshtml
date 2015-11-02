@@ -1,6 +1,6 @@
-﻿@model EmployeeLeave
+﻿@model Contract
 @{
-    var title = "请休假申请详情";
+    var title = "合同详情";
 }
 @section style{
     <link href="~/Plugin/zeniths.web/css/form.layout.css" rel="stylesheet" />
@@ -20,32 +20,26 @@
                 <div class="tabbable-line">
                     <ul class="nav nav-tabs ">
                         <li class="active">
-                            <a href="#BaseLeaveInfo" data-toggle="tab">
-                                请休假基本信息
+                            <a href="#ContractInfo" data-toggle="tab">
+                                合同基本信息
                             </a>
                         </li>
                         <li>
-                            <a href="#LeaveStepList" data-toggle="tab">
+                            <a href="#ContractStepList" data-toggle="tab">
                                 处理意见
                             </a>
                         </li>
                         <li>
-                            <a href="#LeaveStepimg" data-toggle="tab">
+                            <a href="#ContractStepimg" data-toggle="tab">
                                 流程图
                             </a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="BaseLeaveInfo">
-                            @Html.Action("DetailsBaseLeave",new { businessId = Model.Id })
-                        </div>
-                        <div class="tab-pane" id="LeaveStepList">
-                            @Html.Action("InstanceTasks", "FlowTask", new { area = "WorkFlow", flowInstanceId = Model.FlowInstanceId })
-                        </div>
-                        <div class="tab-pane" id="LeaveStepimg">
-                            @Html.Action("TaskImage", "FlowTask", new { area = "WorkFlow", flowInstanceId = Model.FlowInstanceId })
-                        </div>
-                    </div>
+                        <div class="tab-pane active" id="ContractInfo">合同基本信息内容</div>
+                        <div class="tab-pane" id="ContractStepList">处理意见内容</div>
+                        <div class="tab-pane" id="ContractStepimg">流程图内容</div>
+                    </div>                    
                 </div>
                 <!-- tab 代码 结束 -->
                 <div class="panel-footer text-center">

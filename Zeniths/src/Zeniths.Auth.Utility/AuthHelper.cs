@@ -51,7 +51,7 @@ namespace Zeniths.Auth.Utility
             }
             var service = new SystemDictionaryService();
             var detailsList = service.GetEnabledDicListByDicCode(dicCode);
-            var options = WebHelper.GetSelectGroupOptions(detailsList,"Name","Id","Category",selected);
+            var options = WebHelper.GetSelectGroupValueOptions(detailsList,"Name","Id","CategoryName", "CategoryId", selected);
             return options.ToString();
         }
 
