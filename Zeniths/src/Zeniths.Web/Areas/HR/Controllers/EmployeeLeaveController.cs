@@ -139,9 +139,9 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns>视图模板</returns>
-        public ActionResult DetailsBaseLeave(string id)
+        public ActionResult DetailsBaseLeave(string businessId)
         {
-            var entity = service.Get(id.ToInt());
+            var entity = service.Get(businessId.ToInt());
             return View(entity);
         }
 
