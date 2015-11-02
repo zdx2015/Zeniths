@@ -21,6 +21,12 @@ namespace Zeniths.Hr.Entity
         public int Id { get; set; }
 
         /// <summary>
+        /// 日志主键
+        /// </summary>
+        [Column(Caption = "日志主键")]
+        public int WorkLogId { get; set; }
+
+        /// <summary>
         /// 日志日期
         /// </summary>
         [Column(Caption = "日志日期")]

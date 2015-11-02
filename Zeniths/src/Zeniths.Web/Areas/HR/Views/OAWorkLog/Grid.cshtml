@@ -25,8 +25,8 @@
                 </td>
                 <td class="text-center">@DateTimeHelper.FormatDate(record.LogDate)</td>
                 <td>@Html.Raw(record.WorkSummary)</td>
-                <td>@record.TomorrowPlan</td>
-                <td>@record.OtheInstructions</td>
+                <td>@Html.Raw(record.TomorrowPlan)</td>
+                <td>@Html.Raw(record.OtheInstructions)</td>
                 <td class="text-center">@DateTimeHelper.FormatDateHasSecond(record.CreateDateTime)</td>
                 <td>
                     <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {id = record.Id})">

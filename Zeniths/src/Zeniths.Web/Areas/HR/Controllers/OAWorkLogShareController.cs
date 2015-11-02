@@ -59,7 +59,22 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         }
 
         /// <summary>
-        /// 表格视图
+        /// 我分享的工作日志的表格视图
+        /// </summary>
+        /// <param name="name">按钮名称</param>
+        /// <returns>视图模板</returns>
+        public ActionResult GetMyShareList(DateTime? logDateFirst, DateTime? logDateLast)
+        {
+            var pageIndex = GetPageIndex();
+            var pageSize = GetPageSize();
+            var orderName = GetOrderName();
+            var orderDir = GetOrderDir();
+            var list = service.GetMyShareList(pageIndex, pageSize, orderName, orderDir, logDateFirst, logDateLast);
+            return View(list);
+        }
+
+        /// <summary>
+        /// 分享给我的日志的表格视图
         /// </summary>
         /// <param name="name">按钮名称</param>
         /// <returns>视图模板</returns>
@@ -102,6 +117,10 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         /// <returns>视图模板</returns>
         public ActionResult Details(string id)
         {
+            if(string.IsNullOrEmpty(id)||id=="0")
+            {
+                return View(new OAWorkLogShare());
+            }
             var entity = service.Get(id.ToInt());
             return View(entity);
         }

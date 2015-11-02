@@ -129,21 +129,18 @@ namespace Zeniths.Hr.Service
         /// 获取分享给我的工作日志列表
         /// </summary>
         /// <returns>返回分享给我的工作日志列表</returns>
-        public PageList<OAWorkLogShare> GetShared(int pageIndex, int pageSize,
+        public PageList<OAWorkLogExtend> GetShared(int pageIndex, int pageSize,
             string orderName, string orderDir,
             DateTime? logDateFirst, DateTime? logDateLast)
         {
             orderName = orderName.IsEmpty() ? nameof(OAWorkLogExtend.Id) : orderName;//默认使用主键排序
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
-
             var currentUser = OrganizeHelper.GetCurrentUser();
-
-            string query = @"select LogDate, ShareUserId, CreateUserName, ShareDepartmentName, IsFeedback, FeedbackInfomation, FeedbackDateTime
+            var userId = currentUser.Id;
+            string query = @"select WorkLogId, LogDate, ShareUserId, CreateUserName, ShareDepartmentName, IsFeedback, FeedbackInfomation, FeedbackDateTime
             from OAWorkLog, OAWorkLogShare
-            where OAWorkLog.Id = OAWorkLogShare.WorkLogId and ShareUserName = currentUser
-            Order by LogDate";
-
-            return repos.Page(pageIndex, pageSize, query);
+            where OAWorkLog.Id = OAWorkLogShare.WorkLogId and ShareUserId = "+ userId + "  Order by LogDate";
+            return reposExtend.Page(pageIndex, pageSize, query);
         }
 
         /// <summary>
