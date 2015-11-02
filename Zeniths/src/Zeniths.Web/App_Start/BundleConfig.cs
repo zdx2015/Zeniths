@@ -163,7 +163,7 @@ namespace Zeniths.Web
             #endregion
 
 
-            //BundleTable.EnableOptimizations = true;
+            BundleTable.EnableOptimizations = true;
         }
     }
 }

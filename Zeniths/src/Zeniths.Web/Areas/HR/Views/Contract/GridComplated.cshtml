@@ -1,0 +1,43 @@
+﻿@model PageList<Contract>
+@{
+    Layout = null;
+}
+<table class="table table-zeniths table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-100px" data-order="@nameof(Contract.ContractNo)">合同编号</th>
+            <th class="w-100px" data-order="@nameof(Contract.Name)">合同名称</th>
+            <th class="w-100px" data-order="@nameof(Contract.UndertakeDepartmentName)">承办部门</th>
+            <th class="w-100px" data-order="@nameof(Contract.SenderName)">送审人</th>
+            <th class="w-100px" data-order="@nameof(Contract.SendDateTime)">送审日期</th>
+            <th class="w-100px" data-order="@nameof(Contract.ValidDate)">有效日期</th>
+            <th class="w-100px" data-order="@nameof(Contract.SignDate)">盖章日期</th>
+            <th class="w-100px" data-order="@nameof(Contract.ReturnFileDate)">返还原件日期</th>
+            <th class="w-100px" data-order="@nameof(Contract.Amount)">合同金额</th>
+            <th class="w-120px text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr class="cursor-pointer" data-url="@Url.Action("Details",new {id = record.Id})">
+                <td>@record.ContractNo</td>
+                <td>@record.Name</td>
+                <td>@record.UndertakeDepartmentName</td>
+                <td>@record.SenderName</td>
+                <td>@DateTimeHelper.FormatDate(record.SendDateTime)</td>
+                <td>@DateTimeHelper.FormatDate(record.ValidDate)</td>
+                <td>@DateTimeHelper.FormatDate(record.SignDate)</td>
+                <td>@DateTimeHelper.FormatDate(record.ReturnFileDate)</td>
+                <td>@record.Amount</td>
+                <td>
+                    <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Url.Action("EditComplete",new {id = record.Id})">
+                        <i class="fa fa-edit"></i> 编辑
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.RenderPages(Model)
