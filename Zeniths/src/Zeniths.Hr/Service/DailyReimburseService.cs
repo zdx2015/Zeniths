@@ -269,6 +269,31 @@ namespace Zeniths.Hr.Service
             return BoolMessage.False;
         }
 
+        /// <summary>
+        /// 提交后未审批前，实例id，当前步骤
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public BoolMessage Update(DailyReimburse entity)
+        {
+            try
+            {
+                var count = repos.Update(entity, p => p.Id == entity.Id, p => p.FlowInstanceId, p => p.StepId, p => p.StepName, p => p.StepStatus);
+                if (count > 0)
+                {
+                    return BoolMessage.True;
+                }
+                else
+                {
+                    return BoolMessage.False;
+                }
+            }
+            catch (Exception e)
+            {
+                return new BoolMessage(false, e.Message);
+            }
+        }
+
 
         /// <summary>
         /// 删除日常费用报销
