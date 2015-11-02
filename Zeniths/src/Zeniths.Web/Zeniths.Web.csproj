@@ -256,6 +256,16 @@
     <Content Include="Areas\HR\Views\DailyReimburse\AllIndex.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\DetailGrid.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\DetailsBaseBudget.cshtml" />
+    <Content Include="Areas\HR\Views\Contract\Details.cshtml" />
+    <Content Include="Areas\HR\Views\Contract\Edit.cshtml" />
+    <Content Include="Areas\HR\Views\Contract\EditAudit.cshtml" />
+    <Content Include="Areas\HR\Views\Contract\EditBoard.cshtml" />
+    <Content Include="Areas\HR\Views\Contract\EditComplete.cshtml" />
+    <Content Include="Areas\HR\Views\Contract\EditLevel.cshtml" />
+    <Content Include="Areas\HR\Views\Contract\Grid.cshtml" />
+    <Content Include="Areas\HR\Views\Contract\GridComplated.cshtml" />
+    <Content Include="Areas\HR\Views\Contract\Index.cshtml" />
+    <Content Include="Areas\HR\Views\Contract\IndexComplated.cshtml" />
     <Content Include="Areas\HR\Views\EmployeeLeave\_GridColumnCommon.cshtml" />
     <None Include="Areas\WorkFlow\Assets\js\xx.json" />
     <Content Include="Areas\HR\Views\HrBudgetDetails\DetailsGrid.cshtml" />
@@ -655,6 +665,7 @@
     <Compile Include="Areas\Auth\Controllers\SystemParamController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemRoleController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
+    <Compile Include="Areas\HR\Controllers\ContractController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeGoOutRegistrationController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeLeaveController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeNotClockController.cs" />

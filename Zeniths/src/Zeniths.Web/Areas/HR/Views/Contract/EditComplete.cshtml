@@ -1,0 +1,335 @@
+﻿@model Contract
+@{
+    var title = "合同完善归档";
+}
+@section style{
+    <link href="~/Plugin/zeniths.web/css/form.layout.css" rel="stylesheet" />
+    <link href="~/Plugin/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" /> 
+}
+<div class="container-edit-zeniths">
+    <form class="editform form-horizontal" action="@Url.Action("EditCompleteCore")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"><strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">合同名称：</label>
+                            <div class="col-sm-6">
+                                <label class="control-label">@Model.Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">合同编号：</label>
+                            <div class="col-sm-6">
+                                <div class="input-icon right">
+                                    <input class="form-control" type="text" name="@nameof(Model.ContractNo)" value="@Model.ContractNo" />
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">合同分类：</label>
+                            <div class="col-sm-6">
+                                <label class="control-label">@Model.TypeName</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">合同级别：</label>
+                            <div class="col-sm-6">
+                                <label class="control-label">@Model.LevelName</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">我方：</label>
+                    <div class="col-sm-10">
+                        <label class="control-label">@Model.FirstParty</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">签约方：</label>
+                    <div class="col-sm-10">
+                        <label class="control-label">@Model.SecondParty</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">是否为变更合同：</label>
+                    <div class="col-sm-10">
+                        @{ if (Model.IsChange == true)
+                            {
+                                <label class="control-label">是</label>
+                            }
+                            else
+                            {
+                                <label class="control-label">否</label>
+                            }
+                        }
+                    </div>
+                </div>
+                @{
+                    if (Model.IsChange == true)
+                    {
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">原合同编号：</label>
+                            <div class="col-sm-10">
+                            <label class="control-label">@Model.ChangeNo</label>
+                            </div>
+                        </div>
+                    }
+                }
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">合同附件：</label>
+                            <div class="col-sm-6">
+                                <label class="control-label"><a class="fa-hand-o-down" href="~/App_Data/aaa.docx">合同协议书</a></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">承办部门：</label>
+                            <div class="col-sm-6">
+                                <label class="control-label">@Model.UndertakeDepartmentName</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">送审人：</label>
+                            <div class="col-sm-6">
+                                <label class="control-label">@Model.SenderName</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">送审时间：</label>
+                            <div class="col-sm-6">
+                                <label class="control-label">@Model.SendDateTime</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">合同有效期：</label>
+                            <div class="col-sm-6">
+                                <div class="input-icon right">
+                                    <input class="datetime-control form-control" name="@nameof(Model.ValidDate)" value="@DateTimeHelper.FormatDateHasMinute(Model.ValidDate)" type="text" autocomplete="off" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">合同金额：</label>
+                            <div class="col-sm-6">
+                                <div class="input-icon right">
+                                   <input class="form-control" type="number" name="@nameof(Model.Amount)" value="@Model.Amount" />
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">数量：</label>
+                            <div class="col-sm-6">
+                                <div class="input-icon right">
+                                    <input class="form-control" type="number" name="@nameof(Model.Count)" value="@Model.Count" />
+                                </div>                         
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">单位：</label>
+                            <div class="col-sm-6">
+                                <div class="input-icon right">
+                                    <input class="form-control" type="text" name="@nameof(Model.Unit)" value="@Model.Unit" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">单价：</label>
+                            <div class="col-sm-6">
+                                <div class="input-icon right">
+                                    <input class="form-control" type="number" name="@nameof(Model.Price)" value="@Model.Price" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">盖章日期：</label>
+                            <div class="col-sm-6">
+                                <div class="input-icon right">
+                                    <input class="datetime-control form-control" id="@nameof(Model.SignDate)" name="@nameof(Model.SignDate)" value="@DateTimeHelper.FormatDateHasMinute(Model.SignDate)" type="text" />
+                                </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">原件返回日期：</label>
+                            <div class="col-sm-6">
+                                <div class="input-icon right">
+                                    <input class="datetime-control form-control" id="@nameof(Model.ReturnFileDate)" name="@nameof(Model.ReturnFileDate)" value="@DateTimeHelper.FormatDateHasMinute(Model.ReturnFileDate)" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer text-center">
+                    <div class="buttons">
+                        <button id="save" class="btn btn-primary" type="submit">
+                            <i class="fa fa-save"></i> 提交
+                        </button>
+                        &nbsp;
+                        <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                            <i class="fa fa-sign-in"></i> 关闭
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section script{
+    <script src="~/Plugin/bootstrap-daterangepicker/js/moment.min.js"></script>
+    <script src="~/Plugin/bootstrap-daterangepicker/js/zh-cn.js"></script>
+    <script src="~/Plugin/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script>
+
+        $(function () {
+            var ops = {
+                rules: {
+                    ValidDate: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    Amount: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    Count: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    Unit: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    Price: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    SignDate: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    ReturnFileDate: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    ContractNo: {
+                        required: true
+                    }
+                },
+                messages: {
+                    ValidDate: {
+                        required: '请填写'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    Amount: {
+                        required: '请填写'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    Count: {
+                        required: '请填写'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    Unit: {
+                        required: '请填写'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    Price: {
+                        required: '请填写'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    SignDate: {
+                        required: '请选择盖章日期'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    ReturnFileDate: {
+                        required: '请选择原件返回时间'
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    ContractNo: {
+                        required: '请输入合同编号'
+                    }
+                },
+                beforeSubmit: function () {
+                }
+            };
+            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
+            $('.editform').dataform().initDateTimePicker().initValidate(ops).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+        });
+    </script>
+}
+
+

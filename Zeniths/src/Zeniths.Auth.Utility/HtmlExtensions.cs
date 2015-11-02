@@ -64,7 +64,7 @@ namespace Zeniths.Auth.Utility
         public static MvcHtmlString UsersOptions(this HtmlHelper helper, string selected = null)
         {
             var list = new SystemUserService().GetUserIdNameList();
-            return MvcHtmlString.Create(WebHelper.GetSelectOptions(list,"Key","Value",selected));
+            return MvcHtmlString.Create(WebHelper.GetSelectOptions(list,"Value","Key",selected));
         }
     }
 }
