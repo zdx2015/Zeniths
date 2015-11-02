@@ -153,7 +153,8 @@
                     },
                     EndDatetime: {
                         required: true,
-                        compareDate: "#StartDatetime"
+                        compareDate: "#StartDatetime",
+                        compareDateHours: "#GoOutDateTime"
                     },
                     Days: {
                         required: true,
@@ -178,7 +179,8 @@
                     },
                     EndDatetime: {
                         required: '请选择请假结束时间',
-                        compareDate: '请假结束时间必须大于请假开始时间'
+                        compareDate: '请假结束时间必须大于请假开始时间',
+                        compareDateHours: "请假时间必须大于两个小时"
                     },
                     Days: {
                         required: '请填写请假天数',
