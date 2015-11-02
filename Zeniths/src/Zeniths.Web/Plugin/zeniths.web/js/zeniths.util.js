@@ -25,8 +25,6 @@ jQuery.validator.methods.compareDateHours = function (value, element, param) {
     }
 };
 
-sd = new Date(dd[0] * 1, dd[1] * 1 - 1, dd[2] * 1).getTime();
-
 /**
  * 获取当前操作系统信息
  * @return {}
