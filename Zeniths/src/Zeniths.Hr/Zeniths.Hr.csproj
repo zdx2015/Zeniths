@@ -36,6 +36,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity\Contract.cs" />
     <Compile Include="Entity\DailyReimburse.cs" />
     <Compile Include="Entity\DailyReimburseDetails.cs" />
     <Compile Include="Entity\EmpLeave.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Entity\HrBudgetView.cs" />
     <Compile Include="HrDatabase.cs" />
     <Compile Include="HrRepository.cs" />
+    <Compile Include="Service\ContractService.cs" />
     <Compile Include="Service\DailyReimburseDetailsService.cs" />
     <Compile Include="Service\DailyReimburseService.cs" />
     <Compile Include="Service\EmpLeaveService.cs" />

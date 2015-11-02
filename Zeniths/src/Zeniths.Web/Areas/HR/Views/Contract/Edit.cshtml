@@ -1,0 +1,217 @@
+﻿@model Contract
+@{
+    var title = "编辑";
+}
+
+<div class="container-edit-zeniths">
+    <form class="editform" action="@Url.Action("Save")" method="POST" role="form">
+        <div class="panel panel-default panel-zeniths">
+            <div class="panel-heading">
+                <span class="prefix"><strong>@Model.Id</strong></span>
+                @title
+            </div>
+            <div class="panel-body">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="@nameof(Model.Id)" value="@Model.Id" />
+                <table class="table table-form table-dialog-form">               
+                    <tr>
+                        <th class="w-100px">
+                            <label class="control-label">合同名称：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Name)" value="@Model.Name" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="control-label"> 我方：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.FirstParty)" value="@Model.FirstParty" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label"> 签约方：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.SecondParty)" value="@Model.SecondParty" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">是否为变更合同：</label>
+                        </th>
+                        <td>
+                            <div class="checkbox">
+                                @*<label class="checkbox-inline">
+                                    <input id="ck_ischange" class="icheckbox-control" name="@nameof(Model.IsChange)" type="checkbox"  @Html.IsChecked(Model.IsChange) />
+                                    <span>(是)</span>
+                                </label>*@
+                                <div class="checkbox">
+                                    <label class="checkbox-inline">
+                                        <input class="icheckbox-control"  id="ck_ischange" name="@nameof(Model.IsChange)" value="true" type="checkbox" @Html.IsChecked(Model.IsChange) />
+                                        <span>是</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr id="changetr" style="display:none">
+                        <th >
+                            <label class="control-label">变更合同编号：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.ChangeNo)" value="@Model.ChangeNo" type="text" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">合同简要内容：</label>
+                        </th>
+                        <td>
+                                <textarea class="editor-control form-control" name="@nameof(Model.Content)" rows="24">@Model.Content</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >
+                            <label class="control-label">合同附件：</label>
+                        </th>
+                        <td>
+                            <div class="input-icon right">
+                                <input class="form-control" name="@nameof(Model.Attachment)" value="@Model.Attachment" type="text" />
+                                <span>上传</span>
+                            </div>
+                        </td>
+                    </tr>               
+                </table>
+            </div>
+            <div class="panel-footer text-center">
+                <div class="buttons">
+                    <button id="save" class="btn btn-primary" name="Save" value="Save" type="submit">
+                        <i class="fa fa-save"></i> 保存
+                    </button>
+                    <button id="sub" class="btn btn-primary" name="TJSave" value="TJSave" type="submit" >
+                        <i class="fa fa-save"></i> 提交
+                    </button>
+                    &nbsp;
+                    <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
+                        <i class="fa fa-sign-in"></i> 关闭
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section script{
+<script src="~/Plugin/kindeditor/kindeditor-min.js"></script>
+    <script>
+        $(function () {
+            var ops = {
+                rules: {
+                    Name: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    FirstParty: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    SecondParty: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    Content: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    ChangeNo: {
+                        required: false
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    },
+                    Attachment: {
+                        required: true
+                        /*,maxlength: 100
+                          ,digits: true
+                        */
+                    }
+                },
+                messages: {
+                    Name: {
+                        required: '请填写'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    FirstParty: {
+                        required: '请填写'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    SecondParty: {
+                        required: '请填写'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    Content: {
+                        required: '请填写'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    ChangeNo: {
+                        required: '请选择'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    },
+                    Attachment: {
+                        required: '请填写'
+                        /*,maxlength: '长度不能超过100'
+                          ,digits: '只能输入正整数'
+                        */
+                    }
+                },
+                beforeSubmit: function () {
+                }
+            };
+            //$('#ck_ischange').click
+            $('#ck_ischange').click(function () {
+                if ($(this).prop('checked') == true) {
+                    $('#changetr').show();
+                    //$('.editform').dataform().validOptions.rules.ChangeNo.required = true;
+                    ops.rules.ChangeNo.required = true;
+                }
+                else {
+                    $('#changetr').hide();
+                    ops.rules.ChangeNo.required = false;
+                }
+            });
+            //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
+            $('.editform').dataform().initKindEditor().initValidate(ops).initAjax({ success: zeniths.util.formAjaxSuccess });
+
+        });
+    </script>
+}
