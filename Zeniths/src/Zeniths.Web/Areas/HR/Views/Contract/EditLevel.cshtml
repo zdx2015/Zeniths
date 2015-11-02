@@ -1,12 +1,14 @@
 ﻿@model Contract
 @{
-    var title = "确定合同等级";
+    var title = Html.GetCurrentStepName();
+    Layout = "~/Views/Shared/_LayoutWorkflow.cshtml";
+    var currentStep = Html.GetCurrentStep();
 }
 @section style{
     <link href="~/Plugin/zeniths.web/css/form.layout.css" rel="stylesheet" />
 }
 <div class="container-edit-zeniths">
-    <form class="editform form-horizontal" action="@Url.Action("EditLevelCore")" method="POST" role="form">
+    <form class="editform form-horizontal" action="@Html.GetFlowExecuteUrl()" method="POST" role="form">
         <div class="panel panel-default panel-zeniths">
             <div class="panel-heading">
                 <span class="prefix"><strong>@Model.Id</strong></span>
@@ -130,12 +132,19 @@
             </div>
             <div class="panel-footer text-center">
                 <div class="buttons">
-                    <button id="save" class="btn btn-primary" type="submit">
+                    @*<button id="save" class="btn btn-primary" type="submit">
                         <i class="fa fa-save"></i> 提交
                     </button>
                     &nbsp;
                     <a class="btn btn-default btnClose" onclick="zeniths.util.closeFrameDialog(window);">
                         <i class="fa fa-sign-in"></i> 关闭
+                    </a>*@
+                    <a class="btn btn-outline btn-danger btnWorkFlowBack">
+                        <i class="fa fa-arrow-left"></i> 驳回
+                    </a>
+
+                    <a class="btn btn-outline btn-success btnWorkFlowSend">
+                        <i class="fa fa-check"></i> 审核通过
                     </a>
                 </div>
             </div>
@@ -183,7 +192,19 @@
                 }
             };
             //$('.editform').dataform().initSelect2().initiCheck().initDatePicker()
-            $('.editform').dataform().initKindEditor().initValidate(ops).initAjax({ success: zeniths.util.formAjaxSuccess });
+            $('.editform').dataform().initKindEditor().initValidate(ops).initSelect2()
+            .initWorkFlow(
+            {
+                sendCallback: function (wf, result) {
+                    //如果下一步骤的处理人是自己 则继续处理下一步骤
+                    if (result.url) {
+                        window.location.href = result.url;
+                    } else {
+                        zeniths.util.formAjaxSuccess(result);
+                    }
+                }
+            }
+            ).initAjax({ success: zeniths.util.formAjaxSuccess });
 
         });
     </script>

@@ -43,6 +43,9 @@
   <ItemGroup>
     <Compile Include="Budget\BudgetApproval.cs" />
     <Compile Include="Budget\BudgetLeaveRegister.cs" />
+    <Compile Include="Contract\ContractStep_Send4.cs" />
+    <Compile Include="Contract\ContractStep_Send3.cs" />
+    <Compile Include="Contract\ContractStep_Send2.cs" />
     <Compile Include="Contract\ContractStep_Send1.cs" />
     <Compile Include="EmployeeLeave\LeaveHRManagerCancel.cs" />
     <Compile Include="EmployeeLeave\LeaveDepartmentCancel.cs" />
