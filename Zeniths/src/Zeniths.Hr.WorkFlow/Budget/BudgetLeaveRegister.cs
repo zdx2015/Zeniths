@@ -34,10 +34,18 @@ namespace Zeniths.Hr.WorkFlow.Budget
             {
                 args.ExecuteData.Title = entity.Title = $"{args.CurrentUser.DepartmentName}的预算申请({entity.BudgetMonth.ToString("yyyy年MM月")})";
             }
-
             var result = service.Update(entity);
             args.BusinessId = entity.Id.ToString();
             return result;
+        }
+        public override BoolMessage OnAfterSubmit(FlowEventArgs args)
+        {
+            var service = new HrBudgetService();
+            var entity = service.Get(args.BusinessId.ToInt());
+            entity.FlowInstanceId = args.FlowInstanceId;
+            entity.StepId = args.StepId;
+            entity.StepName = args.StepSetting.Name;
+            return service.Update(entity);
         }
     }
 }

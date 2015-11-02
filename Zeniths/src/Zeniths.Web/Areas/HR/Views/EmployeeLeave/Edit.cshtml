@@ -73,7 +73,7 @@
                     </tr>
                     <tr>
                         <th>
-                            <label class="control-label">请假事由：</label>
+                            <label class="required" aria-required="true"></label><label class="control-label">请假事由：</label>
                         </th>
                         <td colspan="3">
                             <div class="input-icon right">
@@ -153,11 +153,15 @@
                     },
                     EndDatetime: {
                         required: true,
-                        compareDate: "#StartDatetime"
+                        compareDate: "#StartDatetime",
+                        compareDateHours: "#GoOutDateTime"
                     },
                     Days: {
                         required: true,
                         number:true
+                    },
+                    Reason: {
+                        required: true
                     }
                 },
                 messages: {
@@ -175,11 +179,15 @@
                     },
                     EndDatetime: {
                         required: '请选择请假结束时间',
-                        compareDate: '请假结束时间必须大于请假开始时间'
+                        compareDate: '请假结束时间必须大于请假开始时间',
+                        compareDateHours: "请假时间必须大于两个小时"
                     },
                     Days: {
                         required: '请填写请假天数',
                         number:'请填写数字'
+                    },
+                    Reason: {
+                        required: '请填写请假事由'
                     }
                 },
                 beforeSubmit: function () {
