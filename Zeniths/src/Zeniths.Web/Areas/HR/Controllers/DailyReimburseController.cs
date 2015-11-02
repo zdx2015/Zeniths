@@ -67,9 +67,12 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             var pageSize = GetPageSize();
             var orderName = GetOrderName();
             var orderDir = GetOrderDir();
-            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name);
+            var list = service.GetPageList(pageIndex, pageSize, orderName, orderDir, name,CurrentUserId);
             return View(list);
         }
+
+       
+
         /// <summary>
         /// 表格视图
         /// </summary>

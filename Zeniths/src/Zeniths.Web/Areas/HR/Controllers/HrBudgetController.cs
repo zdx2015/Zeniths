@@ -185,6 +185,11 @@ namespace Zeniths.Web.Areas.Hr.Controllers
         [HttpPost]
         public ActionResult Delete(string id)
         {
+            //BoolMessage bm= service.GetBaseBudget(id);
+            //if (!bm.Success)
+            //{
+            //    return Json(bm);
+            //}
             var result = service.Delete(StringHelper.ConvertToArrayInt(id));
             return Json(result);
         }
