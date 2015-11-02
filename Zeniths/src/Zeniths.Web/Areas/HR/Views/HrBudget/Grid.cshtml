@@ -56,44 +56,26 @@
                     <td>@record.其他类</td>
                     <td>@record.Status</td>
                     <td>
+                        <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {businessId = record.BudgetId})">
+                            <i class="fa fa-eye"></i> 查看
+                        </a>
                         @switch (@record.Status)
                         {
                             case "未提交":
                             case "驳回":
-                                <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {businessId = record.BudgetId})">
-                                    <i class="fa fa-eye"></i> 查看
-                                </a>
                                 if (ViewData["type"].ToString() == "1") 
                                 {
                                     <a class="btn btn-default btn-xs green-stripe btnRecordEdit" data-url="@Html.GetFlowStartUrl(record.FlowId, record.BudgetId.ToString())">
                                         <i class="fa fa-edit"></i> 编辑
                                     </a>
-                                    @*<a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete", new { id = record.BudgetId })">
+                                    <a class="btn btn-default btn-xs red-stripe btnRecordDelete" data-url="@Url.Action("Delete", new { id = record.BudgetId })">
                                         <i class="fa fa-trash-o"></i> 删除
-                                    </a>*@
+                                    </a>
                                 }
                                 break;
                             case "申请中":
-                                if (ViewData["type"].ToString() == "1")
-                                {
-                                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {businessId = record.BudgetId})">
-                                        <i class="fa fa-eye"></i> 查看
-                                    </a>
-                                }
-                                else if (ViewData["type"].ToString() == "2")
-                                {
-                                    <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {businessId = record.BudgetId})">
-                                        <i class="fa fa-eye"></i> 查看
-                                    </a>//@Html.GetFlowStartUrl(Request.QueryString["flowId"])
-                                    <a class="btn btn-default btn-xs green-stripe btnRecordView" data-url="@Url.Action("DetailsList",new {id = record.BudgetId})">
-                                        <i class="fa fa-eye"></i> 审批
-                                    </a>
-                                }
                                 break;
                             default:
-                                <a class="btn btn-default btn-xs purple-stripe btnRecordView" data-url="@Url.Action("Details",new {businessId = record.BudgetId})">
-                                    <i class="fa fa-eye"></i> 查看
-                                </a>
                                 break;
                         }
                     </td>
