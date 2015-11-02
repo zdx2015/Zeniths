@@ -676,7 +676,6 @@
     <Compile Include="Areas\Auth\Controllers\SystemParamController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemRoleController.cs" />
     <Compile Include="Areas\Auth\Controllers\SystemUserController.cs" />
-    <Compile Include="Areas\HR\Controllers\ContractController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeGoOutRegistrationController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeLeaveController.cs" />
     <Compile Include="Areas\HR\Controllers\EmployeeNotClockController.cs" />
