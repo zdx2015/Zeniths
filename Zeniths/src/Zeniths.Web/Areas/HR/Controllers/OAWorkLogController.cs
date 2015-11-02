@@ -90,9 +90,13 @@ namespace Zeniths.Web.Areas.Hr.Controllers
             OAWorkLogShare shareUser = new OAWorkLogShare();
 
             shareUser.WorkLogId = entity.Id;
-            var userIds = Request.Form["shareUser"];
+            var userIds = Request.Form["ShareUsers"];
 
             var result = service.ShareWorkLog(entity.Id, userIds);
+            //if(result.Success)
+            //{
+            //    result = new BoolMessage(true, "分享日志成功");
+            //}
             
             return Json(result);
         }

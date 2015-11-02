@@ -11,6 +11,8 @@ using Zeniths.Collections;
 using Zeniths.Data;
 using Zeniths.Extensions;
 using Zeniths.Utility;
+using Zeniths.Data.Extensions;
+using Zeniths.Auth.Utility;
 
 namespace Zeniths.Hr.Service
 {
@@ -121,88 +123,68 @@ namespace Zeniths.Hr.Service
             return repos.Query(query).ToList();
         }
 
-
-        ///// <summary>
-        ///// 获取启用的工作日志分享人列表
-        ///// </summary>
-        ///// <returns>返回启用的工作日志分享人列表</returns>
-        //public List<OAWorkLogShare> GetEnabledList()
-        //{
-        //    OAWorkLog entity = new OAWorkLog();
-        //    var query = repos.NewQuery.Where(p => p.ShareUserName == entity.CreateDepartmentName).OrderBy(p => p.Id);
-        //    return repos.Query(query).ToList();
-        //}
-
-        ///// <summary>
-        ///// 获取工作日志分享人DataTable
-        ///// </summary>
-        ///// <returns>返回工作日志分享人DataTable</returns>
-        //public DataTable GetTable()
-        //{
-        //    var query = repos.NewQuery.OrderBy(p => p.Id);
-        //    return repos.GetTable(query);
-        //}
-
-
-        /// <summary>
-        /// 获取工作日志分享人分页列表
-        /// </summary>
-        /// <param name="pageIndex">页面索引</param>
-        /// <param name="pageSize">分页大小</param>
-        /// <param name="orderName">排序列名</param>
-        /// <param name="orderDir">排序方式</param>
-        /// <param name="name">查询关键字</param>
-        /// <returns>返回工作日志分享人分页列表</returns>
-        public PageList<OAWorkLogShare> GetPageList(int pageIndex, int pageSize, string orderName, string orderDir, string name)
-        {
-            orderName = orderName.IsEmpty() ? nameof(OAWorkLogShare.Id) : orderName;//默认使用主键排序
-            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
-            var query = repos.NewQuery.Take(pageSize).Page(pageIndex).OrderBy(orderName, orderDir.IsAsc());
-            /*
-            if (name.IsNotEmpty())
-            {
-                name = name.Trim();
-                query.Where(p => p.Name.Contains(name));
-            }
-            */
-            return repos.Page(query);
-        }
-
         #region 私有方法
-      
+
         /// <summary>
-        /// 链表查询获得分享给我的工作日志DataTable
-        ///</summary>
-        /// <returns>返回分享给我的工作日志DataTable</returns>
-        public DataTable GetShared()
+        /// 获取分享给我的工作日志列表
+        /// </summary>
+        /// <returns>返回分享给我的工作日志列表</returns>
+        public PageList<OAWorkLogExtend> GetShared(int pageIndex, int pageSize,
+            string orderName, string orderDir,
+            DateTime? logDateFirst, DateTime? logDateLast)
         {
-            string sqlstr = @"select LogDate, ShareUserId, ShareUserName, ShareDepartmentName, IsFeedback, FeedbackInfomation, FeedbackDateTime
-            from [Zeniths.HR].[dbo].[OAWorkLog], OAWorkLogShare
-            where [Zeniths.HR].[dbo].[OAWorkLog].Id = OAWorkLogShare.WorkLogId and ShareUserName = CreateUserName
-            Order by LogDate Desc";
-            var db = repos.Database;
-            DataTable dt = db.ExecuteDataTable(sqlstr);
-            return dt;
+            orderName = orderName.IsEmpty() ? nameof(OAWorkLogExtend.Id) : orderName;//默认使用主键排序
+            orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
+            var currentUser = OrganizeHelper.GetCurrentUser();
+            var userId = currentUser.Id;
+            string query = @"select WorkLogId, LogDate, ShareUserId, CreateUserName, ShareDepartmentName, IsFeedback, FeedbackInfomation, FeedbackDateTime
+            from OAWorkLog, OAWorkLogShare
+            where OAWorkLog.Id = OAWorkLogShare.WorkLogId and ShareUserId = "+ userId + "  Order by LogDate";
+            return reposExtend.Page(pageIndex, pageSize, query);
         }
 
         /// <summary>
         /// 获取我分享的工作日志列表
         /// </summary>
         /// <returns>返回我分享的工作日志列表</returns>
-        public PageList<OAWorkLogExtend> GetMyShareList(int pageIndex, int pageSize, string orderName, string orderDir)
+        public PageList<OAWorkLogExtend> GetMyShareList(int pageIndex, int pageSize, 
+            string orderName, string orderDir, 
+            DateTime? logDateFirst, DateTime? logDateLast)
         {
             orderName = orderName.IsEmpty() ? nameof(OAWorkLogExtend.Id) : orderName;//默认使用主键排序
             orderDir = orderDir.IsEmpty() ? nameof(OrderDir.Desc) : orderDir;//默认使用倒序排序
 
-            var querySql = @"select LogDate, ShareUserId, ShareUserName, ShareDepartmentName, IsFeedback, FeedbackInfomation, FeedbackDateTime
-            from[Zeniths.HR].[dbo].[OAWorkLog], [Zeniths.HR].[dbo].[OAWorkLogShare]
-            where[Zeniths.HR].[dbo].[OAWorkLog].Id = [Zeniths.HR].[dbo].[OAWorkLogShare].WorkLogId and WorkLogId=@WorkLogId
-            Order by LogDate Desc";
-
-            var list = reposExtend.Database.Query<OAWorkLogExtend>(querySql).ToList();
-            var query = reposExtend.NewQuery.Take(pageSize).Page(pageIndex).OrderBy(orderName, orderDir.IsAsc());
-
-            return reposExtend.Page(query);
+            if(logDateFirst.IsEmpty() && logDateLast.IsEmpty())
+            {
+                var query = @"select LogDate, ShareUserId, ShareUserName, ShareDepartmentName, IsFeedback, FeedbackInfomation, FeedbackDateTime
+                from OAWorkLog, OAWorkLogShare
+                where OAWorkLog.Id = OAWorkLogShare.WorkLogId and WorkLogId = WorkLogId
+                Order by LogDate Desc";
+                return reposExtend.Page(pageIndex, pageSize, query);
+            }
+            else if (logDateFirst.IsNotEmpty() && logDateLast.IsNotEmpty())
+            {
+                var query = @"select select LogDate, ShareUserId, ShareUserName, ShareDepartmentName, IsFeedback, FeedbackInfomation, FeedbackDateTime
+                from OAWorkLog, OAWorkLogShare
+                where OAWorkLog.Id = OAWorkLogShare.WorkLogId and (logDateFirst < LogDate and LogDate < logDateLast)
+                Order by LogDate";
+                return reposExtend.Page(pageIndex, pageSize, query);
+            }
+            else if (logDateFirst.IsNotEmpty())
+            {
+                var query = @"select LogDate, ShareUserId, ShareUserName, ShareDepartmentName, IsFeedback, FeedbackInfomation, FeedbackDateTime
+                from OAWorkLog, OAWorkLogShare
+                where OAWorkLog.Id = OAWorkLogShare.WorkLogId and logDateFirst = LogDate";
+                return reposExtend.Page(pageIndex, pageSize, query);
+            }
+            else if (logDateLast.IsNotEmpty())
+            {
+                var query = @"select select LogDate, ShareUserId, ShareUserName, ShareDepartmentName, IsFeedback, FeedbackInfomation, FeedbackDateTime
+                from OAWorkExtend
+                where LogDate = logDateLast";
+                return reposExtend.Page(pageIndex, pageSize, query);
+            }
+            return null;
         }
     }
 

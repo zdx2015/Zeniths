@@ -143,19 +143,22 @@ namespace Zeniths.Hr.Service
                     {
                         message.Append($"日志已经分享给{userService.GetName(userId)}了!!");
                     }
+                    else
+                    {
+                        entity.IsShare = true;
+                        repos.Update(entity, p => p.Id == logId, p => p.IsShare);
 
-                    entity.IsShare = true;
-                    repos.Update(entity, p => p.Id == logId, p => p.IsShare);
+                        OAWorkLogShare entitys = new OAWorkLogShare();
+                        var user = userService.Get(userId);
+                        entitys.ShareUserId = userId;
+                        entitys.WorkLogId = logId;
+                        entitys.ShareUserName = user.Name;
+                        entitys.ShareDepartmentId = user.DepartmentId;
+                        entitys.ShareDepartmentName = user.DepartmentName;
+                        reposWorkShare.Insert(entitys);
 
-                    OAWorkLogShare entitys = new OAWorkLogShare();
-                    var user = userService.Get(userId);
-                    entitys.ShareUserId = userId;
-                    entitys.WorkLogId = logId;
-                    entitys.ShareUserName = user.Name;
-                    entitys.ShareDepartmentId = user.DepartmentId;
-                    entitys.ShareDepartmentName = user.DepartmentName;
-                    reposWorkShare.Insert(entitys);
-
+                        message.Append($"日志成功分享给{entitys.ShareUserName}!");
+                    }
                 }
 
                 return new BoolMessage(true, message.ToString());

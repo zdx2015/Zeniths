@@ -256,6 +256,8 @@
     <Content Include="Areas\HR\Views\DailyReimburse\AllIndex.cshtml" />
     <Content Include="Areas\HR\Views\DailyReimburse\DetailGrid.cshtml" />
     <Content Include="Areas\HR\Views\HrBudget\DetailsBaseBudget.cshtml" />
+    <Content Include="Areas\HR\Views\OAWorkLogShare\SharedIndex.cshtml" />
+    <Content Include="Areas\HR\Views\OAWorkLogShare\SharedGrid.cshtml" />
     <Content Include="Areas\HR\Views\Contract\Details.cshtml" />
     <Content Include="Areas\HR\Views\Contract\Edit.cshtml" />
     <Content Include="Areas\HR\Views\Contract\EditAudit.cshtml" />
